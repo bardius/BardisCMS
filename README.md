@@ -1,4 +1,3 @@
-
 Symfony2 BardisCMS v2.2.10
 ======================================================
 
@@ -146,21 +145,17 @@ Here is a sample setup for your virtual host configuration
 
 		# remove image file noise from access logs
 		SetEnvIf Request_URI \.(jgp|gif|png|css|js) static
-		CustomLog c:/wamp/www/domainname/log/domainname-access_log custom env=!static
-		CustomLog c:/wamp/www/domainname/log/domainname-static_log custom env=static
+		CustomLog c:/wamp/www/domainname/logs/domainname-access_log custom env=!static
+		CustomLog c:/wamp/www/domainname/logs/domainname-static_log custom env=static
 
 		# LogLevel debug can be useful but any php warnings
 		# will always and only appear in the 'error' level
 		LogLevel info
-		ErrorLog c:/wamp/www/domainname/log/domainname-error_log
+		ErrorLog c:/wamp/www/domainname/logs/domainname-error_log
 
 		# level 0 is off. Use only for debugging rewrite rules
 		RewriteLogLevel 0
-		RewriteLog c:/wamp/www/domainname/domainname-rewrite_log
-
-
-		# for profiling information. Should not be used in production
-		Alias /xhprof_html /usr/local/share/php/share/pear/xhprof_html
+		RewriteLog c:/wamp/www/domainname/logs/domainname-rewrite_log
 
 		<Directory c:/wamp/www/domainname/web>
 
