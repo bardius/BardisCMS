@@ -1,0 +1,11 @@
+    <div id="homeSlideshow" class="slideshow large-12 small-12 columns">
+		<ul data-orbit>
+		{% for contentBlock in page.maincontentblocks|sort_by_attribute('ordering') if contentBlock.contentType == 'slide' %}
+			{% if contentBlock.publishedState == 1 %}
+					<li class="slide {% if contentBlock.className is not null %}{{ contentBlock.className }}{% endif %} large-12 small-12"{% if contentBlock.idName is not null %} id="{{ contentBlock.idName }}"{% endif %}>
+						<a href="{{ contentBlock.slide.imageLinkURL }}" title="{{ contentBlock.slide.imageLinkTitle }}">{% media contentBlock.slide.imageFile.id, 'slide'  with {'alt': contentBlock.slide.imageLinkTitle, 'title': '' } %}</a>
+					</li>
+			{% endif %}
+		</ul>
+    {% endfor %}
+    </div>

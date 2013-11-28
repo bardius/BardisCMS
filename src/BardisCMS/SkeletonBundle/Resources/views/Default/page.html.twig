@@ -1,0 +1,96 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ page.pagetitle }}{% endblock %}
+{% block metaDescription %}{{ page.description }}{% endblock %}
+{% block metaKeywords %}{{ page.keywords }}{% endblock %}
+{% block metaAuthor %}{{ page.metaAuthor }}{% endblock %}
+
+{% block OgTitle %}{{ page.pagetitle }}{% endblock %}
+{% block OgSiteName %}{{ page.pagetitle }}{% endblock %}
+{% block metaOgDescription %}{{ page.description }}{% endblock %}
+
+{% block siteLogoTitle %}{{ page.pagetitle }}{% endblock %}
+{% block siteLogoKeywords %}{{ page.keywords }}{% endblock %}
+{% block siteLogoDescription %}{{ page.title }} {{ page.description }}{% endblock %}
+
+
+{% block body_start %}{% endblock %}
+    
+{% block content %}
+    {% if page.pagetype == 'skeleton_article' %}
+        <div class="row">
+            <div class="twelve columns pageTopBanner">
+                {% include 'SkeletonBundle:Contents:bannercontentblocks.html.twig' %}
+            </div>
+            {% if page.showPageTitle == 1 %} 
+                <div class="twelve columns">  
+                    <h2>{{ page.title }}</h2>
+                </div>
+            {% endif %}
+            <div class="twelve columns pageText">
+                {% include 'SkeletonBundle:Contents:maincontentblocks.html.twig' %}
+            </div>
+        </div>
+    {% elseif page.pagetype == 'category_page' or page.pagetype == 'skeleton_filtered_list' or page.pagetype == 'skeleton_category_list' %} 
+        <div class="row {{ page.pagetype }}List">
+            {% if page.showPageTitle == 1 %} 
+                <div class="twelve columns">  
+                    <h2>{{ page.title }}</h2>
+                </div>
+            {% endif %}
+            {% if page.pagetype == 'skeleton_filtered_list' %} 
+                <div class="twelve columns"> 
+                    {% include 'SkeletonBundle:Contents:filterResultsFormHolder.html.twig' %}
+                </div>
+            {% endif %}
+            {% if page.maincontentblocks is not empty %}
+            <div class="twelve columns pageText">
+                {% include 'SkeletonBundle:Contents:maincontentblocks.html.twig' %}
+            </div>
+            {% endif %}
+            <div class="twelve columns categoryListing">
+                {% if pages %}
+                    {% for pageItem in pages %}
+                        <div class="columns categoryListingItem four mobile-four">
+                            {% include 'SkeletonBundle:Contents:page-list-item.html.twig' %}
+                        </div>
+                    {% endfor %}
+                {% endif %} 
+            </div>
+        </div>
+        {% if page.pagetype == 'page_tag_list' %} 
+            {% include 'SkeletonBundle:Contents:tags-pagination.html.twig' %}
+        {% else %} 
+            {% include 'SkeletonBundle:Contents:pagination.html.twig' %}            
+        {% endif %} 
+    {% elseif page.pagetype == 'skeleton_home'%} 
+        <div class="row {{ page.pagetype }}List">
+            {% if page.showPageTitle == 1 %} 
+                <div class="twelve columns">  
+                    <h2>{{ page.title }}</h2>
+                </div>
+            {% endif %}
+            {% if page.maincontentblocks is not empty %}
+            <div class="twelve columns pageText">
+                {% include 'SkeletonBundle:Contents:maincontentblocks.html.twig' %}
+            </div>
+            {% endif %}
+            <div class="twelve columns categoryListing">
+                {% if pages %}
+                    {% for pageItem in pages %}
+                        <div class="columns categoryListingItem four mobile-four">
+                            {% include 'SkeletonBundle:Contents:page-list-item.html.twig' %}
+                        </div>
+                    {% endfor %}
+                {% endif %} 
+            </div>
+        </div>
+        {% include 'SkeletonBundle:Contents:home_pagination.html.twig' %}
+    {% endif %}
+{% endblock %}
+
+{% block gAnalytics %}{% include 'PageBundle:Contents:ga.html.twig' %}{% endblock %}
+
+{% block modal %}
+    {% include 'SkeletonBundle:Contents:modalcontentblocks.html.twig' %}
+{% endblock %}

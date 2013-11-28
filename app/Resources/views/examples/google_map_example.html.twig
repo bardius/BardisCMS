@@ -1,0 +1,64 @@
+<aside>
+    <div id="map_canvas">
+        
+    </div>
+</aside>
+
+<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+<script>
+  function initialize() {
+    var myLatlng = new google.maps.LatLng(51.524338,-0.112859);
+    var mapOptions = {
+      zoom: 12,
+      center: myLatlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+
+    var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
+    var contentString = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h3 id="firstHeading" class="firstHeading">Maynard Malone</h3>'+
+        '<div id="bodyContent">'+
+        '<p>Creative Digital Agency in London ' +
+        'sandstone rock formation in the southern part of the '+
+        'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
+        'Heritage Site.</p>'+
+        '<p>Attribution: Maynard Malone, <a href="http://www.maynardmalone.com">'+
+        'visit us</a> '+
+        '</p>'+
+        '</div>'+
+        '</div>';
+
+    var infowindow = new google.maps.InfoWindow({
+        content: contentString
+    });
+
+    var marker = new google.maps.Marker({
+        position: myLatlng,
+        map: map,
+        title: 'Maynard Malone'
+    });
+    google.maps.event.addListener(marker, 'click', function() {
+      infowindow.open(map,marker);
+    });
+    
+    var center;
+    
+    function calculateCenter() {
+        center = map.getCenter();
+    }
+    
+    google.maps.event.addDomListener(map, 'idle', function() {
+        calculateCenter();
+    });
+    
+    google.maps.event.addDomListener(window, 'resize', function() {
+        map.setCenter(center);
+    });
+
+  }
+
+</script>

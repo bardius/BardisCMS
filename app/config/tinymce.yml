@@ -1,0 +1,34 @@
+stfalcon_tinymce:
+  include_jquery: false
+  tinymce_jquery: true
+  selector: ".tinymce"
+  language: %locale%
+  theme:
+    simple: ~
+    advanced:
+     # skin: "o2k7"
+     # skin_variant : "silver"
+      width: "500"
+      height: "280"
+      plugins: 
+          - "pagebreak layer table save autosave insertdatetime anchor charmap hr image link code"
+          - "preview media searchreplace print contextmenu paste directionality fullscreen noneditable visualchars nonbreaking"
+      convert_urls : false
+      toolbar1 : "undo redo | cut copy paste pastetext | removeformat visualaid charmap | code | fullscreen preview"
+      toolbar2 : "formatselect | bold italic underline | blockquote | bullist numlist | link unlink anchor"
+     #  toolbar1 : "save | undo redo | cut copy paste pastetext pasteword | search replace | insertdate inserttime | removeformat visualaid | cleanup code | fullscreen | preview | print | spellchecker | help"
+     #  toolbar2 : "bold italic underline strikethrough | justifyleft justifycenter justifyright justifyfull | formatselect fontsizeselect forecolor | blockquote | sub sup | bullist numlist"
+     #  toolbar3 : "tablecontrols | charmap iespell advhr | link unlink anchor image media | cite abbr acronym attribs"
+     #  image_advtab : true
+     
+     # Sample tinyMCE config 
+      
+     # advanced:
+     #   plugins:
+     #     - "advlist autolink lists link image charmap print preview hr anchor pagebreak"
+     #     - "searchreplace wordcount visualblocks visualchars code fullscreen"
+     #     - "insertdatetime media nonbreaking save table contextmenu directionality"
+     #     - "emoticons template paste textcolor"
+     #   toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+     #   toolbar2: "print preview media | forecolor backcolor emoticons | stfalcon | example"
+     #   image_advtab: true

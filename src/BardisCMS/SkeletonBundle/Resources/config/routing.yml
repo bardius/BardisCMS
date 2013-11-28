@@ -1,0 +1,100 @@
+SkeletonBundle_tagged_full:
+    pattern:   /Skeleton/tagged/{extraParams}/{currentpage}/{totalpageitems}/
+    defaults:  { _controller: SkeletonBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
+    requirements:
+        currentpage: \d+
+        totalpageitems: \d+
+    
+SkeletonBundle_tagged_noslash:
+    pattern:   /Skeleton/tagged/{extraParams}/{currentpage}/{totalpageitems}
+    defaults:  { _controller: SkeletonBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
+    requirements:
+        currentpage: \d+
+        totalpageitems: \d+
+    
+SkeletonBundle_tagged_onlypage_slash:
+    pattern:   /Skeleton/tagged/{extraParams}/{currentpage}/
+    defaults:  { _controller: SkeletonBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
+    requirements:
+        currentpage: \d+
+    
+SkeletonBundle_tagged_onlypage:
+    pattern:   /Skeleton/tagged/{extraParams}/{currentpage}
+    defaults:  { _controller: SkeletonBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
+    requirements:
+        currentpage: \d+
+    
+SkeletonBundle_tagged_onlytag_slash:
+    pattern:   /Skeleton/tagged/{extraParams}/
+    defaults:  { _controller: SkeletonBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
+    
+SkeletonBundle_tagged_onlytag:
+    pattern:   /Skeleton/tagged/{extraParams}
+    defaults:  { _controller: SkeletonBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
+    
+SkeletonBundle_tagged_slash:
+    pattern:   /Skeleton/tagged/
+    defaults:  { _controller: SkeletonBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0} 
+    
+SkeletonBundle_tagged:
+    pattern:   /Skeleton/tagged
+    defaults:  { _controller: SkeletonBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
+    
+SkeletonBundle_filtered:
+    pattern:  /Skeleton/filterPages/
+    defaults: { _controller: SkeletonBundle:Default:filterPages }
+
+SkeletonBundle_page_full_slash:
+    pattern:   /Skeleton/{alias}/{currentpage}/{totalpageitems}/{extraParams}/
+    defaults:  { _controller: SkeletonBundle:Default:alias, alias: articles, extraParams: all, currentpage: 0, totalpageitems: 0}
+    requirements:
+        currentpage: \d+
+        totalpageitems: \d+
+    
+SkeletonBundle_page_full:
+    pattern:   /Skeleton/{alias}/{currentpage}/{totalpageitems}/{extraParams}
+    defaults:  { _controller: SkeletonBundle:Default:alias, alias: articles, extraParams: all, currentpage: 0, totalpageitems: 0}
+    requirements:
+        currentpage: \d+
+        totalpageitems: \d+
+
+SkeletonBundle_page_only_pagin_slash:
+    pattern:   /Skeleton/{alias}/{currentpage}/{totalpageitems}/
+    defaults:  { _controller: SkeletonBundle:Default:alias, alias: articles, extraParams: all, currentpage: 0, totalpageitems: 0}
+    requirements:
+        currentpage: \d+
+    
+SkeletonBundle_page_only_pagin:
+    pattern:   /Skeleton/{alias}/{currentpage}/{totalpageitems}
+    defaults:  { _controller: SkeletonBundle:Default:alias, alias: articles, extraParams: all, currentpage: 0, totalpageitems: 0}
+    requirements:
+        currentpage: \d+
+    
+SkeletonBundle_page_only_page_slash:
+    pattern:   /Skeleton/{alias}/{currentpage}/
+    defaults:  { _controller: SkeletonBundle:Default:alias, alias: articles, extraParams: all, currentpage: 0, totalpageitems: 0 }
+    
+SkeletonBundle_page_only_page:
+    pattern:   /Skeleton/{alias}/{currentpage}
+    defaults:  { _controller: SkeletonBundle:Default:alias, alias: articles, extraParams: all, currentpage: 0, totalpageitems: 0 }
+        
+SkeletonBundle_page_normal_slash:
+    pattern:   /Skeleton/{alias}/
+    defaults:  { _controller: SkeletonBundle:Default:alias, alias: articles, extraParams: all, currentpage: 0, totalpageitems: 0 }
+        
+SkeletonBundle_page_normal:
+    pattern:   /Skeleton/{alias}
+    defaults:  { _controller: SkeletonBundle:Default:alias, alias: articles, extraParams: all, currentpage: 0, totalpageitems: 0 }
+        
+SkeletonBundle_home_slash:
+    pattern:   /Skeleton/
+    defaults:  { _controller: SkeletonBundle:Default:alias, alias: articles, tags: all, currentpage: 0, totalpageitems: 0 }
+        
+SkeletonBundle_home:
+    pattern:   /Skeleton
+    defaults:  { _controller: SkeletonBundle:Default:alias, alias: articles, tags: all, currentpage: 0, totalpageitems: 0 }
+    
+SkeletonBundle_showPage:
+    pattern:  /Skeleton/showSkeletonPage/{id}
+    defaults: { _controller: SkeletonBundle:Default:showPage }
+

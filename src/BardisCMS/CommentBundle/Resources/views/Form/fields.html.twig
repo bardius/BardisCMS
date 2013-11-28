@@ -1,0 +1,26 @@
+{#
+This file is part of the BardisCMS.
+(c) George Bardis <george@bardis.info>
+#}
+
+
+{# Overrides for the comment form fields row etc #}
+{% block form_row %}
+{% spaceless %}
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+		{{ form_errors(form) }}
+{% endspaceless %}
+{% endblock form_row %}
+
+{% block form_errors %}
+{% spaceless %}
+    {% if errors|length > 0 %}
+    <small class="error">
+        {% for error in errors %}
+            {{ error.message }}
+        {% endfor %}
+    </small>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_errors %}

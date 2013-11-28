@@ -1,0 +1,65 @@
+parameters:
+    contenttypes:
+        html:     Text/HTML
+        image:    Image
+        file:     File Attachment
+        youtube:  YouTube Video
+        slide:    Slide
+        vimeo:    Vimeo Video
+        contact:  Contact Form
+    
+    contentsizes:
+        large-12:     100%
+        large-3:      25%
+        large-4:      33%
+        large-6:      50%
+        large-8:      66%
+        large-9:      75%
+        
+    mediasizes:
+        original:   Original
+        small:      Small
+        medium:     Medium
+        big:        Big
+
+services:
+  contentblock.twig.sort_by_attribute:
+    class: BardisCMS\ContentBlockBundle\Twig\SortByAttribute
+    tags:
+      - {name: twig.extension }
+            
+  contentblock.admin.form.type.contentblock:
+    class: BardisCMS\ContentBlockBundle\Admin\Form\Type\ContentBlockType        
+    arguments: [%contenttypes%, %contentsizes%, %mediasizes%]        
+    tags:
+      - { name: form.type, alias: contentblock }
+            
+  contentblock.admin.form.type.contentblockcontent:
+    class: BardisCMS\ContentBlockBundle\Admin\Form\Type\ContentBlockContentType        
+    arguments: []        
+    tags:
+      - { name: form.type, alias: contentblockcontent }
+            
+  contentblock.admin.form.type.contentblockcollection:
+    class: BardisCMS\ContentBlockBundle\Admin\Form\Type\ContentBlockCollectionType        
+    arguments: []        
+    tags:
+      - { name: form.type, alias: contentblockcollection }
+            
+  contentblock.admin.form.type.contentimagecollection:
+    class: BardisCMS\ContentBlockBundle\Admin\Form\Type\ContentImageCollectionType        
+    arguments: []        
+    tags:
+      - { name: form.type, alias: contentimagecollection }
+            
+  contentblock.admin.form.type.contentslide:
+    class: BardisCMS\ContentBlockBundle\Admin\Form\Type\ContentSlideType        
+    arguments: []        
+    tags:
+      - { name: form.type, alias: contentslide }
+            
+  contentblock.admin.form.type.contentimage:
+    class: BardisCMS\ContentBlockBundle\Admin\Form\Type\ContentImageType        
+    arguments: []        
+    tags:
+      - { name: form.type, alias: contentimage }

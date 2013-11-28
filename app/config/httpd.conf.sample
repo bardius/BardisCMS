@@ -1,0 +1,61 @@
+<VirtualHost *:80>
+
+    DocumentRoot "/home/domainname/symfony/web"
+    ServerName ci.domainname.com
+    ServerAlias test.ci.domainname.com
+    ServerAlias dev.ci.domainname.com
+
+    # set some environment variables depending on host
+    SetEnvIfNoCase Host ci\.domainname\.com bardiscms_env=prod
+    SetEnvIfNoCase Host dev\.ci\.domainname\.com bardiscms_env=dev
+    SetEnvIfNoCase Host test\.ci\.domainname\.com bardiscms_env=test
+
+    # consider a json formatted log string 
+    LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" custom
+
+    # remove image file noise from access logs
+    SetEnvIf Request_URI \.(jgp|gif|png|css|js) static
+    CustomLog /home/domainname/log/domainname-access_log custom env=!static
+    CustomLog /home/domainname/log/domainname-static_log custom env=static
+
+    # LogLevel  debug can be useful but any php warning will always and only appear in the 'error' level
+    LogLevel info
+    ErrorLog /home/domainname/log/domainname-error_log
+
+    # level 0 is off. Use only for debugging rewrite rules
+    RewriteLogLevel 0
+    RewriteLog /home/domainname/log/domainname-rewrite_log
+
+
+    # for profiling information. Should not be used in production
+    Alias /xhprof_html /usr/local/share/php/share/pear/xhprof_html
+
+    <Directory /home/domainname/symfony/web>
+
+        RewriteEngine On
+
+        # use the environment variables above to select correct 
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{ENV:bardiscms_env} test
+        RewriteRule ^(.*)$ app_test.php [QSA,L]
+
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{ENV:bardiscms_env} dev
+        RewriteRule ^(.*)$ app_dev.php [QSA,L]
+
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{ENV:bardiscms_env} prod
+        RewriteRule ^(.*)$ app.php [QSA,L]
+
+        Options +Indexes
+        Order Allow,Deny
+        Allow from all
+
+        # this is best left to 'none' rather than 'All' to 
+        # avoid the apache process looking for htaccess files all the way 
+        # up the file system tree. in this configuration we avoid 5 stat calls 
+        AllowOverride none
+        
+    </Directory>
+
+</VirtualHost>

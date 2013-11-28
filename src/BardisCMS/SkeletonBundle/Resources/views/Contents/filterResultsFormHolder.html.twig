@@ -1,0 +1,19 @@
+                    <div id="filterResultsFormHolder columns twelve">
+                        <form id="filterResultsForm" action="/Skeleton/filterPages/" method="post" {{ form_enctype(filterForm) }} class="filterForm">
+                            <div class="column twelve">  
+                                {{ form_errors(filterForm) }}
+                            </div>
+                            <div class="column six">  
+                                {{ form_row(filterForm.tags) }}
+                            </div>
+                            <div class="column six">  
+                                {{ form_row(filterForm.categories) }}
+                            </div>
+                            <div class="column twelve">  
+                                {{ form_rest(filterForm) }}
+                            </div>
+                            <div class="column twelve">  
+                                <input type="submit" id="filterResultsBtn" value="Search" />
+                            </div>
+                        </form>
+                     </div>

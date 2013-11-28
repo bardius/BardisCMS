@@ -1,0 +1,7 @@
+parameters:
+#    skeleton.example.class: BardisCMS\SkeletonBundle\Example
+
+services:
+
+
+

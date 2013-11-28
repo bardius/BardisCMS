@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="{{ url('PageBundle_sitemapxsl') }}"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+  http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+{% for sitemapItem in sitemapList if sitemapItem.alias != '404' %}
+    <url>
+        {% if sitemapItem.pagetype == 'blog_article' or sitemapItem.pagetype == 'blog_cat_page' or sitemapItem.pagetype == 'blog_filtered_list'%}
+        <loc>{{ url('BlogBundle_page_normal', { 'alias': sitemapItem.alias }) }}</loc>               
+        {% elseif sitemapItem.pagetype == 'blog_home' %}
+        <loc>{{ url('BlogBundle_home') }}</loc>         
+        {% elseif sitemapItem.pagetype == 'product_article' or sitemapItem.pagetype == 'product_cat_page' or sitemapItem.pagetype == 'product_filtered_list'%}
+        <loc>{{ url('ProductBundle_page_normal', { 'alias': sitemapItem.alias }) }}</loc>               
+        {% elseif sitemapItem.pagetype == 'product_home' %}
+        <loc>{{ url('ProductBundle_home') }}</loc>          
+        {% elseif sitemapItem.pagetype == 'recipe_article' or sitemapItem.pagetype == 'recipe_cat_page' or sitemapItem.pagetype == 'recipe_filtered_list'%}
+        <loc>{{ url('RecipeBundle_page_normal', { 'alias': sitemapItem.alias }) }}</loc>               
+        {% elseif sitemapItem.pagetype == 'recipe_home' %}
+        <loc>{{ url('RecipeBundle_home') }}</loc>                
+        {% elseif sitemapItem.pagetype == 'homepage' %}
+        <loc>{{ url('PageBundle_home') }}</loc>          
+        {% else %}
+        <loc>{{ url('PageBundle_page', { 'alias': sitemapItem.alias }) }}</loc>
+        {% endif %}
+    </url>
+{% endfor %}
+</urlset>

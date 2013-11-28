@@ -1,0 +1,107 @@
+# Starting the routing of the blog post and pages based on predefined paths
+
+BlogBundle_tagged_full:
+    pattern:   /blog/tagged/{extraParams}/{currentpage}/{totalpageitems}/
+    defaults:  { _controller: BlogBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
+    requirements:
+        currentpage: \d+
+        totalpageitems: \d+
+    
+BlogBundle_tagged_noslash:
+    pattern:   /blog/tagged/{extraParams}/{currentpage}/{totalpageitems}
+    defaults:  { _controller: BlogBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
+    requirements:
+        currentpage: \d+
+        totalpageitems: \d+
+    
+BlogBundle_tagged_onlypage_slash:
+    pattern:   /blog/tagged/{extraParams}/{currentpage}/
+    defaults:  { _controller: BlogBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
+    requirements:
+        currentpage: \d+
+    
+BlogBundle_tagged_onlypage:
+    pattern:   /blog/tagged/{extraParams}/{currentpage}
+    defaults:  { _controller: BlogBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
+    requirements:
+        currentpage: \d+
+    
+BlogBundle_tagged_onlytag_slash:
+    pattern:   /blog/tagged/{extraParams}/
+    defaults:  { _controller: BlogBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
+    
+BlogBundle_tagged_onlytag:
+    pattern:   /blog/tagged/{extraParams}
+    defaults:  { _controller: BlogBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
+    
+BlogBundle_tagged_slash:
+    pattern:   /blog/tagged/
+    defaults:  { _controller: BlogBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0} 
+    
+BlogBundle_tagged:
+    pattern:   /blog/tagged
+    defaults:  { _controller: BlogBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
+    
+BlogBundle_filtered:
+    pattern:  /blog/filterBlogPosts/
+    defaults: { _controller: BlogBundle:Default:filterBlogPosts }
+
+# Starting the routing of the blog post and pages based on alias
+# articles is the alias of the blog homepage (amend if different)
+
+BlogBundle_page_full:
+    pattern:   /blog/{alias}/{currentpage}/{totalpageitems}/{extraParams}/
+    defaults:  { _controller: BlogBundle:Default:alias, alias: articles, extraParams: all, currentpage: 0, totalpageitems: 0}
+    requirements:
+        currentpage: \d+
+        totalpageitems: \d+
+    
+BlogBundle_page_noslash:
+    pattern:   /blog/{alias}/{currentpage}/{totalpageitems}/{extraParams}
+    defaults:  { _controller: BlogBundle:Default:alias, alias: articles, extraParams: all, currentpage: 0, totalpageitems: 0}
+    requirements:
+        currentpage: \d+
+        totalpageitems: \d+
+
+BlogBundle_page_only_pagin_slash:
+    pattern:   /blog/{alias}/{currentpage}/{totalpageitems}/
+    defaults:  { _controller: BlogBundle:Default:alias, alias: articles, extraParams: all, currentpage: 0, totalpageitems: 0}
+    requirements:
+        currentpage: \d+
+    
+BlogBundle_page_only_pagin:
+    pattern:   /blog/{alias}/{currentpage}/{totalpageitems}
+    defaults:  { _controller: BlogBundle:Default:alias, alias: articles, extraParams: all, currentpage: 0, totalpageitems: 0}
+    requirements:
+        currentpage: \d+
+    
+BlogBundle_page_only_page_slash:
+    pattern:   /blog/{alias}/{currentpage}/
+    defaults:  { _controller: BlogBundle:Default:alias, alias: articles, extraParams: all, currentpage: 0, totalpageitems: 0 }
+    
+BlogBundle_page_only_page:
+    pattern:   /blog/{alias}/{currentpage}
+    defaults:  { _controller: BlogBundle:Default:alias, alias: articles, extraParams: all, currentpage: 0, totalpageitems: 0 }
+        
+BlogBundle_page_slash:
+    pattern:   /blog/{alias}/
+    defaults:  { _controller: BlogBundle:Default:alias, alias: articles, extraParams: all, currentpage: 0, totalpageitems: 0 }
+        
+BlogBundle_page:
+    pattern:   /blog/{alias}
+    defaults:  { _controller: BlogBundle:Default:alias, alias: articles, extraParams: all, currentpage: 0, totalpageitems: 0 }
+        
+BlogBundle_home_slash:
+    pattern:   /blog/
+    defaults:  { _controller: BlogBundle:Default:alias, alias: articles, tags: all, currentpage: 0, totalpageitems: 0 }
+        
+BlogBundle_home:
+    pattern:   /blog
+    defaults:  { _controller: BlogBundle:Default:alias, alias: articles, tags: all, currentpage: 0, totalpageitems: 0 }
+    
+BlogBundle_showPage:
+    pattern:  /blog/showBlogPage/{id}
+    defaults: { _controller: BlogBundle:Default:showPage }
+    requirements:
+        id: \d+
+

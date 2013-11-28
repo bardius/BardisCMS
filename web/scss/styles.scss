@@ -1,0 +1,414 @@
+/* -----------------------------------------
+   Foundation Styles Overrides
+----------------------------------------- */
+
+header, nav, article, footer, address, 
+section, aside, hgroup, figure{
+	
+}
+
+body, div, dl, dt, dd, ul, ol, li, pre, 
+form, fieldset, p, blockquote, th, td {
+}
+
+h1, h2, h3, h4, h5, h6{
+}
+  
+iframe { 
+    left: 0; 
+    border:none!important;
+}
+
+a{
+}
+
+a:hover{
+}
+
+.inv{ 
+    position: absolute; 
+    font-size: 0.5em; 
+    font-size: 0.5rem; 
+    left: -9999px;
+}
+
+.hidden{
+	display:none!important;
+}
+
+img{ 
+    border: none;
+}
+    
+strong { 
+    font-size: inherit;
+    line-height: inherit;
+    font-weight: bold;
+}
+    
+table { 
+    font-size: inherit; 
+    float: left;
+    border-spacing:0!important;
+    border-collapse:collapse!important;
+}
+    
+td{ 
+    text-align: center; 
+}
+
+.clearBoth{
+    clear:both;
+}
+
+.hidden{
+    display:none;
+}
+
+/*-------------------------------------------
+    Website Body / Backgrounds
+  -----------------------------------------*/
+
+body{
+	min-height: 100%;
+	width:100%;
+}
+
+.superWrapper{
+    width:100%;
+	min-height:100%;
+    min-width:320px;
+}
+
+.wrapper{
+    width:100%;
+    overflow:hidden;
+    position:relative;
+}
+
+.pageContents{
+	min-height:300px;
+}
+
+
+/*-------------------------------------------
+    Website Logo / Header
+  -----------------------------------------*/
+
+header{
+    overflow:visible;
+    position:relative;
+    background-color:#CCC;
+}
+
+#logo{
+    position:relative;
+    z-index:98;
+
+	.logo{
+		float:left;
+		display:block;
+		margin:0;    
+	}
+
+	a{
+		display:block;
+		width:100%;
+	}
+
+	img{
+		display:block;
+		max-width:100%;
+	}
+}
+
+/*-------------------------------------------
+    Navigation Menu Styles
+  -----------------------------------------*/
+
+.top-bar{
+	margin:10px 0;
+}
+
+/*-------------------------------------------
+    Homepage Page styles
+  -----------------------------------------*/
+ 
+/*-------------------------------------------
+    Generic Page styles
+  -----------------------------------------*/ 
+ 
+/* -----------------------------------------
+   Filter form styles
+----------------------------------------- */
+
+#filterResultsFormHolder{
+    margin-top:28px;     
+    position: relative;
+    padding-bottom:68px;
+}
+
+#filterResultsFormHolder h3{
+    display:none;
+}
+
+#filterResultsFormHolder form{
+    margin:0;
+}
+
+#filterResultsFormHolder .control-group{
+    width: 100%;
+    float: left;
+}
+
+#filterResultsFormHolder label{
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom:12px;
+    text-transform: uppercase;
+    color: #052763;
+    cursor: default;
+}
+
+#filterResultsFormHolder .controls label{
+    font-size: 0.9285em;
+    font-size: 0.9285rem;
+    line-height: 1.285em;
+    line-height: 1.285rem;
+    text-transform: none;
+    color: #052763;
+    cursor: pointer;
+    margin-bottom:0;
+}
+
+#filterResultsForm .formBtns {
+    float:none;
+    position: absolute;
+    bottom:22px;
+    right:0;
+    width:25%;
+}
+
+#filterResultsForm .formBtns .checkAllBox{
+    float: left;
+    margin-top: 4px;
+}
+
+#filterResultsForm #filterResultsBtn{
+    float: right;
+    background: url(../images/site_assets/indexSlideArrow.png) no-repeat 80% 50% #0A3982;
+    border-radius: 16px 16px 16px 16px;
+    color: #FFFFFF;
+    display: block;
+    font-family: "futuramedium", "Helvetica", Tahoma, Arial, sans-serif;
+    font-size: 16px;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 34px 0 16px;
+    text-align: left;
+    text-transform: uppercase;
+    border: none;
+    font-weight:normal!important;
+}
+
+#filterResultsForm #filterResultsBtn:hover{
+    cursor: pointer;
+    background: url(../images/site_assets/indexSlideArrow.png) no-repeat 80% 50% #011A48;    
+}
+    
+#filterResultsForm .checkAllBox label{
+    font-size: 0.9285em;
+    font-size: 0.9285rem;
+    line-height: 1.285em;
+    line-height: 1.285rem;
+    text-transform: none;
+    color: #052763;
+    cursor: pointer;
+    margin-bottom:0;    
+}
+
+.customCheckBox input{
+    display: none;
+}
+
+.lt-ie9 #filterResultsForm .customCheckBox input{
+    display: inline-block;
+    float: left;
+    clear: left;
+}
+ 
+.customCheckBox input + label {
+    padding: 3px 3px 3px 22px;
+    padding: 3px 3px 3px 1.6rem;
+    display: inline-block;
+    position: relative;
+    line-height: 18px;
+    line-height: 1.285rem;
+    clear: left;
+    float: left;
+}
+
+.lt-ie9 .customCheckBox input + label{
+    display: inline-block;
+    float: left;
+    clear: none;
+}
+ 
+.customCheckBox input + label:after {
+    content: '\00a0';
+    font-size: 14px;
+    font-size: 1rem;
+    position: absolute;
+    top: 3px;
+    left: 0px;
+    color: #99a1a7;
+    box-shadow: 0 1px 2px rgba(0,0,0,0), inset 0px 1px 3px rgba(13,59,131,0);
+    border: none;
+    -o-border-radius: 9px;
+    -moz-border-radius: 9px;
+    -webkit-border-radius: 9px;
+    border-radius: 9px;
+    -o-border-radius: 0.6425rem;
+    -moz-border-radius: 0.6425rem;
+    -webkit-border-radius: 0.6425rem;
+    border-radius: 0.6425rem;
+    background-color: #FFF;
+    width: 18px;
+    height: 18px;
+    line-height: 18px;
+    width: 1.285rem;
+    height: 1.285rem;
+    line-height: 1.285rem;
+    text-align: center;
+}
+
+.lt-ie9 .customCheckBox input + label:after{
+    display: none;
+}
+ 
+.customCheckBox input:checked + label:after {
+    content: '\2714';
+    color: #FFF;
+    box-shadow: 0 1px 2px rgba(0,0,0,0), inset 0px -15px 10px -12px rgba(0,0,0,0), inset 15px 10px -12px rgba(13,59,131,0);
+    border: none;
+    background-color: #052763;
+}
+
+#filterResultsForm .checkAllBox{
+    
+}
+
+/* -----------------------------------------
+   Sitemap page
+----------------------------------------- */
+
+.sitemapList ul{
+}
+
+.sitemapList li{
+}
+
+.sitemapList a, .sitemapList .separator{
+}
+
+.sitemapList ul ul li a{
+}
+
+/* -----------------------------------------
+   Google Map
+----------------------------------------- */
+
+#map_canvas { 
+    width:95%;
+    height:100%;
+    float:left;
+}
+
+/* -----------------------------------------
+   Footer Styles
+----------------------------------------- */
+
+footer{
+    background:#CCC;	
+}
+
+/* ---------------------------------------------------
+   Media Queries for mobile / tablets responsivenes
+----------------------------------------------------- */
+
+@media only screen and (device-width: 320px) and (orientation:portrait){
+    
+    html {
+        font-size: 10px!important;
+    }
+}
+
+@media only screen and (device-width: 320px) and (orientation:landscape){
+    
+    html {
+        font-size: 11px!important;
+    }
+   
+}
+
+@media only screen and (max-width: 380px){
+    
+    html {
+        font-size: 10px!important;
+    }
+}
+
+@media only screen and (max-width: 498px){
+    
+    html {
+        font-size: 10px!important;
+    }
+}
+
+@media only screen and (max-width: 766px) and (min-width: 499px){
+    
+    html {
+        font-size: 12px!important;
+    }
+}
+
+
+@media only screen and (max-width: 767px){
+    
+    html {
+        font-size: 13px!important;
+    }
+}
+
+@media only screen and (device-width:768px) and (orientation:portrait){
+    
+    html {
+        font-size: 12px!important;
+    }
+}
+
+@media only screen and (device-width:768px) and (orientation:landscape){
+    
+    html {
+        font-size: 13px!important;
+    }
+}
+
+@media only screen and (max-width: 959px) and (min-width: 768px){
+    
+    html {
+        font-size: 13px!important;
+    }
+}
+
+@media only screen and (min-width: 960px) {
+    html {
+        font-size: 14px!important;
+    }
+}
+
+@media print {
+    div:not(.reveal-modal) {
+        display: inherit !important;
+    }
+}

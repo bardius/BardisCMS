@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+	<head>
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+		<title>{% block title %}Page Title{% endblock %}</title>
+		<meta name="description" content="{% block metaDescription %}Page Description{% endblock %}">
+		<meta name="keywords" content="{% block metaKeywords %}Page keywords{% endblock %}">
+
+		<meta property="og:title" content="{% block OgTitle %}Page Title{% endblock %}">
+		<meta property="og:site_name" content="{% block OgSiteName %}Site Title{% endblock %}">
+		<meta property="og:description" content="{% block metaOgDescription %}Page Description{% endblock %}">
+		<meta property="og:image" content="{% block OgImage %}{{ app.request.uriForPath('/images/site_assets/sitelogo.jpg') }}{% endblock %}">
+
+		<meta name="author" content="{% block metaAuthor %}George Bardis{% endblock %}">
+
+		<link rel="shortcut icon" href="{{ app.request.uriForPath('/favicon.ico') }}" />
+		<link rel="apple-touch-icon" href="{{ app.request.uriForPath('/apple-touch-icon.png') }}" />
+
+    {% stylesheets filter="?yui_css" output="css/styles-compiled.css"
+        'stylesheets/app.css'
+        'stylesheets/styles.css'
+        'stylesheets/legacy.css'
+    %}
+		<link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    {% block stylesheets %}{% endblock %}
+
+    {% javascripts filter='?yui_js' output='js/modernizr.js' 'bower_components/modernizr/modernizr.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% javascripts filter='?yui_js' output='js/jquery.min.js' 'bower_components/jquery/jquery.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+		
+		<!--[if lt IE 9]>
+		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="//s3.amazonaws.com/nwapi/nwmatcher/nwmatcher-1.2.5-min.js"></script>
+		<script src="//html5base.googlecode.com/svn-history/r38/trunk/js/selectivizr-1.0.3b.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.1.0/respond.min.js"></script>
+		<![endif]-->
+		
+	</head>
+
+	<body>
+		<div class="superWrapper">
+			<div class="wrapper">
+            {% block body_start %}{% endblock %}
+				<header class="row header">
+					<div id="logo" class="columns small-12 large-3">
+						<h1 class="logo">
+							<a href="{{ url('PageBundle_index', { 'alias': 'index' }) }}" title="{% block siteLogoTitle %}Page Title{% endblock %}">
+								<img src="{% block sitelogoImage %}{{ app.request.uriForPath('/images/site_assets/siteLogo.png') }}{% endblock %}" alt="{% block siteLogoKeywords %}Site Keywords{% endblock %}" />
+								<span class="inv">{% block siteLogoDescription %}Page Description{% endblock %}</span>
+							</a>
+						</h1>
+					</div>						
+					<div class="columns small-12 large-9">
+                    {% include '::site_top_nav.html.twig' %}
+					</div>
+				</header>
+					
+				<div class="row pageContents">
+					{% block content %}{% endblock %}
+				</div>
+					
+				<footer class="row footer">
+                    {% include '::site_footer.html.twig' %}
+				</footer>
+
+				{% block modal %}
+				{% endblock %}
+
+				{% javascripts filter='?yui_js' output='js/js-compiled.js'
+					'bower_components/foundation/js/foundation.min.js'
+					'js/onDomReady.js'
+				%}
+
+				<script type="text/javascript" src="{{ asset_url }}"></script>
+				{% endjavascripts %}
+
+				{% block javascripts %}{% endblock %}
+				{% block gAnalytics %}{% endblock %}
+			</div>  
+		</div>
+	</body>
+</html>
