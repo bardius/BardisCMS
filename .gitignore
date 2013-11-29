@@ -36,6 +36,7 @@ vendor/*
 */logs/*
 */cache/*
 web/bundles/*
+logs/
 
 # Configuration files
 app/config/parameters.ini
