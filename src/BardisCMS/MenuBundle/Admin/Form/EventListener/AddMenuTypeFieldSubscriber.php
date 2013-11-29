@@ -53,14 +53,6 @@ class AddMenuTypeFieldSubscriber implements EventSubscriberInterface
                 $form->add($this->factory->createNamed('blog', 'entity', null, array('class' => 'BardisCMS\BlogBundle\Entity\Blog', 'property' => 'title', 'expanded' => false, 'multiple' => false, 'label' => 'Select Linked Blog Page', 'attr' => array('class' => 'autoCompleteItems autoCompleteBlogs'), 'required' => false)));
                 $form->add($this->factory->createNamed('menuUrlExtras', 'text', null, array('label' => 'Extra URL Params', 'required' => false)));
                 break;
-            case 'Recipe':
-                $form->add($this->factory->createNamed('recipe', 'entity', null, array('class' => 'BardisCMS\RecipeBundle\Entity\Recipe', 'property' => 'title', 'expanded' => false, 'multiple' => false, 'label' => 'Select Linked Recipe Page', 'attr' => array('class' => 'autoCompleteItems autoCompleteRecipe'), 'required' => false)));
-                $form->add($this->factory->createNamed('menuUrlExtras', 'text', null, array('label' => 'Extra URL Params', 'required' => false)));
-                break;
-            case 'Product':
-                $form->add($this->factory->createNamed('product', 'entity', null, array('class' => 'BardisCMS\ProductBundle\Entity\Product', 'property' => 'title', 'expanded' => false, 'multiple' => false, 'label' => 'Select Linked Product Page', 'attr' => array('class' => 'autoCompleteItems autoCompleteProduct'), 'required' => false)));
-                $form->add($this->factory->createNamed('menuUrlExtras', 'text', null, array('label' => 'Extra URL Params', 'required' => false)));
-                break;
             case 'Page':
                 $form->add($this->factory->createNamed('page', 'entity', null, array('class' => 'BardisCMS\PageBundle\Entity\Page', 'property' => 'title', 'expanded' => false, 'multiple' => false, 'label' => 'Select Linked Page', 'attr' => array('class' => 'autoCompleteItems autoCompletePages'), 'required' => false)));
                 $form->add($this->factory->createNamed('menuUrlExtras', 'text', null, array('label' => 'Extra URL Params', 'required' => false)));

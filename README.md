@@ -154,13 +154,8 @@ Here is a sample setup for your virtual host configuration
 		LogLevel info
 		ErrorLog c:/wamp/www/domainname/log/domainname-error_log
 
-		# level 0 is off. Use only for debugging rewrite rules
-		RewriteLogLevel 0
-		RewriteLog c:/wamp/www/domainname/domainname-rewrite_log
-
-
 		# for profiling information. Should not be used in production
-		Alias /xhprof_html /usr/local/share/php/share/pear/xhprof_html
+		# Alias /xhprof_html /usr/local/share/php/share/pear/xhprof_html
 
 		<Directory c:/wamp/www/domainname/web>
 

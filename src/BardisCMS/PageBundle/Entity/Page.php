@@ -363,7 +363,7 @@ class Page {
 	 * Set bgimage
 	 *
 	 * @param \Application\Sonata\MediaBundle\Entity\Media $bgimage
-	 * @return Products
+	 * @return Page
 	 */
 	public function setBgimage(\Application\Sonata\MediaBundle\Entity\Media $bgimage = null) {
 		$this->bgimage = $bgimage;

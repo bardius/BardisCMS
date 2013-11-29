@@ -269,18 +269,12 @@ class DefaultController extends Controller {
 			// Get the items to display in homepage from all bundles that should supply contents
 			$pages = array();
 			$blogpages = array();
-			$recipepages = array();
-			$productpages = array();
 
 			// Get the pages for the category id of homepage but take ou the current (homepage) page item from the results
 			$pages = $this->getDoctrine()->getRepository('PageBundle:Page')->getHomepageItems($categoryIds, $id, $publishStates);
 			$blogpages = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getHomepageItems($categoryIds, $publishStates);
 
-			// @TODO: remove the hardcoded if for the homepage category of the other bundles (8)
-			$recipepages = $this->getDoctrine()->getRepository('RecipeBundle:Recipe')->getHomepageItems(8, $publishStates);
-			$productpages = $this->getDoctrine()->getRepository('ProductBundle:Product')->getHomepageItems(8, $publishStates);
-
-			$pages = array_merge($pages, $blogpages, $recipepages, $productpages);
+			$pages = array_merge($pages, $blogpages);
 
 			// Sort all the items based on custom sorting
 			usort($pages, array("BardisCMS\PageBundle\Controller\DefaultController", "sortHomepageItemsCompare"));
@@ -329,15 +323,11 @@ class DefaultController extends Controller {
 
 		$sitemapList = array();
 		$blogpages = array();
-		$recipepages = array();
-		$productpages = array();
 
 		$sitemapList = $this->getDoctrine()->getRepository('PageBundle:Page')->getSitemapList($publishStates);
 		$blogpages = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getSitemapList($publishStates);
-		$recipepages = $this->getDoctrine()->getRepository('RecipeBundle:Recipe')->getSitemapList($publishStates);
-		$productpages = $this->getDoctrine()->getRepository('ProductBundle:Product')->getSitemapList($publishStates);
 
-		$sitemapList = array_merge($sitemapList, $blogpages, $recipepages, $productpages);
+		$sitemapList = array_merge($sitemapList, $blogpages);
 
 		return $this->render('PageBundle:Default:sitemap.xml.twig', array('sitemapList' => $sitemapList));
 	}

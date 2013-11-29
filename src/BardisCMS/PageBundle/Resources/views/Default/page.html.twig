@@ -234,10 +234,6 @@
 							<div class="large-6 small-12 columns categoryListingItem">
 								{% if pageItem.pagetype == 'blog_home' or pageItem.pagetype == 'blog_article' %}
 									{% include 'PageBundle:Contents:page-list-blog-item.html.twig' %}
-								{% elseif pageItem.pagetype == 'recipe_home' or pageItem.pagetype == 'recipe_article' %}
-									{% include 'PageBundle:Contents:page-list-recipe-item.html.twig' %}
-								{% elseif pageItem.pagetype == 'product_home' or pageItem.pagetype == 'product_article' %}
-									{% include 'PageBundle:Contents:page-list-product-item.html.twig' %}
 								{% else %}
 									{% include 'PageBundle:Contents:page-list-item.html.twig' %}                            
 								{% endif %}                            

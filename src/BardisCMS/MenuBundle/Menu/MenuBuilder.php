@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
 use BardisCMS\PageBundle\Entity\Page;
 use BardisCMS\BlogBundle\Entity\Blog;
-use BardisCMS\RecipeBundle\Entity\Recipe;
 
 class MenuBuilder {
 
@@ -152,8 +151,6 @@ class MenuBuilder {
 						break;
 
 					case 'Blog':
-					case 'Recipe':
-					case 'Product':
 						$pageFunction = $menuItem->$getPageFunction();
 
 						// If Link Action is not selected point to homepage else to alias or page id based route 

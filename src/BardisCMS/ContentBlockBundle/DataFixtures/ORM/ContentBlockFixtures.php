@@ -70,7 +70,7 @@ class ContentBlockFixtures extends AbstractFixture implements OrderedFixtureInte
         $contentSampleBlog1->setPublishedState(1);
         $contentSampleBlog1->setAvailability('page');
         $contentSampleBlog1->setShowTitle(1);
-        $contentSample1->setOrdering(1);
+        $contentSampleBlog1->setOrdering(1);
         $contentSampleBlog1->setClassName('sampleClassname');
         $contentSampleBlog1->setSizeClass('large-12');
         $contentSampleBlog1->setIdName('sampleId');

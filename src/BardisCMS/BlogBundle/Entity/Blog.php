@@ -522,7 +522,7 @@ class Blog {
 	 * Set bgimage
 	 *
 	 * @param \Application\Sonata\MediaBundle\Entity\Media $bgimage
-	 * @return Products
+	 * @return Blog
 	 */
 	public function setBgimage(\Application\Sonata\MediaBundle\Entity\Media $bgimage = null) {
 		$this->bgimage = $bgimage;

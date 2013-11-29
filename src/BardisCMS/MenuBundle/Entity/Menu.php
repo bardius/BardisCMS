@@ -42,18 +42,6 @@ class Menu
      * @ORM\JoinColumn(name="blog", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $blog;
-	
-    /**
-     * @ORM\ManyToOne(targetEntity="BardisCMS\RecipeBundle\Entity\Recipe")
-     * @ORM\JoinColumn(name="recipe", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $recipe;
-	
-    /**
-     * @ORM\ManyToOne(targetEntity="BardisCMS\ProductBundle\Entity\Product")
-     * @ORM\JoinColumn(name="product", referencedColumnName="id", onDelete="SET NULL")
-     */
-    protected $product;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -354,50 +342,6 @@ class Menu
     {
         return $this->blog;
     }
-    
-    /**
-     * Set recipe
-     *
-     * @param BardisCMS\RecipeBundle\Entity\Recipe $recipe
-     * @return Menu
-     */
-    public function setRecipe(\BardisCMS\RecipeBundle\Entity\Recipe $recipe = null)
-    {
-        $this->recipe = $recipe;
-        return $this;
-    }
-
-    /**
-     * Get recipe
-     *
-     * @return BardisCMS\RecipeBundle\Entity\Recipe 
-     */
-    public function getRecipe()
-    {
-        return $this->recipe;
-    }
-    
-    /**
-     * Set product
-     *
-     * @param BardisCMS\RecipeBundle\Entity\Product $product
-     * @return Menu
-     */
-    public function setProduct(\BardisCMS\ProductBundle\Entity\Product $product = null)
-    {
-        $this->product = $product;
-        return $this;
-    }
-
-    /**
-     * Get product
-     *
-     * @return BardisCMS\RecipeBundle\Entity\Product 
-     */
-    public function getProduct()
-    {
-        return $this->product;
-    }
 
     /**
      * Set menuImage
@@ -495,8 +439,6 @@ class Menu
         switch($this->getMenuType()){
             case('Page'):       return "Page";
             case('Blog'):       return "Blog Page";
-            case('Product'):    return "Product Page";
-            case('Recipe'):     return "Recipe Page";
             case('http'):       return "External URL";
             case('url'):        return "Internal URL";
             case('seperator'):  return "Seperator";

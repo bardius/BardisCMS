@@ -12,8 +12,6 @@ namespace BardisCMS\ContentBlockBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use BardisCMS\PageBundle\Entity\Page;
 use BardisCMS\BlogBundle\Entity\Blog;
-use BardisCMS\RecipeBundle\Entity\Recipe;
-use BardisCMS\ProductBundle\Entity\Product;
 use BardisCMS\ContentBlockBundle\Entity\ContentImage;
 use BardisCMS\ContentBlockBundle\Entity\ContentSlide;
 use Application\Sonata\MediaBundle\Entity\Media;
@@ -96,29 +94,9 @@ class ContentBlock
     protected $blog_maincontents;
     
     /**
-     * @ORM\ManyToMany(targetEntity="BardisCMS\RecipeBundle\Entity\Recipe", mappedBy="maincontentblocks", cascade={"persist"})
-     **/
-    protected $recipe_maincontents;
-    
-    /**
-     * @ORM\ManyToMany(targetEntity="BardisCMS\ProductBundle\Entity\Product", mappedBy="maincontentblocks", cascade={"persist"})
-     **/
-    protected $product_maincontents;
-    
-    /**
      * @ORM\ManyToMany(targetEntity="BardisCMS\PageBundle\Entity\Page", mappedBy="secondarycontentblocks", cascade={"persist"})
      **/
     protected $secondarycontents;
-    
-    /**
-     * @ORM\ManyToMany(targetEntity="BardisCMS\RecipeBundle\Entity\Recipe", mappedBy="secondarycontentblocks", cascade={"persist"})
-     **/
-    protected $recipe_secondarycontents;
-    
-    /**
-     * @ORM\ManyToMany(targetEntity="BardisCMS\ProductBundle\Entity\Product", mappedBy="secondarycontentblocks", cascade={"persist"})
-     **/
-    protected $product_secondarycontents;
     
     /**
      * @ORM\ManyToMany(targetEntity="BardisCMS\PageBundle\Entity\Page", mappedBy="extracontentblocks", cascade={"persist"})
@@ -131,11 +109,6 @@ class ContentBlock
     protected $blog_extracontents;
     
     /**
-     * @ORM\ManyToMany(targetEntity="BardisCMS\RecipeBundle\Entity\Recipe", mappedBy="extracontentblocks", cascade={"persist"})
-     **/
-    protected $recipe_extracontents;
-    
-    /**
      * @ORM\ManyToMany(targetEntity="BardisCMS\PageBundle\Entity\Page", mappedBy="modalcontentblocks", cascade={"persist"})
      **/
     protected $modalcontents;
@@ -146,16 +119,6 @@ class ContentBlock
     protected $blog_modalcontents;
     
     /**
-     * @ORM\ManyToMany(targetEntity="BardisCMS\RecipeBundle\Entity\Recipe", mappedBy="modalcontentblocks", cascade={"persist"})
-     **/
-    protected $recipe_modalcontents;
-    
-    /**
-     * @ORM\ManyToMany(targetEntity="BardisCMS\ProductBundle\Entity\Product", mappedBy="modalcontentblocks", cascade={"persist"})
-     **/
-    protected $product_modalcontents;
-    
-    /**
      * @ORM\ManyToMany(targetEntity="BardisCMS\PageBundle\Entity\Page", mappedBy="bannercontentblocks", cascade={"persist"})
      **/
     protected $bannercontents;
@@ -164,11 +127,6 @@ class ContentBlock
      * @ORM\ManyToMany(targetEntity="BardisCMS\BlogBundle\Entity\Blog", mappedBy="bannercontentblocks", cascade={"persist"})
      **/
     protected $blog_bannercontents;
-    
-    /**
-     * @ORM\ManyToMany(targetEntity="BardisCMS\RecipeBundle\Entity\Recipe", mappedBy="bannercontentblocks", cascade={"persist"})
-     **/
-    protected $recipe_bannercontents;
 
     /**
      * @ORM\ManyToMany(targetEntity="ContentImage", inversedBy="contentblocks", cascade={"all"}, orphanRemoval=true)
@@ -218,14 +176,6 @@ class ContentBlock
         $this->blog_modalcontents           = new \Doctrine\Common\Collections\ArrayCollection();
         $this->blog_bannercontents          = new \Doctrine\Common\Collections\ArrayCollection();
         $this->imagefiles                   = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->recipe_maincontents          = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->recipe_secondarycontents     = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->recipe_extracontents         = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->recipe_modalcontents         = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->recipe_bannercontents        = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->product_maincontents         = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->product_secondarycontents    = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->product_modalcontents        = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
 
@@ -914,301 +864,6 @@ class ContentBlock
     public function getYoutube()
     {
         return $this->youtube;
-    }/**
-     * Add recipe_maincontents
-     *
-     * @param \BardisCMS\RecipeBundle\Entity\Recipe $recipeMaincontents
-     * @return ContentBlock
-     */
-    public function addRecipeMaincontent(\BardisCMS\RecipeBundle\Entity\Recipe $recipeMaincontents)
-    {
-        $this->recipe_maincontents[] = $recipeMaincontents;
-    
-        return $this;
-    }
-
-    /**
-     * Remove recipe_maincontents
-     *
-     * @param \BardisCMS\RecipeBundle\Entity\Recipe $recipeMaincontents
-     */
-    public function removeRecipeMaincontent(\BardisCMS\RecipeBundle\Entity\Recipe $recipeMaincontents)
-    {
-        $this->recipe_maincontents->removeElement($recipeMaincontents);
-    }
-
-    /**
-     * Get recipe_maincontents
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRecipeMaincontents()
-    {
-        return $this->recipe_maincontents;
-    }
-
-    /**
-     * Add product_maincontents
-     *
-     * @param \BardisCMS\ProductBundle\Entity\Product $productMaincontents
-     * @return ContentBlock
-     */
-    public function addProductMaincontent(\BardisCMS\ProductBundle\Entity\Product $productMaincontents)
-    {
-        $this->product_maincontents[] = $productMaincontents;
-    
-        return $this;
-    }
-
-    /**
-     * Remove product_maincontents
-     *
-     * @param \BardisCMS\ProductBundle\Entity\Product $productMaincontents
-     */
-    public function removeProductMaincontent(\BardisCMS\ProductBundle\Entity\Product $productMaincontents)
-    {
-        $this->product_maincontents->removeElement($productMaincontents);
-    }
-
-    /**
-     * Get product_maincontents
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getProductMaincontents()
-    {
-        return $this->product_maincontents;
-    }
-
-    /**
-     * Add recipe_secondarycontents
-     *
-     * @param \BardisCMS\RecipeBundle\Entity\Recipe $recipeSecondarycontents
-     * @return ContentBlock
-     */
-    public function addRecipeSecondarycontent(\BardisCMS\RecipeBundle\Entity\Recipe $recipeSecondarycontents)
-    {
-        $this->recipe_secondarycontents[] = $recipeSecondarycontents;
-    
-        return $this;
-    }
-
-    /**
-     * Remove recipe_secondarycontents
-     *
-     * @param \BardisCMS\RecipeBundle\Entity\Recipe $recipeSecondarycontents
-     */
-    public function removeRecipeSecondarycontent(\BardisCMS\RecipeBundle\Entity\Recipe $recipeSecondarycontents)
-    {
-        $this->recipe_secondarycontents->removeElement($recipeSecondarycontents);
-    }
-
-    /**
-     * Get recipe_secondarycontents
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRecipeSecondarycontents()
-    {
-        return $this->recipe_secondarycontents;
-    }
-
-    /**
-     * Add product_secondarycontents
-     *
-     * @param \BardisCMS\ProductBundle\Entity\Product $productSecondarycontents
-     * @return ContentBlock
-     */
-    public function addProductSecondarycontent(\BardisCMS\ProductBundle\Entity\Product $productSecondarycontents)
-    {
-        $this->product_secondarycontents[] = $productSecondarycontents;
-    
-        return $this;
-    }
-
-    /**
-     * Remove product_secondarycontents
-     *
-     * @param \BardisCMS\ProductBundle\Entity\Product $productSecondarycontents
-     */
-    public function removeProductSecondarycontent(\BardisCMS\ProductBundle\Entity\Product $productSecondarycontents)
-    {
-        $this->product_secondarycontents->removeElement($productSecondarycontents);
-    }
-
-    /**
-     * Get product_secondarycontents
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getProductSecondarycontents()
-    {
-        return $this->product_secondarycontents;
-    }
-
-    /**
-     * Add recipe_extracontents
-     *
-     * @param \BardisCMS\RecipeBundle\Entity\Recipe $recipeExtracontents
-     * @return ContentBlock
-     */
-    public function addRecipeExtracontent(\BardisCMS\RecipeBundle\Entity\Recipe $recipeExtracontents)
-    {
-        $this->recipe_extracontents[] = $recipeExtracontents;
-    
-        return $this;
-    }
-
-    /**
-     * Remove recipe_extracontents
-     *
-     * @param \BardisCMS\RecipeBundle\Entity\Recipe $recipeExtracontents
-     */
-    public function removeRecipeExtracontent(\BardisCMS\RecipeBundle\Entity\Recipe $recipeExtracontents)
-    {
-        $this->recipe_extracontents->removeElement($recipeExtracontents);
-    }
-
-    /**
-     * Get recipe_extracontents
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRecipeExtracontents()
-    {
-        return $this->recipe_extracontents;
-    }
-
-    /**
-     * Add recipe_modalcontents
-     *
-     * @param \BardisCMS\RecipeBundle\Entity\Recipe $recipeModalcontents
-     * @return ContentBlock
-     */
-    public function addRecipeModalcontent(\BardisCMS\RecipeBundle\Entity\Recipe $recipeModalcontents)
-    {
-        $this->recipe_modalcontents[] = $recipeModalcontents;
-    
-        return $this;
-    }
-
-    /**
-     * Remove recipe_modalcontents
-     *
-     * @param \BardisCMS\RecipeBundle\Entity\Recipe $recipeModalcontents
-     */
-    public function removeRecipeModalcontent(\BardisCMS\RecipeBundle\Entity\Recipe $recipeModalcontents)
-    {
-        $this->recipe_modalcontents->removeElement($recipeModalcontents);
-    }
-
-    /**
-     * Get recipe_modalcontents
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRecipeModalcontents()
-    {
-        return $this->recipe_modalcontents;
-    }
-
-    /**
-     * Add product_modalcontents
-     *
-     * @param \BardisCMS\ProductBundle\Entity\Product $productModalcontents
-     * @return ContentBlock
-     */
-    public function addProductModalcontent(\BardisCMS\ProductBundle\Entity\Product $productModalcontents)
-    {
-        $this->product_modalcontents[] = $productModalcontents;
-    
-        return $this;
-    }
-
-    /**
-     * Remove product_modalcontents
-     *
-     * @param \BardisCMS\ProductBundle\Entity\Product $productModalcontents
-     */
-    public function removeProductModalcontent(\BardisCMS\ProductBundle\Entity\Product $productModalcontents)
-    {
-        $this->product_modalcontents->removeElement($productModalcontents);
-    }
-
-    /**
-     * Get product_modalcontents
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getProductModalcontents()
-    {
-        return $this->product_modalcontents;
-    }
-
-    /**
-     * Add recipe_bannercontents
-     *
-     * @param \BardisCMS\RecipeBundle\Entity\Recipe $recipeBannercontents
-     * @return ContentBlock
-     */
-    public function addRecipeBannercontent(\BardisCMS\RecipeBundle\Entity\Recipe $recipeBannercontents)
-    {
-        $this->recipe_bannercontents[] = $recipeBannercontents;
-    
-        return $this;
-    }
-
-    /**
-     * Remove recipe_bannercontents
-     *
-     * @param \BardisCMS\RecipeBundle\Entity\Recipe $recipeBannercontents
-     */
-    public function removeRecipeBannercontent(\BardisCMS\RecipeBundle\Entity\Recipe $recipeBannercontents)
-    {
-        $this->recipe_bannercontents->removeElement($recipeBannercontents);
-    }
-
-    /**
-     * Get recipe_bannercontents
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getRecipeBannercontents()
-    {
-        return $this->recipe_bannercontents;
-    }
-
-    /**
-     * Add product_bannercontents
-     *
-     * @param \BardisCMS\ProductBundle\Entity\Product $productBannercontents
-     * @return ContentBlock
-     */
-    public function addProductBannercontent(\BardisCMS\ProductBundle\Entity\Product $productBannercontents)
-    {
-        $this->product_bannercontents[] = $productBannercontents;
-    
-        return $this;
-    }
-
-    /**
-     * Remove product_bannercontents
-     *
-     * @param \BardisCMS\ProductBundle\Entity\Product $productBannercontents
-     */
-    public function removeProductBannercontent(\BardisCMS\ProductBundle\Entity\Product $productBannercontents)
-    {
-        $this->product_bannercontents->removeElement($productBannercontents);
-    }
-
-    /**
-     * Get product_bannercontents
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getProductBannercontents()
-    {
-        return $this->product_bannercontents;
     }
 	
 	
@@ -1218,7 +873,7 @@ class ContentBlock
 			return (string)$this->getTitle();			
 		}
 		else{
-			return (string)'New Conetnt Block';
+			return (string)'New Content Block';
 		}
     }
     

@@ -3,10 +3,6 @@
             
         {% if pageItem.pagetype == 'blog_home' or pageItem.pagetype == 'blog_article' %}
             {% set vars = {'urlPart': 'blog/'} %}
-        {% elseif pageItem.pagetype == 'recipe_home' or pageItem.pagetype == 'recipe_cat_page' or pageItem.pagetype == 'recipe_article' %}
-            {% set vars = {'urlPart': 'recipe/'} %}
-        {% elseif pageItem.pagetype == 'product_home' or pageItem.pagetype == 'product_cat_page' or pageItem.pagetype == 'product_article' %}
-            {% set vars = {'urlPart': 'product/'} %}
         {% else %}
             {% set vars = {'urlPart': ''} %}
         {% endif %} 

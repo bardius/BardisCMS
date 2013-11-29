@@ -31,7 +31,7 @@ class MenuAdminController extends Controller
         $object = $this->admin->getNewInstance();
 
         if (!$object) {
-            throw new NotFoundHttpException(sprintf('unable to find the Product Page with id : %s', $id));
+            throw new NotFoundHttpException(sprintf('unable to find the Item with id : %s', $id));
         }
 
         if (false === $this->admin->isGranted('CREATE')) {
