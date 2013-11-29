@@ -46,7 +46,7 @@ class ContentBlock
     /**
      * @ORM\Column(type="string", length=255)
      */ 
-    protected $availability;
+    protected $availability = 'page';
 
     /**
      * @ORM\Column(type="integer")
