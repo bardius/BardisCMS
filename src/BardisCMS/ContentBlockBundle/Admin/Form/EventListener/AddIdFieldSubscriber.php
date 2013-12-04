@@ -6,12 +6,13 @@
  * (c) George Bardis <george@bardis.info>
  *
  */
+
 namespace BardisCMS\ContentBlockBundle\Admin\Form\EventListener;
 
-use Symfony\Component\Form\Event\DataEvent;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 
 class AddIdFieldSubscriber implements EventSubscriberInterface
 {
@@ -29,7 +30,7 @@ class AddIdFieldSubscriber implements EventSubscriberInterface
         return array(FormEvents::PRE_SET_DATA => 'preSetData');
     }
 
-    public function preSetData(DataEvent $event)
+    public function preSetData(FormEvent $event)
     {
         $data = $event->getData();
         $form = $event->getForm();
@@ -46,7 +47,7 @@ class AddIdFieldSubscriber implements EventSubscriberInterface
         // check if the content block object is "new" and if it is add the id as field to save so it can be refferenced and unique
         if (!$data->getId()) {
             $contentId = uniqid('content_', true);
-            $form->add($this->factory->createNamed('id', 'hidden', null , array('required' => true, 'data' => $contentId)));
+            $form->add($this->factory->createNamed('id', 'hidden', null , array('auto_initialize' => false, 'required' => true, 'data' => $contentId)));
         }
     }
 }

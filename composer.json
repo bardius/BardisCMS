@@ -6,7 +6,7 @@
 	},
 	"require": {
 		"php": ">=5.4.3",
-		"symfony/symfony": "2.2.10",
+		"symfony/symfony": "2.4.*",
 		"doctrine/orm": ">=2.3.0",
 		"doctrine/doctrine-bundle": "dev-master",
 		"doctrine/doctrine-fixtures-bundle": "dev-master",
@@ -14,7 +14,7 @@
 		"twig/extensions": "dev-master",
 		"symfony/assetic-bundle": "dev-master",
 		"symfony/swiftmailer-bundle": "dev-master",
-		"symfony/monolog-bundle": "2.3.*",
+		"symfony/monolog-bundle": "2.4.*",
 		"sensio/distribution-bundle": "dev-master",
 		"sensio/framework-extra-bundle": ">=2.2.0",
 		"sensio/generator-bundle": "dev-master",
@@ -31,7 +31,11 @@
 		"sonata-project/doctrine-orm-admin-bundle": "dev-master",
 		"facebook/php-sdk": "dev-master",
 		"simplethings/entity-audit-bundle": "dev-master",
-		"stfalcon/tinymce-bundle": "dev-master"
+		"stfalcon/tinymce-bundle": "dev-master",
+		"pimple/pimple": "dev-master",
+		"leafo/scssphp": "dev-master",
+		"leafo/scssphp-compass": "dev-master",
+		"sonata-project/intl-bundle": "2.1.*"
 	},
 	"scripts": {
 		"post-install-cmd": [

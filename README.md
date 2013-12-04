@@ -1,7 +1,7 @@
-Symfony2 BardisCMS v2.2.10
+Symfony2 BardisCMS v2.4.1
 ======================================================
 
-This is a Symfony2 based CMS based on version 2.2.10.  
+This is a Symfony2 based CMS based on version 2.4.1.  
   
 You can find the requirements for Symfony2 here http://symfony.com/doc/2.2/reference/requirements.html  
 You can find the documentation for Symfony2 here http://symfony.com/doc/2.2/book/index.html  
@@ -130,7 +130,7 @@ Here is a sample setup for your virtual host configuration
 
 	<VirtualHost *:80>
 
-		DocumentRoot "c:/wamp/www/domainname/web"
+		DocumentRoot "C:/wamp/www/domainname/web"
 		ServerName domainname.prod
 		ServerAlias domainname.test
 		ServerAlias domainname.dev
@@ -145,18 +145,18 @@ Here is a sample setup for your virtual host configuration
 
 		# remove image file noise from access logs
 		SetEnvIf Request_URI \.(jgp|gif|png|css|js) static
-		CustomLog c:/wamp/www/domainname/logs/domainname-access_log custom env=!static
-		CustomLog c:/wamp/www/domainname/logs/domainname-static_log custom env=static
+		CustomLog C:/wamp/www/domainname/logs/domainname-access_log custom env=!static
+		CustomLog C:/wamp/www/domainname/logs/domainname-static_log custom env=static
 
 		# LogLevel debug can be useful but any php warnings
 		# will always and only appear in the 'error' level
 		LogLevel info
-		ErrorLog c:/wamp/www/domainname/logs/domainname-error_log
+		ErrorLog C:/wamp/www/domainname/logs/domainname-error_log
 
 		# for profiling information. Should not be used in production
 		# Alias /xhprof_html /usr/local/share/php/share/pear/xhprof_html
 
-		<Directory c:/wamp/www/domainname/web>
+		<Directory C:/wamp/www/domainname/web>
 
 			RewriteEngine On
 
@@ -177,9 +177,6 @@ Here is a sample setup for your virtual host configuration
 			Order Allow,Deny
 			Allow from all
 
-			# this is best left to 'none' rather than 'All' to 
-			# avoid the apache process looking for htaccess files all the way 
-			# up the file system tree. in this configuration we avoid 5 stat calls 
 			AllowOverride none
 
 		</Directory>
