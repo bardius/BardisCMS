@@ -14,6 +14,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use BardisCMS\PageBundle\Form\EventListener\SanitizeFieldSubscriber;
 
 class ContactFormType extends AbstractType {
     
@@ -70,6 +71,9 @@ class ContactFormType extends AbstractType {
 				'maxLength' => 1
 			))
 		);
+		
+		// Sanitize data to avoid XSS attacks 
+		$builder->addEventSubscriber(new SanitizeFieldSubscriber());
 	
     }
 	

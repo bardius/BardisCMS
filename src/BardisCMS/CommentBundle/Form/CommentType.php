@@ -14,6 +14,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use BardisCMS\CommentBundle\Form\EventListener\SanitizeFieldSubscriber;
 
 class CommentType extends AbstractType{
      /**
@@ -63,6 +64,9 @@ class CommentType extends AbstractType{
 				'maxLength' => 1
 			))
 		);
+		
+		// Sanitize data to avoid XSS attacks 
+		$builder->addEventSubscriber(new SanitizeFieldSubscriber());
     }
 	
 	// Adding field validation constraints
