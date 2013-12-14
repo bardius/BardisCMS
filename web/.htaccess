@@ -1,31 +1,109 @@
+Header set Created-By "George Bardis - george@bardis.info"
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
+	RewriteBase /
+	#### Redirect non www to www ####
+	# RewriteCond %{HTTP_HOST} ^domain.com [NC]
+	# RewriteRule ^(.*)$ http://www.domain.com/$1 [L,R=301]
+	
+	#### Prevent hotlinking ####
+	# RewriteCond %{HTTP_REFERER} !^$
+	# RewriteCond %{HTTP_REFERER} !^http://(www.)?domain.com/.*$ [NC]
+	# RewriteRule .(gif|jpg|swf|flv|png)$ / [R=302,L]
 
-    #RewriteCond %{HTTP_HOST} ^tgs.com$
-    #RewriteRule (.*) http://www.tgs.com/$1 [R=301,L]
+	#### Security restrictions ####
+	# proc/self/environ? no way!
+	RewriteCond %{QUERY_STRING} proc/self/environ [OR]
+	# Block out any script trying to set a mosConfig value through the URL
+	RewriteCond %{QUERY_STRING} mosConfig_[a-zA-Z_]{1,21}(=|\%3D) [OR]
+	# Block out any script trying to base64_encode crap to send via URL
+	RewriteCond %{QUERY_STRING} base64_encode.*(.*) [OR]
+	# Block out any script that includes a <script> tag in URL
+	RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3E) [NC,OR]
+	# Block out any script trying to set a PHP GLOBALS variable via URL
+	RewriteCond %{QUERY_STRING} GLOBALS(=|[|\%[0-9A-Z]{0,2}) [OR]
+	# Block out any script trying to modify a _REQUEST variable via URL
+	RewriteCond %{QUERY_STRING} _REQUEST(=|[|\%[0-9A-Z]{0,2})
+	# Send all blocked request to homepage with 403 Forbidden error!
+	RewriteRule ^(.*)$ app_dev.php [F,L]
 
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^(.*)$ app_dev.php [QSA,L]
 </IfModule>
 
-######### Optimize for YSlow
+#### disable directory browsing ####
+Options All -Indexes
+
+#### enable directory browsing ####
+# Options All +Indexes
+
+#### Set the timezone ####
+# SetEnv TZ Australia/Melbourne
+
+#### Sample Redirects ####
+# Redirect 301 http://www.domain.com/home http://www.domain.com/
+
+#### Always download attachments ####
+AddType application/octet-stream .pdf
+AddType application/octet-stream .zip
+
 #
+#### Optimize ####
+#
+
+#### HTTP ETag header ####
 FileETag None
 
+#### Gzip Files ####
+<ifModule mod_deflate.c>
+	AddOutputFilterByType DEFLATE text/html text/xml text/css text/plain
+	AddOutputFilterByType DEFLATE image/svg+xml application/xhtml+xml application/xml
+	AddOutputFilterByType DEFLATE application/rdf+xml application/rss+xml application/atom+xml
+	AddOutputFilterByType DEFLATE text/javascript application/javascript application/x-javascript application/json
+	AddOutputFilterByType DEFLATE application/x-font-ttf application/x-font-otf
+	AddOutputFilterByType DEFLATE font/truetype font/opentype
+</ifModule>
+
+#### Cache-Control Headers ####
+<ifModule mod_headers.c>
+  <filesMatch "\.(ico|jpe?g|png|gif|swf)$">
+    Header set Cache-Control "public"
+  </filesMatch>
+  <filesMatch "\.(css)$">
+    Header set Cache-Control "public"
+  </filesMatch>
+  <filesMatch "\.(js)$">
+    Header set Cache-Control "private"
+  </filesMatch>
+  <filesMatch "\.(x?html?|php)$">
+    Header set Cache-Control "private, must-revalidate"
+  </filesMatch>
+</ifModule>
+
+#### Expire Headers ####
 <IfModule mod_expires.c>
-ExpiresActive On
-ExpiresDefault A600
-ExpiresByType image/x-icon A2592000
-ExpiresByType application/x-javascript A604800
-ExpiresByType text/css A604800
-ExpiresByType image/gif A2592000
-ExpiresByType image/png A2592000
-ExpiresByType image/jpeg A2592000
-ExpiresByType text/plain A86400
-ExpiresByType application/x-shockwave-flash A2592000
-ExpiresByType video/x-flv A2592000
-ExpiresByType application/pdf A2592000
-ExpiresByType text/html A600
+
+	#### IE ####
+	Header set X-UA-Compatible "IE=Edge,chrome=1"
+
+	<FilesMatch "\.(appcache|crx|css|eot|gif|htc|ico|jpe?g|js|m4a|m4v|manifest|mp4|oex|oga|ogg|ogv|otf|pdf|png|safariextz|svg|svgz|ttf|vcf|webm|webp|woff|xml|xpi)$">
+	  Header unset X-UA-Compatible
+	</FilesMatch>
+
+	ExpiresActive On
+	ExpiresDefault A600
+	ExpiresByType image/x-icon A2592000
+	ExpiresByType application/x-javascript A604800
+	ExpiresByType text/css A604800
+	ExpiresByType image/gif A2592000
+	ExpiresByType image/png A2592000
+	ExpiresByType image/jpeg A2592000
+	ExpiresByType text/plain A86400
+	ExpiresByType application/x-shockwave-flash A2592000
+	ExpiresByType video/x-flv A2592000
+	ExpiresByType application/pdf A2592000
+	ExpiresByType text/html A600
 </IfModule>
 
 #
