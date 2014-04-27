@@ -23,6 +23,9 @@ matrix:
 before_install:
   - gem install sass
   - gem install foundation
+  - npm install -g grunt-cli
+  - npm install -g grunt
+  - npm install -g bower
 
 before_script:
   - mysql -e 'create database bardiscms;'
