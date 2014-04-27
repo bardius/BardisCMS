@@ -137,7 +137,7 @@ doctrine:
           driver:       %database_driver%
           # path:         "%kernel.data_dir%/data.sqlite"]
           memory:       true
-          unix_socket:  %unix_socket%
+          # unix_socket:  %unix_socket%
           charset:      UTF8
          
          # Config for multible connections 
