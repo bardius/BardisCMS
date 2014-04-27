@@ -35,11 +35,7 @@
 		"facebook/php-sdk": "dev-master",
 		"simplethings/entity-audit-bundle": "dev-master",
 		"stfalcon/tinymce-bundle": "dev-master",
-		"pimple/pimple": "dev-master",
-		"leafo/scssphp": "dev-master",
-		"leafo/scssphp-compass": "dev-master",
 		"sonata-project/intl-bundle": "dev-master",
-		"mrclay/minify": "dev-master",
 		"toopay/assetic-minifier": "dev-master",
 		"stof/doctrine-extensions-bundle": "1.1.*@dev",
 		"misd/guzzle-bundle": "dev-master"

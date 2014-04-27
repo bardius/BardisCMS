@@ -1,9 +1,9 @@
 [![Build Status](https://travis-ci.org/bardius/BardisCMS.svg?branch=master)](https://travis-ci.org/bardius/BardisCMS)
-[![Dependency Status](https://www.versioneye.com/user/projects/535c8e3cfe0d0739380003c9/badge.png)](https://www.versioneye.com/user/projects/535c8e3cfe0d0739380003c9)
+[![Dependency Status](https://www.versioneye.com/user/projects/535c8e24fe0d073b48000126/badge.png)](https://www.versioneye.com/user/projects/535c8e24fe0d073b48000126)
 [![Dependency Status](https://www.versioneye.com/user/projects/535c8e18fe0d073b4800011c/badge.png)](https://www.versioneye.com/user/projects/535c8e18fe0d073b4800011c)
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/)](https://scrutinizer-ci.com/)
 [![Coverage Status](https://coveralls.io/repos/bardius/BardisCMS/badge.png)](https://coveralls.io/r/bardius/BardisCMS)
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/)](https://scrutinizer-ci.com/)
 [![Packagist Stable Version]
 [![License]
 

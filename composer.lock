@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "3c1dc16a334bee8d0fdf72282bd1c019",
+    "hash": "1699cc2cdc774604fb74c5304711e251",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2099,87 +2099,6 @@
             "time": "2013-05-19 03:41:15"
         },
         {
-            "name": "leafo/scssphp",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/leafo/scssphp.git",
-                "reference": "558357feceb9b932a192966945904414dc372e4d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/leafo/scssphp/zipball/558357feceb9b932a192966945904414dc372e4d",
-                "reference": "558357feceb9b932a192966945904414dc372e4d",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.0"
-            },
-            "require-dev": {
-                "php": ">=5.3.0",
-                "phpunit/phpunit": "3.7.*"
-            },
-            "bin": [
-                "pscss"
-            ],
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "scss.inc.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT",
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Leaf Corcoran",
-                    "email": "leafot@gmail.com",
-                    "homepage": "http://leafo.net"
-                }
-            ],
-            "description": "scssphp is a compiler for SCSS written in PHP.",
-            "homepage": "http://leafo.net/scssphp/",
-            "time": "2014-04-15 02:25:09"
-        },
-        {
-            "name": "leafo/scssphp-compass",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/leafo/scssphp-compass.git",
-                "reference": "f1631ddb17731326863954d99b39694f0bbed6ec"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/leafo/scssphp-compass/zipball/f1631ddb17731326863954d99b39694f0bbed6ec",
-                "reference": "f1631ddb17731326863954d99b39694f0bbed6ec",
-                "shasum": ""
-            },
-            "require": {
-                "leafo/scssphp": "dev-master"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "compass.inc.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Leaf Corcoran",
-                    "email": "leafot@gmail.com",
-                    "homepage": "http://leafo.net"
-                }
-            ],
-            "description": "Compass for scssphp",
-            "homepage": "http://leafo.net/scssphp/",
-            "time": "2012-08-02 02:04:32"
-        },
-        {
             "name": "michelf/php-markdown",
             "version": "dev-lib",
             "source": {
@@ -2372,46 +2291,6 @@
             "time": "2014-04-24 13:29:03"
         },
         {
-            "name": "mrclay/minify",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mrclay/minify.git",
-                "reference": "fb3931f8cd54a637b2a42170c3a9a1c4da9e69a9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mrclay/minify/zipball/fb3931f8cd54a637b2a42170c3a9a1c4da9e69a9",
-                "reference": "fb3931f8cd54a637b2a42170c3a9a1c4da9e69a9",
-                "shasum": ""
-            },
-            "require": {
-                "ext-pcre": "*",
-                "php": ">=5.2.1"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "min/lib/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Stephen Clay",
-                    "email": "steve@mrclay.org",
-                    "homepage": "http://www.mrclay.org/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Minify is a PHP5 app that helps you follow several rules for client-side performance. It combines multiple CSS or Javascript files, removes unnecessary whitespace and comments, and serves them with gzip encoding and optimal client-side cache headers",
-            "homepage": "http://code.google.com/p/minify/",
-            "time": "2014-04-03 23:53:48"
-        },
-        {
             "name": "nelmio/api-doc-bundle",
             "version": "dev-master",
             "target-dir": "Nelmio/ApiDocBundle",
@@ -2584,54 +2463,6 @@
                 "type"
             ],
             "time": "2014-01-09 22:37:17"
-        },
-        {
-            "name": "pimple/pimple",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fabpot/Pimple.git",
-                "reference": "e8b5fe6f7782d72a70d444798cdeaf1fb611ea8b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Pimple/zipball/e8b5fe6f7782d72a70d444798cdeaf1fb611ea8b",
-                "reference": "e8b5fe6f7782d72a70d444798cdeaf1fb611ea8b",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Pimple": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                }
-            ],
-            "description": "Pimple is a simple Dependency Injection Container for PHP 5.3",
-            "homepage": "http://pimple.sensiolabs.org",
-            "keywords": [
-                "container",
-                "dependency injection"
-            ],
-            "time": "2014-04-20 07:26:52"
         },
         {
             "name": "psr/log",
@@ -4759,11 +4590,7 @@
         "facebook/php-sdk": 20,
         "simplethings/entity-audit-bundle": 20,
         "stfalcon/tinymce-bundle": 20,
-        "pimple/pimple": 20,
-        "leafo/scssphp": 20,
-        "leafo/scssphp-compass": 20,
         "sonata-project/intl-bundle": 20,
-        "mrclay/minify": 20,
         "toopay/assetic-minifier": 20,
         "stof/doctrine-extensions-bundle": 20,
         "misd/guzzle-bundle": 20
