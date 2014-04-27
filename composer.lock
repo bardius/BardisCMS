@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "1699cc2cdc774604fb74c5304711e251",
+    "hash": "23e5018f51a757dc388705fbf7fbd006",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -3672,12 +3672,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/stephpy/TimelineBundle.git",
-                "reference": "7451b0073a5a1c49f377da1d8baaa2794c99164a"
+                "reference": "4b6b7244936361880eaea9b4a73c20397386896f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stephpy/TimelineBundle/zipball/7451b0073a5a1c49f377da1d8baaa2794c99164a",
-                "reference": "7451b0073a5a1c49f377da1d8baaa2794c99164a",
+                "url": "https://api.github.com/repos/stephpy/TimelineBundle/zipball/4b6b7244936361880eaea9b4a73c20397386896f",
+                "reference": "4b6b7244936361880eaea9b4a73c20397386896f",
                 "shasum": ""
             },
             "require": {
@@ -3734,7 +3734,7 @@
                 "symfony",
                 "timeline"
             ],
-            "time": "2014-04-23 21:16:52"
+            "time": "2014-04-27 19:11:23"
         },
         {
             "name": "stephpy/timeline",
@@ -4202,16 +4202,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.4.3",
+            "version": "v2.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "3199b2e0d194f71fe2e13c95768b2ef22206682b"
+                "reference": "4697c33cdfb520dcf83fd6e4f7864fa26ddaebea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/3199b2e0d194f71fe2e13c95768b2ef22206682b",
-                "reference": "3199b2e0d194f71fe2e13c95768b2ef22206682b",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/4697c33cdfb520dcf83fd6e4f7864fa26ddaebea",
+                "reference": "4697c33cdfb520dcf83fd6e4f7864fa26ddaebea",
                 "shasum": ""
             },
             "require": {
@@ -4313,7 +4313,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-04-04 10:27:02"
+            "time": "2014-04-27 13:39:18"
         },
         {
             "name": "toopay/assetic-minifier",
@@ -4596,7 +4596,7 @@
         "misd/guzzle-bundle": 20
     },
     "platform": {
-        "php": ">=5.4.3"
+        "php": ">=5.3.3"
     },
     "platform-dev": [
 

@@ -9,10 +9,10 @@
 
 ![](http://www.bardis.info/bardisCMS.png)
 
-Symfony2 (v.2.4.3) distribution with integrated Zurb Foundation 5 
+Symfony2 (v.2.4.4) distribution with integrated Zurb Foundation 5 
 ============================================================================
 
-BardisCMS is a Symfony2 (v.2.4.3) distribution with integrated Zurb Foundation 5 Framework.
+BardisCMS is a Symfony2 (v.2.4.4) distribution with integrated Zurb Foundation 5 Framework.
 
 Travis CI, Bower and Grunt with custom builds are included for better workflow on front end.
 
