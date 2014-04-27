@@ -1,13 +1,13 @@
-[![Build Status](https://travis-ci.org/bardius/BardisCMS.svg?branch=master)](https://travis-ci.org/bardius/BardisCMS) 
-[![devDependency Status](https://david-dm.org/bardius/bardisCMS/dev-status.svg)](https://david-dm.org/bardius/bardisCMS#info=devDependencies)
-[![Dependency Status](https://www.versioneye.com/)](https://www.versioneye.com/)
+[![Build Status](https://travis-ci.org/bardius/BardisCMS.svg?branch=master)](https://travis-ci.org/bardius/BardisCMS)
+[![Dependency Status](https://www.versioneye.com/user/projects/535c8e3cfe0d0739380003c9/badge.png)](https://www.versioneye.com/user/projects/535c8e3cfe0d0739380003c9)
+[![Dependency Status](https://www.versioneye.com/user/projects/535c8e18fe0d073b4800011c/badge.png)](https://www.versioneye.com/user/projects/535c8e18fe0d073b4800011c)
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/)](https://scrutinizer-ci.com/)
 [![Coverage Status](https://coveralls.io/repos/bardius/BardisCMS/badge.png)](https://coveralls.io/r/bardius/BardisCMS)
 [![Packagist Stable Version]
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 [![License]
 
-![](http://www.bardis.info/bardisCMS.png)
+[![](http://www.bardis.info/bardisCMS.png)
 
 Symfony2 CMS Boilerplate with Foundation 5 (BardisCMS) v2.4.3
 ===============================================================
