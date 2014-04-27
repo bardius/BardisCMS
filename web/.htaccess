@@ -1,8 +1,7 @@
-Header set Created-By "George Bardis - george@bardis.info"
-
 <IfModule mod_rewrite.c>
     RewriteEngine On
 	RewriteBase /
+
 	#### Redirect non www to www ####
 	# RewriteCond %{HTTP_HOST} ^domain.com [NC]
 	# RewriteRule ^(.*)$ http://www.domain.com/$1 [L,R=301]
@@ -11,6 +10,12 @@ Header set Created-By "George Bardis - george@bardis.info"
 	# RewriteCond %{HTTP_REFERER} !^$
 	# RewriteCond %{HTTP_REFERER} !^http://(www.)?domain.com/.*$ [NC]
 	# RewriteRule .(gif|jpg|swf|flv|png)$ / [R=302,L]
+
+	#### Force https for certain pages ####
+	# RewriteCond %{HTTPS} !=on
+	# RewriteRule ^(signup|contact-us)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R]
+
+	# ErrorDocument 500 /500.html
 
 	#### Security restrictions ####
 	# proc/self/environ? no way!
@@ -26,25 +31,30 @@ Header set Created-By "George Bardis - george@bardis.info"
 	# Block out any script trying to modify a _REQUEST variable via URL
 	RewriteCond %{QUERY_STRING} _REQUEST(=|[|\%[0-9A-Z]{0,2})
 	# Send all blocked request to homepage with 403 Forbidden error!
-	RewriteRule ^(.*)$ app_dev.php [F,L]
+	RewriteRule ^(.*)$ app.php [F,L]
 
+	RewriteCond %{REQUEST_URI} ^/admin(/.*|)$ [NC]
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*)$ app_dev.php [QSA,L]
+	RewriteRule ^(.*)$ app_admin.php [QSA,L]
+
+	RewriteCond %{REQUEST_URI} !^/admin(/.*|)$ [NC]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ app.php [QSA,L]
 </IfModule>
 
-#### disable directory browsing ####
+#### Disable server signature
+ServerSignature Off
+
+#### disable directory browsing
 Options All -Indexes
 
-#### enable directory browsing ####
-# Options All +Indexes
+#### Set the timezone
+# SetEnv TZ Europe/London
 
-#### Set the timezone ####
-# SetEnv TZ Australia/Melbourne
+#### Sample Redirects
+#### Redirect 301 http://www.domain.com/home http://www.domain.com/
 
-#### Sample Redirects ####
-# Redirect 301 http://www.domain.com/home http://www.domain.com/
-
-#### Always download attachments ####
+#### Always download attachments
 AddType application/octet-stream .pdf
 AddType application/octet-stream .zip
 
@@ -53,7 +63,7 @@ AddType application/octet-stream .zip
 #
 
 #### HTTP ETag header ####
-FileETag None
+#FileETag None
 
 #### Gzip Files ####
 <ifModule mod_deflate.c>
@@ -77,15 +87,15 @@ FileETag None
     Header set Cache-Control "private"
   </filesMatch>
   <filesMatch "\.(x?html?|php)$">
-    Header set Cache-Control "private, must-revalidate"
+    #Header set Cache-Control "private, must-revalidate"
   </filesMatch>
 </ifModule>
 
+#### HTTP ETag header ####
+# FileETag None
+
 #### Expire Headers ####
 <IfModule mod_expires.c>
-
-	#### IE ####
-	Header set X-UA-Compatible "IE=Edge,chrome=1"
 
 	<FilesMatch "\.(appcache|crx|css|eot|gif|htc|ico|jpe?g|js|m4a|m4v|manifest|mp4|oex|oga|ogg|ogv|otf|pdf|png|safariextz|svg|svgz|ttf|vcf|webm|webp|woff|xml|xpi)$">
 	  Header unset X-UA-Compatible
@@ -106,5 +116,160 @@ FileETag None
 	ExpiresByType text/html A600
 </IfModule>
 
+#### Set headers
+<ifModule mod_headers.c>
+	#### IE
+	Header set X-UA-Compatible "IE=Edge,chrome=1"
+
+	#### P3P Header of IE issues with 3rd party coockies
+	Header set P3P: "cp=BardisCMS"
+
+	#### Security Hardening
+	# Vivid Matter - Bulletproof Header Security
+	# Don't allow pages to be framed externally - Defends against CSRF
+	Header set X-FRAME-OPTIONS "SAMEORIGIN"
+
+	# Tell the browser to attempt the HTTPS version first
+	#Header add Strict-Transport-Security "max-age=157680000"
+
+	# Turn on IE8-IE9 XSS prevention tools
+	#Header set X-XSS-Protection "1; mode=block"
+
+	# Only allow JavaScript from the same domain to be run.
+	# Don't allow inline JavaScript to run.
+	#Header set X-Content-Security-Policy "allow 'self';"
+
+	# Prevent mime based attacks
+	Header add X-Content-Type-Options "nosniff"
+
+	Header unset link
+	Header unset Server
+	Header unset X-Pingback
+
+	# Disable server signature
+	Header set ServerSignature "Off"
+	Header set ServerTokens "Prod"
+
+	# Control Cross-Domain Policies
+	#Header set X-Permitted-Cross-Domain-Policies "master-only"
+	
+	#### Set the content language header
+	Header set Content-Language en
+
+	#### Set the Creator
+	Header set Created-By "George Bardis - george@bardis.info"
+	Header set Version "1.0.0"
+</ifModule>
+
 #
 ############ End -  Optimize for YSlow
+
+#### bad bot protection
+<IfModule mod_rewrite.c>
+	RewriteCond %{HTTP_USER_AGENT} ^BlackWidow [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Bot\ mailto:craftbot@yahoo.com [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^ChinaClaw [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Custo [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^DISCo [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Download\ Demon [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^eCatch [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^EirGrabber [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^EmailSiphon [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^EmailWolf [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Express\ WebPictures [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^ExtractorPro [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^EyeNetIE [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^FlashGet [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^GetRight [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^GetWeb! [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Go!Zilla [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Go-Ahead-Got-It [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^GrabNet [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Grafula [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^HMView [OR]
+	RewriteCond %{HTTP_USER_AGENT} HTTrack [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Image\ Stripper [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Image\ Sucker [OR]
+	RewriteCond %{HTTP_USER_AGENT} Indy\ Library [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} ^InterGET [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Internet\ Ninja [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^JetCar [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^JOC\ Web\ Spider [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^larbin [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^LeechFTP [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Mass\ Downloader [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^MIDown\ tool [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Mister\ PiX [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Navroad [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^NearSite [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^NetAnts [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^NetSpider [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Net\ Vampire [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^NetZIP [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Octopus [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Offline\ Explorer [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Offline\ Navigator [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^PageGrabber [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Papa\ Foto [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^pavuk [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^pcBrowser [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^RealDownload [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^ReGet [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^SiteSnagger [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^SmartDownload [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^SuperBot [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^SuperHTTP [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Surfbot [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^tAkeOut [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^WWW-Mechanize [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Teleport\ Pro [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^VoidEYE [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Web\ Image\ Collector [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Web\ Sucker [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^WebAuto [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^WebCopier [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^WebFetch [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^WebGo\ IS [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^WebLeacher [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^WebReaper [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^WebSauger [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Website\ eXtractor [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Website\ Quester [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^WebStripper [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^WebWhacker [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^WebZIP [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Widow [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^WWWOFFLE [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Xaldon\ WebSpider [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Toata\ dragostea\ mea\ pentru\ diavola [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Mozilla/5.0\ SF [OR]
+	RewriteCond %{HTTP_USER_AGENT} ^Zeus
+	RewriteRule ^.* - [F,L]
+</IfModule>
+
+#### scanner bots as well as malacious input blocker
+<IfModule mod_rewrite.c>
+	RewriteCond %{HTTP_USER_AGENT} ^w3af.sourceforge.net [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} dirbuster [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} nikto [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} sqlmap [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} fimap [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} nessus [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} whatweb [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} Openvas [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} jbrofuzz [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} libwhisker [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} webshag [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} (havij|Netsparker|libwww-perl|python|nikto|curl|scan|java|winhttp|clshttp|loader) [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} (%0A|%0D|%27|%3C|%3E|%00) [NC,OR]
+	RewriteCond %{HTTP_USER_AGENT} (;|<|>|'|"|\)|\(|%0A|%0D|%22|%27|%28|%3C|%3E|%00).*(libwww-perl|python|nikto|curl|scan|java|winhttp|HTTrack|clshttp|archiver|loader|email|harvest|extract|grab|miner) [NC,OR]
+	RewriteCond %{HTTP:Acunetix-Product} ^WVS
+	RewriteCond %{REQUEST_URI} (<|%3C)([^s]*s)+cript.*(>|%3E) [NC,OR]
+	RewriteCond %{REQUEST_URI} (<|%3C)([^e]*e)+mbed.*(>|%3E) [NC,OR]
+	RewriteCond %{REQUEST_URI} (<|%3C)([^o]*o)+bject.*(>|%3E) [NC,OR]
+	RewriteCond %{REQUEST_URI} (<|%3C)([^i]*i)+frame.*(>|%3E) [NC,OR]
+	RewriteCond %{REQUEST_URI} base64_(en|de)code[^(]*\([^)]*\) [NC,OR]
+	RewriteCond %{REQUEST_URI} (%0A|%0D|\\r|\\n) [NC,OR]
+	RewriteCond %{REQUEST_URI} union([^a]*a)+ll([^s]*s)+elect [NC]
+	RewriteRule ^(.*)$ http://127.0.0.1 [R=301,L]
+</IfModule>
