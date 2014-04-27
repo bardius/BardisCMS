@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "328be9aacbac2ee910467c0799edc0f6",
+    "hash": "3c1dc16a334bee8d0fdf72282bd1c019",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -3492,31 +3492,38 @@
         },
         {
             "name": "sonata-project/intl-bundle",
-            "version": "2.1.x-dev",
-            "target-dir": "Sonata/IntlBundle",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataIntlBundle.git",
-                "reference": "8226a28087927bdc7e3bfacdd6dc0ae0c2459ae3"
+                "reference": "292fad908cd6a02d48bdd8ac9ac76d4cbffd0e59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataIntlBundle/zipball/8226a28087927bdc7e3bfacdd6dc0ae0c2459ae3",
-                "reference": "8226a28087927bdc7e3bfacdd6dc0ae0c2459ae3",
+                "url": "https://api.github.com/repos/sonata-project/SonataIntlBundle/zipball/292fad908cd6a02d48bdd8ac9ac76d4cbffd0e59",
+                "reference": "292fad908cd6a02d48bdd8ac9ac76d4cbffd0e59",
                 "shasum": ""
             },
             "require": {
-                "ext-intl": "*",
-                "symfony/dependency-injection": "2.*",
-                "symfony/http-kernel": "2.*",
-                "symfony/locale": "2.*",
-                "symfony/templating": "2.*",
+                "symfony/dependency-injection": "~2.2",
+                "symfony/http-kernel": "~2.2",
+                "symfony/locale": "~2.2",
+                "symfony/templating": "~2.2",
                 "twig/twig": "*"
             },
+            "require-dev": {
+                "sonata-project/user-bundle": "~2.2",
+                "symfony/security": "~2.2"
+            },
             "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2.x-dev"
+                }
+            },
             "autoload": {
-                "psr-0": {
-                    "Sonata\\IntlBundle": ""
+                "psr-4": {
+                    "Sonata\\IntlBundle\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3543,7 +3550,7 @@
                 "sonata",
                 "time"
             ],
-            "time": "2013-08-23 14:14:49"
+            "time": "2014-03-19 11:44:49"
         },
         {
             "name": "sonata-project/media-bundle",
@@ -4245,17 +4252,17 @@
         },
         {
             "name": "symfony/monolog-bundle",
-            "version": "v2.4.1",
+            "version": "dev-master",
             "target-dir": "Symfony/Bundle/MonologBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/MonologBundle.git",
-                "reference": "e81c2e9c4dc0a9ff794674017069e036f575f278"
+                "reference": "1cebb645e4c0f4d62ae8c00346980b7713e90daa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/e81c2e9c4dc0a9ff794674017069e036f575f278",
-                "reference": "e81c2e9c4dc0a9ff794674017069e036f575f278",
+                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/1cebb645e4c0f4d62ae8c00346980b7713e90daa",
+                "reference": "1cebb645e4c0f4d62ae8c00346980b7713e90daa",
                 "shasum": ""
             },
             "require": {
@@ -4273,7 +4280,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4.x-dev"
+                    "dev-master": "2.5.x-dev"
                 }
             },
             "autoload": {
@@ -4303,7 +4310,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2013-08-26 10:15:04"
+            "time": "2014-04-16 07:35:34"
         },
         {
             "name": "symfony/swiftmailer-bundle",
@@ -4737,6 +4744,7 @@
         "twig/extensions": 20,
         "symfony/assetic-bundle": 20,
         "symfony/swiftmailer-bundle": 20,
+        "symfony/monolog-bundle": 20,
         "sensio/distribution-bundle": 20,
         "sensio/generator-bundle": 20,
         "jms/security-extra-bundle": 20,
@@ -4754,6 +4762,7 @@
         "pimple/pimple": 20,
         "leafo/scssphp": 20,
         "leafo/scssphp-compass": 20,
+        "sonata-project/intl-bundle": 20,
         "mrclay/minify": 20,
         "toopay/assetic-minifier": 20,
         "stof/doctrine-extensions-bundle": 20,
