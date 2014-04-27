@@ -15,7 +15,6 @@ language: php
 php:
   - 5.5
   - 5.4
-  - 5.3
 
 matrix:
   allow_failures:
