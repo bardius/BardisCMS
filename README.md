@@ -1,4 +1,11 @@
-[![devDependency Status](https://david-dm.org/bardius/bardisCMS/dev-status.svg)](https://david-dm.org/bardius/bardisCMS#info=devDependencies) [![Build Status](https://travis-ci.org/bardius/BardisCMS.svg?branch=master)](https://travis-ci.org/bardius/BardisCMS) [![Coverage Status](https://coveralls.io/repos/bardius/BardisCMS/badge.png)](https://coveralls.io/r/bardius/BardisCMS)[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+[![Build Status](https://travis-ci.org/bardius/BardisCMS.svg?branch=master)](https://travis-ci.org/bardius/BardisCMS) 
+[![devDependency Status](https://david-dm.org/bardius/bardisCMS/dev-status.svg)](https://david-dm.org/bardius/bardisCMS#info=devDependencies)
+[![Dependency Status](https://www.versioneye.com/)](https://www.versioneye.com/)
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/)](https://scrutinizer-ci.com/)
+[![Coverage Status](https://coveralls.io/repos/bardius/BardisCMS/badge.png)](https://coveralls.io/r/bardius/BardisCMS)
+[![Packagist Stable Version]
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+[![License]
 
 ![](http://www.bardis.info/bardisCMS.png)
 
