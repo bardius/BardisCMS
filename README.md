@@ -1,4 +1,4 @@
-[![devDependency Status](https://david-dm.org/bardius/bardisCMS/dev-status.svg)](https://david-dm.org/bardius/bardisCMS#info=devDependencies) [![Build Status](https://travis-ci.org/bardius/BardisCMS.svg?branch=master)](https://travis-ci.org/bardius/BardisCMS) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+[![devDependency Status](https://david-dm.org/bardius/bardisCMS/dev-status.svg)](https://david-dm.org/bardius/bardisCMS#info=devDependencies) [![Build Status](https://travis-ci.org/bardius/BardisCMS.svg?branch=master)](https://travis-ci.org/bardius/BardisCMS) [![Coverage Status](https://coveralls.io/repos/bardius/BardisCMS/badge.png)](https://coveralls.io/r/bardius/BardisCMS)[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 ![](http://www.bardis.info/bardisCMS.png)
 
