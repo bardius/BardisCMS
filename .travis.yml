@@ -52,9 +52,11 @@ before_script:
   - php app/console assetic:dump --env=prod --no-debug
 
 script:
-  - mkdir -p build/logs
-  - php vendor/bin/phpunit -c phpunit.xml.dist
-  - phpunit -c app/
+  - grunt deploy
+  - php app/console assetic:dump --env=prod --no-debug
+  # - mkdir -p build/logs
+  # - php vendor/bin/phpunit -c phpunit.xml.dist
+  # - phpunit -c app/
 #   - phpunit --coverage-text
 
 after_script:

@@ -29,11 +29,11 @@ The fastest way to get everything running is:
 
 	1. git clone https://github.com/bardius/BardisCMS.git
 	2. composer self-update
-	2. composer install
-	3. npm install -g bower grunt-cli
-	4. npm install
-	4. bower install
-	5. bardisCMS-deploy.sh
+	3. composer install
+	4. npm install -g bower grunt-cli
+	5. npm install
+	6. bower install
+	7. bardisCMS-deploy.sh
   
 
 Deployment / Local Installation
