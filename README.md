@@ -7,7 +7,7 @@
 [![Packagist Stable Version]
 [![License]
 
-[![](http://www.bardis.info/bardisCMS.png)
+![](http://www.bardis.info/bardisCMS.png)
 
 Symfony2 CMS Boilerplate with Foundation 5 (BardisCMS) v2.4.3
 ===============================================================
@@ -28,6 +28,7 @@ Quick Start
 The fastest way to get everything running is:
 
 	1. git clone https://github.com/bardius/BardisCMS.git
+	2. composer self-update
 	2. composer install
 	3. npm install -g bower grunt-cli
 	4. npm install
