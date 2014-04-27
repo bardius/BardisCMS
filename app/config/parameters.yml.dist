@@ -12,8 +12,10 @@ parameters:
     mailer_password:   ~
 
     locale:            en
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    secret:            2WYgMKzMLqEVFNU245fLqEVFNvprjmRy0I4Q
     
     javapath:          /usr/bin/java
     compass.bin:       /usr/bin/compass
     sass.bin:          /usr/bin/sass
+    
+    #unix_socket:       ~ #/tmp/mysql.sock
