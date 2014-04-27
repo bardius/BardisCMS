@@ -9,18 +9,19 @@
 
 ![](http://www.bardis.info/bardisCMS.png)
 
-Symfony2 (v.2.4.3) distribution with integrated Foundation 5 Framework 
-===============================================================
+Symfony2 (v.2.4.3) distribution with integrated Zurb Foundation 5 Framework 
+============================================================================
 
-BardisCMS is a Symfony2 (v.2.4.3) distribution with integrated Foundation 5 Framework (Bower and Grunt with custom builds included for better workflow) 
+BardisCMS is a Symfony2 (v.2.4.3) distribution with integrated Zurb Foundation 5 Framework (Bower and Grunt with custom builds included for better workflow) 
 for front end and all the major bundles pre-configured (Sonata Admin, User, Media, FOSUser, KnpMenu, Guzzle) combined with extra bundles to provide a fully functional out of the box CMS for websites
   
 You can find the requirements for Symfony2 here http://symfony.com/doc/current/reference/requirements.html  
 You can find the documentation for Symfony2 here http://symfony.com/doc/current/book/index.html  
+You can find the documentation for Zurb Foundation 5 here http://foundation.zurb.com/docs/
   
-The CMS requires the existence of 3 pages to work. These are the homepage, the 404 page and the tagged page (if there are tags and filtered results).  
+The CMS requires the existence of 3 pages to work. These are the homepage, the 404 page and the tagged page.  
   
-SkeletonBundle is a basic structured bundle with simple functionalities (similar to normal pages) so it can be cloned to create new bundles for new content types.  
+SkeletonBundle is a fully structured bundle with simple functionalities (similar to normal pages) so it can be cloned to create new bundles for new content types.  
   
 
 Quick Start
