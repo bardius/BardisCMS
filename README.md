@@ -12,9 +12,16 @@
 Symfony2 (v.2.4.3) distribution with integrated Zurb Foundation 5 
 ============================================================================
 
-BardisCMS is a Symfony2 (v.2.4.3) distribution with integrated Zurb Foundation 5 Framework (Bower and Grunt with custom builds included for better workflow) 
-for front end and all the major bundles pre-configured (Sonata Admin, User, Media, FOSUser, KnpMenu, Guzzle) combined with extra bundles to provide a fully functional out of the box CMS for websites
-  
+BardisCMS is a Symfony2 (v.2.4.3) distribution with integrated Zurb Foundation 5 Framework.
+
+Travis CI, Bower and Grunt with custom builds are included for better workflow on front end.
+
+All the major bundles are pre-configured (Sonata Admin, Sonata User, Sonata Media, FOSUser, KnpMenu, Guzzle) combined with my own bundles (Page, Settings, ContentBlocks, Blog, Comments, Tags, Categories) to provide a fully functional out of the box responsive CMS for websites with exceptional performance, usage of REST API's and caching abilities.
+
+A Skeleton Bundle is provided as part of the CMS so new content types/functionality that comply with the current architecture can easily be added.
+
+You can browse the Git repository, that I update with big releases every couple of months or so, and use freely for your projects.
+
 You can find the requirements for Symfony2 here http://symfony.com/doc/current/reference/requirements.html  
 You can find the documentation for Symfony2 here http://symfony.com/doc/current/book/index.html  
 You can find the documentation for Zurb Foundation 5 here http://foundation.zurb.com/docs/
