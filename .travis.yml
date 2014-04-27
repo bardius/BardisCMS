@@ -28,7 +28,8 @@ before_install:
 before_script:
   - curl -s http://getcomposer.org/installer | php
   - cp app/config/parameters.yml.dist app/config/parameters.yml
-  - php composer.phar install --dev --no-interaction
+  - php composer.phar self-update
+  - php composer.phar install
   - npm install -g grunt-cli
   - npm install -g grunt
   - npm install -g bower
