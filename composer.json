@@ -1,6 +1,7 @@
 {
-	"name": "symfony/framework-standard-edition",
-	"description": "The \"Symfony Standard Edition\" distribution",
+	"name": "symfony2-bardiscms",
+	"title": "Symfony2 BardisCMS & Foundation 5",
+	"description": "Foundation 5 front end framework for Symfony2 BardisCMS",
 	"autoload": {
 		"psr-0": {"": "src/"}
 	},
