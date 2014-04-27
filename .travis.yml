@@ -12,13 +12,19 @@
 
 # .travis.yml
 language: php
+
 php:
-  # - 5.5
   - 5.4
+  - 5.5
+  - 5.6
+  - hhvm
 
 matrix:
   allow_failures:
-    - php: 5.5
+    - php:
+        - 5.5
+        - 5.6
+        - hhvm
 
 before_install:
   - gem install sass
@@ -46,13 +52,11 @@ before_script:
   - php app/console sonata:media:sync sonata.media.provider.image intro
   - php app/console sonata:media:sync sonata.media.provider.image bgimage
   - php app/console sonata:media:sync sonata.media.provider.image icon
-  - grunt deploy
   - php app/console assets:install ./web/ --env=prod --no-debug
-  - php app/console assetic:dump --env=dev --no-debug
-  - php app/console assetic:dump --env=prod --no-debug
 
 script:
   - grunt deploy
+  - php app/console assetic:dump --env=dev --no-debug
   - php app/console assetic:dump --env=prod --no-debug
   # - mkdir -p build/logs
   # - php vendor/bin/phpunit -c phpunit.xml.dist

@@ -9,10 +9,11 @@
 
 ![](http://www.bardis.info/bardisCMS.png)
 
-Symfony2 CMS Boilerplate with Foundation 5 (BardisCMS) v2.4.3
+Symfony2 (v.2.4.3) distribution with integrated Foundation 5 Framework 
 ===============================================================
 
-This is a Symfony2 based CMS based on version 2.4.3.  
+BardisCMS is a Symfony2 (v.2.4.3) distribution with integrated Foundation 5 Framework (Bower and Grunt with custom builds included for better workflow) 
+for front end and all the major bundles pre-configured (Sonata Admin, User, Media, FOSUser, KnpMenu, Guzzle) combined with extra bundles to provide a fully functional out of the box CMS for websites
   
 You can find the requirements for Symfony2 here http://symfony.com/doc/current/reference/requirements.html  
 You can find the documentation for Symfony2 here http://symfony.com/doc/current/book/index.html  
@@ -34,6 +35,19 @@ The fastest way to get everything running is:
 	5. npm install
 	6. bower install
 	7. bardisCMS-deploy.sh
+  
+
+Bundle List
+------------------------------------------------------
+
+	1. FOSUserBundle
+	2. SonataBlockBundle
+	3. SonataUserBundle
+	4. SonataMediaBundle
+	5. SonataAdminBundle
+	6. SonataTimelineBundle
+	7. KnpMenu
+	8. Guzzle
   
 
 Deployment / Local Installation
