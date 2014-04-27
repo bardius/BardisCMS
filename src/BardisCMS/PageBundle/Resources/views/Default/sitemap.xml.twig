@@ -6,12 +6,14 @@
   http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 {% for sitemapItem in sitemapList if sitemapItem.alias != '404' %}
     <url>
-        {% if sitemapItem.pagetype == 'blog_article' or sitemapItem.pagetype == 'blog_cat_page' or sitemapItem.pagetype == 'blog_filtered_list'%}
-        <loc>{{ url('BlogBundle_page_normal', { 'alias': sitemapItem.alias }) }}</loc>               
+        {% if sitemapItem.pagetype == 'blog_article' or sitemapItem.pagetype == 'blog_cat_page' %}
+        <loc>{{ url('BlogBundle_page', { 'alias': sitemapItem.alias }) }}</loc>               
+        {% elseif sitemapItem.pagetype == 'blog_filtered_list' %}
+        <loc>{{ url('BlogBundle_tagged') }}</loc>                        
         {% elseif sitemapItem.pagetype == 'blog_home' %}
-        <loc>{{ url('BlogBundle_home') }}</loc>  
+        <loc>{{ url('BlogBundle_home') }}</loc>
         {% elseif sitemapItem.pagetype == 'homepage' %}
-        <loc>{{ url('PageBundle_home') }}</loc>          
+        <loc>{{ url('PageBundle_index') }}</loc>          
         {% else %}
         <loc>{{ url('PageBundle_page', { 'alias': sitemapItem.alias }) }}</loc>
         {% endif %}

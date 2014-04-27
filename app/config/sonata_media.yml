@@ -1,0 +1,102 @@
+# cli  http://sonata-project.org/bundles/media/2-1/doc/reference/command_line.html
+sonata_media:
+  
+    default_context: default
+    db_driver: doctrine_orm # or doctrine_mongodb
+    
+    contexts:
+      
+        default:  # the default context is mandatory
+            providers:
+                - sonata.media.provider.youtube
+                - sonata.media.provider.vimeo
+                - sonata.media.provider.image
+                - sonata.media.provider.file
+
+            formats:
+                adminthumb: { width: 70 , height: 70 , quality: 80 }
+                small:			{ width: 188 , height: 263 , quality: 80 }
+                medium:			{ width: 394 , height: 263 , quality: 80 }
+                big:				{ width: 840 , height: 320 , quality: 80 }
+                original:		{ quality: 80 }                
+        
+        intro:
+            providers:
+                - sonata.media.provider.youtube
+                - sonata.media.provider.image
+
+            formats:
+                adminthumb: { width: 70 , height: 70 , quality: 80 }
+                small:			{ width: 188 , height: 263 , quality: 80 }
+                blog:				{ width: 227 , height: 205 , quality: 80 }
+                medium:			{ width: 394 , height: 263 , quality: 80 }
+                big:				{ width: 601 , height: 263 , quality: 80 }
+                original:		{ quality: 80 }  
+        
+        bgimage:
+            providers:
+                - sonata.media.provider.image
+
+            formats:
+                adminthumb: { width: 70 , height: 70 , quality: 80 }
+                small:      { width: 224 , height: 206 , quality: 80 }
+                mobile:     { width: 768 , height: 300 , quality: 80 }
+                medium:     { width: 310 , height: 318 , quality: 80 }
+                big:        { width: 1388 , height: 257 , quality: 80 }
+                slide:      { width: 1388 , height: 394 , quality: 80 }
+                original:   { quality: 80 }        
+        
+        icons:
+            providers:
+                - sonata.media.provider.image
+
+            formats:
+                adminthumb: { width: 46 , height: 46 , quality: 80 }
+                small:			{ width: 46 , height: 46 , quality: 80}
+                medium:			{ width: 66 , height: 66 , quality: 80}
+                big:				{ width: 86 , height: 86 , quality: 80}
+                original:		{ quality: 80 } 
+
+    cdn:
+        server:
+            path: /uploads/media # http://media.sonata-project.org/
+
+    filesystem:
+        local:
+            directory:  %kernel.root_dir%/../web/uploads/media
+            create:     false
+    
+    providers:
+        file:
+            resizer:    false
+            filesystem: sonata.media.filesystem.local
+            cdn:        sonata.media.cdn.server
+            generator:  sonata.media.generator.default
+            thumbnail:  sonata.media.thumbnail.format
+
+        image:          
+            service:    sonata.media.provider.image
+            resizer:    sonata.media.resizer.bardiscms # sonata.media.resizer.square # sonata.media.resizer.simple
+            filesystem: sonata.media.filesystem.local
+            cdn:        sonata.media.cdn.server
+            generator:  sonata.media.generator.default
+            thumbnail:  sonata.media.thumbnail.format
+            allowed_extensions: ['jpg', 'png', 'jpeg']
+            allowed_mime_types: ['image/pjpeg', 'image/jpeg', 'image/png', 'image/x-png']
+
+        youtube:           
+            service:    sonata.media.provider.youtube
+            resizer:    sonata.media.resizer.bardiscms # sonata.media.resizer.square # sonata.media.resizer.simple
+            filesystem: sonata.media.filesystem.local
+            cdn:        sonata.media.cdn.server
+            generator:  sonata.media.generator.default
+            thumbnail:  sonata.media.thumbnail.format
+            html5:			true
+
+        vimeo:
+            service:    sonata.media.provider.vimeo
+            resizer:    sonata.media.resizer.bardiscms # sonata.media.resizer.square # sonata.media.resizer.simple
+            filesystem: sonata.media.filesystem.local
+            cdn:        sonata.media.cdn.server
+            generator:  sonata.media.generator.default
+            thumbnail:  sonata.media.thumbnail.format

@@ -11,6 +11,7 @@
 namespace BardisCMS\PageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Application\Sonata\MediaBundle\Entity\Media;
 use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -160,6 +161,13 @@ class Page {
 	 * @ORM\JoinTable(name="modalcontent_blocks")
 	 * */
 	protected $modalcontentblocks;
+	
+	/**
+     * @ORM\Column(name="date_last_modified", type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $dateLastModified;
+	
 
 	public function __construct() {
 		$this->modalcontentblocks = new \Doctrine\Common\Collections\ArrayCollection();
@@ -730,7 +738,7 @@ class Page {
 	 * Set publishState
 	 *
 	 * @param integer $publishState
-	 * @return Menu
+	 * @return Page
 	 */
 	public function setPublishState($publishState) {
 		$this->publishState = $publishState;
@@ -744,6 +752,27 @@ class Page {
 	 */
 	public function getPublishState() {
 		return $this->publishState;
+	}
+		
+	/**
+	 * Get dateLastModified
+	 *
+	 * @return integer 
+	 */
+    public function getDateLastModified()
+    {
+        return $this->dateLastModified;
+    }
+
+	/**
+	 * Set dateLastModified
+	 *
+	 * @param integer $dateLastModified
+	 * @return Page
+	 */
+	public function setDateLastModified($dateLastModified) {
+		$this->dateLastModified = $dateLastModified;
+		return $this;
 	}
 
 	/**

@@ -78,6 +78,28 @@ class ContentBlockFixtures extends AbstractFixture implements OrderedFixtureInte
 		$contentSampleBlog1->setHtmlText('<p>Quisque non arcu id ipsum imperdiet ultricies pharetra eu nibh. Etiam eros lectus, ullamcorper et congue in, lobortis sit amet lectus. In fermentum quam in arcu sodales, id varius est placerat. Fusce a dictum mi. Aliquam accumsan diam eget rutrum tincidunt. Nullam massa metus, placerat quis mattis nec</p>');
 		$manager->persist($contentSampleBlog1);
 		
+        $contentHomeSlide1 = new ContentBlock();
+        $contentHomeSlide1->setTitle('Home Top Banner Slide 1');
+        $contentHomeSlide1->setPublishedState(1);
+        $contentHomeSlide1->setAvailability('page');
+        $contentHomeSlide1->setShowTitle(0);
+        $contentHomeSlide1->setOrdering(1);
+        $contentHomeSlide1->setSizeClass('large-12');
+        $contentHomeSlide1->setContentType('slide');
+        $contentHomeSlide1->setSlide($manager->merge($this->getReference('homeSlide1')));
+		$manager->persist($contentHomeSlide1);
+		
+        $contentHomeSlide2 = new ContentBlock();
+        $contentHomeSlide2->setTitle('Home Top Banner Slide 2');
+        $contentHomeSlide2->setPublishedState(1);
+        $contentHomeSlide2->setAvailability('page');
+        $contentHomeSlide2->setShowTitle(0);
+        $contentHomeSlide2->setOrdering(2);
+        $contentHomeSlide2->setSizeClass('large-12');
+        $contentHomeSlide2->setContentType('slide');
+        $contentHomeSlide2->setSlide($manager->merge($this->getReference('homeSlide2')));
+		$manager->persist($contentHomeSlide2);
+		
         $manager->flush();
 		
 		$this->addReference('contentSampleHome', $contentSampleHome);	
@@ -85,11 +107,13 @@ class ContentBlockFixtures extends AbstractFixture implements OrderedFixtureInte
 		$this->addReference('contentSample2', $contentSample2);
 		$this->addReference('contentSampleContact', $contentSampleContact);	
 		$this->addReference('contentSampleBlog1', $contentSampleBlog1);
+		$this->addReference('contentHomeSlide1', $contentHomeSlide1);
+		$this->addReference('contentHomeSlide2', $contentHomeSlide2);
     }
 	
 	public function getOrder()
     {
-        return 4;
+        return 5;
     }
 
 }

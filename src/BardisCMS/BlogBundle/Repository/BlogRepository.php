@@ -211,6 +211,37 @@ class BlogRepository extends EntityRepository {
 		return $blogPostList;
 	}
 	
+	// Function to retrieve the blog posts of the homepage category
+	public function getFeaturedItems($categoryTitle, $publishStates, $maxResults) {
+		
+		$blogPostList = null;
+        
+        if(!empty($categoryTitle)){
+		
+			// Initalize the query builder variables
+			$qb = $this->_em->createQueryBuilder();
+
+			// The query to get the blog post items for the homepage page
+			$qb->select('DISTINCT p')
+				->from('BlogBundle:Blog', 'p')
+				->innerJoin('p.categories', 'c')
+				->where($qb->expr()->andX(
+					$qb->expr()->in('c.title', ':category'),
+					$qb->expr()->in('p.publishState', ':publishState')
+				))
+				->orderBy('p.date', 'DESC')
+				->setFirstResult(0)
+				->setMaxResults($maxResults)
+				->setParameter('category', $categoryTitle)
+				->setParameter('publishState', $publishStates);
+
+			// Get the blog posts
+			$blogPostList = $qb->getQuery()->getResult();
+		}
+
+		return $blogPostList;
+	}
+	
 	// Function to retrieve a blog post list for sitemap
 	public function getSitemapList($publishStates) {
 		

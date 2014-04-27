@@ -44,7 +44,7 @@ class DefaultController extends Controller
         
         // Get data to display
         $page       = $this->getDoctrine()->getRepository('BlogBundle:Blog')->find($id);        
-        $userRole   = $this->getLoggedUserHighestRole();        
+        $userRole   = $this->get('sonata_user.services.helpers')->getLoggedUserHighestRole();   
         $settings   = $this->get('bardiscms_settings.load_settings')->loadSettings();
         
         // Simple ACL for publishing
@@ -66,9 +66,35 @@ class DefaultController extends Controller
         {
             $publishStates = array(1, 2);                
         }
+		
+		if($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()){	
+			
+			$response = new Response();
+			
+			// set a custom Cache-Control directive
+			$response->headers->addCacheControlDirective('must-revalidate', true);
+			// set multiple vary headers
+			$response->setVary(array('Accept-Encoding', 'User-Agent'));
+			// create a Response with a Last-Modified header
+			$response->setLastModified($page->getDateLastModified());
+			// Set response as public. Otherwise it will be private by default.
+			$response->setPublic();
+			
+			//var_dump($response->isNotModified($this->getRequest()));
+			//var_dump($response->getStatusCode());
+			if (!$response->isNotModified($this->getRequest())) {
+				// Marks the Response stale
+				$response->expire();
+			}
+			else{				
+				// return the 304 Response immediately
+				$response->setSharedMaxAge(3600);
+				return $response;
+			}
+		}
         
         // Set the website settings and metatags
-        $page = $this->setSettings($settings, $page);
+		$page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($page);
         
         // Set the pagination variables        
         if(!$totalpageitems)
@@ -84,28 +110,9 @@ class DefaultController extends Controller
         }
         
         // Render the correct view depending on pagetype
-        return $this->renderPage($page, $id, $publishStates, $extraParams, $currentpage, $totalpageitems, $linkUrlParams);        
-    }
-    
-    
-    // Get the user role ( @TODO: this is very simple ACL and has to be improved )
-    public function getLoggedUserHighestRole()
-    {
-        
-        if ($this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
-            $userRole = 'ROLE_SUPER_ADMIN';
-        }
-        else if ($this->get('security.context')->isGranted('ROLE_USER')) {
-            $userRole = 'ROLE_USER';
-        }
-        else
-        {
-            $userRole = '';
-        }
-        
-        return $userRole;
-    }
-    
+        return $this->renderPage($page, $id, $publishStates, $extraParams, $currentpage, $totalpageitems, $linkUrlParams);     
+    }    
+	
     
     // Get the tags and / or categories for filtering from the request
     // filters are like: tag1,tag2|category1,category1 and each argument
@@ -115,7 +122,7 @@ class DefaultController extends Controller
         
         $selectedTags       = array();
         $selectedCategories = array();        
-        $extraParams        = explode('|', $extraParams);
+        $extraParams        = explode('|', urldecode($extraParams));
         
         if (isset($extraParams[0]))
         {
@@ -203,71 +210,12 @@ class DefaultController extends Controller
     }
     
     
-    // Set the settings as defined from the service of the settings bundle
-    // alternative could be to skip that bundle and use the config.yml
-    public function setSettings($settings, $page)
-    {
-        if(is_object($settings))
-        {        
-            if($settings->getUseWebsiteAuthor())
-            {
-               $page->metaAuthor = $settings->getWebsiteAuthor();
-            }
-            else
-            {
-               $page->metaAuthor = $page->getAuthor()->getUsername();
-            }
-
-            $pageTitle          = $page->getTitle();
-            $titleKeywords      = trim(preg_replace("/\b[A-za-z0-9']{1,3}\b/", "", strtolower($pageTitle)));
-            $titleKeywords      = str_replace(' ', ',', preg_replace('!\s+!', ' ', $titleKeywords));        
-            $fromTitle          = $pageTitle . ' ' . $settings->getFromTitle();
-            $pageTitle          .= ' - ' . $settings->getWebsiteTitle();
-
-            $page->pagetitle    = $pageTitle;
-
-            $page->enableGA     = $settings->getEnableGoogleAnalytics();
-            $page->gaID         = $settings->getGoogleAnalyticsId();
-
-            if($page->getKeywords() == null)
-            {
-               $page->setKeywords($settings->getMetaKeywords() . ',' . $titleKeywords);
-            }
-            else
-            {
-                $page->setKeywords($page->getKeywords() . ',' . $titleKeywords);
-            }
-
-            if($page->getDescription() == null)
-            {
-                $page->setDescription($settings->getMetaDescription() . ' ' . $fromTitle);
-            }
-            else
-            {
-                $page->setDescription($page->getDescription() . ' ' . $fromTitle);
-            }    
-        }
-        else
-        {
-            $page->metaAuthor   = '';
-            $pageTitle          = $page->getTitle();
-            $titleKeywords      = trim(preg_replace("/\b[A-za-z0-9']{1,3}\b/", "", strtolower($pageTitle)));
-            $titleKeywords      = str_replace(' ', ',', preg_replace('!\s+!', ' ', $titleKeywords)); 
-            $page->pagetitle    = $pageTitle; 
-            $page->enableGA     = false;
-            $page->gaID         = null;
-            
-            $page->setDescription($page->getDescription());
-            $page->setKeywords($page->getKeywords() . ',' . $titleKeywords);
-        }        
-        
-        return $page;
-    }
-    
-    
     // Get the required data to display to the correct view depending on pagetype
     public function renderPage($page, $id, $publishStates, $extraParams, $currentpage, $totalpageitems, $linkUrlParams)
-    {
+	{
+		// Check if mobile content should be served		
+        $serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
+		$settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
                         
         if ($page->getPagetype() == 'blog_cat_page')
         {            
@@ -286,11 +234,11 @@ class DefaultController extends Controller
             $pages      = $pageList['pages'];
             $totalPages = $pageList['totalPages'];
             
-            return $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems));
+            $response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems));
         }      
         else if ($page->getPagetype() == 'blog_filtered_list')
         {          
-            $filterForm     = $this->createForm(new FilterBlogPostsForm());                
+            $filterForm     = $this->createForm('filterblogpostsform');                
             $filterData     = $this->getRequestedFilters($extraParams);
             $tagIds         = $this->getTagFilterIds($filterData['tags']->toArray());           
             $categoryIds    = $this->getCategoryFilterIds($filterData['categories']->toArray());
@@ -309,7 +257,7 @@ class DefaultController extends Controller
             $pages      = $pageList['pages'];
             $totalPages = $pageList['totalPages'];
             
-            return $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'filterForm' => $filterForm->createView()));
+            $response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'filterForm' => $filterForm->createView()));
         }
         else if ($page->getPagetype() == 'blog_home')
         {            
@@ -318,35 +266,45 @@ class DefaultController extends Controller
             $pages      = $pageList['pages'];
             $totalPages = $pageList['totalPages'];
             
-            return $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages,  'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems));
+            $response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages,  'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems));
         }
-		
-        $commentsEnabled = true;
-		
-		if($commentsEnabled){
-			// Retrieving the comments the views
-			$postComments = null;
-			$postComments = $this->getPostComments($id);
-
-			// Adding the form for new comment
-			$comment = new Comment();
-			$comment->setBlogPost($page);
-			$form = $this->createForm(new CommentType(), $comment);
-		
-			return $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'form' => $form->createView(), 'comments' => $postComments));			
-		}
 		else{		
-			return $this->render('BlogBundle:Default:page.html.twig', array('page' => $page));			
+			$commentsEnabled = true;
+
+			if($commentsEnabled){
+				// Retrieving the comments the views
+				$postComments = $this->getPostComments($id);
+
+				// Adding the form for new comment
+				$comment = new Comment();
+				$comment->setBlogPost($page);
+				$form = $this->createForm(new CommentType(), $comment);
+
+				$response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'form' => $form->createView(), 'comments' => $postComments));			
+			}
+			else{		
+				$response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page));			
+			}
 		}
+		
+		if($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()){	
+			// set a custom Cache-Control directive
+			$response->setPublic();
+			$response->setLastModified($page->getDateLastModified());
+			$response->setVary(array('Accept-Encoding', 'User-Agent'));
+			$response->headers->addCacheControlDirective('must-revalidate', true);
+			$response->setSharedMaxAge(3600);
+		}
+		
+		return $response;
     }
     
     
     // Get and display to the 404 error page
     public function render404Page()
-    {
-        
-        $page       = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias('404');
-        $settings   = $this->get('bardiscms_settings.load_settings')->loadSettings();
+    {        
+        $page  = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias('404');
+		$settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
         
         // Check if page exists
         if (!$page) {
@@ -354,10 +312,22 @@ class DefaultController extends Controller
         }
         
         // Set the website settings and metatags
-        $page = $this->setSettings($settings, $page);
+		$page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($page);
         
-        return $this->render('PageBundle:Default:page.html.twig', array('page' => $page))->setStatusCode(404);
+        $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page))->setStatusCode(404);
+		
+		if($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()){
+			// set a custom Cache-Control directive
+			$response->setPublic();
+			$response->setLastModified($page->getDateLastModified());
+			$response->setVary(array('Accept-Encoding', 'User-Agent'));
+			$response->headers->addCacheControlDirective('must-revalidate', true);
+			$response->setSharedMaxAge(3600);
+		}
+		
+		return $response;
     }
+	
     
     // Get and format the filtering arguments to use with the actions 
     public function filterBlogPostsAction(Request $request) 
@@ -365,7 +335,7 @@ class DefaultController extends Controller
         
         $filterTags         = 'all';
         $filterCategories   = 'all'; 
-        $filterForm         = $this->createForm(new FilterBlogPostsForm());
+        $filterForm			= $this->createForm('filterblogpostsform'); 
         $filterData         = null;
         
         if ($request->getMethod() == 'POST') {

@@ -89,6 +89,11 @@ class Settings
     /**
      * @ORM\Column(type="boolean")
      */ 
+    protected $activateHttpCache = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */ 
     protected $activateSettings = true;
 
     
@@ -379,8 +384,6 @@ class Settings
     {
         return $this->blogItemsPerPage;
     }
-    
-    
 
     /**
      * Set activateSettings
@@ -403,7 +406,30 @@ class Settings
     public function getActivateSettings()
     {
         return $this->activateSettings;
-    }    
+    } 
+
+    /**
+     * Set activateHttpCache
+     *
+     * @param boolean $activateHttpCache
+     * @return Settings
+     */
+    public function setActivateHttpCache($activateHttpCache)
+    {
+        $this->activateHttpCache = $activateHttpCache;
+    
+        return $this;
+    }
+
+    /**
+     * Get activateSettings
+     *
+     * @return boolean 
+     */
+    public function getActivateHttpCache()
+    {
+        return $this->activateHttpCache;
+    }	
     
     public function __toString()
     {

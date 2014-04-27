@@ -4,6 +4,7 @@
 
 header, nav, article, footer, address, 
 section, aside, hgroup, figure{
+	display: block;
 }
 
 body, div, dl, dt, dd, ul, ol, li, pre, 
@@ -15,24 +16,25 @@ h1, h2, h3, h4, h5, h6{
   
 iframe { 
     left: 0; 
-    border:none!important;
+    border: none!important;
 }
 
 a{
 }
 
-a:hover{
+a:hover, a:focus{
 }
 
 .inv{ 
-    position: absolute; 
-    font-size: 0.5em; 
-    font-size: 0.5rem; 
-    left: -9999px;
+	font-size: 1px; 
+	overflow: hidden;
+	text-indent: -100%;
+	display: inline-block;
 }
 
 .hidden{
-	display:none!important;
+	display: none!important;
+	visibility: hidden!important;
 }
 
 img{ 
@@ -48,20 +50,25 @@ strong {
 table { 
     font-size: inherit; 
     float: left;
-    border-spacing:0!important;
-    border-collapse:collapse!important;
+    border-spacing: 0!important;
+    border-collapse: collapse!important;
 }
     
 td{ 
-    text-align: center; 
+    text-align: center;
+	padding: 5px;
 }
 
 .clearBoth{
-    clear:both;
+    clear: both;
+}
+
+[class*="column"] + [class*="column"]:last-child {
+	float: left;
 }
 
 .hidden{
-    display:none;
+    display: none;
 }
 
 /*-------------------------------------------
@@ -70,23 +77,23 @@ td{
 
 body{
 	min-height: 100%;
-	width:100%;
+	width: 100%;
 }
 
 .superWrapper{
-    width:100%;
-	min-height:100%;
-    min-width:320px;
+    width: 100%;
+	min-height: 100%;
+    min-width: 320px;
 }
 
 .wrapper{
-    width:100%;
-    overflow:hidden;
-    position:relative;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
 }
 
 .pageContents{
-	min-height:300px;
+	min-height: 300px;
 }
 
 
@@ -95,29 +102,36 @@ body{
   -----------------------------------------*/
 
 header{
-    overflow:visible;
-    position:relative;
-    background-color:#CCC;
-}
+    overflow: visible;
+    position: relative;
+    background-color: #CCC;
 
-#logo{
-    position:relative;
-    z-index:98;
+	#logo{
+		position: relative;
+		z-index: 98;
 
-	.logo{
-		float:left;
-		display:block;
-		margin:0;    
-	}
+		.logo{
+			float: left;
+			display: block;
+			margin: 0;    
+		}
 
-	a{
-		display:block;
-		width:100%;
-	}
+		a{
+			display: block;
+			width: 100%;
+			-webkit-animation-duration: 1s!important;
+			animation-duration: 1s!important;
 
-	img{
-		display:block;
-		max-width:100%;
+			&:hover{
+				-webkit-animation-name: pulse;
+				animation-name: pulse;
+			}
+
+			img{
+				display: block;
+				max-width: 100%;
+			}
+		}
 	}
 }
 
@@ -130,29 +144,100 @@ header{
 }
 
 /*-------------------------------------------
+    Orbit Slideshow
+  -----------------------------------------*/
+
+.bannerSlide{	
+	z-index: 1;
+	
+	&.active{
+		z-index: 2;
+	}
+}
+
+/*-------------------------------------------
     Homepage Page styles
   -----------------------------------------*/
+
+.homepageItem{	
+	margin: 10px 0;
+	
+		img{
+			width: 100%;
+		}
+}
  
 /*-------------------------------------------
     Generic Page styles
   -----------------------------------------*/ 
+
+.readMoreImage {
+	width: 100%;
+}
+
+/* -----------------------------------------
+	Pagination
+----------------------------------------- */
+
+.paginationHolder {
+	margin-top: rem-calc(30);
+	
+	ul{
+		text-align: center;
+		
+		li{
+			float: none;
+			display: inline-block;
+			height: auto;
+			margin: 4px 0;
+			
+			a {
+				color: $white-color;
+				font-size: rem-calc(12);
+				letter-spacing: 1px;
+				line-height: 1.4;
+				font-family: $alt-font-family;
+				background: none #ccc;
+				
+				&:hover, &:focus {
+					color: $white-color;
+					background: none $primary-color;				
+				}
+			}		
+		
+			&.current{
+
+				a{
+					color: $white-color;
+					background: none $dark-gray-color;
+					font-weight: normal;
+
+					&:hover, &:focus {
+						color: $white-color;
+						background: none $dark-gray-color;				
+					}
+				}
+			}
+		}
+	}
+}
  
 /* -----------------------------------------
    Filter form styles
 ----------------------------------------- */
 
 #filterResultsFormHolder{
-    margin-top:28px;     
+    margin-top: 28px;     
     position: relative;
-    padding-bottom:68px;
+    padding-bottom: 68px;
 }
 
 #filterResultsFormHolder h3{
-    display:none;
+    display: none;
 }
 
 #filterResultsFormHolder form{
-    margin:0;
+    margin: 0;
 }
 
 #filterResultsFormHolder .control-group{
@@ -181,11 +266,11 @@ header{
 }
 
 #filterResultsForm .formBtns {
-    float:none;
+    float: none;
     position: absolute;
-    bottom:22px;
-    right:0;
-    width:25%;
+    bottom: 22px;
+    right: 0;
+    width: 25%;
 }
 
 #filterResultsForm .formBtns .checkAllBox{
@@ -263,13 +348,7 @@ header{
     color: #99a1a7;
     box-shadow: 0 1px 2px rgba(0,0,0,0), inset 0px 1px 3px rgba(13,59,131,0);
     border: none;
-    -o-border-radius: 9px;
-    -moz-border-radius: 9px;
-    -webkit-border-radius: 9px;
     border-radius: 9px;
-    -o-border-radius: 0.6425rem;
-    -moz-border-radius: 0.6425rem;
-    -webkit-border-radius: 0.6425rem;
     border-radius: 0.6425rem;
     background-color: #FFF;
     width: 18px;
@@ -284,17 +363,52 @@ header{
 .lt-ie9 .customCheckBox input + label:after{
     display: none;
 }
- 
+
 .customCheckBox input:checked + label:after {
-    content: '\2714';
-    color: #FFF;
-    box-shadow: 0 1px 2px rgba(0,0,0,0), inset 0px -15px 10px -12px rgba(0,0,0,0), inset 15px 10px -12px rgba(13,59,131,0);
-    border: none;
-    background-color: #052763;
+	content: '\2714';
+	color: #FFF;
+	box-shadow: 0 1px 2px rgba(0,0,0,0), inset 0px -15px 10px -12px rgba(0,0,0,0), inset 15px 10px -12px rgba(13,59,131,0);
+	border: none;
+	background-color: #052763;
 }
 
-#filterResultsForm .checkAllBox{
-    
+.filterResultsFormBtns {
+	
+	.customCheckBox {
+		
+		input{
+			display: none;
+		}
+		
+		input + label {
+			display: inline-block;
+			position: relative;
+			line-height: 1.2;
+			font-size: rem-calc(24);
+			cursor: pointer;
+			margin: 0;
+			color: $secondary-color;
+			text-transform: none;
+			
+			transition: all 300ms ease-in-out;	
+			
+			&:after {
+				content: '\00a0';
+				font-size: rem-calc(20);
+				color: $dark-gray-color;
+				line-height: 1.2;
+				padding-left: 12px;
+			}
+			
+			&:hover {
+				color: $dark-gray-color;
+				
+				&:after {
+					content: '\2716';
+				}
+			}
+		}
+	}
 }
 
 /* -----------------------------------------
@@ -318,9 +432,9 @@ header{
 ----------------------------------------- */
 
 #map_canvas { 
-    width:95%;
-    height:100%;
-    float:left;
+    width: 95%;
+    height: 100%;
+    float: left;
 }
 
 /* -----------------------------------------
@@ -328,7 +442,11 @@ header{
 ----------------------------------------- */
 
 footer{
-    background:#CCC;	
+	background: #CCC;
+	
+	&.row{
+		margin-top: rem-calc(30);
+	}	
 }
 
 /* ---------------------------------------------------

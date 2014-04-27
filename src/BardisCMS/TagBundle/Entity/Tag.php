@@ -6,9 +6,11 @@
  * (c) George Bardis <george@bardis.info>
  *
  */
+
 namespace BardisCMS\TagBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use BardisCMS\PageBundle\Entity\Page;
 use BardisCMS\BlogBundle\Entity\Blog;
 use Application\Sonata\MediaBundle\Entity\Media;
@@ -54,6 +56,12 @@ class Tag
     * @ORM\ManyToMany(targetEntity="BardisCMS\BlogBundle\Entity\Blog", mappedBy="tags", cascade={"persist"})
     */
     protected $blogs;
+	
+	/**
+     * @ORM\Column(name="date_last_modified", type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $dateLastModified;
 
     public function __construct()
     {
@@ -204,6 +212,16 @@ class Tag
     public function getBlogs()
     {
         return $this->blogs;
+    }
+		
+	/**
+	 * Get dateLastModified
+	 *
+	 * @return integer 
+	 */
+    public function getDateLastModified()
+    {
+        return $this->dateLastModified;
     }
 	
     /**

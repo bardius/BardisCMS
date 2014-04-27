@@ -13,6 +13,7 @@
 ######################
 .DS_Store
 .DS_Store?
+._*
 *.DS_Store
 .Trashes
 Icon?
@@ -20,33 +21,30 @@ ehthumbs.db
 Thumbs.db
 
 
-# Netbeans #
+# Random #
 #################
+*.sublime-*
 nbproject/
+node_modules/
 
 
-# Symfonny2 #
+# Symfony2 #
 #############
-
-# Bootstrap
-app/bootstrap*
-
-# Symfony directories
-vendor/*
-*/logs/*
-*/cache/*
-web/bundles/*
-logs/
-
-# Configuration files
-app/config/parameters.ini
-app/config/parameters.yml
-
-
-# BOWER #
-########
-*/bower_components/*
-/web/css/*
+app/bootstrap.php.cache
+app/cache/*
+app/logs/*
+app/sessions/*
+build/
+composer.phar
+foundation/.sass-cache/
+parameters.yml
+/web/.sass-cache/
+/web/foundation/.sass-cache/vendor/
+/web/foundation/sass/.sass-cache/
+vendor/
+/web/bower_components/*
+web/uploads/
+/web/npm-debug.log
 
 
 

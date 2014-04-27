@@ -1,6 +1,6 @@
 {% if admin.hasRoute('duplicate') and admin.id(object) and admin.isGranted('EDIT', object)%}
-    <a class="btn sonata-action-element duplicate_link" href="{{ admin.generateObjectUrl('duplicate', object) }}" title="{{ 'Duplicate'|trans({}, 'SonataAdminBundle') }}">
-		<i class="icon-plus"></i>
+    <a class="btn btn-default duplicate_link sonata-action-element" href="{{ admin.generateObjectUrl('duplicate', object) }}" title="{{ 'Duplicate'|trans({}, 'SonataAdminBundle') }}">
+		<i class="glyphicon glyphicon-file"></i>
 		{{ 'Duplicate'|trans({}, 'SonataAdminBundle') }}
     </a>
 {% endif %}

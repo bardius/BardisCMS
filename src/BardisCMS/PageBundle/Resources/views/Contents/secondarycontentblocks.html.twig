@@ -25,16 +25,16 @@
             {% elseif contentBlock.contentType == 'youtube' and contentBlock.youtube.id is defined %}
 				<div class="flex-video">
                 	{% media contentBlock.youtube.id, contentBlock.mediaSize %}
-					</div>
+				</div>
             {% elseif contentBlock.contentType == 'vimeo'  and contentBlock.vimeo.id is defined %}
-					<div class="flex-video vimeo">
+				<div class="flex-video vimeo">
                 	{% media contentBlock.vimeo.id, contentBlock.mediaSize %}
-						</div>
+				</div>
             {% elseif contentBlock.contentType == 'contact' %}                   
-                    {% include 'PageBundle:Contents:contactFormHolder.html.twig' %} 
+				{% include 'PageBundle:Contents:contactFormHolder.html.twig' %} 
             {% else %}
-						<p class="error">No content yet. Please Add content from the administation panel.</p>
+				<p class="error">No content yet. Please Add content from the administation panel.</p>
             {% endif %}
-					</div>
+			</div>
     {% endif %}
 {% endfor %}

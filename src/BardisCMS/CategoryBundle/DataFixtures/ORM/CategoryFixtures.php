@@ -23,6 +23,16 @@ class CategoryFixtures extends AbstractFixture implements OrderedFixtureInterfac
         $categoryHome->setTitle('Homepage');
 		$manager->persist($categoryHome);
 		
+        $categoryNews = new Category();
+        $categoryNews->setTitle('News');
+        $categoryNews->setCategoryClass('news');
+		$manager->persist($categoryNews);
+		
+        $categoryEvents = new Category();
+        $categoryEvents->setTitle('Events');
+        $categoryEvents->setCategoryClass('events');
+		$manager->persist($categoryEvents);
+		
         $categorySample = new Category();
         $categorySample->setTitle('Sample Category');
         $categorySample->setCategoryClass('featured-category');
@@ -30,7 +40,9 @@ class CategoryFixtures extends AbstractFixture implements OrderedFixtureInterfac
 		
         $manager->flush();
 		
-		$this->addReference('categoryHome', $categoryHome);		
+		$this->addReference('categoryHome', $categoryHome);	
+		$this->addReference('categoryNews', $categoryNews);
+		$this->addReference('categoryEvents', $categoryEvents);	
 		$this->addReference('categorySample', $categorySample);
     }
 	

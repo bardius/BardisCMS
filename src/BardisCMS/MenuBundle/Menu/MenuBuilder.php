@@ -141,6 +141,8 @@ class MenuBuilder {
 
 							if (null === $alias) {
 								$menu->addChild($menuItem->getTitle(), array('uri' => '/' . $menuItem->getRoute() . '/' . $pageFunction . $urlParams));
+							} elseif ('index' === $alias){
+								$menu->addChild($menuItem->getTitle(), array('uri' => '/'));
 							} else {
 								$menu->addChild($menuItem->getTitle(), array('uri' => '/' . $alias . $urlParams));
 							}
@@ -155,7 +157,7 @@ class MenuBuilder {
 
 						// If Link Action is not selected point to homepage else to alias or page id based route 
 						if ($pageFunction != null) {
-							$alias = $this->getPageAlias($menuItem->$getPageFunction(), $em, $menuType);
+							$alias = $this->getPageAlias($pageFunction, $em, $menuType);
 
 							if (null === $alias) {
 								$menu->addChild($menuItem->getTitle(), array('uri' => '/' . strtolower($menuType) . '/' . $menuItem->getRoute() . '/' . $menuItem->$getPageFunction() . $urlParams));

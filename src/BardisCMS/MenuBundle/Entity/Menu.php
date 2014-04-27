@@ -4,6 +4,7 @@ namespace BardisCMS\MenuBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use BardisCMS\PageBundle\Entity\Page;
+use BardisCMS\BlogBundle\Entity\Blog;
 use Application\Sonata\MediaBundle\Entity\Media;
 
 /**
@@ -437,12 +438,12 @@ class Menu
     public function getMenuTypeAsString()
     {
         switch($this->getMenuType()){
-            case('Page'):       return "Page";
-            case('Blog'):       return "Blog Page";
-            case('http'):       return "External URL";
-            case('url'):        return "Internal URL";
-            case('seperator'):  return "Seperator";
-            default:            return $this->getMenuType(); 
+            case('Page'):			return "Page";
+            case('Blog'):			return "Blog Page";
+            case('http'):			return "External URL";
+            case('url'):			return "Internal URL";
+            case('seperator'):		return "Seperator";
+            default:				return $this->getMenuType(); 
         }
     }
 }

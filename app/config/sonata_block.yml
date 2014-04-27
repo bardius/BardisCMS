@@ -1,0 +1,31 @@
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts:   [admin]
+         
+        #sonata.admin_doctrine_orm.block.audit:
+        #    contexts:   [admin]
+        
+        sonata.admin.block.search_result: 
+            contexts:   [admin]       
+            
+        sonata.block.service.text:
+        sonata.block.service.action:
+        sonata.block.service.rss:
+        sonata.timeline.block.timeline:
+
+        # Some specific blocks from the SonataMediaBundle
+        sonata.media.block.media:
+          
+        # Some specific blocks from the BardisCMS Bundles
+        sonata.admin.pages:
+        sonata.admin.menus: 
+        sonata.admin.blogs:
+        sonata.admin.categories:
+        sonata.admin.tags:
+        sonata.admin.contentblocks:
+        sonata.user.admin.user:
+        sonata.admin.settings:
+        sonata.admin.comments:
+        sonata.block.service.clearcache:

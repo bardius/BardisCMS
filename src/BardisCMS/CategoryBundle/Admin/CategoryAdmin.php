@@ -49,9 +49,13 @@ class CategoryAdmin extends Admin
             ->addIdentifier('categoryClass')
             ->addIdentifier('categoryIcon')
             ->add('_action', 'actions', array( 
-                    'actions' => array(  
-                        'edit' => array(),
-                        'delete' => array()
+                    'actions' => array(
+                        'edit' => array(
+                            'template' => 'CategoryBundle:Admin:edit.html.twig'
+                        ),
+                        'delete' => array(
+                            'template' => 'CategoryBundle:Admin:delete.html.twig'
+                        )
                     )
                 ))
         ;

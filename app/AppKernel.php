@@ -23,13 +23,16 @@ class AppKernel extends Kernel
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Sonata\CoreBundle\SonataCoreBundle(),
             new Sonata\AdminBundle\SonataAdminBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
             new Sonata\CacheBundle\SonataCacheBundle(),
-            new Sonata\jQueryBundle\SonatajQueryBundle(),
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
-            new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
+            new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),			
+			new Spy\TimelineBundle\SpyTimelineBundle(),
+			new Sonata\TimelineBundle\SonataTimelineBundle(),
+            new Application\Sonata\TimelineBundle\ApplicationSonataTimelineBundle(),
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
             new Sonata\MediaBundle\SonataMediaBundle(),
             new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
@@ -43,6 +46,9 @@ class AppKernel extends Kernel
             new BardisCMS\ContentBlockBundle\ContentBlockBundle(),
             new BardisCMS\MobileDetectBundle\MobileDetectBundle(),
             new BardisCMS\CommentBundle\CommentBundle(),
+			new Misd\GuzzleBundle\MisdGuzzleBundle(),
+			new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+			new Minifier\MinifierBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

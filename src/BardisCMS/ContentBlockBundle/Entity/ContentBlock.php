@@ -1,4 +1,5 @@
 <?php
+
 /*
  * ContentBlock Bundle
  * This file is part of the BardisCMS.
@@ -10,6 +11,7 @@
 namespace BardisCMS\ContentBlockBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use BardisCMS\PageBundle\Entity\Page;
 use BardisCMS\BlogBundle\Entity\Blog;
 use BardisCMS\ContentBlockBundle\Entity\ContentImage;
@@ -127,7 +129,6 @@ class ContentBlock
      * @ORM\ManyToMany(targetEntity="BardisCMS\BlogBundle\Entity\Blog", mappedBy="bannercontentblocks", cascade={"persist"})
      **/
     protected $blog_bannercontents;
-
     /**
      * @ORM\ManyToMany(targetEntity="ContentImage", inversedBy="contentblocks", cascade={"all"}, orphanRemoval=true)
      * @ORM\JoinTable(name="content_blocks_images")
@@ -162,20 +163,26 @@ class ContentBlock
      * @ORM\JoinColumn(name="youtube", referencedColumnName="id", onDelete="CASCADE")
      */ 
     protected $youtube;
+	
+	/**
+     * @ORM\Column(name="date_last_modified", type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $dateLastModified;
 
    
     public function __construct()
     {
-        $this->maincontents                 = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->secondarycontents            = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->extracontents                = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->modalcontents                = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->bannercontents               = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->blog_maincontents            = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->blog_extracontents            = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->blog_modalcontents           = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->blog_bannercontents          = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->imagefiles                   = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->maincontents						= new \Doctrine\Common\Collections\ArrayCollection();
+        $this->secondarycontents				= new \Doctrine\Common\Collections\ArrayCollection();
+        $this->extracontents					= new \Doctrine\Common\Collections\ArrayCollection();
+        $this->modalcontents					= new \Doctrine\Common\Collections\ArrayCollection();
+        $this->bannercontents					= new \Doctrine\Common\Collections\ArrayCollection();
+        $this->blog_maincontents				= new \Doctrine\Common\Collections\ArrayCollection();
+        $this->blog_extracontents				= new \Doctrine\Common\Collections\ArrayCollection();
+        $this->blog_modalcontents				= new \Doctrine\Common\Collections\ArrayCollection();
+        $this->blog_bannercontents				= new \Doctrine\Common\Collections\ArrayCollection();
+        $this->imagefiles						= new \Doctrine\Common\Collections\ArrayCollection();
     }
     
 
@@ -865,8 +872,22 @@ class ContentBlock
     {
         return $this->youtube;
     }
-	
-	
+		
+	/**
+	 * Get dateLastModified
+	 *
+	 * @return integer 
+	 */
+    public function getDateLastModified()
+    {
+        return $this->dateLastModified;
+    }
+    
+    /**
+    * toString Title
+    *
+    * @return string 
+    */	
     public function __toString()
     {
 		if($this->getTitle()){

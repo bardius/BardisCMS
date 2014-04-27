@@ -47,6 +47,11 @@
 				dropdown : {
 				}
 			});
+        
+			$('#resetFilters').change(function() {
+				var checkboxes = $(this).closest('form').find(':checkbox').not(this);
+				checkboxes.removeAttr('checked');
+			});
 			
 			// Start the AJAX based contact form
 			CMS.foundationConfig.ajaxSubmittedForm('#contactform', '#contactFormBtn');

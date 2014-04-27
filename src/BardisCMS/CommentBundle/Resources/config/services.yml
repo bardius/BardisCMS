@@ -1,0 +1,6 @@
+services:
+      
+  comment.comment_timestamp_listener:
+    class: BardisCMS\CommentBundle\Listener\TimestampListener
+    tags:
+        - { name: doctrine.event_listener, event: onFlush }

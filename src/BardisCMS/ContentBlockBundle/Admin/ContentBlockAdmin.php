@@ -89,9 +89,13 @@ class ContentBlockAdmin extends Admin
             ->addIdentifier('className')
             ->addIdentifier('contentTypeAsString', null, array('sortable' => false, 'label' => 'Content Type'))
             ->add('_action', 'actions', array( 
-                    'actions' => array(  
-                        'edit' => array(),
-                        'delete' => array()
+                    'actions' => array(
+                        'edit' => array(
+                            'template' => 'ContentBlockBundle:Admin:edit.html.twig'
+                        ),
+                        'delete' => array(
+                            'template' => 'ContentBlockBundle:Admin:delete.html.twig'
+                        )
                     )
                 ))
         ;

@@ -2,3 +2,9 @@ parameters:
 #    blog.example.class: BardisCMS\BlogBundle\Example
 
 services:
+            
+  blog.form.filterblogpostsform:
+    class: BardisCMS\BlogBundle\Form\FilterBlogPostsForm        
+    arguments: ["@doctrine.orm.entity_manager"]        
+    tags:
+      - { name: form.type, alias: filterblogpostsform }

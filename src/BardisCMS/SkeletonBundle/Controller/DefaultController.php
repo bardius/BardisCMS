@@ -41,7 +41,7 @@ class DefaultController extends Controller
         
         // Get data to display
         $page       = $this->getDoctrine()->getRepository('SkeletonBundle:Skeleton')->find($id);        
-        $userRole   = $this->getLoggedUserHighestRole();        
+        $userRole   = $this->get('sonata_user.services.helpers')->getLoggedUserHighestRole();        
         $settings   = $this->get('bardiscms_settings.load_settings')->loadSettings();
         
         // Simple ACL for publishing
@@ -63,9 +63,37 @@ class DefaultController extends Controller
         {
             $publishStates = array(1, 2);                
         }
+		
+		//var_dump($this->container->getParameter('kernel.environment'));
+		
+		if($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()){
+			
+			$response = new Response();
+			
+			// set a custom Cache-Control directive
+			$response->headers->addCacheControlDirective('must-revalidate', true);
+			// set multiple vary headers
+			$response->setVary(array('Accept-Encoding', 'User-Agent'));
+			// create a Response with a Last-Modified header
+			$response->setLastModified($page->getDateLastModified());
+			// Set response as public. Otherwise it will be private by default.
+			$response->setPublic();
+			
+			//var_dump($response->isNotModified($this->getRequest()));
+			//var_dump($response->getStatusCode());
+			if (!$response->isNotModified($this->getRequest())) {
+				// Marks the Response stale
+				$response->expire();
+			}
+			else{				
+				// return the 304 Response immediately
+				$response->setSharedMaxAge(3600);
+				return $response;
+			}
+		}
         
         // Set the website settings and metatags
-        $page = $this->setSettings($settings, $page);
+		$page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($page);
         
         // Set the pagination variables        
         if(is_object($settings))
@@ -82,25 +110,6 @@ class DefaultController extends Controller
         
         // Render the correct view depending on pagetype
         return $this->renderPage($page, $id, $publishStates, $extraParams, $currentpage, $totalpageitems, $linkUrlParams);        
-    }
-    
-    
-    // Get the user role ( @TODO: this is very simple ACL and has to be improved )
-    public function getLoggedUserHighestRole()
-    {
-        
-        if ($this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
-            $userRole = 'ROLE_SUPER_ADMIN';
-        }
-        else if ($this->get('security.context')->isGranted('ROLE_USER')) {
-            $userRole = 'ROLE_USER';
-        }
-        else
-        {
-            $userRole = '';
-        }
-        
-        return $userRole;
     }
     
     
@@ -200,71 +209,11 @@ class DefaultController extends Controller
     }
     
     
-    // Set the settings as defined from the service of the settings bundle
-    // alternative could be to skip that bundle and use the config.yml
-    public function setSettings($settings, $page)
-    {
-        if(is_object($settings))
-        {         
-            if($settings->getUseWebsiteAuthor())
-            {
-               $page->metaAuthor = $settings->getWebsiteAuthor();
-            }
-            else
-            {
-               $page->metaAuthor = $page->getAuthor()->getUsername();
-            }
-
-            $pageTitle          = $page->getTitle();
-            $titleKeywords      = trim(preg_replace("/\b[A-za-z0-9']{1,3}\b/", "", strtolower($pageTitle)));
-            $titleKeywords      = str_replace(' ', ',', preg_replace('!\s+!', ' ', $titleKeywords));        
-            $fromTitle          = $pageTitle . ' ' . $settings->getFromTitle();
-            $pageTitle          .= ' - ' . $settings->getWebsiteTitle();
-
-            $page->pagetitle    = $pageTitle;
-
-            $page->enableGA     = $settings->getEnableGoogleAnalytics();
-            $page->gaID         = $settings->getGoogleAnalyticsId();
-
-            if($page->getKeywords() == null)
-            {
-               $page->setKeywords($settings->getMetaKeywords() . ',' . $titleKeywords);
-            }
-            else
-            {
-                $page->setKeywords($page->getKeywords() . ',' . $titleKeywords);
-            }
-
-            if($page->getDescription() == null)
-            {
-                $page->setDescription($settings->getMetaDescription() . ' ' . $fromTitle);
-            }
-            else
-            {
-                $page->setDescription($page->getDescription() . ' ' . $fromTitle);
-            }
-        }
-        else
-        {
-            $page->metaAuthor   = '';
-            $pageTitle          = $page->getTitle();
-            $titleKeywords      = trim(preg_replace("/\b[A-za-z0-9']{1,3}\b/", "", strtolower($pageTitle)));
-            $titleKeywords      = str_replace(' ', ',', preg_replace('!\s+!', ' ', $titleKeywords)); 
-            $page->pagetitle    = $pageTitle; 
-            $page->enableGA     = false;
-            $page->gaID         = null;
-            
-            $page->setDescription($page->getDescription());
-            $page->setKeywords($page->getKeywords() . ',' . $titleKeywords);
-        }         
-        
-        return $page;
-    }
-    
-    
     // Get the required data to display to the correct view depending on pagetype
-    public function renderPage($page, $id, $publishStates, $extraParams, $currentpage, $totalpageitems, $linkUrlParams)
-    {
+    public function renderPage($page, $id, $publishStates, $extraParams, $currentpage, $totalpageitems, $linkUrlParams){
+		// Check if mobile content should be served		
+        $serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
+		$settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
                         
         if ($page->getPagetype() == 'category_page')
         {            
@@ -283,7 +232,7 @@ class DefaultController extends Controller
             $pages      = $pageList['pages'];
             $totalPages = $pageList['totalPages'];
             
-            return $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems));
+            $response = $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems));
         }      
         else if ($page->getPagetype() == 'skeleton_filtered_list')
         {          
@@ -306,7 +255,7 @@ class DefaultController extends Controller
             $pages      = $pageList['pages'];
             $totalPages = $pageList['totalPages'];
             
-            return $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'filterForm' => $filterForm->createView()));
+            $response = $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'filterForm' => $filterForm->createView()));
         }
         else if ($page->getPagetype() == 'skeleton_home')
         {            
@@ -315,19 +264,30 @@ class DefaultController extends Controller
             $pages      = $pageList['pages'];
             $totalPages = $pageList['totalPages'];
             
-            return $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages,  'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems));
+            $response = $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages,  'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems));
         }
-        
-        return $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $page));
+        else{
+			$response = $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $page));			
+		}
+		
+		if($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()){	
+			// set a custom Cache-Control directive
+			$response->setPublic();
+			$response->setLastModified($page->getDateLastModified());
+			$response->setVary(array('Accept-Encoding', 'User-Agent'));
+			$response->headers->addCacheControlDirective('must-revalidate', true);
+			$response->setSharedMaxAge(3600);
+		}
+		
+		return $response;
     }
     
     
     // Get and display to the 404 error page
     public function render404Page()
-    {
-        
+    {        
         $page       = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias('404');
-        $settings   = $this->get('bardiscms_settings.load_settings')->loadSettings();
+		$settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
         
         // Check if page exists
         if (!$page) {
@@ -335,9 +295,20 @@ class DefaultController extends Controller
         }
         
         // Set the website settings and metatags
-        $page = $this->setSettings($settings, $page);
+		$page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($page);
         
-        return $this->render('PageBundle:Default:page.html.twig', array('page' => $page))->setStatusCode(404);
+        $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page))->setStatusCode(404);
+		
+		if($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()){
+			// set a custom Cache-Control directive
+			$response->setPublic();
+			$response->setLastModified($page->getDateLastModified());
+			$response->setVary(array('Accept-Encoding', 'User-Agent'));
+			$response->headers->addCacheControlDirective('must-revalidate', true);
+			$response->setSharedMaxAge(3600);
+		}
+		
+		return $response;
     }
     
     // Get and format the filtering arguments to use with the actions 

@@ -1,0 +1,51 @@
+{
+	"name": "symfony2-bardiscms-foundation-libsass-template",
+		
+	"title": "Symfony2 BardisCMS & Foundation 5",
+	
+	"description": "Foundation 5 front end framework for Symfony2 BardisCMS",
+	
+	"version": "1.0.0",
+	
+	"homepage": "",
+	
+	"authors": [{
+			"name": "George Bardis",
+			"url": "http://www.bardis.info"
+		}],
+		
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/bardius/bardiscms.git"
+	},
+		
+	"bugs": {
+		"url": "https://github.com/bardius/bardiscms/issues"
+	},
+		
+	"license": "MIT",
+	
+	"engines": {
+		"node": ">=0.6"
+	},
+		
+	"dependencies": {},
+	
+	"devDependencies": {
+		"grunt": "~0.4.4",
+		"grunt-contrib-sass": "~0.7.2",
+		"grunt-contrib-jshint": "~0.10.0",
+		"grunt-contrib-watch": "~0.6.1",
+		"grunt-contrib-uglify": "~0.3.2",
+		"grunt-csso": "~0.5.3",
+		"load-grunt-tasks": "~0.3.0",
+		"grunt-jscs-checker": "~0.4.1",
+		"grunt-autoprefixer": "~0.7.2"
+	},
+		
+	"keywords": [],
+	
+	"scripts": {
+		"test": "grunt travis --verbose"
+	}
+}

@@ -33,7 +33,7 @@ class Configuration implements ConfigurationInterface
         // more information on that topic.
         $rootNode
             ->children()                                        
-                ->booleanNode('loadservices')->defaultFalse()->end()
+                ->booleanNode('loadservices')->defaultTrue()->end()
                 
                 ->arrayNode('commenttypes')
                     ->isRequired()

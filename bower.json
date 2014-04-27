@@ -1,0 +1,14 @@
+{
+  "name": "symfony2-bardiscms-foundation-libsass-template",
+  "version": "1.0.0",
+  "homepage": "",
+  "authors": [
+    "George Bardis @bardius george@bardis.info"
+  ],
+  "description": "Foundation 5 front end framework for Symfony2 BardisCMS",
+  "license": "MIT",
+  "dependencies": {
+    "foundation": "zurb/bower-foundation",
+    "jquery-ias": "~2.1.0"
+  }
+}

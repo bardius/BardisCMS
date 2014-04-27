@@ -15,6 +15,10 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
         SONATA:
             - ROLE_SONATA_PAGE_ADMIN_PAGE_EDIT  # if you are using acl then this line must be commented
+    
+    # set access_strategy to unanimous, else you may have unexpected behaviors
+    access_decision_manager:
+        strategy: unanimous
 
     providers:
         in_memory:
@@ -43,6 +47,7 @@ security:
             logout:
                 path:           /admin/logout
                 target:         /admin/login
+                # invalidate_session: false
 
             anonymous:    true
 
@@ -59,18 +64,13 @@ security:
                 check_path:     /login_check
                 failure_path:   null
             logout:             true
-            anonymous:          true
-        
+            anonymous:          true        
     
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
     access_control:
-        # URL of FOSUserBundle which need to be available to anonymous users
-        - { path: ^/_wdt, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/_profiler, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
         # -> custom access control for the admin area of the URL
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
@@ -79,7 +79,25 @@ security:
         # -> end
 
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        # URL of FOSUserBundle which need to be available to anonymous users
+        - { path: ^/_wdt, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/_profiler, role: IS_AUTHENTICATED_ANONYMOUSLY }    
+
+        # AsseticBundle paths used when using the controller for assets
+        - { path: ^/js/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/css/, role: IS_AUTHENTICATED_ANONYMOUSLY }       
+
+        # URL of FOSUserBundle which need to be available to anonymous users
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY } # for the case of a failed login
+        - { path: ^/user/new$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/check-confirmation-email$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/confirm/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/confirmed$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/request-reset-password$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/send-resetting-email$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/check-resetting-email$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user/reset-password/, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin role for the admin part.

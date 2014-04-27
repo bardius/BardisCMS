@@ -87,8 +87,8 @@ class ContactFormType extends AbstractType {
                 new Assert\Length(array('min' => 2, 'max' => 50))
             ),
             'surname' => array(
-                new Assert\NotBlank(array('message' => 'First Name should not be blank.')),
-				new Assert\Regex(array('pattern' => '/[0-9]/', 'match' => false, 'message' => 'First Name cannot contain numbers')),
+                new Assert\NotBlank(array('message' => 'Surname should not be blank.')),
+				new Assert\Regex(array('pattern' => '/[0-9]/', 'match' => false, 'message' => 'Surname cannot contain numbers')),
                 new Assert\Length(array('min' => 2, 'max' => 50))
             ),
             'email' => array(

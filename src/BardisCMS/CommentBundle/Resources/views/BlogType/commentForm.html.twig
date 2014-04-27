@@ -1,3 +1,4 @@
+{% if form is defined %}
 <form id="add_comment_form" class="commentsForm" action="{{ path('CommentBundle_blog_comment_add_no_slash', { 'page_id' : page.id } ) }}" method="post" {{ form_enctype(form) }}>
 	<div class="row">
 		<div class="large-12 small-12 columns">
@@ -28,4 +29,5 @@
 			{% endif %}
 		</div>
 	</div>
-</form>          
+</form>
+{% endif %}

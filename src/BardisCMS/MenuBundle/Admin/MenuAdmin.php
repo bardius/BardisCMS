@@ -85,7 +85,7 @@ class MenuAdmin extends Admin
             ->end()
             ->with('Menu Item Taxonomy', array('collapsed' => true))
                 ->add('menuGroup', 'choice', array('choices'   => $menuGroupsChoice, 'preferred_choices' => array($prefMenuGroupsChoice), 'label' => 'Menu Group', 'required' => true))
-                ->add('parent', 'choice', array('choices' =>  $menusChoice, 'attr' => array('class' => 'autoCompleteMenus'), 'label' => 'Parent Menu Item', 'required' => false))
+                ->add('parent', 'choice', array('choices' =>  $menusChoice, 'attr' => array('class' => 'autoCompleteItems autoCompleteMenus', 'data-sonata-select2' => 'false'), 'label' => 'Parent Menu Item', 'required' => false))
                 ->add('ordering', null, array('label' => 'Menu Item Order', 'required' => true))
                 ->setHelps(array(
                     'menuGroup'     => 'Set the menu group this menu item belongs to',

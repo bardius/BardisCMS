@@ -64,9 +64,13 @@ class TagAdmin extends Admin
             ->addIdentifier('tagCategoryAsString', null, array('sortable' => false, 'label' => 'Tag Category'))
             ->addIdentifier('tagIcon')
             ->add('_action', 'actions', array( 
-                    'actions' => array(  
-                        'edit' => array(),
-                        'delete' => array()
+                    'actions' => array(
+                        'edit' => array(
+                            'template' => 'TagBundle:Admin:edit.html.twig'
+                        ),
+                        'delete' => array(
+                            'template' => 'TagBundle:Admin:delete.html.twig'
+                        )
                     )
                 ))
         ;

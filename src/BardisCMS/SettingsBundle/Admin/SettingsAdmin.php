@@ -35,6 +35,7 @@ class SettingsAdmin extends Admin
                 ->add('enableGoogleAnalytics', null, array('attr' => array(), 'label' => 'Enable Google Analytics', 'required' => false))
                 ->add('emailRecepient', null, array('attr' => array(), 'label' => 'Recepient Email', 'required' => true))
                 ->add('emailSender', null, array('attr' => array(), 'label' => 'Senders Email', 'required' => false))
+                ->add('activateHttpCache', null, array('attr' => array(), 'label' => 'Activate HTTP Cache', 'required' => false))
                 ->add('activateSettings', null, array('attr' => array(), 'label' => 'Activate Settings', 'required' => false))
                 ->setHelps(array(
                 ))
@@ -57,14 +58,15 @@ class SettingsAdmin extends Admin
             ->addIdentifier('enableGoogleAnalytics')
             ->addIdentifier('emailRecepient')
             ->addIdentifier('emailSender')
+            ->addIdentifier('activateHttpCache')
             ->addIdentifier('activateSettings')
             ->add('_action', 'actions', array( 
                     'actions' => array(  
                         'edit' => array(
-                            'template' => 'PageBundle:Admin:edit.html.twig'
+                            'template' => 'SettingsBundle:Admin:edit.html.twig'
                         )
                     )
-                ))
-        ;
+                )
+		);
     }
 }

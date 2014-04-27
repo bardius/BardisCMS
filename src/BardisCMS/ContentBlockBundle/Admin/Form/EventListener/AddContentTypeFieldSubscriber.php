@@ -1,4 +1,5 @@
 <?php
+
 /*
  * ContentBlock Bundle
  * This file is part of the BardisCMS.
@@ -57,7 +58,7 @@ class AddContentTypeFieldSubscriber implements EventSubscriberInterface
                     $form->add($this->factory->createNamed('htmlText', 'textarea', null, array('auto_initialize' => false, 'attr' => array( 'class' => 'tinymce', 'data-theme' => 'advanced'), 'label' => 'Text - HTML Contents', 'required' => false)));
                 break;
             case 'image':
-                    //$form->add($this->factory->createNamed('imageFile', 'sonata_media_type', null, array( 'provider' => 'sonata.media.provider.image', 'context' => 'default', 'attr' => array( 'class' => 'imagefield'), 'label' => 'Image File', 'required' => false)));
+                    //$form->add($this->factory->createNamed('imageFile', 'sonata_media_type', null, array('auto_initialize' => false, 'provider' => 'sonata.media.provider.image', 'context' => 'default', 'attr' => array( 'class' => 'imagefield'), 'label' => 'Image File', 'required' => false)));
                     $form->add($this->factory->createNamed('imageFiles','contentimagecollection', null, array('auto_initialize' => false, 'label' => 'Image Files')));
                     $form->add($this->factory->createNamed('mediaSize', 'choice', null, array('auto_initialize' => false, 'choices' => $mediaSizeChoices, 'preferred_choices' => array($prefMediaSizeChoice), 'label' => 'Media Size', 'required' => true)));
                 break;

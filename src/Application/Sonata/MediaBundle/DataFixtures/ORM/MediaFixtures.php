@@ -154,6 +154,40 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
         $introImage8->setUpdatedAt(new \DateTime());
 		$manager->persist($introImage8);
 		
+		
+        $homeBanner1 = new Media();
+        $homeBanner1->setName('sample_thumb.jpeg');
+        $homeBanner1->setEnabled(0);
+        $homeBanner1->setProviderName('sonata.media.provider.image');
+        $homeBanner1->setProviderStatus(1);
+        $homeBanner1->setProviderReference('sample_thumb.jpeg');
+        $homeBanner1->setMetadataValue('filename', 'sample_thumb.jpeg');
+        $homeBanner1->setWidth(622);
+        $homeBanner1->setHeight(415);
+		$homeBanner1->setContentType('image/jpeg');
+		$homeBanner1->setSize(8043);
+        $homeBanner1->setContext('bgimage');
+        $homeBanner1->setCreatedAt(new \DateTime());
+        $homeBanner1->setUpdatedAt(new \DateTime());
+		$manager->persist($homeBanner1);
+		
+		
+        $homeBanner2 = new Media();
+        $homeBanner2->setName('sample_thumb.jpeg');
+        $homeBanner2->setEnabled(0);
+        $homeBanner2->setProviderName('sonata.media.provider.image');
+        $homeBanner2->setProviderStatus(1);
+        $homeBanner2->setProviderReference('sample_thumb.jpeg');
+        $homeBanner2->setMetadataValue('filename', 'sample_thumb.jpeg');
+        $homeBanner2->setWidth(622);
+        $homeBanner2->setHeight(415);
+		$homeBanner2->setContentType('image/jpeg');
+		$homeBanner2->setSize(8043);
+        $homeBanner2->setContext('bgimage');
+        $homeBanner2->setCreatedAt(new \DateTime());
+        $homeBanner2->setUpdatedAt(new \DateTime());
+		$manager->persist($homeBanner2);
+		
         $manager->flush();
 		
 		$this->addReference('introImage1', $introImage1);
@@ -164,11 +198,13 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
 		$this->addReference('introImage6', $introImage6);
 		$this->addReference('introImage7', $introImage7);
 		$this->addReference('introImage8', $introImage8);
+		$this->addReference('homeBanner1', $homeBanner1);
+		$this->addReference('homeBanner2', $homeBanner2);
     }
 	
 	public function getOrder()
     {
-        return 5;
+        return 3;
     }
 
 }

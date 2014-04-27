@@ -30,6 +30,8 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface
         $pagehome->setPagetype('homepage');
         $pagehome->addCategory($manager->merge($this->getReference('categoryHome')));
         $pagehome->addMaincontentblock($manager->merge($this->getReference('contentSampleHome')));
+        $pagehome->addBannercontentblock($manager->merge($this->getReference('contentHomeSlide1')));
+        $pagehome->addBannercontentblock($manager->merge($this->getReference('contentHomeSlide2')));
 		$manager->persist($pagehome);
 		
         $page404 = new Page();

@@ -3,6 +3,7 @@
 namespace BardisCMS\CategoryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use BardisCMS\PageBundle\Entity\Page;
 use BardisCMS\BlogBundle\Entity\Blog;
 use Application\Sonata\MediaBundle\Entity\Media;
@@ -49,14 +50,19 @@ class Category
     * @ORM\ManyToMany(targetEntity="BardisCMS\BlogBundle\Entity\Blog", mappedBy="categories", cascade={"persist"})
     */
     protected $blogs;
+	
+	/**
+     * @ORM\Column(name="date_last_modified", type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $dateLastModified;
+	
 
     public function __construct()
     {
         $this->pages    = new \Doctrine\Common\Collections\ArrayCollection();
         $this->blogs    = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
- 
+    } 
 
     /**
      * Get id
@@ -196,6 +202,16 @@ class Category
     public function getPages()
     {
         return $this->pages;
+    }
+		
+	/**
+	 * Get dateLastModified
+	 *
+	 * @return integer 
+	 */
+    public function getDateLastModified()
+    {
+        return $this->dateLastModified;
     }
 	
     /**

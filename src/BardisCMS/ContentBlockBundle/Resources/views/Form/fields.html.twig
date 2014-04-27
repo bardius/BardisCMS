@@ -66,8 +66,8 @@ This file is part of the BardisCMS.
 		<div class="sonata-collection-row sonata-ba-collapsed-fields" style="float: left;padding: 10px;margin: 10px 0; background-color: #EEE; border: 1px solid #666;">
 			<span style="display: none;">{{ form_label(child) }}</span>
 			{% if allow_delete %}
-				<span class="btn sonata-action-element" style="float: left;display: block; clear: both;">
-					<a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-delete"><i class="icon-remove"></i> Delete This Content Block</a>    
+				<span class="btn btn-danger sonata-action-element" style="float: left;display: block; clear: both;">
+					<a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-delete"><i class="fa fa-minus-circle"></i> Delete This Content Block</a>    
 				</span>
 			{% endif %}
 			{{ form_errors(child, { 'attr': {'style': 'float:left;width:100%;padding:10px 0;width:100%;'} }) }}
@@ -91,8 +91,8 @@ This file is part of the BardisCMS.
         {% endfor %}
         {{ form_rest(form) }}
         {% if allow_add %}
-            <span class="btn sonata-action-element" style="float: left;display: block; clear: both;">
-                <a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-add"><i class="icon-plus"></i> Add New Content Block</a> 
+            <span class="btn btn-default sonata-action-element" style="float: left;display: block; clear: both;">
+                <a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-add"><i class="fa fa-plus-square fa-fw"></i> Add New Content Block</a> 
             </span>
         {% endif %}
     </div>
@@ -111,8 +111,8 @@ This file is part of the BardisCMS.
 		<div class="sonata-collection-row sonata-ba-collapsed-fields" style="float: left;padding: 10px;margin: 10px 0; background-color: #EEE; border: 1px solid #666;">
 			<span style="display: none;">{{ form_label(child) }}</span>
 			{% if allow_delete %}
-				<span class="btn sonata-action-element" style="float: left;display: block; clear: both;">
-					<a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-delete"><i class="icon-remove"></i> Delete This Image File</a>
+				<span class="btn btn-danger sonata-action-element" style="float: left;display: block; clear: both;">
+					<a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-delete"><i class="fa fa-minus-circle"></i> Delete This Image File</a>
 				</span>
 			{% endif %}
 			{{ form_errors(child, { 'attr': {'style': 'float:left;width:100%;padding:10px 0;width:100%;'} }) }}
@@ -136,8 +136,8 @@ This file is part of the BardisCMS.
         {% endfor %}
         {{ form_rest(form) }}
         {% if allow_add %}
-            <span class="btn sonata-action-element" style="float: left;display: block; clear: both;">
-                <a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-add"><i class="icon-plus"></i> Add New Image File</a> 
+            <span class="btn btn-default sonata-action-element" style="float: left;display: block; clear: both;">
+                <a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-add"><i class="fa fa-plus-square fa-fw"></i> Add New Image File</a> 
             </span>
         {% endif %}
     </div>

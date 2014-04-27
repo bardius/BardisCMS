@@ -10,25 +10,16 @@ services:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
         factory_service: bardiscms_menu.menu_builder
         factory_method: createMenu
-        arguments: ["@request", "@doctrine.orm.entity_manager","Main Menu","menu right","main"]
+        arguments: ["@request", "@doctrine.orm.entity_manager","Main Menu","menu left","main"]
         scope: request # needed as we have the request as a dependency here
         tags:
             - { name: knp_menu.menu, alias: main } # The alias is what is used to retrieve the menu
-
-    bardiscms_menu.menu.smallfooter:
-        class: Knp\Menu\MenuItem # the service definition requires setting the class
-        factory_service: bardiscms_menu.menu_builder
-        factory_method: createMenu
-        arguments: ["@request", "@doctrine.orm.entity_manager","Small Footer Menu","smallfooter-menu menu inline-list","simple"]
-        scope: request # needed as we have the request as a dependency here
-        tags:
-            - { name: knp_menu.menu, alias: smallfooter } # The alias is what is used to retrieve the menu
 
     bardiscms_menu.menu.footer:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
         factory_service: bardiscms_menu.menu_builder
         factory_method: createMenu
-        arguments: ["@request", "@doctrine.orm.entity_manager","Footer Menu","footer-menu menu inline-list","simple"]
+        arguments: ["@request", "@doctrine.orm.entity_manager","Footer Menu","footer-menu menu inline-list center","simple"]
         scope: request # needed as we have the request as a dependency here
         tags:
             - { name: knp_menu.menu, alias: footer } # The alias is what is used to retrieve the menu

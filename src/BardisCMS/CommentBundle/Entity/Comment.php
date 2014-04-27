@@ -11,6 +11,7 @@
 namespace BardisCMS\CommentBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use BardisCMS\BlogBundle\Entity\Blog;
 
 use Symfony\Component\Validator\Mapping\ClassMetadata;
@@ -75,6 +76,12 @@ class Comment
      * @ORM\JoinColumn(name="blog_id", referencedColumnName="id")
      */
     protected $blogPost;
+	
+	/**
+     * @ORM\Column(name="date_last_modified", type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $dateLastModified;
 	
 
     public function __construct()
@@ -281,6 +288,16 @@ class Comment
     public function getBlogPost()
     {
         return $this->blogPost;
+    }
+		
+	/**
+	 * Get dateLastModified
+	 *
+	 * @return integer 
+	 */
+    public function getDateLastModified()
+    {
+        return $this->dateLastModified;
     }
     
     /**

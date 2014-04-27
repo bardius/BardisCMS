@@ -1,0 +1,6 @@
+services:
+      
+  tag.tag_timestamp_listener:
+    class: BardisCMS\TagBundle\Listener\TimestampListener
+    tags:
+        - { name: doctrine.event_listener, event: onFlush }

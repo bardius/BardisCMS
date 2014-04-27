@@ -2,10 +2,7 @@
                         <form id="contactform" method="post" {{ form_enctype(form) }} class="contactForm">
 							<div class="row">
 								<div class="large-12 small-12 columns">
-									<p><span class="noticeMsg">All fields are mandatory</span></p>
-								</div>
-								<div class="large-12 small-12 columns">
-									{{ form_errors(form) }}								
+									<legend>MESSAGE TO THE WEBSITE</legend>
 								</div>
 								<div class="large-6 small-12 columns">
 									{{ form_row(form.firstname) }}										
@@ -22,10 +19,14 @@
 								<div class="large-12 small-12 columns hidden">
 									{{ form_row(form.bottrap) }}								
 								</div>
-								<div class="large-12 small-12 columns">
-									{{ form_rest(form) }}								
+								{#
+								<div class="large-12 small-12 columns formFieldContainer">
+									{{ form_errors(form) }}								
 								</div>
+								#}
 								<div class="large-12 small-12 columns">
+									{{ form_rest(form) }}
+									<small class="noticeMsg">All fields are mandatory</small>
 									<input type="submit" id="contactFormBtn" class="button" value="Submit" />
 									{% if formMessage is defined %}
 									<small class="contactForm-message error">

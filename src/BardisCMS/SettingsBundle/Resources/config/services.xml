@@ -5,5 +5,9 @@
      <service id="bardiscms_settings.load_settings" class="BardisCMS\SettingsBundle\Services\LoadSettings">
         <argument type="service" id="doctrine.orm.entity_manager" />
      </service>
+	 
+	 <service id="bardiscms_settings.set_page_settings" class="BardisCMS\SettingsBundle\Services\SetPageSettings">
+        <argument type="service" id="doctrine.orm.entity_manager" />
+     </service>
   </services>
 </container>

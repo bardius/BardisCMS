@@ -1,10 +1,14 @@
-Symfony2 BardisCMS v2.4.1
+[![devDependency Status](https://david-dm.org/bardius/bardisCMS/dev-status.svg)](https://david-dm.org/bardius/bardisCMS#info=devDependencies) [![Build Status](https://travis-ci.org/bardius/bardisCMS.svg?branch=master)](https://travis-ci.org/bardius/bardisCMS) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+
+![](http://www.bardis.info/bardisCMS.png)
+
+Symfony2 BardisCMS v2.4.3
 ======================================================
 
-This is a Symfony2 based CMS based on version 2.4.1.  
+This is a Symfony2 based CMS based on version 2.4.3.  
   
-You can find the requirements for Symfony2 here http://symfony.com/doc/2.2/reference/requirements.html  
-You can find the documentation for Symfony2 here http://symfony.com/doc/2.2/book/index.html  
+You can find the requirements for Symfony2 here http://symfony.com/doc/current/reference/requirements.html  
+You can find the documentation for Symfony2 here http://symfony.com/doc/current/book/index.html  
   
 The CMS requires the existence of 3 pages to work. These are the homepage, the 404 page and the tagged page (if there are tags and filtered results).  
   
@@ -41,7 +45,8 @@ Tip: Additionally in the same file you have to set the paths for sass, compass a
 composer.phar install
 
 9. Run the CLI symphony2 commands  
-	* php app/console cache:clear  
+
+	* php app/console cache:clear [--env=prod]
 	(to clear and warmup cache)
 	* php app/console assets:install  
 	(to generate the bundle assets)
@@ -51,43 +56,41 @@ composer.phar install
 	(to load required/sample data to database)
 	* php app/console sonata:media:sync-thumbnails sonata.media.provider.image  
 	(to generate the required by sample data images)
-	* php app/console assetic:dump  
+	* php app/console assetic:dump [--env=prod]
 	(to generate the assets for the front end)
 
  
 ### Front end Framework Setup ###
 
-Due to the use of the Zurb Foundation Framework 5 (version 1.0.1) the need for the following steps is unavoidable unless you do not need the framework at all. 
+Due to the use of the Zurb Foundation Framework 5 (version 5.2.2) the need for the following steps is unavoidable unless you do not need the framework at all. 
   
 We need to install NodeJs, Node Packaged Modules, Ruby, compass, sass, foundation gems and GIT and bower dependency manager if they are not already installed to the system. 
   
 More information can be found below at their official web sites:  
   
-http://git-scm.com/downloads				(GIT)  
-http://nodejs.org/							(NodeJs)  
-https://npmjs.org/							(Node Packaged Modules)  
-http://www.rubyinstaller.org/				(Ruby)  
-https://github.com/bower/bower				(Bower)  
-http://sass-lang.com/install				(Sass)  
-http://compass-style.org/install/			(Compass)  
-http://foundation.zurb.com/docs/sass.html	(Foundation 5 - Sass based)  
+	http://git-scm.com/downloads				(GIT)  
+	http://nodejs.org/							(NodeJs)  
+	https://npmjs.org/							(Node Packaged Modules)  
+	http://www.rubyinstaller.org/				(Ruby)  
+	https://github.com/bower/bower				(Bower)  
+	http://sass-lang.com/install				(Sass)  
+	http://compass-style.org/install/			(Compass)  
+	http://foundation.zurb.com/docs/sass.html	(Foundation 5 - Sass based)  
   
 The command line steps are:  
-
-	1. npm install -g bower
+	
+	1. [sudo] npm install -g bower grunt-cli
 	2. gem update --system
 	3. gem install sass
 	4. gem install compass
 	5. gem install foundation
-
-Navigate in your /web folder via Git bash and run
-
-	bower install  
+	6. [sudo] npm install
+	7. bower install
+	8. grunt deploy [watch]
 
 Tip: In case you are behind a firewall and connection to git is refused force https for all git connections with running this in your bash git config --global url."https://".insteadOf git://
 
-	compass compile
-	php app/console assetic:dump  
+	php app/console assetic:dump  [--env=prod]
   
 Your project should work now and you can see your front end working.  
 Please Login to /admin/dashboard and alter your website settings and you are finally set to go.
@@ -130,7 +133,7 @@ Here is a sample setup for your virtual host configuration
 
 	<VirtualHost *:80>
 
-		DocumentRoot "C:/wamp/www/domainname/web"
+		DocumentRoot "c:/wamp/www/domainname/web"
 		ServerName domainname.prod
 		ServerAlias domainname.test
 		ServerAlias domainname.dev
@@ -145,18 +148,23 @@ Here is a sample setup for your virtual host configuration
 
 		# remove image file noise from access logs
 		SetEnvIf Request_URI \.(jgp|gif|png|css|js) static
-		CustomLog C:/wamp/www/domainname/logs/domainname-access_log custom env=!static
-		CustomLog C:/wamp/www/domainname/logs/domainname-static_log custom env=static
+		CustomLog c:/wamp/www/domainname/log/domainname-access_log custom env=!static
+		CustomLog c:/wamp/www/domainname/log/domainname-static_log custom env=static
 
 		# LogLevel debug can be useful but any php warnings
 		# will always and only appear in the 'error' level
 		LogLevel info
-		ErrorLog C:/wamp/www/domainname/logs/domainname-error_log
+		ErrorLog c:/wamp/www/domainname/log/domainname-error_log
+
+		# level 0 is off. Use only for debugging rewrite rules
+		RewriteLogLevel 0
+		RewriteLog c:/wamp/www/domainname/domainname-rewrite_log
+
 
 		# for profiling information. Should not be used in production
-		# Alias /xhprof_html /usr/local/share/php/share/pear/xhprof_html
+		Alias /xhprof_html /usr/local/share/php/share/pear/xhprof_html
 
-		<Directory C:/wamp/www/domainname/web>
+		<Directory c:/wamp/www/domainname/web>
 
 			RewriteEngine On
 
@@ -177,6 +185,9 @@ Here is a sample setup for your virtual host configuration
 			Order Allow,Deny
 			Allow from all
 
+			# this is best left to 'none' rather than 'All' to 
+			# avoid the apache process looking for htaccess files all the way 
+			# up the file system tree. in this configuration we avoid 5 stat calls 
 			AllowOverride none
 
 		</Directory>
@@ -221,27 +232,27 @@ The skeleton bundle is now ready to be used as base for the creation of new cont
 
 The process for this is to:
 
-01. Copy the SkeletonBundle folder and rename it properly (e.g. ProductsBundle)
-02. Edit the admin class file with the correct names for fields and variables.
-03. Edit the Controller files with correct namespaces and variable names
-04. Change the Dependency Injection configuration and extension to fit your bundle
-05. Edit the Entity file to fit your database needs
-06. Edit the repository file to suit your needs
-07. Change the bundles routing file to provide the required functional urls
-08. Alter the views
-09. Add the requested configuration values to the config.yml
-10. Add the bundle to the registered bundles list in AppKernel
-11. Clear cache
-12. Add the a service for the new bundle admin and add it to the sonata admin config
-13. Include the bundle routing file to the app routing
-14. Edit the menu entity so you can add menu items for that bundle
-15. Edit the tag entity so you can add menu items for that bundle
-16. Edit the category entity so you can add menu items for that bundle
-17. Edit the contentblocks entity so you can add menu items for that bundle
-18. Edit the AddMenuTypeFieldSubscriber to be able to create menu items for that bundle
-19. Edit the MenuBuilder to add the case for the link generation of your bundle
-20. doctrine:schema:update --force
-21. Create an Page in that bundle to display the filtered results with alias tagged
+	01. Copy the SkeletonBundle folder and rename it properly (e.g. ProductsBundle)
+	02. Edit the admin class file with the correct names for fields and variables.
+	03. Edit the Controller files with correct namespaces and variable names
+	04. Change the Dependency Injection configuration and extension to fit your bundle
+	05. Edit the Entity file to fit your database needs
+	06. Edit the repository file to suit your needs
+	07. Change the bundles routing file to provide the required functional urls
+	08. Alter the views
+	09. Add the requested configuration values to the config.yml
+	10. Add the bundle to the registered bundles list in AppKernel.php
+	11. Clear cache
+	12. Add the a service for the new bundle admin and add it to the sonata admin config
+	13. Include the bundle routing file to the app routing
+	14. Edit the menu entity so you can add menu items for that bundle
+	15. Edit the tag entity so you can add menu items for that bundle
+	16. Edit the category entity so you can add menu items for that bundle
+	17. Edit the contentblocks entity so you can add menu items for that bundle
+	18. Edit the AddMenuTypeFieldSubscriber to be able to create menu items for that bundle
+	19. Edit the MenuBuilder to add the case for the link generation of your bundle
+	20. doctrine:schema:update --force
+	21. Create an Page in that bundle to display the filtered results with alias tagged
 
 Your new bundle should now work.
 (prequisites are the PageBundle, SettingsBundle and MenuBundle)

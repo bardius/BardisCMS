@@ -1,4 +1,5 @@
 <?php
+
 /*
  * ContentBlock Bundle
  * This file is part of the BardisCMS.
@@ -6,6 +7,7 @@
  * (c) George Bardis <george@bardis.info>
  *
  */
+
 namespace BardisCMS\ContentBlockBundle\Admin\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -43,11 +45,11 @@ class ContentBlockType extends AbstractType
         $subscriber = new AddContentTypeFieldSubscriber($formBuilder->getFormFactory(), $this->mediasizes);
         $formBuilder->addEventSubscriber($subscriber);
 		
-	$contentTypeChoices = $this->contentTypes;
+		$contentTypeChoices = $this->contentTypes;
         reset($contentTypeChoices);
         $prefContentTypeChoice = key($contentTypeChoices);
 		
-	$sizeclassChoices = $this->contentsizes;
+		$sizeclassChoices = $this->contentsizes;
         reset($sizeclassChoices);
         $prefSizeclassChoice = key($sizeclassChoices);
                 

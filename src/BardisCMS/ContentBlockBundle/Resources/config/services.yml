@@ -63,3 +63,8 @@ services:
     arguments: []        
     tags:
       - { name: form.type, alias: contentimage }
+      
+  contentblock.contentblock_timestamp_listener:
+    class: BardisCMS\ContentBlockBundle\Listener\TimestampListener
+    tags:
+        - { name: doctrine.event_listener, event: onFlush }

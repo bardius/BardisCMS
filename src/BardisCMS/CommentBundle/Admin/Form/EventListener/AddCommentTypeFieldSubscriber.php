@@ -48,11 +48,11 @@ class AddCommentTypeFieldSubscriber implements EventSubscriberInterface {
 		switch ($data->getCommentType()) {
 			
 			case 'Blog':
-				$form->add($this->factory->createNamed('blogPost', 'entity', null, array('auto_initialize' => false, 'class' => 'BardisCMS\BlogBundle\Entity\Blog', 'property' => 'title', 'expanded' => false, 'multiple' => false, 'label' => 'Select Linked Blog Post', 'attr' => array('class' => 'autoCompleteItems autoCompleteBlogs'), 'required' => false)));
+				$form->add($this->factory->createNamed('blogPost', 'entity', null, array('auto_initialize' => false, 'class' => 'BardisCMS\BlogBundle\Entity\Blog', 'property' => 'title', 'expanded' => false, 'multiple' => false, 'label' => 'Select Linked Blog Post', 'attr' => array('class' => 'autoCompleteItems autoCompleteBlogs', 'data-sonata-select2' => 'false'), 'required' => false)));
 				break;
 			
 			/*case 'Page':
-				$form->add($this->factory->createNamed('page', 'entity', null, array('auto_initialize' => false, 'class' => 'BardisCMS\PageBundle\Entity\Page', 'property' => 'title', 'expanded' => false, 'multiple' => false, 'label' => 'Select Linked Page', 'attr' => array('class' => 'autoCompleteItems autoCompletePages'), 'required' => false)));
+				$form->add($this->factory->createNamed('page', 'entity', null, array('auto_initialize' => false, 'class' => 'BardisCMS\PageBundle\Entity\Page', 'property' => 'title', 'expanded' => false, 'multiple' => false, 'label' => 'Select Linked Page', 'attr' => array('class' => 'autoCompleteItems autoCompletePages', 'data-sonata-select2' => 'false'), 'required' => false)));
 				break;*/
 			
 			default:
