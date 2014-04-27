@@ -1,9 +1,9 @@
-[![devDependency Status](https://david-dm.org/bardius/bardisCMS/dev-status.svg)](https://david-dm.org/bardius/bardisCMS#info=devDependencies) [![Build Status](https://travis-ci.org/bardius/bardisCMS.svg?branch=master)](https://travis-ci.org/bardius/bardisCMS) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+[![devDependency Status](https://david-dm.org/bardius/bardisCMS/dev-status.svg)](https://david-dm.org/bardius/bardisCMS#info=devDependencies) [![Build Status](https://travis-ci.org/bardius/BardisCMS.svg?branch=master)](https://travis-ci.org/bardius/BardisCMS) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 ![](http://www.bardis.info/bardisCMS.png)
 
-Symfony2 BardisCMS v2.4.3
-======================================================
+Symfony2 CMS Boilerplate with Foundation 5 (BardisCMS) v2.4.3
+===============================================================
 
 This is a Symfony2 based CMS based on version 2.4.3.  
   
@@ -13,6 +13,19 @@ You can find the documentation for Symfony2 here http://symfony.com/doc/current/
 The CMS requires the existence of 3 pages to work. These are the homepage, the 404 page and the tagged page (if there are tags and filtered results).  
   
 SkeletonBundle is a basic structured bundle with simple functionalities (similar to normal pages) so it can be cloned to create new bundles for new content types.  
+  
+
+Quick Start
+------------------------------------------------------
+
+The fastest way to get everything running is:
+
+	1. git clone https://github.com/bardius/BardisCMS.git
+	2. composer install
+	3. npm install -g bower grunt-cli
+	4. npm install
+	4. bower install
+	5. bardisCMS-deploy.sh
   
 
 Deployment / Local Installation
