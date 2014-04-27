@@ -25,6 +25,7 @@ before_install:
   - gem install foundation
 
 before_script:
+  - mysql -e 'create database bardiscms;'
   - curl -s http://getcomposer.org/installer | php
   - cp app/config/parameters.yml.dist app/config/parameters.yml
   - php composer.phar self-update
