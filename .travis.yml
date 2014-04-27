@@ -34,7 +34,21 @@ before_script:
   - npm install -g grunt
   - npm install -g bower
   - bower install
-  - bardisCMS-deploy.sh
+  - php app/console cache:clear --env=dev --no-debug --no-warmup
+  - php app/console cache:warmup --env=dev --no-debug
+  - php app/console cache:clear --env=prod --no-debug --no-warmup
+  - php app/console cache:warmup --env=prod --no-debug
+  - php app/console doctrine:schema:drop --force
+  - php app/console doctrine:schema:create 
+  - php app/console doctrine:fixtures:load
+  - php app/console sonata:media:sync sonata.media.provider.image default
+  - php app/console sonata:media:sync sonata.media.provider.image intro
+  - php app/console sonata:media:sync sonata.media.provider.image bgimage
+  - php app/console sonata:media:sync sonata.media.provider.image icon
+  - grunt deploy
+  - php app/console assets:install ./web/ --env=prod --no-debug
+  - php app/console assetic:dump --env=dev --no-debug
+  - php app/console assetic:dump --env=prod --no-debug
 
 script:
   - mkdir -p build/logs
