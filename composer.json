@@ -1,7 +1,7 @@
 {
 	"name": "bardis/cms-symfony2",
 	"title": "Symfony2 BardisCMS & Foundation 5",
-	"description": "Foundation 5 front end framework for Symfony2 BardisCMS",
+	"description": "BardisCMS is a Symfony2 distribution with integrated Zurb Foundation 5 (Bower and Grunt with custom builds included for better workflow) for front end and all the major bundles pre-configured (Sonata Admin, User, Media, FOSUser, KnpMenu, Guzzle) combined with extra bundles to provide a fully functional out of the box responsive CMS for websites",
 	"autoload": {
 		"psr-0": {"": "src/"}
 	},
