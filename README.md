@@ -52,6 +52,7 @@ The fastest way to get everything running is:
 	8. bower install
 	9. bardisCMS-deploy.sh 
 	10. setup your vhost
+	11. login to the admin (/admin username:admin, pass: admin)
   
 
 Deployment / Local Installation
