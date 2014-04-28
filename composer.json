@@ -19,7 +19,7 @@
 	"autoload": {
 		"psr-0": {"": "src/"}
 	},
-	"require": {
+	"require-dev": {
 		"php": ">=5.3.3",
 		"symfony/symfony": "v2.4.4",
 		"doctrine/orm": ">=2.3.0",
