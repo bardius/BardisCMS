@@ -54,19 +54,6 @@ The fastest way to get everything running is:
 	10. setup your vhost
   
 
-Included Bundles List
-------------------------------------------------------
-
-	1. FOSUserBundle
-	2. SonataBlockBundle
-	3. SonataUserBundle
-	4. SonataMediaBundle
-	5. SonataAdminBundle
-	6. SonataTimelineBundle
-	7. KnpMenu
-	8. Guzzle
-  
-
 Deployment / Local Installation
 ------------------------------------------------------
 
@@ -284,24 +271,18 @@ Your new bundle should now work.
 
 
 
+Included Bundles List
+------------------------------------------------------
 
-Installed bundles
-----------------------------------------------
-
-Sonata Admin Documentation
-http://sonata-project.org/bundles/admin/2-1/doc/index.html
-
-Sonata Media Documentation
-http://sonata-project.org/bundles/media/2-1/doc/index.html
-
-FOS User Bundle Documentation
-https://github.com/FriendsOfSymfony/FOSUserBundle
-
-Knp Menu Documentation
-http://knpbundles.com/KnpLabs/KnpMenuBundle
-
-TinymceBundle Documentation
-(http://knpbundles.com/stfalcon/TinymceBundle)
+	1. FOSUserBundle (https://github.com/FriendsOfSymfony/FOSUserBundle)
+	2. SonataBlockBundle (http://sonata-project.org/bundles/block/master/doc/index.html)
+	3. SonataUserBundle (http://sonata-project.org/bundles/user/master/doc/index.html)
+	4. SonataMediaBundle (http://sonata-project.org/bundles/media/master/doc/index.html)
+	5. SonataAdminBundle (http://sonata-project.org/bundles/admin/master/doc/index.html)
+	6. SonataTimelineBundle (http://sonata-project.org/bundles/timeline/master/doc/index.html)
+	7. KnpMenu (http://knpbundles.com/KnpLabs/KnpMenuBundle)
+	8. Guzzle (https://github.com/misd-service-development/guzzle-bundle)
+	9. StFalcon TinymceBundle (http://knpbundles.com/stfalcon/TinymceBundle)
 
 
 
@@ -338,9 +319,9 @@ NodeJs, Node Packaged Modules, Ruby, compass, sass, foundation gems and GIT and 
 
 http://git-scm.com/downloads				(GIT)
 
-http://nodejs.org/							(NodeJs)
+http://nodejs.org/					(NodeJs)
 
-https://npmjs.org/							(Node Packaged Modules)
+https://npmjs.org/					(Node Packaged Modules)
 
 http://www.rubyinstaller.org/				(Ruby)
 
@@ -350,4 +331,4 @@ http://sass-lang.com/install				(Sass)
 
 http://compass-style.org/install/			(Compass)
 
-http://foundation.zurb.com/docs/sass.html	(Foundation 5 - Sass based)
+http://foundation.zurb.com/docs/sass.html		(Foundation 5 - Sass based)
