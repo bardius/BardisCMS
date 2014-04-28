@@ -3,7 +3,6 @@
 [![Dependency Status](https://www.versioneye.com/user/projects/535c8e18fe0d073b4800011c/badge.png)](https://www.versioneye.com/user/projects/535c8e18fe0d073b4800011c)
 [![Latest Stable Version](https://poser.pugx.org/bardis/cms-symfony2/v/stable.png)](https://packagist.org/packages/bardis/cms-symfony2) 
 [![Total Downloads](https://poser.pugx.org/bardis/cms-symfony2/downloads.png)](https://packagist.org/packages/bardis/cms-symfony2) 
-[![Scrutinizer Quality Score](https://scrutinizer-ci.com/)](https://scrutinizer-ci.com/)
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 [![License](https://poser.pugx.org/bardis/cms-symfony2/license.png)](https://packagist.org/packages/bardis/cms-symfony2)
 
