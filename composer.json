@@ -1,5 +1,5 @@
 {
-	"name": "symfony2-bardiscms",
+	"name": "bardis/cms-symfony2",
 	"title": "Symfony2 BardisCMS & Foundation 5",
 	"description": "Foundation 5 front end framework for Symfony2 BardisCMS",
 	"autoload": {
