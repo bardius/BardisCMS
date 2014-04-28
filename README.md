@@ -43,6 +43,7 @@ The fastest way to get everything running is:
 
 	
 	1. git clone https://github.com/bardius/BardisCMS.git
+	2. cd BardisCMS
 	2. composer install
 	3. npm install -g bower grunt-cli
 	4. npm install
