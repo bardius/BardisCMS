@@ -36,13 +36,14 @@ Quick Start
 
 The fastest way to get everything running is:
 
-	1. git clone https://github.com/bardius/BardisCMS.git
-	2. composer self-update
-	3. composer install
-	4. npm install -g bower grunt-cli
-	5. npm install
-	6. bower install
-	7. bardisCMS-deploy.sh
+	
+	1. run composer require bardis/cms-symfony2 dev-master
+	4. run npm install -g bower grunt-cli
+	5. run npm install
+	6. run bower install
+	7. create a database
+	8. create your app/config/parameters.yml (based on parameters.yml.dist)
+	7. run bardisCMS-deploy.sh 
   
 
 Bundle List
