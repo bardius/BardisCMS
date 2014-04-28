@@ -1,11 +1,11 @@
 [![Build Status](https://travis-ci.org/bardius/BardisCMS.svg?branch=master)](https://travis-ci.org/bardius/BardisCMS)
 [![Dependency Status](https://www.versioneye.com/user/projects/535c8e24fe0d073b48000126/badge.png)](https://www.versioneye.com/user/projects/535c8e24fe0d073b48000126)
 [![Dependency Status](https://www.versioneye.com/user/projects/535c8e18fe0d073b4800011c/badge.png)](https://www.versioneye.com/user/projects/535c8e18fe0d073b4800011c)
-[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
-[![Coverage Status](https://coveralls.io/repos/bardius/BardisCMS/badge.png)](https://coveralls.io/r/bardius/BardisCMS)
+[![Latest Stable Version](https://poser.pugx.org/bardis/cms-symfony2/v/stable.png)](https://packagist.org/packages/bardis/cms-symfony2) 
+[![Total Downloads](https://poser.pugx.org/bardis/cms-symfony2/downloads.png)](https://packagist.org/packages/bardis/cms-symfony2) 
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/)](https://scrutinizer-ci.com/)
-[![Packagist Stable Version]
-[![License]
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+[![License](https://poser.pugx.org/bardis/cms-symfony2/license.png)](https://packagist.org/packages/bardis/cms-symfony2)
 
 ![](http://www.bardis.info/bardisCMS.png)
 
@@ -25,6 +25,12 @@ You can browse the Git repository, that I update with big releases every couple 
 You can find the requirements for Symfony2 here http://symfony.com/doc/current/reference/requirements.html  
 You can find the documentation for Symfony2 here http://symfony.com/doc/current/book/index.html  
 You can find the documentation for Zurb Foundation 5 here http://foundation.zurb.com/docs/
+
+Requirements
+
+* [PHP](http://www.php.net) 5.3 or later
+* Installation via [Composer](http://getcomposer.org/)
+
   
 The CMS requires the existence of 3 pages to work. These are the homepage, the 404 page and the tagged page.  
   
