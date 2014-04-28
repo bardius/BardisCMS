@@ -4,7 +4,8 @@
 	"title": "BardisCMS Symfony2 & Zurb Foundation 5 Distribution",
 	"description": "BardisCMS is a Symfony2 distribution with integrated Zurb Foundation 5 (Bower and Grunt with custom builds included for better workflow) for front end and all the major bundles pre-configured (Sonata Admin, User, Media, FOSUser, KnpMenu, Guzzle) combined with extra bundles to provide a fully functional out of the box responsive CMS for websites",
 	"license": "MIT",
-        "type": "distribution",
+        "type": "symfony-distribution",
+        "homepage": "https://github.com/bardius/BardisCMS",
 	"authors": [
             {
             "name": "George Bardis",
@@ -12,7 +13,8 @@
             }
         ],
         "support": {
-          "email": "george@bardis.info"
+          "email": "george@bardis.info",
+          "issues": "https://github.com/bardius/BardisCMS/issues"
         },
 	"autoload": {
 		"psr-0": {"": "src/"}
