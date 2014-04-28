@@ -44,18 +44,17 @@ The fastest way to get everything running is:
 	
 	1. git clone https://github.com/bardius/BardisCMS.git
 	2. cd BardisCMS
-	2. composer install
-	3. npm install -g bower grunt-cli
-	4. npm install
-	5. bower install
-	6. create a database
-	7. create your app/config/parameters.yml (based on parameters.yml.dist)
-	8. bardisCMS-deploy.sh 
-	9. setup your vhost
-	10. Ready to go!
+	3. composer install
+	4. create a database
+	5. alter your app/config/parameters.yml with your db details
+	6. npm install -g bower grunt-cli (if you have never installed them in past)
+	7. npm install
+	8. bower install
+	9. bardisCMS-deploy.sh 
+	10. setup your vhost
   
 
-Bundle List
+Included Bundles List
 ------------------------------------------------------
 
 	1. FOSUserBundle
@@ -76,21 +75,18 @@ Please follow the steps below for a complete new install.
 1. You need to do a git clone of the git repo  
 git clone
 
-2. Create the a new folder called uploads within your web directory if not existing (with write rights)
-
-3. Install composer  
+2. Install composer  
 http://getcomposer.org/download/
 
 3. Install packagist (https://packagist.org)  
 curl -s http://getcomposer.org/installer | php
 
-4. Setup your virtual host (see details in relevant section below).  
-Tip: Remember to create the log folder that you added in the virtual host settings (if you did set one).
+4. Setup your virtual host (see details in relevant section below).
 
 5. Setup a database and provide the details to the app/config/parameters.yml file (see details in relevant section below).  
 Tip: Additionally in the same file you have to set the paths for sass, compass and java for each environment.
 
-6. Change the memory limit in your php.ini to 512M if possible
+6. Change the memory limit in your php.ini to 128M or more if required
 
 7. Set the intl PHP extension as enabled if not already (Symfony2 requirement)
 
@@ -107,7 +103,8 @@ composer.phar install
 	(to create the database schema)
 	* php app/console doctrine:fixtures:load  
 	(to load required/sample data to database)
-	* php app/console sonata:media:sync-thumbnails sonata.media.provider.image  
+	* php app/console sonata:media:sync-thumbnails sonata.media.provider.image intro
+	* php app/console sonata:media:sync-thumbnails sonata.media.provider.image bgimage
 	(to generate the required by sample data images)
 	* php app/console assetic:dump [--env=prod]
 	(to generate the assets for the front end)
@@ -122,13 +119,13 @@ We need to install NodeJs, Node Packaged Modules, Ruby, compass, sass, foundatio
 More information can be found below at their official web sites:  
   
 	http://git-scm.com/downloads				(GIT)  
-	http://nodejs.org/							(NodeJs)  
-	https://npmjs.org/							(Node Packaged Modules)  
+	http://nodejs.org/					(NodeJs)  
+	https://npmjs.org/					(Node Packaged Modules)  
 	http://www.rubyinstaller.org/				(Ruby)  
 	https://github.com/bower/bower				(Bower)  
 	http://sass-lang.com/install				(Sass)  
 	http://compass-style.org/install/			(Compass)  
-	http://foundation.zurb.com/docs/sass.html	(Foundation 5 - Sass based)  
+	http://foundation.zurb.com/docs/sass.html		(Foundation 5 - Sass based)  
   
 The command line steps are:  
 	
