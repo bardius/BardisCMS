@@ -177,31 +177,34 @@ Here is a sample setup for your virtual host configuration
 		ServerAlias domainname.dev
 
 		# set some environment variables depending on host
-		SetEnvIfNoCase Host domainname\.prod domainname_env=prod
-		SetEnvIfNoCase Host domainname\.dev domainname_env=dev
-		SetEnvIfNoCase Host domainname\.test domainname_env=test
+		# if you do not want to do that in .htaccess
+		# SetEnvIfNoCase Host domainname\.prod domainname_env=prod
+		# SetEnvIfNoCase Host domainname\.dev domainname_env=dev
+		# SetEnvIfNoCase Host domainname\.test domainname_env=test
 
 		<Directory c:/wamp/www/domainname/web>
 
 			RewriteEngine On
 
 			# use the environment variables above to select correct 
-			RewriteCond %{REQUEST_FILENAME} !-f
-			RewriteCond %{ENV:domainname_env} test
-			RewriteRule ^(.*)$ app_test.php [QSA,L]
+			# environment if you do not want to do that in .htaccess
+			# RewriteCond %{REQUEST_FILENAME} !-f
+			# RewriteCond %{ENV:domainname_env} test
+			# RewriteRule ^(.*)$ app_test.php [QSA,L]
 
-			RewriteCond %{REQUEST_FILENAME} !-f
-			RewriteCond %{ENV:domainname_env} dev
-			RewriteRule ^(.*)$ app_dev.php [QSA,L]
+			# RewriteCond %{REQUEST_FILENAME} !-f
+			# RewriteCond %{ENV:domainname_env} dev
+			# RewriteRule ^(.*)$ app_dev.php [QSA,L]
 
-			RewriteCond %{REQUEST_FILENAME} !-f
-			RewriteCond %{ENV:domainname_env} prod
-			RewriteRule ^(.*)$ app.php [QSA,L]
+			# RewriteCond %{REQUEST_FILENAME} !-f
+			# RewriteCond %{ENV:domainname_env} prod
+			# RewriteRule ^(.*)$ app.php [QSA,L]
 
 			Options +Indexes
 			Order Allow,Deny
 			Allow from all
 			AllowOverride All
+			# AllowOverride none
 
 		</Directory>
 

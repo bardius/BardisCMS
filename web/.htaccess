@@ -2,6 +2,12 @@
     RewriteEngine On
 	RewriteBase /
 
+    # set some environment variables depending on host
+    SetEnv bardiscms_env=prod
+    SetEnvIfNoCase Host bardiscms\.prod bardiscms_env=prod
+    SetEnvIfNoCase Host bardiscms\.dev bardiscms_env=dev
+    SetEnvIfNoCase Host bardiscms\.test bardiscms_env=test
+
 	#### Redirect non www to www ####
 	# RewriteCond %{HTTP_HOST} ^domain.com [NC]
 	# RewriteRule ^(.*)$ http://www.domain.com/$1 [L,R=301]
@@ -31,7 +37,7 @@
 	# Block out any script trying to modify a _REQUEST variable via URL
 	RewriteCond %{QUERY_STRING} _REQUEST(=|[|\%[0-9A-Z]{0,2})
 	# Send all blocked request to homepage with 403 Forbidden error!
-	RewriteRule ^(.*)$ app.php [F,L]
+	RewriteRule ^(.*)$ app.php [QSA,L]
 
 	RewriteCond %{REQUEST_URI} ^/admin(/.*|)$ [NC]
     RewriteCond %{REQUEST_FILENAME} !-f
@@ -39,7 +45,19 @@
 
 	RewriteCond %{REQUEST_URI} !^/admin(/.*|)$ [NC]
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*)$ app.php [QSA,L]
+	RewriteCond %{ENV:bardiscms_env} test
+	RewriteRule ^(.*)$ app_test.php [QSA,L]
+
+	RewriteCond %{REQUEST_URI} !^/admin(/.*|)$ [NC]
+    RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{ENV:bardiscms_env} dev
+	RewriteRule ^(.*)$ app_dev.php [QSA,L]
+
+	RewriteCond %{REQUEST_URI} !^/admin(/.*|)$ [NC]
+    RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{ENV:bardiscms_env} prod
+	RewriteRule ^(.*)$ app.php [QSA,L]
+
 </IfModule>
 
 #### Disable server signature
