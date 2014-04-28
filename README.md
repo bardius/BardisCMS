@@ -45,11 +45,13 @@ The fastest way to get everything running is:
 	1. git clone https://github.com/bardius/BardisCMS.git
 	2. composer install
 	3. npm install -g bower grunt-cli
-	4. run npm install
-	5. run bower install
+	4. npm install
+	5. bower install
 	6. create a database
 	7. create your app/config/parameters.yml (based on parameters.yml.dist)
-	8. run bardisCMS-deploy.sh 
+	8. bardisCMS-deploy.sh 
+	9. setup your vhost
+	10. Ready to go!
   
 
 Bundle List
@@ -193,27 +195,6 @@ Here is a sample setup for your virtual host configuration
 		SetEnvIfNoCase Host domainname\.dev domainname_env=dev
 		SetEnvIfNoCase Host domainname\.test domainname_env=test
 
-		# consider a json formatted log string 
-		LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-agent}i\"" custom
-
-		# remove image file noise from access logs
-		SetEnvIf Request_URI \.(jgp|gif|png|css|js) static
-		CustomLog c:/wamp/www/domainname/log/domainname-access_log custom env=!static
-		CustomLog c:/wamp/www/domainname/log/domainname-static_log custom env=static
-
-		# LogLevel debug can be useful but any php warnings
-		# will always and only appear in the 'error' level
-		LogLevel info
-		ErrorLog c:/wamp/www/domainname/log/domainname-error_log
-
-		# level 0 is off. Use only for debugging rewrite rules
-		RewriteLogLevel 0
-		RewriteLog c:/wamp/www/domainname/domainname-rewrite_log
-
-
-		# for profiling information. Should not be used in production
-		Alias /xhprof_html /usr/local/share/php/share/pear/xhprof_html
-
 		<Directory c:/wamp/www/domainname/web>
 
 			RewriteEngine On
@@ -234,11 +215,7 @@ Here is a sample setup for your virtual host configuration
 			Options +Indexes
 			Order Allow,Deny
 			Allow from all
-
-			# this is best left to 'none' rather than 'All' to 
-			# avoid the apache process looking for htaccess files all the way 
-			# up the file system tree. in this configuration we avoid 5 stat calls 
-			AllowOverride none
+			AllowOverride All
 
 		</Directory>
 
