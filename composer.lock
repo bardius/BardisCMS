@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "1b3c5b6aba5566217a718a7ac67cc3da",
+    "hash": "d1dd00f04c80ce27a041204d53080603",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2847,12 +2847,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "0527005a864afc7c5e8057fd390b0ca30f576b5e"
+                "reference": "98da9fdef197b1ad1ac05048c675938e0b5d14db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/0527005a864afc7c5e8057fd390b0ca30f576b5e",
-                "reference": "0527005a864afc7c5e8057fd390b0ca30f576b5e",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/98da9fdef197b1ad1ac05048c675938e0b5d14db",
+                "reference": "98da9fdef197b1ad1ac05048c675938e0b5d14db",
                 "shasum": ""
             },
             "require": {
@@ -2918,7 +2918,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2014-04-24 17:41:00"
+            "time": "2014-04-28 18:11:57"
         },
         {
             "name": "sonata-project/block-bundle",
@@ -3733,12 +3733,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataUserBundle.git",
-                "reference": "af77840d693aedde5176b359863e891d9fb79f18"
+                "reference": "fa13c8a142c00d2b17f0d758f133280e3c978cb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataUserBundle/zipball/af77840d693aedde5176b359863e891d9fb79f18",
-                "reference": "af77840d693aedde5176b359863e891d9fb79f18",
+                "url": "https://api.github.com/repos/sonata-project/SonataUserBundle/zipball/fa13c8a142c00d2b17f0d758f133280e3c978cb2",
+                "reference": "fa13c8a142c00d2b17f0d758f133280e3c978cb2",
                 "shasum": ""
             },
             "require": {
@@ -3796,7 +3796,7 @@
                 "sonata",
                 "user"
             ],
-            "time": "2014-04-25 07:41:35"
+            "time": "2014-04-28 17:10:29"
         },
         {
             "name": "stephpy/TimelineBundle",

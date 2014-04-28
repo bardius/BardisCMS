@@ -22,12 +22,12 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
         $admin = new User();
         $admin->setCreatedAt(new \DateTime());
         $admin->setUpdatedAt(new \DateTime());
-        $admin->setUsername('administrator');
-        $admin->setUsernameCanonical('administrator');
-        $admin->setEmail('george@bardis.info');
-        $admin->setEmailCanonical('george@bardis.info');
+        $admin->setUsername('admin');
+        $admin->setUsernameCanonical('admin');
+        $admin->setEmail('admin@domain.com');
+        $admin->setEmailCanonical('admin@domain.com');
         $admin->setEnabled(1);
-        $admin->setPlainPassword('!p@$$w0rd!');
+        $admin->setPlainPassword('admin');
 		$admin->setSuperAdmin(true);
 		//$admin->addRole(static::ROLE_SUPER_ADMIN);
 		$manager->persist($admin);
