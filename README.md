@@ -47,12 +47,11 @@ The fastest way to get everything running is:
 	3. composer install
 	4. create a database
 	5. alter your app/config/parameters.yml with your db details
-	6. npm install -g bower grunt-cli (if you have never installed them in past)
-	7. npm install
-	8. bower install
-	9. bardisCMS-deploy.sh 
-	10. setup your vhost
-	11. login to the admin (/admin username:admin, pass: admin)
+	6. setup your vhost 
+	7. npm install -g bower grunt-cli (if you have never installed them in past)
+	8. npm install
+	9. grunt first_deployment
+	10. login to the admin (/admin username:admin, pass: admin)
   
 
 Deployment / Local Installation

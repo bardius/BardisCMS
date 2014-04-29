@@ -330,6 +330,9 @@ module.exports = function(grunt) {
 	* grunt watch : run sass, uglify
 	* grunt dev : run jshint, uglify and sass
 	* grunt deploy : run jshint, uglify, sass and csso
+	* grunt first_deployment : 
+	* grunt deployment_prod : 
+	* grunt deployment_prod : 
 	* grunt availabletasks : view all available tasks
 	========================================================================== */
 

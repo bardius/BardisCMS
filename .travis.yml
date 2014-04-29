@@ -38,28 +38,28 @@ before_script:
   - php composer.phar self-update
   - php composer.phar install
   - npm install
-  - bower install
-  - php app/console cache:clear --env=dev --no-debug --no-warmup
-  - php app/console cache:warmup --env=dev --no-debug
-  - php app/console cache:clear --env=prod --no-debug --no-warmup
-  - php app/console cache:warmup --env=prod --no-debug
-  - php app/console doctrine:schema:drop --force
-  - php app/console doctrine:schema:create 
-  - php app/console doctrine:fixtures:load --append
-  - php app/console sonata:media:sync sonata.media.provider.image default
-  - php app/console sonata:media:sync sonata.media.provider.image intro
-  - php app/console sonata:media:sync sonata.media.provider.image bgimage
-  - php app/console sonata:media:sync sonata.media.provider.image icon
-  - php app/console assets:install ./web/ --env=prod --no-debug
+ # - bower install
+ # - php app/console cache:clear --env=dev --no-debug --no-warmup
+ # - php app/console cache:warmup --env=dev --no-debug
+ # - php app/console cache:clear --env=prod --no-debug --no-warmup
+ # - php app/console cache:warmup --env=prod --no-debug
+ # - php app/console doctrine:schema:drop --force
+ # - php app/console doctrine:schema:create 
+ # - php app/console doctrine:fixtures:load --append
+ # - php app/console sonata:media:sync sonata.media.provider.image default
+ # - php app/console sonata:media:sync sonata.media.provider.image intro
+ # - php app/console sonata:media:sync sonata.media.provider.image bgimage
+ # - php app/console sonata:media:sync sonata.media.provider.image icon
+ # - php app/console assets:install ./web/ --env=prod --no-debug
 
 script:
-  - grunt deploy
-  - php app/console assetic:dump --env=dev --no-debug
-  - php app/console assetic:dump --env=prod --no-debug
+  - grunt first_deployment
+  # - php app/console assetic:dump --env=dev --no-debug
+  # - php app/console assetic:dump --env=prod --no-debug
   # - mkdir -p build/logs
   # - php vendor/bin/phpunit -c phpunit.xml.dist
   # - phpunit -c app/
-#   - phpunit --coverage-text
+  # - phpunit --coverage-text
 
 after_script:
 #   - php vendor/bin/coveralls
