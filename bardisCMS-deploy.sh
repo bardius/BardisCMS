@@ -42,12 +42,6 @@ grunt deploy
 
 echo "Done!";
 
-echo "Generating Bundle Assets"
-
-php app/console assets:install ./web/ --env=prod --no-debug
-
-echo "Done!";
-
 echo "Generating Front End Assets"
 
 php app/console assetic:dump --env=dev --no-debug

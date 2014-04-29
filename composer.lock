@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "d1dd00f04c80ce27a041204d53080603",
+    "hash": "a79a2ef2d7d5d784261076fc6d5b127e",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1048,12 +1048,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "9cd16ec56a44e0dc089e6de5174e69bdca6bf2b2"
+                "reference": "7a305475e35930749e15bad0d060f8a917b1992f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/9cd16ec56a44e0dc089e6de5174e69bdca6bf2b2",
-                "reference": "9cd16ec56a44e0dc089e6de5174e69bdca6bf2b2",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/7a305475e35930749e15bad0d060f8a917b1992f",
+                "reference": "7a305475e35930749e15bad0d060f8a917b1992f",
                 "shasum": ""
             },
             "require": {
@@ -1117,7 +1117,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2014-04-28 13:47:57"
+            "time": "2014-04-29 11:25:17"
         },
         {
             "name": "friendsofsymfony/rest-bundle",
@@ -1126,12 +1126,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "8072b992807d0fc278ffb4dc9485c9d422664b29"
+                "reference": "a1763eb9c8d3988d607b4448a1a24197f7bcf8cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/8072b992807d0fc278ffb4dc9485c9d422664b29",
-                "reference": "8072b992807d0fc278ffb4dc9485c9d422664b29",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/a1763eb9c8d3988d607b4448a1a24197f7bcf8cb",
+                "reference": "a1763eb9c8d3988d607b4448a1a24197f7bcf8cb",
                 "shasum": ""
             },
             "require": {
@@ -1196,7 +1196,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2014-04-23 14:33:46"
+            "time": "2014-04-28 21:08:53"
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -1915,7 +1915,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -2690,12 +2690,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "3f87e5039d8cfcee292a6553e0069254cb0208b7"
+                "reference": "5e015ee9f525bea0ebd77951558934402fcf28cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/3f87e5039d8cfcee292a6553e0069254cb0208b7",
-                "reference": "3f87e5039d8cfcee292a6553e0069254cb0208b7",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/5e015ee9f525bea0ebd77951558934402fcf28cd",
+                "reference": "5e015ee9f525bea0ebd77951558934402fcf28cd",
                 "shasum": ""
             },
             "require": {
@@ -2732,7 +2732,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2014-04-25 14:48:23"
+            "time": "2014-04-29 09:48:35"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -3229,12 +3229,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataDoctrineORMAdminBundle.git",
-                "reference": "18ea96f455a4ea3dd2b3ae1cdeca36e7279ea83f"
+                "reference": "f35952c3e58e6cb50e2a773c3681859bf2469a07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineORMAdminBundle/zipball/18ea96f455a4ea3dd2b3ae1cdeca36e7279ea83f",
-                "reference": "18ea96f455a4ea3dd2b3ae1cdeca36e7279ea83f",
+                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineORMAdminBundle/zipball/f35952c3e58e6cb50e2a773c3681859bf2469a07",
+                "reference": "f35952c3e58e6cb50e2a773c3681859bf2469a07",
                 "shasum": ""
             },
             "require": {
@@ -3289,7 +3289,7 @@
                 "generator",
                 "sonata"
             ],
-            "time": "2014-04-23 08:15:01"
+            "time": "2014-04-29 11:25:21"
         },
         {
             "name": "sonata-project/easy-extends-bundle",
@@ -3522,12 +3522,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataMediaBundle.git",
-                "reference": "f557d5c327b402d80125ce6cca15ad8f46fb36b5"
+                "reference": "6b945acccebcb5518974f14e62c148590c310f91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataMediaBundle/zipball/f557d5c327b402d80125ce6cca15ad8f46fb36b5",
-                "reference": "f557d5c327b402d80125ce6cca15ad8f46fb36b5",
+                "url": "https://api.github.com/repos/sonata-project/SonataMediaBundle/zipball/6b945acccebcb5518974f14e62c148590c310f91",
+                "reference": "6b945acccebcb5518974f14e62c148590c310f91",
                 "shasum": ""
             },
             "require": {
@@ -3597,7 +3597,7 @@
                 "vimeo",
                 "youtube"
             ],
-            "time": "2014-04-24 17:42:08"
+            "time": "2014-04-29 09:32:38"
         },
         {
             "name": "sonata-project/notification-bundle",
@@ -4173,12 +4173,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/MonologBundle.git",
-                "reference": "1cebb645e4c0f4d62ae8c00346980b7713e90daa"
+                "reference": "dd5f08aad13fac3c863c7784ac5773364abb80d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/1cebb645e4c0f4d62ae8c00346980b7713e90daa",
-                "reference": "1cebb645e4c0f4d62ae8c00346980b7713e90daa",
+                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/dd5f08aad13fac3c863c7784ac5773364abb80d1",
+                "reference": "dd5f08aad13fac3c863c7784ac5773364abb80d1",
                 "shasum": ""
             },
             "require": {
@@ -4226,7 +4226,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2014-04-16 07:35:34"
+            "time": "2014-04-29 07:53:06"
         },
         {
             "name": "symfony/swiftmailer-bundle",
@@ -4235,12 +4235,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/SwiftmailerBundle.git",
-                "reference": "e98defd402f72e8b54a029ba4d3ac4cb51dc3577"
+                "reference": "85840a287403e53268e212f892607e01cc61b6da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/e98defd402f72e8b54a029ba4d3ac4cb51dc3577",
-                "reference": "e98defd402f72e8b54a029ba4d3ac4cb51dc3577",
+                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/85840a287403e53268e212f892607e01cc61b6da",
+                "reference": "85840a287403e53268e212f892607e01cc61b6da",
                 "shasum": ""
             },
             "require": {
@@ -4253,6 +4253,9 @@
                 "symfony/dependency-injection": "~2.1",
                 "symfony/http-kernel": "~2.1",
                 "symfony/yaml": "~2.1"
+            },
+            "suggest": {
+                "psr/log": "Allows logging"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -4283,7 +4286,7 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
-            "time": "2014-04-05 17:15:52"
+            "time": "2014-04-29 13:05:02"
         },
         {
             "name": "toopay/assetic-minifier",
@@ -4415,7 +4418,7 @@
             ],
             "authors": [
                 {
-                    "name": "William DURAND",
+                    "name": "William Durand",
                     "email": "william.durand1@gmail.com",
                     "homepage": "http://www.willdurand.fr"
                 }
