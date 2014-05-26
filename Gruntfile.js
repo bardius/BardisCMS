@@ -407,12 +407,6 @@ module.exports = function(grunt) {
 		'sf2-console:assetic_dump_prod'
 	]);
 
-	/**
-	* TODO:
-	* Need task to update all grunt dependencies
-	* Need task to download all bower dependencies
-	*/
-
 	//Travis CI to test build
 	grunt.registerTask('travis', [
 		'sf2-console:cache_clear_dev',
