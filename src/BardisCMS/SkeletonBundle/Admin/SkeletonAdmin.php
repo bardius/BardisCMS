@@ -44,7 +44,7 @@ class SkeletonAdmin extends Admin
                 ->add('title', null, array('attr' => array('class' => 'pageTitleField'), 'label' => 'Skeleton Page Title', 'required' => true))
                 ->add('publishState', 'choice', array('choices' => array('0' => 'Unpublished', '1' => 'Published', '2' => 'Preview'), 'preferred_choices' => array('2'), 'label' => 'Publish Status', 'required' => true))
                 ->add('date', 'date', array('widget' => 'single_text', 'format' => 'dd-MM-yyyy', 'attr' => array('class' => 'datepicker'), 'label' => 'Publish Date', 'required' => true))
-		->add('author',  'entity', array('class' => 'Application\Sonata\UserBundle\Entity\User', 'property' => 'username', 'expanded' => false, 'multiple' => false, 'label' => 'Author', 'data' => $loggedUser->getUsername(), 'required' => true))
+				->add('author',  'entity', array('class' => 'Application\Sonata\UserBundle\Entity\User', 'property' => 'username', 'expanded' => false, 'multiple' => false, 'label' => 'Author', 'data' => $loggedUser->getUsername(), 'required' => true))
                 ->add('alias', null, array('attr' => array('class' => 'pageAliasField'), 'label' => 'Skeleton Page Alias', 'required' => false))
                 ->add('categories',  'entity', array('class' => 'BardisCMS\CategoryBundle\Entity\Category', 'property' => 'title', 'expanded' => true, 'multiple' => true, 'label' => 'Add to Category', 'required' => true))
                 ->add('tags',  'entity', array('class' => 'BardisCMS\TagBundle\Entity\Tag', 'property' => 'title', 'expanded' => true, 'multiple' => true, 'label' => 'Associated Tags', 'required' => false))
@@ -137,7 +137,7 @@ class SkeletonAdmin extends Admin
             ->add('categories')
             ->add('tags')
             ->add('author')
-            ->add('date', 'doctrine_orm_date_range', array('input_type' => 'date'));
+            ->add('date', 'doctrine_orm_date_range', array('input_type' => 'date'), 'sonata_type_date_range')
         ;
     }
 
