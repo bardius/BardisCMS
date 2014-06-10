@@ -20,8 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
-{
-    getRequestedFilters
+{    
     // Get the blog page id based on alias from route
     public function aliasAction($alias, $extraParams = null, $currentpage = 0, $totalpageitems = 0) 
     {
