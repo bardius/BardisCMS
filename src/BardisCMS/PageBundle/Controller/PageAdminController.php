@@ -114,23 +114,6 @@ class PageAdminController extends Controller {
 		));
 	}
 	
-	// Defining the custom sonata admin action for the clearing the cache
-	public function clearCacheAction() {
-		
-		$this->get('security.context')->setToken(null);
-		$this->get('session')->invalidate();
-
-        return new RedirectResponse('/clear-cache.php');
-	}
-	
-	public function clearCacheProdAction() {
-		
-		$this->get('security.context')->setToken(null);
-		$this->get('session')->invalidate();
-
-        return new RedirectResponse('/clear-cache-prod.php');
-	}
-	
 	public function clearHTTPCacheAction() {
 		
 		$fs = new Filesystem;
