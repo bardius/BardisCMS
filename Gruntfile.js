@@ -367,7 +367,6 @@ module.exports = function(grunt) {
 		'sass:dist',
 		'autoprefixer:dist',
 		'csso:dist',
-		'sf2-console:assets_install',
 		'sf2-console:assetic_dump_dev',
 		'sf2-console:assetic_dump_prod'
 	]);
