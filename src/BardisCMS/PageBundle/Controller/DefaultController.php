@@ -355,7 +355,7 @@ class DefaultController extends Controller {
 		if ($request->getMethod() == 'POST') {
 
 			//Bind the posted form field values
-			$form->bind($request);
+			$form->handleRequest($request);
 
 			if ($form->isValid()) {
 				// Get the field values
@@ -467,7 +467,7 @@ class DefaultController extends Controller {
 		if ($request->getMethod() == 'POST') {
 
 			// Bind the data with the form
-			$filterForm->bind($request);
+			$filterForm->handleRequest($request);
 
 			// Get the data from the form
 			$filterData = $filterForm->getData();

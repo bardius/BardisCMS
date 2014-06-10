@@ -53,7 +53,7 @@ class MenuAdminController extends Controller
         unset($menuUrlExtras);      
 
         if ($this->get('request')->getMethod() == 'POST') {
-            $form->bind($this->get('request'));
+            $form->handleRequest($this->get('request'));
 
             $isFormValid = $form->isValid();
 

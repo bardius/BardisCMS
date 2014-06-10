@@ -60,7 +60,7 @@ class DefaultController extends Controller {
 		
 		// Bind the request to the comment form
 		$form = $this->createForm(new CommentType(), $comment);
-		$form->bind($request);	
+		$form->handleRequest($request);	
 		
 		//Prepare the responce data
 		$errorList = array();
