@@ -351,6 +351,8 @@ module.exports = function(grunt) {
 	
 	// Deployment to Dev task
 	grunt.registerTask('first_deployment', [
+		'sf2-console:cache_clear_dev',
+		'sf2-console:cache_clear_prod',
 		'sf2-console:cache_warmup_dev',
 		'sf2-console:cache_warmup_prod',
 		'sf2-console:doctrine_schema_drop',
@@ -365,6 +367,7 @@ module.exports = function(grunt) {
 		'sass:dist',
 		'autoprefixer:dist',
 		'csso:dist',
+		'sf2-console:assets_install',
 		'sf2-console:assetic_dump_dev',
 		'sf2-console:assetic_dump_prod'
 	]);
