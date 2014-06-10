@@ -1,8 +1,8 @@
 {
 	"name": "bardis/cms-symfony2",
-	"keywords": ["symfony2", "zurb foundation", "cms", "responsive", "doctrine", "content management", "guzzle", "rest"],
-	"title": "BardisCMS Symfony2 CMS & Zurb Foundation 5 Distribution",
+    "type": "symfony-distribution",
 	"description": "BardisCMS is a Symfony2 CMS distribution with integrated Zurb Foundation 5 (Bower and Grunt with custom builds included for better workflow) for front end and all the major bundles pre-configured (Sonata Admin, User, Media, FOSUser, KnpMenu, Guzzle) combined with extra bundles to provide a fully functional out of the box responsive CMS for websites",
+	"keywords": ["symfony2", "zurb foundation", "cms", "responsive", "doctrine", "content management", "guzzle", "rest"],
 	"license": "MIT",
         "type": "symfony-distribution",
         "homepage": "https://github.com/bardius/BardisCMS",
@@ -55,7 +55,10 @@
 		"misd/guzzle-bundle": "dev-master"
 	},
 	"scripts": {
-		"post-install-cmd": [
+		"pre-install-cmd": [
+			"cp app/config/parameters.yml.dist app/config/parameters.yml"
+		],
+		"post-install-cmd": [			
 			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
 			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
 			"Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"

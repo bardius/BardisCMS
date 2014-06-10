@@ -18,7 +18,7 @@ parameters:
     compass.bin:       /usr/bin/compass
     sass.bin:          /usr/bin/sass
     
-    unix_socket:	   /tmp/mysql.sock #for mac/linux environment
+    unix_socket:			/tmp/mysql.sock #for mac/linux environment
 
-	userpass:		   userpass
-	adminpass:		   adminpass
+    userpass:					userpass
+    adminpass:				adminpass
