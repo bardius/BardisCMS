@@ -1,0 +1,33 @@
+pre_composer_script: |
+    #!/bin/bash
+
+    # Do what you need to setup your project
+    cp app/config/parameters.yml.dist app/config/parameters.yml
+    sed -i -e "s/database_user:.*/database_user: root/" app/config/parameters.yml
+    sed -i -e "s/database_password:.*/database_password: Secr3t/" app/config/parameters.yml
+
+post_composer_script: |
+    #!/bin/bash
+
+    # Do what you need to configure your project
+    ./app/console doctrine:database:create --no-interaction
+    ./app/console doctrine:schema:create --no-interaction
+    ./app/console doctrine:fixtures:load --no-interaction
+
+php_ini: |
+    extension=openssl.so
+
+global_exclude_dirs:
+    - vendor
+    - vendors
+    - test
+    - tests
+    - Tests
+    - lib/vendor
+
+exclude_patterns:
+    - app/check.php
+    - app/autoload.php
+    - app/SymfonyRequirements.php
+    - web/config.php
+    - web/app_*.php
