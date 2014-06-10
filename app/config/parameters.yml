@@ -19,3 +19,6 @@ parameters:
     sass.bin:          /usr/bin/sass
     
     unix_socket:      /tmp/mysql.sock #for mac/linux environment
+
+    userpass:					userpass
+    adminpass:				adminpass

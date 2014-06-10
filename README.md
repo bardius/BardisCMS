@@ -44,9 +44,9 @@ The fastest way to get everything running is:
 	
 	1. git clone https://github.com/bardius/BardisCMS.git
 	2. cd BardisCMS
-	3. composer install
-	4. create a database
-	5. alter your app/config/parameters.yml with your db details
+	3. create a database
+	4. alter your app/config/parameters.yml with your db details
+	5. composer install
 	6. setup your vhost 
 	7. npm install -g bower grunt-cli (if you have never installed them in past)
 	8. npm install
