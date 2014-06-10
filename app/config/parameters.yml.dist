@@ -6,10 +6,12 @@ parameters:
     database_user:     root
     database_password: ~
 
-    mailer_transport:  smtp
-    mailer_host:       localhost
-    mailer_user:       ~
-    mailer_password:   ~
+    mailer_transport:	smtp
+    mailer_host:		localhost
+    mailer_user:		~
+    mailer_password:	~
+    mailer_encryption:	~
+    mailer_port:		~
 
     locale:            en
     secret:            2WYgMKzMLqEVFNU245fLqEVFNvprjmRy0I4Q
