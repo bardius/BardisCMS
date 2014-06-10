@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/bardius/BardisCMS.svg?branch=master)](https://travis-ci.org/bardius/BardisCMS)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/493afa2c-bd25-4c8a-ae92-a3a596dfb042/small.png)](https://insight.sensiolabs.com/projects/493afa2c-bd25-4c8a-ae92-a3a596dfb042)
 [![Dependency Status](https://www.versioneye.com/user/projects/535c8e24fe0d073b48000126/badge.png)](https://www.versioneye.com/user/projects/535c8e24fe0d073b48000126)
 [![Dependency Status](https://www.versioneye.com/user/projects/535c8e18fe0d073b4800011c/badge.png)](https://www.versioneye.com/user/projects/535c8e18fe0d073b4800011c)
 [![Latest Stable Version](https://poser.pugx.org/bardis/cms-symfony2/v/stable.png)](https://packagist.org/packages/bardis/cms-symfony2) 
