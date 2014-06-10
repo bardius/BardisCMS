@@ -18,6 +18,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class PageAdminController extends Controller {
 

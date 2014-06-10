@@ -81,7 +81,7 @@ function twig_sort_by_attribute_filter($array, $attribute = null, $options = arr
     
     foreach ($array as $k => $v) {
         // implements ArrayAccess
-        if ($v instanceof ArrayAccess && isset($v[$attribute])) {
+        if ($v instanceof \ArrayAccess && isset($v[$attribute])) {
             $v = $v[$attribute];
         // $v is an object
         } elseif (is_object($v)) {

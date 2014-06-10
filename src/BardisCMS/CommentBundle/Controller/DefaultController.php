@@ -38,7 +38,7 @@ class DefaultController extends Controller {
 	}
 	
 	// Validate form and store data with proper associations
-	public function createComment($commentType, $associated_object, $associated_object_id) {
+	protected function createComment($commentType, $associated_object, $associated_object_id) {
 		
 		// Create new comment object and associate with the desired object
 		$comment = new Comment();		
@@ -134,7 +134,7 @@ class DefaultController extends Controller {
 	}
     
     // Get the approved comments for the blog post
-    public function getBlogPostComments($blogPostId){
+    protected function getBlogPostComments($blogPostId){
 		
 		$comments = $this->getDoctrine()->getRepository('CommentBundle:Comment')->getCommentsForBlogPost($blogPostId);
         
@@ -143,7 +143,7 @@ class DefaultController extends Controller {
 	
 	// Set the settings as defined from the service of the settings bundle
     // alternative could be to skip that bundle and use the config.yml
-    public function setBlogSettings($settings, $page)
+    protected function setBlogSettings($settings, $page)
     {
         if(is_object($settings))
         {        

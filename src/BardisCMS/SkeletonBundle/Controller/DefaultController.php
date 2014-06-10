@@ -116,7 +116,7 @@ class DefaultController extends Controller
     // Get the tags and / or categories for filtering from the request
     // filters are like: tag1,tag2|category1,category1 and each argument
     // is url encoded. If all is passed as argument value everything is fetched
-    public function getRequestedFilters($extraParams)
+    protected function getRequestedFilters($extraParams)
     {
         
         $selectedTags       = array();
@@ -170,7 +170,7 @@ class DefaultController extends Controller
     
     
     // Get the ids of the filter categories
-    public function getCategoryFilterIds($selectedCategoriesArray)
+    protected function getCategoryFilterIds($selectedCategoriesArray)
     {
         
         $categoryIds = array(); 
@@ -190,7 +190,7 @@ class DefaultController extends Controller
     
     
     // Get the ids of the filter tags
-    public function getTagFilterIds($selectedTagsArray)
+    protected function getTagFilterIds($selectedTagsArray)
     {       
         
         $tagIds = array();      
@@ -210,7 +210,7 @@ class DefaultController extends Controller
     
     
     // Get the required data to display to the correct view depending on pagetype
-    public function renderPage($page, $id, $publishStates, $extraParams, $currentpage, $totalpageitems, $linkUrlParams){
+    protected function renderPage($page, $id, $publishStates, $extraParams, $currentpage, $totalpageitems, $linkUrlParams){
 		// Check if mobile content should be served		
         $serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 		$settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
@@ -284,7 +284,7 @@ class DefaultController extends Controller
     
     
     // Get and display to the 404 error page
-    public function render404Page()
+    protected function render404Page()
     {        
         $page       = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias('404');
 		$settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
@@ -341,7 +341,7 @@ class DefaultController extends Controller
     
     
     // Get the titles of the filter categories
-    public function getCategoryFilterTitles($selectedCategoriesArray)
+    protected function getCategoryFilterTitles($selectedCategoriesArray)
     {
         
         $categories = array(); 
@@ -366,7 +366,7 @@ class DefaultController extends Controller
     
     
     // Get the titles of the filter tags
-    public function getTagFilterTitles($selectedTagsArray)
+    protected function getTagFilterTitles($selectedTagsArray)
     {          
         $tags = array();
             

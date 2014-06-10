@@ -13,7 +13,7 @@ use BardisCMS\MenuBundle\Entity\Menu;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class MenuAdminController extends Controller
 {

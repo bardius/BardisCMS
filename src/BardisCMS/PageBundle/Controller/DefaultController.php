@@ -109,7 +109,7 @@ class DefaultController extends Controller {
 	// filters are like: tag1,tag2|category1,category1 and each argument
 	// is url encoded. 
 	// If 'all' is passed as argument value, everything is fetched
-	public function getRequestedFilters($extraParams) {
+	protected function getRequestedFilters($extraParams) {
 
 		$selectedTags = array();
 		$selectedCategories = array();
@@ -150,7 +150,7 @@ class DefaultController extends Controller {
 	}
 
 	// Get the ids of the filter categories
-	public function getCategoryFilterIds($selectedCategoriesArray) {
+	protected function getCategoryFilterIds($selectedCategoriesArray) {
 
 		$categoryIds = array();
 
@@ -166,7 +166,7 @@ class DefaultController extends Controller {
 	}
 
 	// Get the ids of the filter tags
-	public function getTagFilterIds($selectedTagsArray) {
+	protected function getTagFilterIds($selectedTagsArray) {
 
 		$tagIds = array();
 
@@ -183,7 +183,7 @@ class DefaultController extends Controller {
 
 	// Get the required data to display to the correct view depending on pagetype
 	// @TODO: refactor that to be a case switch in stead of conditional if 
-	public function renderPage($page, $id, $publishStates, $extraParams, $currentpage, $totalpageitems, $linkUrlParams) {
+	protected function renderPage($page, $id, $publishStates, $extraParams, $currentpage, $totalpageitems, $linkUrlParams) {
 		// Check if mobile content should be served		
         $serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 		$settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
@@ -265,7 +265,7 @@ class DefaultController extends Controller {
 	}
 
 	// Get and display to the 404 error page
-	public function render404Page() {
+	protected function render404Page() {
 
 		// Get the page with alias 404
 		$page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias('404');
@@ -331,7 +331,7 @@ class DefaultController extends Controller {
 	}
 
 	// Get the contact form page
-	public function contactForm(Request $request, $page) {
+	protected function contactForm(Request $request, $page) {
 		// Load the settings from the setting bundle
 		$settings = $this->get('bardiscms_settings.load_settings')->loadSettings();	
 		
@@ -490,7 +490,7 @@ class DefaultController extends Controller {
 	}
 
 	// Get the titles of the filter categories
-	public function getCategoryFilterTitles($selectedCategoriesArray) {
+	protected function getCategoryFilterTitles($selectedCategoriesArray) {
 
 		$categories = array();
 
@@ -510,7 +510,7 @@ class DefaultController extends Controller {
 	}
 
 	// Get the titles of the filter tags
-	public function getTagFilterTitles($selectedTagsArray) {
+	protected function getTagFilterTitles($selectedTagsArray) {
 		$tags = array();
 
 		if (!empty($selectedTagsArray)) {
@@ -529,7 +529,7 @@ class DefaultController extends Controller {
 	}
 
 	// Sort homepage items by the pageOrder value of the objects returned after the merge
-	public function sortHomepageItemsCompare($introItemA, $introItemB) {
+	protected function sortHomepageItemsCompare($introItemA, $introItemB) {
 		if ($introItemA->getPageOrder() == $introItemB->getPageOrder()) {
 			return 0;
 		}
