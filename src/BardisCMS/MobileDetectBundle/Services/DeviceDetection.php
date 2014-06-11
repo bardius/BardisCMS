@@ -10,7 +10,7 @@
 
 namespace BardisCMS\MobileDetectBundle\Services;
 
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class DeviceDetection {
 
@@ -18,13 +18,10 @@ class DeviceDetection {
 	private $mobile_ua;
 	private $mobile_agents;
 
-	public function __construct() {
-		
-		$request = Request::createFromGlobals();
-		
-		$this->useragent = strtolower($request->server->get('HTTP_USER_AGENT'));
-		$this->mobile_ua = substr($this->useragent, 0, 4);
+	public function __construct(RequestStack $requestStack) {
 
+		$this->requestStack = $requestStack;
+		
 		$this->mobile_agents = array(
 			'w3c ', 'acs-', 'alav', 'alca', 'amoi', 'audi', 'avan', 'benq', 'bird', 'blac',
 			'blaz', 'brew', 'cell', 'cldc', 'cmd-', 'dang', 'doco', 'eric', 'hipt', 'inno',
@@ -40,7 +37,10 @@ class DeviceDetection {
 	// Test if device is mobile
 	public function testMobile() {
 		
-		$request = Request::createFromGlobals();
+		$request = $this->requestStack->getMasterRequest();
+		
+		$this->useragent = strtolower($request->server->get('HTTP_USER_AGENT'));
+		$this->mobile_ua = substr($this->useragent, 0, 4);
 		
 		$HTTP_ACCEPT = $request->server->get('HTTP_ACCEPT');
 		$HTTP_X_WAP_PROFILE = $request->server->get('HTTP_X_WAP_PROFILE');
@@ -90,7 +90,10 @@ class DeviceDetection {
 	// Test if device is tablet
 	public function testTablet() {
 		
-		$request = Request::createFromGlobals();
+		$request = $this->requestStack->getMasterRequest();
+		
+		$this->useragent = strtolower($request->server->get('HTTP_USER_AGENT'));
+		$this->mobile_ua = substr($this->useragent, 0, 4);
 		
 		$HTTP_X_OPERAMINI_PHONE_UA = $request->server->get('HTTP_X_OPERAMINI_PHONE_UA');
 		$HTTP_DEVICE_STOCK_UA = $request->server->get('HTTP_DEVICE_STOCK_UA');
