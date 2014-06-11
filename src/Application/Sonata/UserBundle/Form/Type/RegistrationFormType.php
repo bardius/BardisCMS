@@ -21,10 +21,13 @@ class RegistrationFormType extends BaseType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+		/*
         $this->campaignData     = null;
         $this->campaignData     = explode('/', $_SERVER['REQUEST_URI']);
         $this->campaignData     = end($this->campaignData);
-        
+		*/
+        $this->campaignData		= 'registration';
+			
         parent::buildForm($builder, $options);
 
         // add your custom fields
