@@ -30,20 +30,18 @@ node_modules/
 
 # Symfony2 #
 #############
-app/bootstrap.php.cache
-app/cache/*
-app/logs/*
-app/sessions/*
-build/
+/app/bootstrap.php.cache
+/app/cache/*
+/app/logs/*
+/app/sessions/*
+/build/
 composer.phar
-foundation/.sass-cache/
 parameters.yml
-/web/.sass-cache/
-/web/foundation/.sass-cache/vendor/
-/web/foundation/sass/.sass-cache/
+.sass-cache/
 vendor/
-/web/bower_components/*
-web/uploads/
+/web/bower_components/
+/web/uploads/
+/web/bundles/
 /web/npm-debug.log
 
 

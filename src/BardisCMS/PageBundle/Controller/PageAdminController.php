@@ -121,8 +121,8 @@ class PageAdminController extends Controller {
 		try {
 			$fs->remove(
 				array(
-				__DIR__.'/../../../../app/cache/prod/http_cache',
-				__DIR__.'/../../../../app/cache/dev/http_cache'
+					$this->get('kernel')->getRootDir() . '/../app/cache/prod/http_cache',
+					$this->get('kernel')->getRootDir() . '/../app/cache/dev/http_cache'
 				)
 			);
 			$this->get('session')->getFlashBag()->add('sonata_flash_success', 'HTTP Cache Cleared');

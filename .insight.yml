@@ -15,9 +15,9 @@ post_composer_script: |
     #!/bin/bash
 
     # Do what you need to configure your project
-    ./app/console doctrine:database:create --no-interaction
-    ./app/console doctrine:schema:create --no-interaction
-    ./app/console doctrine:fixtures:load --no-interaction
+    #./app/console doctrine:database:create --no-interaction
+    #./app/console doctrine:schema:create --no-interaction
+    #./app/console doctrine:fixtures:load --no-interaction
 
 global_exclude_dirs:
     - vendor
@@ -38,7 +38,7 @@ rules:
     composer.apc_class_loader_should_be_enabled:
         enabled: true
     composer.dependencies_not_installable:
-        enabled: true
+        enabled: false
     composer.invalid_file:
         enabled: true
     composer.security_issue_in_composer:
