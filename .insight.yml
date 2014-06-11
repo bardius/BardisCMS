@@ -8,8 +8,8 @@ pre_composer_script: |
     cp app/config/parameters.yml.dist app/config/parameters.yml
     sed -i -e "s/database_user:.*/database_user: root/" app/config/parameters.yml
     sed -i -e "s/database_password:.*/database_password: Secr3t/" app/config/parameters.yml
-    sed -i -e "s/unix_socket:.*/unix_socket: ~" app/config/parameters.yml
-    #mysql -u root -p Secr3t -e "create database bardiscms;"
+    #sed -i -e "s/unix_socket:.*/unix_socket: ~" app/config/parameters.yml
+    mysql -u root -p Secr3t -e "create database bardiscms;"
 
 post_composer_script: |
     #!/bin/bash
@@ -173,8 +173,6 @@ rules:
     symfony.routing.action_not_restricted_by_method:
         enabled: true
     symfony.routing.route_references_non_existent_action:
-        enabled: true
-    symfony.routing.route_resource_not_loadable:
         enabled: true
     symfony.security.insecure_password_hashing_algorithm:
         enabled: true
