@@ -10,6 +10,8 @@
 
 namespace BardisCMS\MobileDetectBundle\Services;
 
+use Symfony\Component\HttpFoundation\Request;
+
 class DeviceDetection {
 
 	private $useragent;
@@ -17,7 +19,10 @@ class DeviceDetection {
 	private $mobile_agents;
 
 	public function __construct() {
-		$this->useragent = strtolower($_SERVER['HTTP_USER_AGENT']);
+		
+		$request = Request::createFromGlobals();
+		
+		$this->useragent = strtolower($request->server->get('HTTP_USER_AGENT'));
 		$this->mobile_ua = substr($this->useragent, 0, 4);
 
 		$this->mobile_agents = array(
@@ -34,6 +39,14 @@ class DeviceDetection {
 	
 	// Test if device is mobile
 	public function testMobile() {
+		
+		$request = Request::createFromGlobals();
+		
+		$HTTP_ACCEPT = $request->server->get('HTTP_ACCEPT');
+		$HTTP_X_WAP_PROFILE = $request->server->get('HTTP_X_WAP_PROFILE');
+		$HTTP_PROFILE = $request->server->get('HTTP_PROFILE');
+		$HTTP_X_OPERAMINI_PHONE_UA = $request->server->get('HTTP_X_OPERAMINI_PHONE_UA');
+		$HTTP_DEVICE_STOCK_UA = $request->server->get('HTTP_DEVICE_STOCK_UA');
 
 		// Count successful tests
 		$tablet_browser = 0;
@@ -52,7 +65,7 @@ class DeviceDetection {
 			$mobile_browser++;
 		}
 
-		if ((strpos(strtolower($_SERVER['HTTP_ACCEPT']), 'application/vnd.wap.xhtml+xml') > 0) || ((isset($_SERVER['HTTP_X_WAP_PROFILE']) || isset($_SERVER['HTTP_PROFILE'])))) {
+		if ((strpos(strtolower($HTTP_ACCEPT), 'application/vnd.wap.xhtml+xml') > 0) || ((!empty($HTTP_X_WAP_PROFILE) || !empty($HTTP_PROFILE)))) {
 			$mobile_browser++;
 		}
 
@@ -60,7 +73,7 @@ class DeviceDetection {
 			$mobile_browser++;
 
 			//Check for tablets on opera mini alternative headers
-			$stock_ua = strtolower(isset($_SERVER['HTTP_X_OPERAMINI_PHONE_UA']) ? $_SERVER['HTTP_X_OPERAMINI_PHONE_UA'] : (isset($_SERVER['HTTP_DEVICE_STOCK_UA']) ? $_SERVER['HTTP_DEVICE_STOCK_UA'] : ''));
+			$stock_ua = strtolower(!empty($HTTP_X_OPERAMINI_PHONE_UA) ? $HTTP_X_OPERAMINI_PHONE_UA : (!empty($HTTP_DEVICE_STOCK_UA) ? $HTTP_DEVICE_STOCK_UA : ''));
 			if (preg_match('/(tablet|ipad|playbook)|(android(?!.*mobile))/i', $stock_ua)) {
 				$tablet_browser++;
 			}
@@ -76,6 +89,11 @@ class DeviceDetection {
 
 	// Test if device is tablet
 	public function testTablet() {
+		
+		$request = Request::createFromGlobals();
+		
+		$HTTP_X_OPERAMINI_PHONE_UA = $request->server->get('HTTP_X_OPERAMINI_PHONE_UA');
+		$HTTP_DEVICE_STOCK_UA = $request->server->get('HTTP_DEVICE_STOCK_UA');
 
 		// Count successful tests
 		$tablet_browser = 0;
@@ -86,7 +104,7 @@ class DeviceDetection {
 
 		if (strpos($this->useragent, 'opera mini') > 0) {
 			//Check for tablets on opera mini alternative headers
-			$stock_ua = strtolower(isset($_SERVER['HTTP_X_OPERAMINI_PHONE_UA']) ? $_SERVER['HTTP_X_OPERAMINI_PHONE_UA'] : (isset($_SERVER['HTTP_DEVICE_STOCK_UA']) ? $_SERVER['HTTP_DEVICE_STOCK_UA'] : ''));
+			$stock_ua = strtolower(!empty($HTTP_X_OPERAMINI_PHONE_UA) ? $HTTP_X_OPERAMINI_PHONE_UA : (!empty($HTTP_DEVICE_STOCK_UA) ? $HTTP_DEVICE_STOCK_UA : ''));
 			if (preg_match('/(tablet|ipad|playbook)|(android(?!.*mobile))/i', $stock_ua)) {
 				$tablet_browser++;
 			}
