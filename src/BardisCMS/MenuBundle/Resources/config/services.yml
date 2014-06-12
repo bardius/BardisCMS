@@ -4,13 +4,13 @@ parameters:
 services:
     bardiscms_menu.menu_builder:
         class: BardisCMS\MenuBundle\Menu\MenuBuilder
-        arguments: ["@knp_menu.factory"]
+        arguments: ["@knp_menu.factory", "@doctrine.orm.entity_manager"]
 
     bardiscms_menu.menu.main:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
         factory_service: bardiscms_menu.menu_builder
         factory_method: createMenu
-        arguments: ["@request", "@doctrine.orm.entity_manager","Main Menu","menu left","main"]
+        arguments: ["@request", "Main Menu","menu left","main"]
         scope: request # needed as we have the request as a dependency here
         tags:
             - { name: knp_menu.menu, alias: main } # The alias is what is used to retrieve the menu
@@ -19,7 +19,7 @@ services:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
         factory_service: bardiscms_menu.menu_builder
         factory_method: createMenu
-        arguments: ["@request", "@doctrine.orm.entity_manager","Footer Menu","footer-menu menu inline-list center","simple"]
+        arguments: ["@request", "Footer Menu", "footer-menu menu inline-list center", "simple"]
         scope: request # needed as we have the request as a dependency here
         tags:
             - { name: knp_menu.menu, alias: footer } # The alias is what is used to retrieve the menu
@@ -28,7 +28,7 @@ services:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
         factory_service: bardiscms_menu.menu_builder
         factory_method: createMenu
-        arguments: ["@request", "@doctrine.orm.entity_manager","Main Menu","sitemapList side-nav","simple"]
+        arguments: ["@request", "Main Menu", "sitemapList side-nav", "simple"]
         scope: request # needed as we have the request as a dependency here
         tags:
             - { name: knp_menu.menu, alias: mainsitemap } # The alias is what is used to retrieve the menu
@@ -37,7 +37,7 @@ services:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
         factory_service: bardiscms_menu.menu_builder
         factory_method: createMenu
-        arguments: ["@request", "@doctrine.orm.entity_manager","Footer Menu","sitemapList side-nav","simple"]
+        arguments: ["@request", "Footer Menu", "sitemapList side-nav", "simple"]
         scope: request # needed as we have the request as a dependency here
         tags:
             - { name: knp_menu.menu, alias: footersitemap } # The alias is what is used to retrieve the menu

@@ -17,23 +17,24 @@ use Doctrine\ORM\EntityManager;
 class MenuBuilder {
 
 	private $factory;
+	private $em;
 
 	/**
 	 * @param FactoryInterface $factory
 	 */
-	public function __construct(FactoryInterface $factory) {
+	public function __construct(FactoryInterface $factory, EntityManager $em) {
 		$this->factory = $factory;
+		$this->em = $em;
 	}
 
 	/**
 	 * @param Request $request
-	 * @param EntityManager $em
 	 * @param String $menugroup
 	 * @param String $cssClass
 	 * @param String $menuItemDecorator
 	 */
-	public function createMenu(Request $request, EntityManager $em, $menugroup, $cssClass, $menuItemDecorator) {
-		$repo = $em->getRepository('MenuBundle:Menu');
+	public function createMenu(Request $request, $menugroup, $cssClass, $menuItemDecorator) {
+		$repo = $this->em->getRepository('MenuBundle:Menu');
 		$menudata = $repo->findBy(array("menuGroup" => $menugroup), array("ordering" => "ASC"));
 
 		$menudata = array_values($menudata);
@@ -45,7 +46,7 @@ class MenuBuilder {
 		$menu->setCurrentUri($request->getRequestUri());
 
 		$this->menuItemlevel = 0;
-		$this->setupMenuItem($menu, $menudata, $em, $menuItemDecorator);
+		$this->setupMenuItem($menu, $menudata, $menuItemDecorator);
 
 		return $menu;
 	}
@@ -75,10 +76,9 @@ class MenuBuilder {
 	/**
 	 * @param MenuItem $menu
 	 * @param Array $menudata
-	 * @param EntityManager $em
 	 * @param String $menuItemDecorator
 	 * */
-	public function setupMenuItem($menu, $menudata, EntityManager $em, $menuItemDecorator) {
+	public function setupMenuItem($menu, $menudata, $menuItemDecorator) {
 		$menuItemCounter = 0;
 
 		foreach ($menudata as $menuItem) {
@@ -86,8 +86,7 @@ class MenuBuilder {
 			$getPageFunction = 'get' . $menuType;
 
 			$menuItemCounter++;
-
-			// @TODO: here we must add proper acl based on permition levels for each menu item
+			
 			if ($menuItem->getPublishstate() != '0') {
 				$urlParams = $menuItem->getMenuUrlExtras();
 				if (!empty($urlParams)) {
@@ -135,7 +134,7 @@ class MenuBuilder {
 
 						// If Link Action is not selected point to homepage else to alias or page id based route 
 						if ($pageFunction != null) {
-							$alias = $this->getPageAlias($pageFunction, $em, $menuType);
+							$alias = $this->getPageAlias($pageFunction, $menuType);
 
 							if (null === $alias) {
 								$menu->addChild($menuItem->getTitle(), array('uri' => '/' . $menuItem->getRoute() . '/' . $pageFunction . $urlParams));
@@ -155,7 +154,7 @@ class MenuBuilder {
 
 						// If Link Action is not selected point to homepage else to alias or page id based route 
 						if ($pageFunction != null) {
-							$alias = $this->getPageAlias($pageFunction, $em, $menuType);
+							$alias = $this->getPageAlias($pageFunction, $menuType);
 
 							if (null === $alias) {
 								$menu->addChild($menuItem->getTitle(), array('uri' => '/' . strtolower($menuType) . '/' . $menuItem->getRoute() . '/' . $menuItem->$getPageFunction() . $urlParams));
@@ -187,14 +186,14 @@ class MenuBuilder {
 						$this->menuItemlevel = $this->menuItemlevel + 1;
 						//$menu[$menuItem->getTitle()]->setAttribute('flyout-toggle', true);
 						$menu[$menuItem->getTitle()]->setChildrenAttribute('class', 'dropdown level' . $this->menuItemlevel);
-						$this->setupMenuItem($menu[$menuItem->getTitle()], $menuItem->children, $em, $menuItemDecorator);
+						$this->setupMenuItem($menu[$menuItem->getTitle()], $menuItem->children, $menuItemDecorator);
 						$this->menuItemlevel = $this->menuItemlevel - 1;
 					}
 				} else {
 					if ($menuItem->children != null) {
 						$this->menuItemlevel = $this->menuItemlevel + 1;
 						$menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemlevel);
-						$this->setupMenuItem($menu[$menuItem->getTitle()], $menuItem->children, $em, $menuItemDecorator);
+						$this->setupMenuItem($menu[$menuItem->getTitle()], $menuItem->children, $menuItemDecorator);
 						$this->menuItemlevel = $this->menuItemlevel - 1;
 					}
 				}
@@ -204,10 +203,9 @@ class MenuBuilder {
 
 	/**
 	 * @param Integer $pageId
-	 * @param EntityManager $em
 	 */
-	public function getPageAlias($pageId, EntityManager $em, $menuType) {
-		$repo = $em->getRepository($menuType . 'Bundle:' . $menuType);
+	public function getPageAlias($pageId, $menuType) {
+		$repo = $this->em->getRepository($menuType . 'Bundle:' . $menuType);
 		$page = $repo->findOneById($pageId);
 
 		$pageAlias = $page->getAlias();

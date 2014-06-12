@@ -48,7 +48,7 @@ class ClearCacheService extends BaseBlockService
      */
     public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
     {
-        // TODO: Implement validateBlock() method.
+		
     }
 	
 	/**
@@ -56,6 +56,7 @@ class ClearCacheService extends BaseBlockService
      */
     public function buildEditForm(FormMapper $formMapper, BlockInterface $block)
     {
+		
     }
 	
 	/**

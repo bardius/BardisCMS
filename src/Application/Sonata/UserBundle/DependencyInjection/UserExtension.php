@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\Loader\XMLFileLoader;
 use Symfony\Component\Config\FileLocator;
 
 
-// @TODO: The service for the custon registration form type should load in the services.xml of the bundle
+// The service for the custon registration form type should load in the services.xml of the bundle
 // but this extension is totally ignored so the service is declared in the app/config/services.xml
 // this must be fixed so bundle and app are decoupled properly
 class UserExtension extends Extension

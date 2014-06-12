@@ -9,6 +9,7 @@
         <service id="sonata_user.form.type.registration" class="Application\Sonata\UserBundle\Form\Type\RegistrationFormType">
             <tag name="form.type" alias="registration" />
             <argument>%fos_user.model.user.class%</argument>
+			<argument type="service" id="request_stack" />
         </service>
 
     </services>

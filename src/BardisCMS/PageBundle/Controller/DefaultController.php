@@ -180,74 +180,81 @@ class DefaultController extends Controller {
 	}
 
 	// Get the required data to display to the correct view depending on pagetype
-	// @TODO: refactor that to be a case switch in stead of conditional if 
 	protected function renderPage($page, $id, $publishStates, $extraParams, $currentpage, $totalpageitems, $linkUrlParams) {
+		
 		// Check if mobile content should be served		
         $serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 		$settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
-
-		// Render category list page type
-		if ($page->getPagetype() == 'category_page') {
-			$tagIds = $this->getTagFilterIds($page->getTags()->toArray());
-			$categoryIds = $this->getCategoryFilterIds($page->getCategories()->toArray());
-
-			if (!empty($tagIds)) {
-				$pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedCategoryItems($categoryIds, $id, $publishStates, $currentpage, $totalpageitems, $tagIds);
-			} else {
-				$pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getCategoryItems($categoryIds, $id, $publishStates, $currentpage, $totalpageitems);
-			}
-
-			$pages = $pageList['pages'];
-			$totalPages = $pageList['totalPages'];
-
-			$response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'mobile' => $serveMobile));
-		}
-		// Render tag list page type
-		else if ($page->getPagetype() == 'page_tag_list') {
-			$filterForm = $this->createForm(new FilterPagesForm());
-			$filterData = $this->getRequestedFilters($extraParams);
-			$tagIds = $this->getTagFilterIds($filterData['tags']->toArray());
-			$categoryIds = $this->getCategoryFilterIds($filterData['categories']->toArray());
-
-			$filterForm->setData($filterData);
-
-			if (!empty($categoryIds)) {
-				$pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedCategoryItems($categoryIds, $id, $publishStates, $currentpage, $totalpageitems, $tagIds);
-			} else {
-				$pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedItems($tagIds, $id, $publishStates, $currentpage, $totalpageitems);
-			}
-
-			$pages = $pageList['pages'];
-			$totalPages = $pageList['totalPages'];
-
-			$response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'filterForm' => $filterForm->createView(), 'mobile' => $serveMobile));
-		}
-		// Render homepage page type
-		else if ($page->getPagetype() == 'homepage') {
-			$categoryIds = $this->getCategoryFilterIds($page->getCategories()->toArray());
-
-			// Get the items to display in homepage from all bundles that should supply contents
-			$pages = array();
-			$blogpages = array();
-
-			// Get the pages for the category id of homepage but take ou the current (homepage) page item from the results
-			$pages = $this->getDoctrine()->getRepository('PageBundle:Page')->getHomepageItems($categoryIds, $id, $publishStates);
-			$blogpages = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getHomepageItems($categoryIds, $publishStates);
-
-			$pages = array_merge($pages, $blogpages);
-
-			// Sort all the items based on custom sorting
-			usort($pages, array("BardisCMS\PageBundle\Controller\DefaultController", "sortHomepageItemsCompare"));
+		
+		switch ($page->getPagetype()) {
 			
-			$response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'blogs' => $blogpages, 'mobile' => $serveMobile));
-		}
-		// Render contact page type
-		else if ($page->getPagetype() == 'contact') {
-			return $this->ContactForm($this->getRequest(), $page);
-		}
-		else{
-			// Render normal page type
-			$response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'mobile' => $serveMobile));			
+			case 'category_page':
+				// Render category list page type
+				$tagIds = $this->getTagFilterIds($page->getTags()->toArray());
+				$categoryIds = $this->getCategoryFilterIds($page->getCategories()->toArray());
+
+				if (!empty($tagIds)) {
+					$pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedCategoryItems($categoryIds, $id, $publishStates, $currentpage, $totalpageitems, $tagIds);
+				} else {
+					$pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getCategoryItems($categoryIds, $id, $publishStates, $currentpage, $totalpageitems);
+				}
+
+				$pages = $pageList['pages'];
+				$totalPages = $pageList['totalPages'];
+
+				$response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'mobile' => $serveMobile));
+				break;
+
+			case 'page_tag_list':
+				// Render tag list page type
+				$filterForm = $this->createForm(new FilterPagesForm());
+				$filterData = $this->getRequestedFilters($extraParams);
+				$tagIds = $this->getTagFilterIds($filterData['tags']->toArray());
+				$categoryIds = $this->getCategoryFilterIds($filterData['categories']->toArray());
+
+				$filterForm->setData($filterData);
+
+				if (!empty($categoryIds)) {
+					$pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedCategoryItems($categoryIds, $id, $publishStates, $currentpage, $totalpageitems, $tagIds);
+				} else {
+					$pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedItems($tagIds, $id, $publishStates, $currentpage, $totalpageitems);
+				}
+
+				$pages = $pageList['pages'];
+				$totalPages = $pageList['totalPages'];
+
+				$response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'filterForm' => $filterForm->createView(), 'mobile' => $serveMobile));
+				break;
+
+			case 'homepage':
+				// Render homepage page type
+				$categoryIds = $this->getCategoryFilterIds($page->getCategories()->toArray());
+
+				// Get the items to display in homepage from all bundles that should supply contents
+				$pages = array();
+				$blogpages = array();
+
+				// Get the pages for the category id of homepage but take ou the current (homepage) page item from the results
+				$pages = $this->getDoctrine()->getRepository('PageBundle:Page')->getHomepageItems($categoryIds, $id, $publishStates);
+				$blogpages = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getHomepageItems($categoryIds, $publishStates);
+
+				$pages = array_merge($pages, $blogpages);
+
+				// Sort all the items based on custom sorting
+				usort($pages, array("BardisCMS\PageBundle\Controller\DefaultController", "sortHomepageItemsCompare"));
+
+				$response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'blogs' => $blogpages, 'mobile' => $serveMobile));
+				break;
+
+			case 'contact':
+				// Render contact page type				
+				return $this->ContactForm($this->getRequest(), $page);
+				break;
+
+			default:				
+				// Render normal page type
+				$response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'mobile' => $serveMobile));
+				
 		}
 		
 		if($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()){	
