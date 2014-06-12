@@ -340,7 +340,7 @@ class DefaultController extends Controller {
 			$websiteTitle = '';			
 		}
 		
-		$successMgs = '';		
+		$successMsg = '';		
 		$ajaxForm = $request->get('isAjax');
 		if(!isset($ajaxForm) || !$ajaxForm){
 			$ajaxForm = false;			

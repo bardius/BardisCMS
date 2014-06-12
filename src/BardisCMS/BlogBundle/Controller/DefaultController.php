@@ -229,7 +229,7 @@ class DefaultController extends Controller
             $pages      = $pageList['pages'];
             $totalPages = $pageList['totalPages'];
             
-            $response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems));
+            $response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'mobile' => $serveMobile));
         }      
         else if ($page->getPagetype() == 'blog_filtered_list')
         {          
@@ -252,7 +252,7 @@ class DefaultController extends Controller
             $pages      = $pageList['pages'];
             $totalPages = $pageList['totalPages'];
             
-            $response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'filterForm' => $filterForm->createView()));
+            $response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'filterForm' => $filterForm->createView(), 'mobile' => $serveMobile));
         }
         else if ($page->getPagetype() == 'blog_home')
         {            
@@ -261,7 +261,7 @@ class DefaultController extends Controller
             $pages      = $pageList['pages'];
             $totalPages = $pageList['totalPages'];
             
-            $response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages,  'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems));
+            $response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages,  'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'mobile' => $serveMobile));
         }
 		else{		
 			$commentsEnabled = true;
@@ -275,10 +275,10 @@ class DefaultController extends Controller
 				$comment->setBlogPost($page);
 				$form = $this->createForm(new CommentType(), $comment);
 
-				$response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'form' => $form->createView(), 'comments' => $postComments));			
+				$response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'form' => $form->createView(), 'comments' => $postComments, 'mobile' => $serveMobile));			
 			}
 			else{		
-				$response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page));			
+				$response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'mobile' => $serveMobile));			
 			}
 		}
 		

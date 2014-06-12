@@ -52,7 +52,7 @@ class FilterBlogPostsForm extends AbstractType
     public function getFilters($title)
     {
         
-        $filterList = array();
+        //$filterList = array();
         $qb         = $this->entityManager->createQueryBuilder();  
         
         $qb->select('DISTINCT c')

@@ -230,7 +230,7 @@ class DefaultController extends Controller
             $pages      = $pageList['pages'];
             $totalPages = $pageList['totalPages'];
             
-            $response = $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems));
+            $response = $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'mobile' => $serveMobile));
         }      
         else if ($page->getPagetype() == 'skeleton_filtered_list')
         {          
@@ -253,7 +253,7 @@ class DefaultController extends Controller
             $pages      = $pageList['pages'];
             $totalPages = $pageList['totalPages'];
             
-            $response = $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'filterForm' => $filterForm->createView()));
+            $response = $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'filterForm' => $filterForm->createView(), 'mobile' => $serveMobile));
         }
         else if ($page->getPagetype() == 'skeleton_home')
         {            
@@ -262,10 +262,10 @@ class DefaultController extends Controller
             $pages      = $pageList['pages'];
             $totalPages = $pageList['totalPages'];
             
-            $response = $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages,  'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems));
+            $response = $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages,  'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'mobile' => $serveMobile));
         }
         else{
-			$response = $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $page));			
+			$response = $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $page, 'mobile' => $serveMobile));			
 		}
 		
 		if($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()){	
