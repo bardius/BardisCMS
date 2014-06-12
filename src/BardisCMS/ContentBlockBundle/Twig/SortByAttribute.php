@@ -8,9 +8,6 @@
  */
 namespace BardisCMS\ContentBlockBundle\Twig;
 
-use Symfony\Component\HttpKernel\KernelInterface;
-
-
 class SortByAttribute extends \Twig_Extension
 {
     

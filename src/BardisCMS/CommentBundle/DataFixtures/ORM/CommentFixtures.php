@@ -13,7 +13,6 @@ namespace BardisCMS\CommentBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use BardisCMS\BlogBundle\Entity\Blog;
 use BardisCMS\CommentBundle\Entity\Comment;
 
 class CommentFixtures extends AbstractFixture implements OrderedFixtureInterface

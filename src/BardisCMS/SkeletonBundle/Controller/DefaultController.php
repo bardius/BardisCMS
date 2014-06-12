@@ -8,8 +8,6 @@
  */
 namespace BardisCMS\SkeletonBundle\Controller;
 
-use BardisCMS\SkeletonBundle\Entity\Skeleton;
-use BardisCMS\PageBundle\Entity\Page;
 use BardisCMS\SkeletonBundle\Form\FilterResultsForm;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

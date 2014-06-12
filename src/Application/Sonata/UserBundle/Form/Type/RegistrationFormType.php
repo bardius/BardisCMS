@@ -10,9 +10,7 @@
 namespace Application\Sonata\UserBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
-use Symfony\Component\HttpFoundation\Request;
 
 
 class RegistrationFormType extends BaseType

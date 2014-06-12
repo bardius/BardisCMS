@@ -10,7 +10,6 @@
 
 namespace BardisCMS\ContentBlockBundle\Admin\Form\EventListener;
 
-use Symfony\Component\Form\Event\DataEvent;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvents;

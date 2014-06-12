@@ -8,10 +8,6 @@
  */
 namespace BardisCMS\BlogBundle\Controller;
 
-use BardisCMS\BlogBundle\Entity\Blog;
-use BardisCMS\PageBundle\Entity\Page;
-use BardisCMS\BlogBundle\Form\FilterBlogPostsForm;
-
 use BardisCMS\CommentBundle\Entity\Comment;
 use BardisCMS\CommentBundle\Form\CommentType;
 

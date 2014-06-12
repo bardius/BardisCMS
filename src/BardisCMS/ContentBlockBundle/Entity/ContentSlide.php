@@ -11,7 +11,6 @@ namespace BardisCMS\ContentBlockBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Application\Sonata\MediaBundle\Entity\Media;
-use BardisCMS\ContentBlockBundle\Entity\ContentBlock;
 
 
 /**

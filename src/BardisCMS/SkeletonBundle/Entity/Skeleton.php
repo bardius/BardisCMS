@@ -1,4 +1,11 @@
 <?php
+/*
+ * Skeleton Bundle
+ * This file is part of the BardisCMS.
+ *
+ * (c) George Bardis <george@bardis.info>
+ *
+ */
 
 namespace BardisCMS\SkeletonBundle\Entity;
 
@@ -6,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Application\Sonata\MediaBundle\Entity\Media;
 use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use BardisCMS\ContentBlockBundle\Entity\ContentBlock;
 use BardisCMS\CategoryBundle\Entity\Category;

@@ -13,8 +13,6 @@ namespace BardisCMS\MenuBundle\Menu;
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
-use BardisCMS\PageBundle\Entity\Page;
-use BardisCMS\BlogBundle\Entity\Blog;
 
 class MenuBuilder {
 

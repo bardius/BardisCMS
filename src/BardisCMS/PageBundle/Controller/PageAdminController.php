@@ -10,10 +10,7 @@
 
 namespace BardisCMS\PageBundle\Controller;
 
-use BardisCMS\PageBundle\Entity\Page;
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Symfony\Component\Filesystem\Filesystem;

@@ -9,11 +9,8 @@
 
 namespace BardisCMS\MenuBundle\Admin\Form\EventListener;
 
-use Symfony\Component\Form\Event\DataEvent;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 

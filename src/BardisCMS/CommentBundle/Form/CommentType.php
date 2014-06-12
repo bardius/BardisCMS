@@ -13,7 +13,6 @@ namespace BardisCMS\CommentBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 use BardisCMS\CommentBundle\Form\EventListener\SanitizeFieldSubscriber;
 
 class CommentType extends AbstractType{

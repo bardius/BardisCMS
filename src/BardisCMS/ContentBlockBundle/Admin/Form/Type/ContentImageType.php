@@ -10,11 +10,8 @@ namespace BardisCMS\ContentBlockBundle\Admin\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Sonata\AdminBundle\Form\EventListener\ResizeFormListener;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
-use BardisCMS\ContentBlockBundle\Entity\ContentImage;
 
 class ContentImageType extends AbstractType
 {

@@ -11,7 +11,6 @@
 namespace BardisCMS\SettingsBundle\Services;
 
 use Doctrine\ORM\EntityManager;
-use BardisCMS\SettingsBundle\Entity\Settings;
 
 class LoadSettings {
 

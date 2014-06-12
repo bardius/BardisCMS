@@ -8,9 +8,7 @@
  */
 namespace BardisCMS\ContentBlockBundle\Controller;
 
-use BardisCMS\ContentBlockBundle\Entity\ContentBlock;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {   

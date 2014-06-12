@@ -13,11 +13,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Loader\XMLFileLoader; 
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
-use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\Config\Resource\FileResource;
-use Symfony\Component\Config\Resource\DirectoryResource;
-use Symfony\Component\Finder\Finder;
 
 
 // @TODO: The service for the custon registration form type should load in the services.xml of the bundle

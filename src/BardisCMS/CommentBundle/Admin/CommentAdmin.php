@@ -16,12 +16,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
-use Form\Type;
 use BardisCMS\CommentBundle\Admin\Form\EventListener\AddCommentTypeFieldSubscriber;
-use Symfony\Component\Form\FormBuilderInterface;
-
-use Doctrine\ORM\EntityManager;
-use BardisCMS\BlogBundle\Entity\Blog;
 
 
 class CommentAdmin extends Admin

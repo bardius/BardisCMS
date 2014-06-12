@@ -40,7 +40,7 @@ SkeletonBundle is a fully structured bundle with simple functionalities (similar
 Quick Start
 ------------------------------------------------------
 
-The fastest way to get everything running is:
+The fastest way to get everything running is (must have nodejs, ruby and sass gem installed):
 
 	
 	1. git clone https://github.com/bardius/BardisCMS.git
@@ -49,14 +49,15 @@ The fastest way to get everything running is:
 	4. copy app/config/parameters.yml.dist to app/config/parameters.yml
 	5. alter your app/config/parameters.yml with your db and environment details
 	6. composer install
-	7. npm install -g bower grunt-cli (if you have never installed them in past)
-	8. npm install
-	9. grunt first_deployment
-	10. setup your vhost 
-	11. login to the admin (/admin username:admin, pass: admin)
+	7. npm install -g bower (if you have never installed in past)
+	8. npm install -g grunt-cli (if you have never installed in past)
+	9. npm install
+	10. grunt first_deployment
+	11. setup your vhost 
+	12. login to the admin (/admin username:admin, pass: admin)
   
 
-Deployment / Local Installation
+Manual Deployment / Local Installation
 ------------------------------------------------------
 
 Please follow the steps below for a complete new install.  
@@ -118,14 +119,13 @@ More information can be found below at their official web sites:
   
 The command line steps are:  
 	
-	1. [sudo] npm install -g bower grunt-cli
-	2. gem update --system
-	3. gem install sass
-	4. gem install compass
-	5. gem install foundation
-	6. [sudo] npm install
-	7. bower install
-	8. grunt deploy [watch]
+	1. [sudo] npm install -g bower
+	2. [sudo] npm install -g grunt-cli
+	3. gem update --system
+	4. gem install sass
+	5. [sudo] npm install
+	6. bower install
+	7. grunt deploy [dev] [watch]
 
 Tip: In case you are behind a firewall and connection to git is refused force https for all git connections with running this in your bash git config --global url."https://".insteadOf git://
 
@@ -161,7 +161,7 @@ Here is a sample setup for your parameters file
 		compass.bin:       C:\Program Files\Ruby193\bin\compass #usr/bin/compass
 		sass.bin:          C:\Program Files\Ruby193\bin\sass    #usr/bin/sass
 
-		unix_socket:       ~ #for your db connection for mac users
+		unix_socket:       ~ #for your db connection if required
 
 
 

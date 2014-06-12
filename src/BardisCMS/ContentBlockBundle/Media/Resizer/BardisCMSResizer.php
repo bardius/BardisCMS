@@ -14,8 +14,6 @@ use Imagine\Image\ImagineInterface;
 use Imagine\Image\Box;
 use Gaufrette\File;
 use Sonata\MediaBundle\Model\MediaInterface;
-use Imagine\Image\ImageInterface;
-use Imagine\Exception\InvalidArgumentException;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
 use Imagine\Image\Point;
 

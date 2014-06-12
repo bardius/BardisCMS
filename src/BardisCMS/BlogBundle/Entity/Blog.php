@@ -18,7 +18,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use BardisCMS\ContentBlockBundle\Entity\ContentBlock;
 use BardisCMS\CategoryBundle\Entity\Category;
 use BardisCMS\TagBundle\Entity\Tag;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 
 /**

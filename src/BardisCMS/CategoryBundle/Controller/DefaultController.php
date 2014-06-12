@@ -8,9 +8,7 @@
  */
 namespace BardisCMS\CategoryBundle\Controller;
 
-use BardisCMS\CategoryBundle\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {   
