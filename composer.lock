@@ -3753,12 +3753,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataTimelineBundle.git",
-                "reference": "190873b646993905bedd6a90cbbff6dee0914d34"
+                "reference": "6e52ee67bb7ce16b1e32078975bdddbf1fbc5689"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataTimelineBundle/zipball/190873b646993905bedd6a90cbbff6dee0914d34",
-                "reference": "190873b646993905bedd6a90cbbff6dee0914d34",
+                "url": "https://api.github.com/repos/sonata-project/SonataTimelineBundle/zipball/6e52ee67bb7ce16b1e32078975bdddbf1fbc5689",
+                "reference": "6e52ee67bb7ce16b1e32078975bdddbf1fbc5689",
                 "shasum": ""
             },
             "require": {
@@ -3801,7 +3801,7 @@
                 "time",
                 "wall"
             ],
-            "time": "2014-04-23 16:13:04"
+            "time": "2014-06-12 13:54:22"
         },
         {
             "name": "sonata-project/user-bundle",
