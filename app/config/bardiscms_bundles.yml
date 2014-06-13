@@ -71,7 +71,7 @@ menu:
     
     accessLevel:
         0:      Public
-        1:      Authendicated
+        1:      Authenticated
         2:      Administrator
     
     publishState:
