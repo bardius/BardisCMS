@@ -23,7 +23,7 @@ class SortByAttribute extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            'sort_by_attribute'   => new \Twig_Filter_Method($this, 'twig_sort_by_attribute_filter')
+            'sort_by_attribute'   => new \Twig_Filter_Method($this, 'twigSortByAttributeFilter')
         );
     }
 
@@ -50,7 +50,7 @@ class SortByAttribute extends \Twig_Extension
  * @param string $attribute An object property or an array index/key
  * @param array $options An array of options
  */
-function twig_sort_by_attribute_filter($array, $attribute = null, $options = array('caseSensitive' => false))
+function twigSortByAttributeFilter($array, $attribute = null, $options = array('caseSensitive' => false))
 {
     // returns the original array if $attribute is not specified
     if (null === $attribute) {

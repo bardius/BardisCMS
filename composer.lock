@@ -45,7 +45,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -1055,12 +1055,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "5c447cfb7118e2822a9fe0e01deb575b5e7a8527"
+                "reference": "ca37f87c277a0431286f37ac7107d0bf46f34e92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/5c447cfb7118e2822a9fe0e01deb575b5e7a8527",
-                "reference": "5c447cfb7118e2822a9fe0e01deb575b5e7a8527",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/ca37f87c277a0431286f37ac7107d0bf46f34e92",
+                "reference": "ca37f87c277a0431286f37ac7107d0bf46f34e92",
                 "shasum": ""
             },
             "require": {
@@ -1124,7 +1124,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2014-06-07 13:12:09"
+            "time": "2014-06-15 10:19:45"
         },
         {
             "name": "friendsofsymfony/rest-bundle",
@@ -1451,12 +1451,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/avalanche123/Imagine.git",
-                "reference": "f64ec666baaa800edcbf237db41121a569230709"
+                "reference": "ff1550c270fe6116cfed778607024125e754899a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/f64ec666baaa800edcbf237db41121a569230709",
-                "reference": "f64ec666baaa800edcbf237db41121a569230709",
+                "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/ff1550c270fe6116cfed778607024125e754899a",
+                "reference": "ff1550c270fe6116cfed778607024125e754899a",
                 "shasum": ""
             },
             "require": {
@@ -1471,6 +1471,11 @@
                 "ext-imagick": "to use the Imagick implementation"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.6-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "Imagine": "lib/"
@@ -1495,7 +1500,7 @@
                 "image manipulation",
                 "image processing"
             ],
-            "time": "2013-07-10 17:25:36"
+            "time": "2014-06-13 10:56:49"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -2944,12 +2949,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataBlockBundle.git",
-                "reference": "ba4888c69745416da8ab0f7e7a64e04401cd2fbe"
+                "reference": "2bacc827aba3a73bc8cabaa9517627755f29c255"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataBlockBundle/zipball/ba4888c69745416da8ab0f7e7a64e04401cd2fbe",
-                "reference": "ba4888c69745416da8ab0f7e7a64e04401cd2fbe",
+                "url": "https://api.github.com/repos/sonata-project/SonataBlockBundle/zipball/2bacc827aba3a73bc8cabaa9517627755f29c255",
+                "reference": "2bacc827aba3a73bc8cabaa9517627755f29c255",
                 "shasum": ""
             },
             "require": {
@@ -3000,7 +3005,7 @@
                 "block",
                 "sonata"
             ],
-            "time": "2014-06-13 10:26:57"
+            "time": "2014-06-14 12:59:02"
         },
         {
             "name": "sonata-project/cache",
@@ -3069,12 +3074,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataCacheBundle.git",
-                "reference": "aa5c2f0600af8fdd0eecf45c2b6ac34a2e1a8683"
+                "reference": "5dd85ef0b94be804ae7ca029f5ee72a3ca3a7c21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataCacheBundle/zipball/aa5c2f0600af8fdd0eecf45c2b6ac34a2e1a8683",
-                "reference": "aa5c2f0600af8fdd0eecf45c2b6ac34a2e1a8683",
+                "url": "https://api.github.com/repos/sonata-project/SonataCacheBundle/zipball/5dd85ef0b94be804ae7ca029f5ee72a3ca3a7c21",
+                "reference": "5dd85ef0b94be804ae7ca029f5ee72a3ca3a7c21",
                 "shasum": ""
             },
             "require": {
@@ -3130,7 +3135,7 @@
             "keywords": [
                 "cache block"
             ],
-            "time": "2014-06-10 21:44:51"
+            "time": "2014-06-14 12:43:58"
         },
         {
             "name": "sonata-project/core-bundle",
@@ -3138,12 +3143,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataCoreBundle.git",
-                "reference": "9c2fc7ed49077024a258419e22d911d255274f4d"
+                "reference": "fdeb39d81d31f377b49e8bbfa2b72eb2d4ae1dcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataCoreBundle/zipball/9c2fc7ed49077024a258419e22d911d255274f4d",
-                "reference": "9c2fc7ed49077024a258419e22d911d255274f4d",
+                "url": "https://api.github.com/repos/sonata-project/SonataCoreBundle/zipball/fdeb39d81d31f377b49e8bbfa2b72eb2d4ae1dcb",
+                "reference": "fdeb39d81d31f377b49e8bbfa2b72eb2d4ae1dcb",
                 "shasum": ""
             },
             "require": {
@@ -3193,7 +3198,7 @@
             "keywords": [
                 "sonata"
             ],
-            "time": "2014-06-10 10:25:31"
+            "time": "2014-06-14 13:33:31"
         },
         {
             "name": "sonata-project/datagrid-bundle",
@@ -4012,12 +4017,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/stfalcon/TinymceBundle.git",
-                "reference": "2d78f28743e8c769d8cd8a164f34f16cc6595d7c"
+                "reference": "d686b5de27d7dfcee81cf8527931d5ace5390141"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stfalcon/TinymceBundle/zipball/2d78f28743e8c769d8cd8a164f34f16cc6595d7c",
-                "reference": "2d78f28743e8c769d8cd8a164f34f16cc6595d7c",
+                "url": "https://api.github.com/repos/stfalcon/TinymceBundle/zipball/d686b5de27d7dfcee81cf8527931d5ace5390141",
+                "reference": "d686b5de27d7dfcee81cf8527931d5ace5390141",
                 "shasum": ""
             },
             "require": {
@@ -4061,7 +4066,7 @@
                 "tinymce",
                 "wysiwyg"
             ],
-            "time": "2014-04-17 12:40:40"
+            "time": "2014-06-15 07:33:43"
         },
         {
             "name": "stof/doctrine-extensions-bundle",
