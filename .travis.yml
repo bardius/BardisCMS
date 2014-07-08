@@ -53,7 +53,7 @@ before_script:
  # - php app/console assets:install ./web/ --env=prod --no-debug
 
 script:
-  - grunt first_deployment
+  - grunt travis
   # - php app/console assetic:dump --env=dev --no-debug
   # - php app/console assetic:dump --env=prod --no-debug
   # - mkdir -p build/logs
