@@ -18,6 +18,9 @@ DirectoryIndex app.php
 	#### Redirect non www to www ####
 	# RewriteCond %{HTTP_HOST} ^domain.com [NC]
 	# RewriteRule ^(.*)$ http://www.domain.com/$1 [L,R=301]
+
+	# Remove trailing slash
+	RewriteRule ^(.*)/$ $1 [R=301,L]
 	
 	#### Prevent hotlinking ####
 	# RewriteCond %{HTTP_REFERER} !^$
@@ -25,8 +28,11 @@ DirectoryIndex app.php
 	# RewriteRule .(gif|jpg|swf|flv|png)$ / [R=302,L]
 
 	#### Force https for certain pages ####
+	# RewriteCond %{REQUEST_METHOD} !^POST$
 	# RewriteCond %{HTTPS} !=on
-	# RewriteRule ^(signup|contact-us)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R]
+	# RewriteCond %{HTTP_HOST} domain.com [NC]
+	# RewriteCond %{REQUEST_URI} contact-us
+	# RewriteRule ^(.*)$ https://www.domain.com/$1 [L,R=301]
 
 	# ErrorDocument 500 /500.html
 
