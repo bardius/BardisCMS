@@ -36,7 +36,6 @@ class BlogAdmin extends Admin
         
         // Getting the container services that exist and then the user roles
         $loggedUser     = $this->getConfigurationPool()->getContainer()->get('security.context')->getToken()->getUser();
-        $loggedUserRole = $loggedUser->getRoles();
         
         $formMapper
             ->with('Blog Page Essential Details', array('collapsed' => false))
