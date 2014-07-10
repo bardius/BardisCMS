@@ -53,7 +53,7 @@ class BlogAdmin extends Admin
                     'title'         => 'Set the title',
                     'publishState'  => 'Set the publish status',
                     'date'          => 'Set the publishing date',
-                    'author'        => 'Select the Author ( '.$loggedUserRole[0].' )',
+                    'author'        => 'Select the Author',
                     'alias'         => 'Set the URL alias',
                     'pagetype'      => 'Select the type of the Page (Blog Page template)',
                     'pageclass'     => 'Set the CSS class that wraps the Page',

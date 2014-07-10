@@ -54,7 +54,7 @@ class PageAdmin extends Admin {
 				'title' => 'Set the title',
 				'publishState' => 'Set the publish',
 				'date' => 'Set the publishing date',
-				'author' => 'Select the Author ( ' . $loggedUserRole[0] . ' )',
+				'author' => 'Select the Author',
 				'alias' => 'Set the URL alias',
 				'pagetype' => 'Select the type of the page (page template)',
 				'pageclass' => 'Set the CSS class that wraps the page',
