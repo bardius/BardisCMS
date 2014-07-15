@@ -36,7 +36,6 @@ class PageAdmin extends Admin {
 
 		//getting the container services that exist
 		$loggedUser = $this->getConfigurationPool()->getContainer()->get('security.context')->getToken()->getUser();
-		$loggedUserRole = $loggedUser->getRoles();
 
 		// using sonata admin to generate the edit page form and its fields
 		$formMapper
@@ -54,7 +53,7 @@ class PageAdmin extends Admin {
 				'title' => 'Set the title',
 				'publishState' => 'Set the publish',
 				'date' => 'Set the publishing date',
-				'author' => 'Select the Author ( ' . $loggedUserRole[0] . ' )',
+				'author' => 'Select the Author',
 				'alias' => 'Set the URL alias',
 				'pagetype' => 'Select the type of the page (page template)',
 				'pageclass' => 'Set the CSS class that wraps the page',
