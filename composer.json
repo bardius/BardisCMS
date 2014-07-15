@@ -21,7 +21,7 @@
 	},
 	"require": {
 	    "php": ">=5.3.3",
-		"symfony/symfony": "v2.4.7"
+		"symfony/symfony": "v2.4.8"
 	},
 	"require-dev": {
 		"doctrine/orm": ">=2.3.0",
