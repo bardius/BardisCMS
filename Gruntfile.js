@@ -349,7 +349,7 @@ module.exports = function(grunt) {
 		'sf2-console:assetic_dump_dev'
 	]);
 	
-	// Deployment to Dev task
+	// First Deployment task
 	grunt.registerTask('first_deployment', [
 		'sf2-console:cache_clear_dev',
 		'sf2-console:cache_clear_prod',
@@ -409,7 +409,9 @@ module.exports = function(grunt) {
 		'sf2-console:assetic_dump_prod'
 	]);
 
-	//Travis CI to test build
+	/**
+	* GRUNT Travis * A task for Travis CI to test build
+	*/
 	grunt.registerTask('travis', [
 		'sf2-console:cache_clear_dev',
 		'sf2-console:cache_clear_prod',
@@ -423,7 +425,6 @@ module.exports = function(grunt) {
 		'sf2-console:sonata_media_sync_bgimage',
 		'sf2-console:sonata_media_sync_icon',
 		'bower:install',
-		//'jshint',
 		'uglify',
 		'sass:dist',
 		'autoprefixer:dist',
