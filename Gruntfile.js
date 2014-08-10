@@ -424,7 +424,6 @@ module.exports = function(grunt) {
 		'sf2-console:sonata_media_sync_intro',
 		'sf2-console:sonata_media_sync_bgimage',
 		'sf2-console:sonata_media_sync_icon',
-		'bower:install',
 		'uglify',
 		'sass:dist',
 		'autoprefixer:dist',
