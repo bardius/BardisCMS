@@ -36,9 +36,9 @@ before_script:
   - curl -s http://getcomposer.org/installer | php
   - cp app/config/parameters.yml.dist app/config/parameters.yml
   - php composer.phar self-update
-  - php composer.phar install
+  - php composer.phar install -o
   - npm install
- # - bower install
+  - bower install
  # - php app/console cache:clear --env=dev --no-debug --no-warmup
  # - php app/console cache:warmup --env=dev --no-debug
  # - php app/console cache:clear --env=prod --no-debug --no-warmup

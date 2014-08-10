@@ -345,7 +345,7 @@ class DefaultController extends Controller
         $extraParams = urlencode($filterTags) . '|' . urlencode($filterCategories);
         
         $url = $this->get('router')->generate(
-            'BlogBundle_tagged_full',
+            'BlogBundle_tagged_noslash',
             array('extraParams' => $extraParams),
             true
         );

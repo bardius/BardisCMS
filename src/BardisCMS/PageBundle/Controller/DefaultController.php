@@ -58,13 +58,13 @@ class DefaultController extends Controller {
 		} else {
 			$publishStates = array(1, 2);
 		}
-		
+
 		//var_dump($this->container->getParameter('kernel.environment'));
-		
-		if($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()){
-			
+
+		if ($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()) {
+
 			$response = new Response();
-			
+
 			// set a custom Cache-Control directive
 			$response->headers->addCacheControlDirective('must-revalidate', true);
 			// set multiple vary headers
@@ -73,14 +73,13 @@ class DefaultController extends Controller {
 			$response->setLastModified($page->getDateLastModified());
 			// Set response as public. Otherwise it will be private by default.
 			$response->setPublic();
-			
+
 			//var_dump($response->isNotModified($this->getRequest()));
 			//var_dump($response->getStatusCode());			
 			if (!$response->isNotModified($this->getRequest())) {
 				// Marks the Response stale
 				$response->expire();
-			}
-			else{
+			} else {
 				// return the 304 Response immediately
 				$response->setSharedMaxAge(3600);
 				return $response;
@@ -181,13 +180,13 @@ class DefaultController extends Controller {
 
 	// Get the required data to display to the correct view depending on pagetype
 	protected function renderPage($page, $id, $publishStates, $extraParams, $currentpage, $totalpageitems, $linkUrlParams) {
-		
+
 		// Check if mobile content should be served		
-        $serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
+		$serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 		$settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
-		
+
 		switch ($page->getPagetype()) {
-			
+
 			case 'category_page':
 				// Render category list page type
 				$tagIds = $this->getTagFilterIds($page->getTags()->toArray());
@@ -251,13 +250,12 @@ class DefaultController extends Controller {
 				return $this->ContactForm($this->getRequest(), $page);
 				break;
 
-			default:				
+			default:
 				// Render normal page type
 				$response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'mobile' => $serveMobile));
-				
 		}
-		
-		if($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()){	
+
+		if ($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()) {
 			// set a custom Cache-Control directive
 			$response->setPublic();
 			$response->setLastModified($page->getDateLastModified());
@@ -265,7 +263,7 @@ class DefaultController extends Controller {
 			$response->headers->addCacheControlDirective('must-revalidate', true);
 			$response->setSharedMaxAge(3600);
 		}
-		
+
 		return $response;
 	}
 
@@ -285,8 +283,8 @@ class DefaultController extends Controller {
 		$page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($page);
 
 		$response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page))->setStatusCode(404);
-		
-		if($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()){
+
+		if ($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()) {
 			// set a custom Cache-Control directive
 			$response->setPublic();
 			$response->setLastModified($page->getDateLastModified());
@@ -294,7 +292,7 @@ class DefaultController extends Controller {
 			$response->headers->addCacheControlDirective('must-revalidate', true);
 			$response->setSharedMaxAge(3600);
 		}
-		
+
 		return $response;
 	}
 
@@ -316,14 +314,14 @@ class DefaultController extends Controller {
 		$sitemapList = array_merge($sitemapList, $blogpages);
 
 		$response = $this->render('PageBundle:Default:sitemap.xml.twig', array('sitemapList' => $sitemapList));
-		
-		if($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()){	
+
+		if ($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()) {
 			// set a custom Cache-Control directive
 			$response->setPublic();
 			$response->setVary(array('Accept-Encoding', 'User-Agent'));
 			$response->setSharedMaxAge(3600);
 		}
-		
+
 		return $response;
 	}
 
@@ -331,28 +329,27 @@ class DefaultController extends Controller {
 	public function sitemapxslAction() {
 
 		$response = $this->render('PageBundle:Default:sitemap.xsl.twig');
-		
+
 		return $response;
 	}
 
 	// Get the contact form page
 	protected function contactForm(Request $request, $page) {
 		// Load the settings from the setting bundle
-		$settings = $this->get('bardiscms_settings.load_settings')->loadSettings();	
-		
-		if (is_object($settings)) {		
+		$settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
+
+		if (is_object($settings)) {
 			$websiteTitle = $settings->getWebsiteTitle();
+		} else {
+			$websiteTitle = '';
 		}
-		else{
-			$websiteTitle = '';			
-		}
-		
-		$successMsg = '';		
+
+		$successMsg = '';
 		$ajaxForm = $request->get('isAjax');
-		if(!isset($ajaxForm) || !$ajaxForm){
-			$ajaxForm = false;			
+		if (!isset($ajaxForm) || !$ajaxForm) {
+			$ajaxForm = false;
 		}
-		
+
 		// Create the form
 		$form = $this->createForm(new ContactFormType());
 
@@ -368,11 +365,11 @@ class DefaultController extends Controller {
 
 				// If data is valid send the email with the twig email template set in the views
 				$message = \Swift_Message::newInstance()
-						->setSubject('Enquiry from ' . $websiteTitle . ' website: ' . $emailData['firstname'] . ' ' . $emailData['surname'] - $emailData['email'])
-						->setFrom($settings->getEmailSender())
-						->setReplyTo($emailData['email'])
-						->setTo($settings->getEmailRecepient())
-						->setBody($this->renderView('PageBundle:Email:contactFormEmail.txt.twig', array('sender' => $emailData['firstname'] . ' ' . $emailData['surname'], 'mailData' => $emailData['comment'])));
+					->setSubject('Enquiry from ' . $websiteTitle . ' website: ' . $emailData['firstname'] . ' ' . $emailData['surname'] - $emailData['email'])
+					->setFrom($settings->getEmailSender())
+					->setReplyTo($emailData['email'])
+					->setTo($settings->getEmailRecepient())
+					->setBody($this->renderView('PageBundle:Email:contactFormEmail.txt.twig', array('sender' => $emailData['firstname'] . ' ' . $emailData['surname'], 'mailData' => $emailData['comment'])));
 
 				// The responce for the user upon successful submission
 				$successMsg = 'Thank you for contacting us, we will be in touch soon';
@@ -388,38 +385,36 @@ class DefaultController extends Controller {
 					$formMessage = $exception->getMessage();
 					$formhasErrors = true;
 				}
-			}
-			else {
+			} else {
 				// Validate the data and get errors
 				$successMsg = '';
 				$errorList = $this->getFormErrorMessages($form);
 				$formMessage = 'There was an error submitting your form. Please try again.';
 				$formhasErrors = true;
 			}
-			
+
 			// Return the responce to the user
 			if ($ajaxForm) {
-				
+
 				$ajaxFormData = array(
-					'errors'		=> $errorList,
-					'formMessage'	=> $formMessage, 
-					'hasErrors'		=> $formhasErrors
+					'errors' => $errorList,
+					'formMessage' => $formMessage,
+					'hasErrors' => $formhasErrors
 				);
-				
+
 				$ajaxFormResponce = new Response(json_encode($ajaxFormData));
 				$ajaxFormResponce->headers->set('Content-Type', 'application/json');
 
 				return $ajaxFormResponce;
-			}
-			else {
+			} else {
 				return $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'form' => $form->createView(), 'ajaxform' => $ajaxForm, 'formMessage' => $formMessage));
 			}
-		}		
+		}
 		// If the form has not been submited yet
 		else {
 			$response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'form' => $form->createView(), 'ajaxform' => $ajaxForm));
-		
-			if($this->container->getParameter('kernel.environment') == 'prod'){	
+
+			if ($this->container->getParameter('kernel.environment') == 'prod') {
 				// set a custom Cache-Control directive
 				$response->setPublic();
 				$response->setLastModified($page->getDateLastModified());
@@ -431,13 +426,14 @@ class DefaultController extends Controller {
 			return $response;
 		}
 	}
-	
+
 	// Get the error messages of the contact form assosiated with their fields in an array
 	private function getFormErrorMessages(\Symfony\Component\Form\Form $form) {
-		
+
 		$errors = array();
-		
-		foreach ($form->getErrors() as $key => $error) {
+		$formErrors = iterator_to_array($form->getErrors(false, true));
+
+		foreach ($formErrors as $key => $error) {
 			$template = $error->getMessageTemplate();
 			$parameters = $error->getMessageParameters();
 
@@ -456,8 +452,7 @@ class DefaultController extends Controller {
 		}
 		return $errors;
 	}
-	
-	
+
 	// Get and format the filtering arguments to use with the actions 
 	public function filterPagesAction(Request $request) {
 
@@ -487,7 +482,7 @@ class DefaultController extends Controller {
 
 		// Generate the proper route for the required results
 		$url = $this->get('router')->generate(
-				'PageBundle_tagged_full', array('extraParams' => $extraParams), true
+			'PageBundle_tagged_noslash', array('extraParams' => $extraParams), true
 		);
 
 		// Redirect to the results
@@ -540,4 +535,5 @@ class DefaultController extends Controller {
 		}
 		return ($introItemA->getPageOrder() < $introItemB->getPageOrder()) ? -1 : 1;
 	}
+
 }

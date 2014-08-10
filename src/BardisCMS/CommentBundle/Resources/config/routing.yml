@@ -1,10 +1,3 @@
-CommentBundle_blog_comment_add_full:
-    pattern:  /create_comment/blog/{page_id}/
-    defaults: { _controller: CommentBundle:Default:addComment, commentType: Blog}
-    requirements:
-        _method: POST
-        page_id: \d+
-        
 CommentBundle_blog_comment_add_no_slash:
     pattern:  /create_comment/blog/{page_id}
     defaults: { _controller: CommentBundle:Default:addComment, commentType: Blog}

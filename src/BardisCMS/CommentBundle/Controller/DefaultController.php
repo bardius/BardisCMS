@@ -205,8 +205,9 @@ class DefaultController extends Controller {
 	private function getFormErrorMessages(\Symfony\Component\Form\Form $form) {
 		
 		$errors = array();
+		$formErrors = iterator_to_array($form->getErrors(false, true));
 		
-		foreach ($form->getErrors() as $key => $error) {
+		foreach ($formErrors as $key => $error) {
 			$template = $error->getMessageTemplate();
 			$parameters = $error->getMessageParameters();
 

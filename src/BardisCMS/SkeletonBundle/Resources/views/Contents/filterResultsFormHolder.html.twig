@@ -1,5 +1,5 @@
                     <div id="filterResultsFormHolder columns twelve">
-                        <form id="filterResultsForm" action="/Skeleton/filterPages/" method="post" {{ form_enctype(filterForm) }} class="filterForm">
+                        <form id="filterResultsForm" action="{{ path('SkeletonBundle_filtered') }}" method="post" {{ form_enctype(filterForm) }} class="filterForm">
                             <div class="column twelve">  
                                 {{ form_errors(filterForm) }}
                             </div>

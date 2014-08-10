@@ -1,12 +1,5 @@
 # Starting the routing of the pages based on predefined paths
 
-PageBundle_tagged_full:
-    pattern:   /tagged/{extraParams}/{currentpage}/{totalpageitems}/
-    defaults:  { _controller: PageBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
-    requirements:
-        currentpage: \d+
-        totalpageitems: \d+
-    
 PageBundle_tagged_noslash:
     pattern:   /tagged/{extraParams}/{currentpage}/{totalpageitems}
     defaults:  { _controller: PageBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
@@ -14,36 +7,22 @@ PageBundle_tagged_noslash:
         currentpage: \d+
         totalpageitems: \d+
     
-PageBundle_tagged_onlypage_slash:
-    pattern:   /tagged/{extraParams}/{currentpage}/
-    defaults:  { _controller: PageBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
-    requirements:
-        currentpage: \d+
-    
 PageBundle_tagged_onlypage:
     pattern:   /tagged/{extraParams}/{currentpage}
     defaults:  { _controller: PageBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
     requirements:
         currentpage: \d+
     
-PageBundle_tagged_onlytag_slash:
-    pattern:   /tagged/{extraParams}/
-    defaults:  { _controller: PageBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
-    
 PageBundle_tagged_onlytag:
     pattern:   /tagged/{extraParams}
     defaults:  { _controller: PageBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
-    
-PageBundle_tagged_slash:
-    pattern:   /tagged/
-    defaults:  { _controller: PageBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0} 
     
 PageBundle_tagged:
     pattern:   /tagged
     defaults:  { _controller: PageBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
     
 PageBundle_filtered:
-    pattern:  /filterPages/
+    pattern:  /filterPages
     defaults: { _controller: PageBundle:Default:filterPages }
     
 PageBundle_sitemap:
@@ -58,13 +37,6 @@ PageBundle_sitemapxsl:
     
 # Starting the routing of the pages based on alias
 # index is the alias of the homepage (amend if different)
-
-PageBundle_page_full:
-    pattern:   /{alias}/{currentpage}/{totalpageitems}/{extraParams}/
-    defaults:  { _controller: PageBundle:Default:alias, alias: index, extraParams: all, currentpage: 0, totalpageitems: 0}
-    requirements:
-        currentpage: \d+
-        totalpageitems: \d+
     
 PageBundle_page_noslash:
     pattern:   /{alias}/{currentpage}/{totalpageitems}/{extraParams}
@@ -73,28 +45,14 @@ PageBundle_page_noslash:
         currentpage: \d+
         totalpageitems: \d+
     
-PageBundle_page_only_pagin_slash:
-    pattern:   /{alias}/{currentpage}/{totalpageitems}/
-    defaults:  { _controller: PageBundle:Default:alias, alias: index, extraParams: all, currentpage: 0, totalpageitems: 0}
-    requirements:
-        currentpage: \d+
-    
 PageBundle_page_only_pagin:
     pattern:   /{alias}/{currentpage}/{totalpageitems}
     defaults:  { _controller: PageBundle:Default:alias, alias: index, extraParams: all, currentpage: 0, totalpageitems: 0}
     requirements:
         currentpage: \d+
     
-PageBundle_page_only_page_slash:
-    pattern:   /{alias}/{currentpage}/
-    defaults:  { _controller: PageBundle:Default:alias, alias: index, extraParams: all, currentpage: 0, totalpageitems: 0}
-    
 PageBundle_page_only_page:
     pattern:   /{alias}/{currentpage}
-    defaults:  { _controller: PageBundle:Default:alias, alias: index, extraParams: all, currentpage: 0, totalpageitems: 0}
-    
-PageBundle_page_slash:
-    pattern:   /{alias}/
     defaults:  { _controller: PageBundle:Default:alias, alias: index, extraParams: all, currentpage: 0, totalpageitems: 0}
     
 PageBundle_page:
@@ -105,8 +63,8 @@ PageBundle_index:
     pattern:   /
     defaults:  { _controller: PageBundle:Default:alias, alias: index, extraParams: all, currentpage: 0, totalpageitems: 0}   
     
-PageBundle_showPage:
-    pattern:  /showPage/{id}
-    defaults: { _controller: PageBundle:Default:showPage }
-    requirements:
-        id: \d+
+#PageBundle_showPage:
+#    pattern:  /showPage/{id}
+#    defaults: { _controller: PageBundle:Default:showPage }
+#    requirements:
+#        id: \d+

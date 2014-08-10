@@ -5,14 +5,15 @@
 [![Latest Stable Version](https://poser.pugx.org/bardis/cms-symfony2/v/stable.png)](https://packagist.org/packages/bardis/cms-symfony2) 
 [![Total Downloads](https://poser.pugx.org/bardis/cms-symfony2/downloads.png)](https://packagist.org/packages/bardis/cms-symfony2) 
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+[![Gitter chat](https://badges.gitter.im/bardius/BardisCMS.png)](https://gitter.im/bardius/BardisCMS)
 [![License](https://poser.pugx.org/bardis/cms-symfony2/license.png)](https://packagist.org/packages/bardis/cms-symfony2)
 
 ![](http://www.bardis.info/bardisCMS.png)
 
-Symfony2 (v.2.4.8) distribution with integrated Zurb Foundation 5 
+Symfony2 (v.2.5.3) distribution with integrated Zurb Foundation 5 
 ============================================================================
 
-BardisCMS is a Symfony2 (v.2.4.8) distribution with integrated Zurb Foundation 5 Framework.
+BardisCMS is a Symfony2 (v.2.5.3) distribution with integrated Zurb Foundation 5 Framework.
 
 Travis CI, Bower and Grunt with custom builds are included for better workflow on front end.
 
@@ -48,7 +49,7 @@ The fastest way to get everything running is (must have nodejs, ruby and sass ge
 	3. create a database
 	4. copy app/config/parameters.yml.dist to app/config/parameters.yml
 	5. alter your app/config/parameters.yml with your db and environment details
-	6. composer install
+	6. composer install -o
 	7. npm install -g bower (if you have never installed in past)
 	8. npm install -g grunt-cli (if you have never installed in past)
 	9. npm install

@@ -330,7 +330,7 @@ class DefaultController extends Controller
         $extraParams = urlencode($filterTags) . '|' . urlencode($filterCategories);
         
         $url = $this->get('router')->generate(
-            'SkeletonBundle_tagged_full',
+            'SkeletonBundle_tagged_noslash',
             array('extraParams' => $extraParams),
             true
         );
