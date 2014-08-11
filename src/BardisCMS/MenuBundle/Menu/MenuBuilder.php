@@ -13,18 +13,21 @@ namespace BardisCMS\MenuBundle\Menu;
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class MenuBuilder {
+class MenuBuilder{
 
 	private $factory;
 	private $em;
+	private $container;
 
 	/**
 	 * @param FactoryInterface $factory
 	 */
-	public function __construct(FactoryInterface $factory, EntityManager $em) {
+	public function __construct(FactoryInterface $factory, EntityManager $em, ContainerInterface $container) {
 		$this->factory = $factory;
 		$this->em = $em;
+		$this->container = $container;
 	}
 
 	/**
@@ -42,8 +45,12 @@ class MenuBuilder {
 
 		$menu = $this->factory->createItem($menugroup);
 		$menu->setChildrenAttribute('class', $cssClass);
+		
+		$matcher = $this->container->get('knp_menu.matcher');
+		$voter = $this->container->get('bardiscms_menu.voter.request');
+		$matcher->addVoter($voter);
 
-		$menu->setCurrentUri($request->getRequestUri());
+		//$menu->setCurrentUri($request->getRequestUri());
 
 		$this->menuItemlevel = 0;
 		$this->setupMenuItem($menu, $menudata, $menuItemDecorator);

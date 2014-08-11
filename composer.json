@@ -48,7 +48,7 @@
 		"sonata-project/user-bundle": "dev-master",
 		"sonata-project/doctrine-orm-admin-bundle": "dev-master",
 		"sonata-project/timeline-bundle": "dev-master",
-		"knplabs/knp-menu": "1.1.*@dev",
+		"knplabs/knp-menu-bundle": "2.0.0",
 		"stfalcon/tinymce-bundle": "dev-master",
 		"sonata-project/intl-bundle": "dev-master",
 		"toopay/assetic-minifier": "dev-master",

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "abdfc4ccd64bec2f3ecedaa4dbbef335",
+    "hash": "271975215901fd00f4ffbacb09863192",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1110,12 +1110,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "dcd601879b2e03c9615dfc2455d5bd70f59f9fb6"
+                "reference": "22d6b2a401b66fb4f18840efc27826de441d902c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/dcd601879b2e03c9615dfc2455d5bd70f59f9fb6",
-                "reference": "dcd601879b2e03c9615dfc2455d5bd70f59f9fb6",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/22d6b2a401b66fb4f18840efc27826de441d902c",
+                "reference": "22d6b2a401b66fb4f18840efc27826de441d902c",
                 "shasum": ""
             },
             "require": {
@@ -1179,7 +1179,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2014-08-07 11:22:31"
+            "time": "2014-08-11 13:50:52"
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -1335,12 +1335,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle3.git",
-                "reference": "13e577cd52b836ebaf5e09c2938bdffb6b913d65"
+                "reference": "54991459675c1a2924122afbb0e5609ade581155"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/13e577cd52b836ebaf5e09c2938bdffb6b913d65",
-                "reference": "13e577cd52b836ebaf5e09c2938bdffb6b913d65",
+                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/54991459675c1a2924122afbb0e5609ade581155",
+                "reference": "54991459675c1a2924122afbb0e5609ade581155",
                 "shasum": ""
             },
             "require": {
@@ -1419,7 +1419,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2014-08-06 20:57:30"
+            "time": "2014-08-11 04:32:36"
         },
         {
             "name": "imagine/imagine",
@@ -2071,23 +2071,23 @@
         },
         {
             "name": "knplabs/knp-menu",
-            "version": "1.1.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpMenu.git",
-                "reference": "f8e867268f63f561c1adadd6cbb5d8524f921873"
+                "reference": "4718be3b639d30d3ac1e4292bd7232faccceb962"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/f8e867268f63f561c1adadd6cbb5d8524f921873",
-                "reference": "f8e867268f63f561c1adadd6cbb5d8524f921873",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/4718be3b639d30d3ac1e4292bd7232faccceb962",
+                "reference": "4718be3b639d30d3ac1e4292bd7232faccceb962",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "pimple/pimple": "*",
+                "pimple/pimple": "1.0.*",
                 "silex/silex": "1.0.*",
                 "twig/twig": ">=1.2,<2.0-dev"
             },
@@ -2099,7 +2099,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev"
+                    "dev-master": "2.0.x-dev"
                 }
             },
             "autoload": {
@@ -2131,28 +2131,33 @@
                 "menu",
                 "tree"
             ],
-            "time": "2012-06-10 16:20:40"
+            "time": "2014-08-08 15:32:27"
         },
         {
             "name": "knplabs/knp-menu-bundle",
-            "version": "1.1.x-dev",
+            "version": "v2.0.0",
             "target-dir": "Knp/Bundle/MenuBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpMenuBundle.git",
-                "reference": "2fecac02614e5a006f674dd5dd754eeaeca060b9"
+                "reference": "bdfc95da5ff7e4e67f948aaa9ea5da835a3a9088"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpMenuBundle/zipball/2fecac02614e5a006f674dd5dd754eeaeca060b9",
-                "reference": "2fecac02614e5a006f674dd5dd754eeaeca060b9",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenuBundle/zipball/bdfc95da5ff7e4e67f948aaa9ea5da835a3a9088",
+                "reference": "bdfc95da5ff7e4e67f948aaa9ea5da835a3a9088",
                 "shasum": ""
             },
             "require": {
-                "knplabs/knp-menu": "~1.1",
+                "knplabs/knp-menu": "~2.0",
                 "symfony/framework-bundle": "~2.0"
             },
             "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "Knp\\Bundle\\MenuBundle": ""
@@ -2168,7 +2173,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "Knplabs",
+                    "name": "KnpLabs",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -2180,7 +2185,7 @@
             "keywords": [
                 "menu"
             ],
-            "time": "2013-05-25 10:20:03"
+            "time": "2014-08-01 09:57:23"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -2310,12 +2315,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/michelf/php-markdown.git",
-                "reference": "123c43a65c783e7535384cfbec640d9702204c22"
+                "reference": "a8c56ecd5e9e7c7d37d00c814c864c3bc8b32694"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/michelf/php-markdown/zipball/123c43a65c783e7535384cfbec640d9702204c22",
-                "reference": "123c43a65c783e7535384cfbec640d9702204c22",
+                "url": "https://api.github.com/repos/michelf/php-markdown/zipball/a8c56ecd5e9e7c7d37d00c814c864c3bc8b32694",
+                "reference": "a8c56ecd5e9e7c7d37d00c814c864c3bc8b32694",
                 "shasum": ""
             },
             "require": {
@@ -2353,7 +2358,7 @@
             "keywords": [
                 "markdown"
             ],
-            "time": "2014-05-15 19:49:30"
+            "time": "2014-08-10 19:25:52"
         },
         {
             "name": "misd/guzzle-bundle",
@@ -2883,12 +2888,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "ec1b2175162480afb6db4ce6a4a628b33873b6b5"
+                "reference": "eb081fb0c1ae1ebf942eb8816ecc47331de68750"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/ec1b2175162480afb6db4ce6a4a628b33873b6b5",
-                "reference": "ec1b2175162480afb6db4ce6a4a628b33873b6b5",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/eb081fb0c1ae1ebf942eb8816ecc47331de68750",
+                "reference": "eb081fb0c1ae1ebf942eb8816ecc47331de68750",
                 "shasum": ""
             },
             "require": {
@@ -2954,7 +2959,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2014-08-10 15:09:21"
+            "time": "2014-08-11 16:38:14"
         },
         {
             "name": "sonata-project/block-bundle",
@@ -3827,12 +3832,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataUserBundle.git",
-                "reference": "1d7b926e2f7e473830b1f1dbe84414ad3b795350"
+                "reference": "b7082fcdae9dbd573684d4e71cdec2692bbab4a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataUserBundle/zipball/1d7b926e2f7e473830b1f1dbe84414ad3b795350",
-                "reference": "1d7b926e2f7e473830b1f1dbe84414ad3b795350",
+                "url": "https://api.github.com/repos/sonata-project/SonataUserBundle/zipball/b7082fcdae9dbd573684d4e71cdec2692bbab4a3",
+                "reference": "b7082fcdae9dbd573684d4e71cdec2692bbab4a3",
                 "shasum": ""
             },
             "require": {
@@ -3891,7 +3896,7 @@
                 "sonata",
                 "user"
             ],
-            "time": "2014-08-05 11:32:15"
+            "time": "2014-08-11 14:03:24"
         },
         {
             "name": "stephpy/TimelineBundle",
@@ -4592,7 +4597,6 @@
         "sonata-project/user-bundle": 20,
         "sonata-project/doctrine-orm-admin-bundle": 20,
         "sonata-project/timeline-bundle": 20,
-        "knplabs/knp-menu": 20,
         "stfalcon/tinymce-bundle": 20,
         "sonata-project/intl-bundle": 20,
         "toopay/assetic-minifier": 20,
