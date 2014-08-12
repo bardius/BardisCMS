@@ -8,6 +8,7 @@
   "description": "Foundation 5 front end framework for Symfony2 BardisCMS",
   "license": "MIT",
   "dependencies": {
+    "modernizr": "~2.8.3",
     "foundation": "~5.3.3",
     "jquery-ias": "~2.1.0"
   }

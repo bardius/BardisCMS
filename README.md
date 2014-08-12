@@ -49,7 +49,7 @@ The fastest way to get everything running is (must have nodejs, ruby and sass ge
 	3. create a database
 	4. copy app/config/parameters.yml.dist to app/config/parameters.yml
 	5. alter your app/config/parameters.yml with your db and environment details
-	6. composer install -o
+	6. composer.phar install -o
 	7. npm install -g bower (if you have never installed in past)
 	8. npm install -g grunt-cli (if you have never installed in past)
 	9. npm install
@@ -177,6 +177,9 @@ Here is a sample setup for your virtual host configuration
 		ServerName domainname.prod
 		ServerAlias domainname.test
 		ServerAlias domainname.dev
+
+                ErrorLog "logs/domainname-error.log"
+                CustomLog "logs/domainname-access.log" common
 
 		# set some environment variables depending on host
 		# if you do not want to do that in .htaccess
