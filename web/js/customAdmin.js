@@ -86,23 +86,24 @@ jQuery(document).ready(function($) {
     // Reorder content blocks by dragging them.
     availableContentSlots = new Array('bannercontentblocks', 'maincontentblocks', 'secondarycontentblocks', 'extracontentblocks', 'modalcontentblocks');
 
-    for (var availableContentSlot in availableContentSlots)
-    {
-        if ($("." + availableContentSlots[availableContentSlot]).length > 0)
-        {
-            $("." + availableContentSlots[availableContentSlot]).sortable({
-                placeholder: "ui-state-highlight"
-            });
+    if(availableContentSlots.length > 0){
+        for (var availableContentSlot in availableContentSlots) {
+            if ($("." + availableContentSlots[availableContentSlot]).length > 0)
+            {
+                $("." + availableContentSlots[availableContentSlot]).sortable({
+                    placeholder: "ui-state-highlight"
+                });
 
-            $("." + availableContentSlots[availableContentSlot]).bind("sortupdate", function(event, ui) {
-                var orderedItems = $(this).sortable("toArray");
-                for (var orderedPosition in orderedItems)
-                {
-                    orderInputField = getInputField($(this).attr('id'), orderedItems[orderedPosition], 'orderField');
-                    $(orderInputField).val(orderedPosition);
-                }
-            });
-        }
+                $("." + availableContentSlots[availableContentSlot]).bind("sortupdate", function() {
+                    var orderedItems = $(this).sortable("toArray");
+                    for (var orderedPosition in orderedItems)
+                    {
+                        orderInputField = getInputField($(this).attr('id'), orderedItems[orderedPosition], 'orderField');
+                        $(orderInputField).val(orderedPosition);
+                    }
+                });
+            }
+        }        
     }
 
     $("form").on('submit', function() {
