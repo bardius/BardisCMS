@@ -42,7 +42,7 @@
 		"grunt-jscs": "~0.6.1",
 		"grunt-autoprefixer": "~1.0.0",
 		"grunt-symfony2": "~0.4.0",
-		"grunt-composer": "~0.4.0",
+		"grunt-composer": "~0.4.1",
 		"grunt-bower-task": "~0.4.0"
 	},
 		
