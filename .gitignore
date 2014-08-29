@@ -35,13 +35,10 @@ node_modules/
 /app/logs/*
 /app/sessions/*
 /build/
-composer.phar
 parameters.yml
 .sass-cache/
 vendor/
-/web/bower_components/
 /web/uploads/
-/web/bundles/
 /web/npm-debug.log
 
 
