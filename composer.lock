@@ -3877,7 +3877,7 @@
                 "sonata-project/block-bundle": "~2.2,>=2.2.1",
                 "sonata-project/core-bundle": "~2.2",
                 "stephpy/timeline": "~1.0@dev",
-                "stephpy/timelinebundle": "2.0.*@dev"
+                "stephpy/timelinebundle": ">=2.0.1"
             },
             "type": "symfony-bundle",
             "extra": {
