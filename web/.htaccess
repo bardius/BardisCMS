@@ -3,10 +3,13 @@
     RewriteBase /
 
     # set some environment variables depending on host
-    SetEnv bardiscms_env=prod
-    SetEnvIfNoCase Host bardiscms\.prod bardiscms_env=prod
-    SetEnvIfNoCase Host bardiscms\.dev bardiscms_env=dev
-    SetEnvIfNoCase Host bardiscms\.test bardiscms_env=test
+    RewriteRule .* - [E=ENVIRONMENT:prod]
+    RewriteCond %{HTTP_HOST} ^bardiscms.prod [NC]
+    RewriteRule .* - [E=ENVIRONMENT:prod]
+    RewriteCond %{HTTP_HOST} ^bardiscms.dev [NC]
+    RewriteRule .* - [E=ENVIRONMENT:dev]
+    RewriteCond %{HTTP_HOST} ^bardiscms.test [NC]
+    RewriteRule .* - [E=ENVIRONMENT:test]
 
     #### Redirect non www to www ####
     # RewriteCond %{HTTP_HOST} ^domain.com [NC]
@@ -55,17 +58,17 @@
 
     RewriteCond %{REQUEST_URI} !^/admin(/.*|)$ [NC]
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{ENV:bardiscms_env} test
+    RewriteCond %{ENV:ENVIRONMENT} test
     RewriteRule ^(.*)$ app_test.php [QSA,L]
 
     RewriteCond %{REQUEST_URI} !^/admin(/.*|)$ [NC]
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{ENV:bardiscms_env} dev
+    RewriteCond %{ENV:ENVIRONMENT} dev
     RewriteRule ^(.*)$ app_dev.php [QSA,L]
 
     RewriteCond %{REQUEST_URI} !^/admin(/.*|)$ [NC]
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{ENV:bardiscms_env} prod
+    RewriteCond %{ENV:ENVIRONMENT} prod
     RewriteRule ^(.*)$ app.php [QSA,L]
 
 </IfModule>
