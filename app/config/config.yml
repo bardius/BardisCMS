@@ -15,60 +15,60 @@ imports:
 # framework configuration
 framework:
   
-    secret:								%secret%    
-    http_method_override: true
-    trusted_proxies:      [] #[192.0.0.1, 10.0.0.0/8]
-    ide:                  ~
-    test:                 false # true only for testing env
-    default_locale:				%locale%
+    secret:					%secret%    
+    http_method_override:   true
+    trusted_proxies:        [] #[192.0.0.1, 10.0.0.0/8]
+    ide:                    ~
+    test:                   false # true only for testing env
+    default_locale:			%locale%
     
     csrf_protection:
-        enabled:					false
+        enabled:			false
         
     # form configuration
     form:
-        enabled:              true
+        enabled:            true
         csrf_protection:
-            enabled:          true
+            enabled:        true
     
     # esi configuration
     esi:
-        enabled:              false    
+        enabled:            false    
     
     # fragments configuration
     fragments:
-        enabled:              false
-        path:                 /_fragment
+        enabled:            false
+        path:               /_fragment
         
     # router configuration    
     router:
-        resource:				"%kernel.root_dir%/config/routing.yml"
+        resource:			"%kernel.root_dir%/config/routing.yml"
        # type:          ~
        # http_port:     80
        # https_port:    443
        
     # translator configuration
     translator:
-        enabled:              true
-        fallback:             en
+        enabled:            true
+        fallback:           en
         
     # validation configuration
     validation:
-        enabled:              true
-        cache:                ~
-        enable_annotations:   true
-        translation_domain:   validators
+        enabled:            true
+        cache:              ~
+        enable_annotations: true
+        translation_domain: validators
         
     # annotation configuration
     annotations:
-        cache:                file
-        file_cache_dir:       %kernel.cache_dir%/annotations
-        debug:                %kernel.debug%
+        cache:              file
+        file_cache_dir:     %kernel.cache_dir%/annotations
+        debug:              %kernel.debug%
         
     # templating configuration
     templating:
-        assets_version:							~
-        assets_version_format:			%%s?%%s
+        assets_version:				~
+        assets_version_format:		%%s?%%s
         hinclude_default_template:  ~
         
         form:
@@ -80,43 +80,43 @@ framework:
                 - PageBundle:Form:fields.html.twig
                 
         assets_base_urls:
-            http:                 []
-            ssl:                  []
+            http:               []
+            ssl:                []
             
-        cache:                ~
+        cache:                  ~
         
         engines:
             - twig
             
-        loaders:              []
+        loaders:                []
         
         packages:
             # Prototype
             name:
-                version:              ~
-                version_format:       %%s?%%s
+                version:            ~
+                version_format:     %%s?%%s
                 base_urls:
-                    http:                 []
-                    ssl:                  []
+                    http:           []
+                    ssl:            []
 
     
     # Session storage configuration
     session:        
-       # storage_id:           session.storage.native
-       # handler_id:           session.handler.native_file
-        name:									bardiscms
-       # cookie_lifetime:      ~
-       # cookie_path:          ~
-       # cookie_domain:        ~
-       # cookie_secure:        ~
-        cookie_httponly:			true
-       # gc_divisor:           ~
-       # gc_probability:       ~
-       # gc_maxlifetime:       ~
-       # save_path:            %kernel.cache_dir%/sessions
-        handler_id:						session.handler.pdo
+        # storage_id:           session.storage.native
+        # handler_id:           session.handler.native_file
+        name:                   bardiscms
+        # cookie_lifetime:      ~
+        # cookie_path:          ~
+        # cookie_domain:        ~
+        # cookie_secure:        ~
+        cookie_httponly:		true
+        # gc_divisor:           ~
+        # gc_probability:       ~
+        # gc_maxlifetime:       ~
+        # save_path:            %kernel.cache_dir%/sessions
+        handler_id:             session.handler.pdo
         # time in seconds 
-        cookie_lifetime:			43200
+        cookie_lifetime:		43200
 
 # Doctrine Configuration
 doctrine:
@@ -149,22 +149,22 @@ doctrine:
          #   host:             localhost
 
     orm:
-        auto_generate_proxy_classes: %kernel.debug%
-        auto_mapping: true
-        # metadata_cache_driver: apc
-        # result_cache_driver: apc
-        # query_cache_driver: apc
-        # connection: default
+        auto_generate_proxy_classes:    %kernel.debug%
+        auto_mapping:                   true
+        # metadata_cache_driver:        apc
+        # result_cache_driver:          apc
+        # query_cache_driver:           apc
+        # connection:                   default
         
         # query_cache_driver:
-        #     type: service
-        #     id: bardiscms_doctrine_orm_cache
+        #     type:                     service
+        #     id:                       bardiscms_doctrine_orm_cache
         
         # result_cache_driver:
-        #    type: memcache
-        #     host: localhost
-        #     port: 11211
-        #     instance_class: Memcache
+        #    type:                      memcache
+        #     host:                     localhost
+        #     port:                     11211
+        #     instance_class:           Memcache
 
 # Session storage table
 parameters:
@@ -181,27 +181,27 @@ services:
     pdo:
         class: PDO
         arguments:          
-            dsn:      "mysql:dbname=%database_name%"
-            user:     "%database_user%"
-            password: "%database_password%"
+            dsn:        %pdo_service_dsn%
+            user:       "%database_user%"
+            password:   "%database_password%"
         calls:
             - [setAttribute, [3, 2]] # \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION
 
     session.handler.pdo:
-        class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
-        arguments: ["@pdo", "%pdo.db_options%"]
+        class:      Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
+        arguments:  ["@pdo", "%pdo.db_options%"]
 
 # Twig Configuration
 twig:
   
-    debug:            %kernel.debug%
-    strict_variables: %kernel.debug%
-    cache:            "%kernel.cache_dir%/twig"
-    charset:          "%kernel.charset%"
+    debug:              %kernel.debug%
+    strict_variables:   %kernel.debug%
+    cache:              "%kernel.cache_dir%/twig"
+    charset:            "%kernel.charset%"
     
     globals:
         # Examples:
-        pi:                  3.14
+        pi:             3.14
     
     form:
       resources:
@@ -213,24 +213,19 @@ minifier:
   
     filter:
         name:
-            css:	minifier_css
-            js:		minifier_js
+            css:        minifier_css
+            js:         minifier_js
             
 assetic:
   
-    debug:						%kernel.debug%   
+    debug:              %kernel.debug%   
     
     use_controller:
-        enabled:      "%kernel.debug%"
-        profiler:     false        
+        enabled:        "%kernel.debug%"
+        profiler:       false        
         
-    read_from:        "%kernel.root_dir%/../web"
-    write_to:         "%kernel.root_dir%/../web"
-    
-    #java:						  %javapath%
-    #node:              %nodepath%
-    #ruby:              %rubypath%
-    #sass:              %sasspath%
+    read_from:          "%kernel.root_dir%/../web"
+    write_to:           "%kernel.root_dir%/../web"
     
     bundles:
       - PageBundle
@@ -259,25 +254,25 @@ assetic:
 # Swiftmailer Configuration
 swiftmailer:
   
-    transport: %mailer_transport%
-    host:      %mailer_host%
-    username:  %mailer_user%
-    password:  %mailer_password%
-    spool:     { type: memory }
+    transport:  %mailer_transport%
+    host:       %mailer_host%
+    username:   %mailer_user%
+    password:   %mailer_password%
+    spool:      { type: memory }
 
 # ACL and User management configuration
 fos_user:
   
-    db_driver:      orm # other valid values are 'mongodb', 'couchdb' and 'propel'
-    firewall_name:  main
-    user_class:     Application\Sonata\UserBundle\Entity\User
+    db_driver:          orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name:      main
+    user_class:         Application\Sonata\UserBundle\Entity\User
     
     group:
         group_class:    Application\Sonata\UserBundle\Entity\Group
         
     from_email:
-        address:        info@thewebsite.com
-        sender_name:    TGS
+        address:        info@domain.com
+        sender_name:    BardisCMS
         
     service:
         mailer:         fos_user.mailer.twig_swift
@@ -291,42 +286,42 @@ fos_user:
 
 sonata_user:
   
-    security_acl: true
+    security_acl:   true
     
     #sonata_user_impersonating:
     #    pattern: /
     #    defaults: { _controller: SonataPageBundle:Page:catchAll }
-    impersonating_route: sonata_user_impersonating
+    impersonating_route:    sonata_user_impersonating
     
     admin:
         user:
-            class: Application\Sonata\UserBundle\Admin\Entity\BardisCMSUserAdmin
+            class:  Application\Sonata\UserBundle\Admin\Entity\BardisCMSUserAdmin
 
 # Doctrine Extensions
 stof_doctrine_extensions:
           
-    default_locale: en_GB
+    default_locale:         en_GB
     
     orm:
         default:
-          timestampable: true
+          timestampable:    true
     
     # Only used if you activated the Uploadable extension
     uploadable:
       
         # Default file path: This is one of the three ways you can configure the path for the Uploadable extension
-        default_file_path:       %kernel.root_dir%/../web/uploads
+        default_file_path:          %kernel.root_dir%/../web/uploads
         
         # Mime type guesser class: Optional. By default, we provide an adapter for the one present in the HttpFoundation component of Symfony
-        mime_type_guesser_class: Stof\DoctrineExtensionsBundle\Uploadable\MimeTypeGuesserAdapter
+        mime_type_guesser_class:    Stof\DoctrineExtensionsBundle\Uploadable\MimeTypeGuesserAdapter
 
         # Default file info class implementing FileInfoInterface: Optional. By default we provide a class which is prepared to receive an UploadedFile instance.
-        default_file_info_class: Stof\DoctrineExtensionsBundle\Uploadable\UploadedFileInfo
+        default_file_info_class:    Stof\DoctrineExtensionsBundle\Uploadable\UploadedFileInfo
  
         
 knp_menu:
     twig:  # use "twig: false" to disable the Twig extension and the TwigRenderer
-        template: knp_menu.html.twig
+        template:       knp_menu.html.twig
         
-    templating: false # if true, enables the helper for PHP templates
-    default_renderer: twig # The renderer to use, list is also available by default
+    templating:         false # if true, enables the helper for PHP templates
+    default_renderer:   twig # The renderer to use, list is also available by default

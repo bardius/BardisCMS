@@ -1,10 +1,12 @@
 parameters:
-    database_driver:   pdo_mysql
-    database_host:     localhost
-    database_port:     ~
-    database_name:     bardiscms
-    database_user:     root
-    database_password: ~
+    database_driver:    pdo_mysql
+    database_host:      localhost
+    database_port:      ~
+    database_name:      bardiscms
+    database_user:      root
+    database_password:  ~
+
+    pdo_service_dsn:    "mysql:dbhost=%database_host%;dbname=%database_name%"
 
     mailer_transport:	smtp
     mailer_host:		localhost
@@ -13,14 +15,10 @@ parameters:
     mailer_encryption:	~
     mailer_port:		~
 
-    locale:            en
-    secret:            2WYgMKzMLqEVFNU245fLqEVFNvprjmRy0I4Q
+    locale:             en
+    secret:             2WYgMKzMLqEVFNU245fLqEVFNvprjmRy0I4Q
     
-    javapath:          /usr/bin/java
-    compass.bin:       /usr/bin/compass
-    sass.bin:          /usr/bin/sass
+    unix_socket:        ~ #/tmp/mysql.sock #for mac/linux environment
     
-    unix_socket:       ~ #/tmp/mysql.sock #for mac/linux environment
-    
-    userpass:          userpass
-    adminpass:         adminpass
+    userpass:           userpass
+    adminpass:          adminpass
