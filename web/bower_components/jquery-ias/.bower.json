@@ -1,0 +1,25 @@
+{
+  "name": "jquery-ias",
+  "version": "2.1.2",
+  "homepage": "http://infiniteajaxscroll.com",
+  "main": "src/jquery-ias.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "dist"
+  ],
+  "dependencies": {
+    "jquery": "git://github.com/components/jquery.git#>=1.7"
+  },
+  "_release": "2.1.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v2.1.2",
+    "commit": "32cf4d91c2ffc61c88f6e973e0b196ddcaa6b233"
+  },
+  "_source": "git://github.com/webcreate/infinite-ajax-scroll.git",
+  "_target": "~2.1.0",
+  "_originalSource": "jquery-ias"
+}
