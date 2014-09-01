@@ -80,12 +80,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "72121e68265cd8b37f9b69778308251f6c5133e4"
+                "reference": "daba57d377f2620ce0355797acad538fc682e3a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/72121e68265cd8b37f9b69778308251f6c5133e4",
-                "reference": "72121e68265cd8b37f9b69778308251f6c5133e4",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/daba57d377f2620ce0355797acad538fc682e3a4",
+                "reference": "daba57d377f2620ce0355797acad538fc682e3a4",
                 "shasum": ""
             },
             "require": {
@@ -141,7 +141,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2014-08-05 12:51:19"
+            "time": "2014-08-30 05:24:19"
         },
         {
             "name": "doctrine/collections",
@@ -1125,12 +1125,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "4b504c9436097dc229c1b800dca199d777cd2889"
+                "reference": "d9b43dc6492b163fc46f40c0555e2a7015ef5b68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/4b504c9436097dc229c1b800dca199d777cd2889",
-                "reference": "4b504c9436097dc229c1b800dca199d777cd2889",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/d9b43dc6492b163fc46f40c0555e2a7015ef5b68",
+                "reference": "d9b43dc6492b163fc46f40c0555e2a7015ef5b68",
                 "shasum": ""
             },
             "require": {
@@ -1192,7 +1192,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2014-08-27 16:27:05"
+            "time": "2014-08-30 02:22:47"
         },
         {
             "name": "friendsofsymfony/rest-bundle",
@@ -1201,12 +1201,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "d72481c837200a6ea2b6be12d92f5883da88df00"
+                "reference": "334072d8e57b79e226e9ce24106c058684bf27e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/d72481c837200a6ea2b6be12d92f5883da88df00",
-                "reference": "d72481c837200a6ea2b6be12d92f5883da88df00",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/334072d8e57b79e226e9ce24106c058684bf27e8",
+                "reference": "334072d8e57b79e226e9ce24106c058684bf27e8",
                 "shasum": ""
             },
             "require": {
@@ -1270,7 +1270,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2014-08-28 22:00:06"
+            "time": "2014-09-01 22:10:04"
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -2886,12 +2886,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "3acd15b9287d1d887e443b57f6c68b5d7ffc20db"
+                "reference": "dd102e9fa7d95440ad0adaf80ee0b64b3d2cce05"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/3acd15b9287d1d887e443b57f6c68b5d7ffc20db",
-                "reference": "3acd15b9287d1d887e443b57f6c68b5d7ffc20db",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/dd102e9fa7d95440ad0adaf80ee0b64b3d2cce05",
+                "reference": "dd102e9fa7d95440ad0adaf80ee0b64b3d2cce05",
                 "shasum": ""
             },
             "require": {
@@ -2925,7 +2925,7 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2014-08-08 10:34:11"
+            "time": "2014-09-01 11:55:41"
         },
         {
             "name": "sensiolabs/security-checker",
@@ -2978,12 +2978,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "0dfc4c427e3a68d8cf39e3d8b6b6776791ee9046"
+                "reference": "982dd6e8350ac7f369d22eb103f3d183fe949f35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/0dfc4c427e3a68d8cf39e3d8b6b6776791ee9046",
-                "reference": "0dfc4c427e3a68d8cf39e3d8b6b6776791ee9046",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/982dd6e8350ac7f369d22eb103f3d183fe949f35",
+                "reference": "982dd6e8350ac7f369d22eb103f3d183fe949f35",
                 "shasum": ""
             },
             "require": {
@@ -3049,7 +3049,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2014-08-28 19:47:09"
+            "time": "2014-09-01 20:17:14"
         },
         {
             "name": "sonata-project/block-bundle",
@@ -3057,12 +3057,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataBlockBundle.git",
-                "reference": "e4195582740d0e26346761be9cf5f4aa6fc26238"
+                "reference": "32534c6867c49b685108c46a8699d7ed8df2ee09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataBlockBundle/zipball/e4195582740d0e26346761be9cf5f4aa6fc26238",
-                "reference": "e4195582740d0e26346761be9cf5f4aa6fc26238",
+                "url": "https://api.github.com/repos/sonata-project/SonataBlockBundle/zipball/32534c6867c49b685108c46a8699d7ed8df2ee09",
+                "reference": "32534c6867c49b685108c46a8699d7ed8df2ee09",
                 "shasum": ""
             },
             "require": {
@@ -3113,7 +3113,7 @@
                 "block",
                 "sonata"
             ],
-            "time": "2014-08-14 12:40:45"
+            "time": "2014-09-01 20:18:58"
         },
         {
             "name": "sonata-project/cache",
@@ -3251,12 +3251,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataCoreBundle.git",
-                "reference": "88c530177f1784f9628d247c7fcfbcb91353b07f"
+                "reference": "6f36419ad655ee8d396a7d31237e52ec0b1f3ff4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataCoreBundle/zipball/88c530177f1784f9628d247c7fcfbcb91353b07f",
-                "reference": "88c530177f1784f9628d247c7fcfbcb91353b07f",
+                "url": "https://api.github.com/repos/sonata-project/SonataCoreBundle/zipball/6f36419ad655ee8d396a7d31237e52ec0b1f3ff4",
+                "reference": "6f36419ad655ee8d396a7d31237e52ec0b1f3ff4",
                 "shasum": ""
             },
             "require": {
@@ -3305,7 +3305,7 @@
             "keywords": [
                 "sonata"
             ],
-            "time": "2014-08-21 08:31:30"
+            "time": "2014-09-01 21:20:34"
         },
         {
             "name": "sonata-project/datagrid-bundle",
@@ -3413,12 +3413,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataDoctrineORMAdminBundle.git",
-                "reference": "6b9bb241c4fc871eace1fc33fdf9963c037c53e8"
+                "reference": "1ab6b728ef03d6565bdde6b0c2b65a9e7a2659b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineORMAdminBundle/zipball/6b9bb241c4fc871eace1fc33fdf9963c037c53e8",
-                "reference": "6b9bb241c4fc871eace1fc33fdf9963c037c53e8",
+                "url": "https://api.github.com/repos/sonata-project/SonataDoctrineORMAdminBundle/zipball/1ab6b728ef03d6565bdde6b0c2b65a9e7a2659b9",
+                "reference": "1ab6b728ef03d6565bdde6b0c2b65a9e7a2659b9",
                 "shasum": ""
             },
             "require": {
@@ -3475,7 +3475,7 @@
                 "generator",
                 "sonata"
             ],
-            "time": "2014-08-29 10:57:09"
+            "time": "2014-09-01 20:21:38"
         },
         {
             "name": "sonata-project/easy-extends-bundle",
@@ -3708,12 +3708,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataMediaBundle.git",
-                "reference": "7a21a95d8fc3acd60124c996417fb3eb65c7252d"
+                "reference": "f478e1358448c96a3a80eca198d2fa31fdff7772"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataMediaBundle/zipball/7a21a95d8fc3acd60124c996417fb3eb65c7252d",
-                "reference": "7a21a95d8fc3acd60124c996417fb3eb65c7252d",
+                "url": "https://api.github.com/repos/sonata-project/SonataMediaBundle/zipball/f478e1358448c96a3a80eca198d2fa31fdff7772",
+                "reference": "f478e1358448c96a3a80eca198d2fa31fdff7772",
                 "shasum": ""
             },
             "require": {
@@ -3786,7 +3786,7 @@
                 "vimeo",
                 "youtube"
             ],
-            "time": "2014-08-21 13:41:39"
+            "time": "2014-09-01 08:58:53"
         },
         {
             "name": "sonata-project/notification-bundle",
@@ -3865,19 +3865,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataTimelineBundle.git",
-                "reference": "6e52ee67bb7ce16b1e32078975bdddbf1fbc5689"
+                "reference": "2765d6d7a68428d7149fa5de9e533d1557912add"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataTimelineBundle/zipball/6e52ee67bb7ce16b1e32078975bdddbf1fbc5689",
-                "reference": "6e52ee67bb7ce16b1e32078975bdddbf1fbc5689",
+                "url": "https://api.github.com/repos/sonata-project/SonataTimelineBundle/zipball/2765d6d7a68428d7149fa5de9e533d1557912add",
+                "reference": "2765d6d7a68428d7149fa5de9e533d1557912add",
                 "shasum": ""
             },
             "require": {
                 "sonata-project/block-bundle": "~2.2,>=2.2.1",
                 "sonata-project/core-bundle": "~2.2",
-                "stephpy/timeline": "~1.0@dev",
-                "stephpy/timelinebundle": ">=2.0.1"
+                "stephpy/timeline-bundle": "~2.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -3896,13 +3895,12 @@
             ],
             "authors": [
                 {
-                    "name": "Thomas Rabaix",
-                    "email": "thomas.rabaix@sonata-project.org",
-                    "homepage": "http://sonata-project.org"
-                },
-                {
                     "name": "Sonata Community",
                     "homepage": "https://github.com/sonata-project/SonataTimelineBundle/contributors"
+                },
+                {
+                    "name": "Thomas Rabaix",
+                    "email": "thomas.rabaix@sonata-project.org"
                 }
             ],
             "description": "Symfony SonataTimelineBundle ~ integrate SpyTimelineBundle into Sonata",
@@ -3913,7 +3911,7 @@
                 "time",
                 "wall"
             ],
-            "time": "2014-06-12 13:54:22"
+            "time": "2014-08-31 16:30:12"
         },
         {
             "name": "sonata-project/user-bundle",
@@ -3988,7 +3986,66 @@
             "time": "2014-08-14 11:45:09"
         },
         {
-            "name": "stephpy/TimelineBundle",
+            "name": "stephpy/timeline",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stephpy/timeline.git",
+                "reference": "75cc8db1595a6e87256d22c6785901cdc2c198f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/stephpy/timeline/zipball/75cc8db1595a6e87256d22c6785901cdc2c198f3",
+                "reference": "75cc8db1595a6e87256d22c6785901cdc2c198f3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/options-resolver": "*"
+            },
+            "require-dev": {
+                "atoum/atoum": "dev-master",
+                "knplabs/knp-components": "1.*",
+                "pimple/pimple": "*",
+                "symfony/event-dispatcher": "2.*"
+            },
+            "suggest": {
+                "ext-redis": "Redis C extension for PHP",
+                "knplabs/knp-components": "Knp Paginator",
+                "pimple/pimple": "Use ServiceLocator",
+                "predis/predis": "Redis PHP client library"
+            },
+            "type": "package",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spy\\Timeline\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Community contributors",
+                    "homepage": "https://github.com/stephpy/timeline/contributors"
+                }
+            ],
+            "description": "Standalone library to create timelines",
+            "homepage": "https://github.com/stephpy/timeline",
+            "keywords": [
+                "standalone",
+                "timeline"
+            ],
+            "time": "2014-08-28 15:10:58"
+        },
+        {
+            "name": "stephpy/timeline-bundle",
             "version": "dev-master",
             "source": {
                 "type": "git",
@@ -4050,65 +4107,6 @@
                 "timeline"
             ],
             "time": "2014-08-28 15:41:43"
-        },
-        {
-            "name": "stephpy/timeline",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/stephpy/timeline.git",
-                "reference": "75cc8db1595a6e87256d22c6785901cdc2c198f3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/stephpy/timeline/zipball/75cc8db1595a6e87256d22c6785901cdc2c198f3",
-                "reference": "75cc8db1595a6e87256d22c6785901cdc2c198f3",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2",
-                "symfony/options-resolver": "*"
-            },
-            "require-dev": {
-                "atoum/atoum": "dev-master",
-                "knplabs/knp-components": "1.*",
-                "pimple/pimple": "*",
-                "symfony/event-dispatcher": "2.*"
-            },
-            "suggest": {
-                "ext-redis": "Redis C extension for PHP",
-                "knplabs/knp-components": "Knp Paginator",
-                "pimple/pimple": "Use ServiceLocator",
-                "predis/predis": "Redis PHP client library"
-            },
-            "type": "package",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Spy\\Timeline\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Community contributors",
-                    "homepage": "https://github.com/stephpy/timeline/contributors"
-                }
-            ],
-            "description": "Standalone library to create timelines",
-            "homepage": "https://github.com/stephpy/timeline",
-            "keywords": [
-                "standalone",
-                "timeline"
-            ],
-            "time": "2014-08-28 15:10:58"
         },
         {
             "name": "stfalcon/tinymce-bundle",
@@ -4350,12 +4348,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/MonologBundle.git",
-                "reference": "7b7a97e6a9afefea68b6e9b2894cc0d221e9e33f"
+                "reference": "1a34465d5f33a2b559dcae7eddd1ef838114994e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/7b7a97e6a9afefea68b6e9b2894cc0d221e9e33f",
-                "reference": "7b7a97e6a9afefea68b6e9b2894cc0d221e9e33f",
+                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/1a34465d5f33a2b559dcae7eddd1ef838114994e",
+                "reference": "1a34465d5f33a2b559dcae7eddd1ef838114994e",
                 "shasum": ""
             },
             "require": {
@@ -4401,7 +4399,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2014-08-18 23:03:08"
+            "time": "2014-08-31 13:44:52"
         },
         {
             "name": "symfony/swiftmailer-bundle",
