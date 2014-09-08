@@ -15,12 +15,12 @@ imports:
 # framework configuration
 framework:
   
-    secret:					%secret%    
+    secret:                 %secret%    
     http_method_override:   true
-    trusted_proxies:        [] #[192.0.0.1, 10.0.0.0/8]
+    trusted_proxies:        [192.0.0.1, 10.0.0.0/8, 127.0.0.1] #[]
     ide:                    ~
     test:                   false # true only for testing env
-    default_locale:			%locale%
+    default_locale:         %locale%
     
     csrf_protection:
         enabled:			false

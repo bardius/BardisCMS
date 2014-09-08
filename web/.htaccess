@@ -147,7 +147,7 @@ AddType application/octet-stream .zip
     </FilesMatch>
 
     ExpiresActive On
-    ExpiresDefault A600
+    ExpiresDefault A3600
     ExpiresByType image/x-icon A2592000
     ExpiresByType application/x-javascript A604800
     ExpiresByType text/css A604800
@@ -158,7 +158,7 @@ AddType application/octet-stream .zip
     ExpiresByType application/x-shockwave-flash A2592000
     ExpiresByType video/x-flv A2592000
     ExpiresByType application/pdf A2592000
-    ExpiresByType text/html A600
+    ExpiresByType text/html A3600
 </IfModule>
 
 #### Set headers
