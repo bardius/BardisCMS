@@ -11,10 +11,10 @@
 
 ![](http://www.bardis.info/bardisCMS.png)
 
-Symfony2 (v.2.5.3) distribution with integrated Zurb Foundation 5 
+Symfony2 (v.2.5.4) distribution with integrated Zurb Foundation 5 
 ============================================================================
 
-BardisCMS is a Symfony2 (v.2.5.3) distribution with integrated Zurb Foundation 5 Framework.
+BardisCMS is a Symfony2 (v.2.5.4) distribution with integrated Zurb Foundation 5 Framework.
 
 Travis CI, Bower and Grunt with custom builds are included for better workflow on front end.
 
@@ -179,8 +179,8 @@ Here is a sample setup for your virtual host configuration
 		ServerAlias domainname.test
 		ServerAlias domainname.dev
 
-                ErrorLog "logs/domainname-error.log"
-                CustomLog "logs/domainname-access.log" common
+        ErrorLog "logs/domainname-error.log"
+        CustomLog "logs/domainname-access.log" common
 
 		# set some environment variables depending on host
 		# if you do not want to do that in .htaccess

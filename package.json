@@ -5,7 +5,7 @@
 	
 	"description": "Foundation 5 front end framework for Symfony2 BardisCMS",
 	
-	"version": "1.0.0",
+	"version": "1.1.0",
 	
 	"homepage": "",
 	
@@ -36,7 +36,7 @@
 		"grunt-contrib-sass": "~0.8.1",
 		"grunt-contrib-jshint": "~0.10.0",
 		"grunt-contrib-watch": "~0.6.1",
-		"grunt-contrib-uglify": "~0.5.0",
+		"grunt-contrib-uglify": "~0.6.0",
 		"grunt-csso": "~0.6.1",
 		"load-grunt-tasks": "~0.6.0",
 		"grunt-jscs": "~0.7.0",

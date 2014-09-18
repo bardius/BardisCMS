@@ -33,10 +33,10 @@ module.exports = function(grunt) {
 					'web/bower_components/foundation/js/foundation.min.js',
 					//'web/bower_components/foundation/js/foundation.js',
 					//'web/bower_components/foundation/js/foundation/*.js',
-					'web/bower_components/jquery-ias/src/jquery-ias.js',
-					'web/bower_components/jquery-ias/src/callbacks.js',
-					'web/bower_components/jquery-ias/src/extension/spinner.js',
-					'web/bower_components/jquery-ias/src/extension/noneleft.js',
+					//'web/bower_components/jquery-ias/src/jquery-ias.js',
+					//'web/bower_components/jquery-ias/src/callbacks.js',
+					//'web/bower_components/jquery-ias/src/extension/spinner.js',
+					//'web/bower_components/jquery-ias/src/extension/noneleft.js',
 					'web/js/onDomReady.js'
 				]
 			}
