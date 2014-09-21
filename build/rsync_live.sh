@@ -26,8 +26,8 @@ echo sudo -H -u $4 bash -c "sudo mv $3/web/.index.html $3/web/index.html"
 sudo -H -u $4 bash -c "sudo mv $3/web/.index.html $3/web/index.html"
 
 echo -e "\n\n\e[0;34m********** Start Synchronising files with Rsync **********\e[0m" 
-echo sudo -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --delete-excluded --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude-live.txt --stats $dirRoot/$2 $3"
-sudo -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --delete-excluded --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude-live.txt --stats $dirRoot/$2 $3"
+echo sudo -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude-live.txt --stats $dirRoot/$2 $3"
+sudo -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude-live.txt --stats $dirRoot/$2 $3"
 
 echo -e "\n\n\e[0;34m********** Start Synchronising files in user upload/assets folders with Rsync **********\e[0m" 
 echo sudo -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude.txt --stats $dirRoot/$2web/uploads $3/web/uploads" 
