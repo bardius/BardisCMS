@@ -34,7 +34,6 @@ node_modules/
 /package.json
 /composer.lock
 /README.md
-/composer.phar
 /build.xml
 /phpunit.xml
 /.insight.yml

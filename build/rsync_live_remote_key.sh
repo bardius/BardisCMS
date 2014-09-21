@@ -11,7 +11,7 @@
 # 1 - Location of the build checkout - double quoted, no trailing slash
 # 2 - Relative path to be deployed - with trailing slash
 # 3 - Target server IP
-# 4 - Target server location
+# 4 - Target server location - full server path no trailing slash
 # 5 - Target server sudo user
 
 # building the unix path for the root directory

@@ -10,7 +10,7 @@
 
 # 1 - Location of the build checkout - double quoted, no trailing slash
 # 2 - Relative path to be deployed - with trailing slash
-# 3 - Target server location - full server path
+# 3 - Target server location - full server path no trailing slash
 # 4 - Target server sudo user
 
 
