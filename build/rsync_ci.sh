@@ -55,6 +55,10 @@ echo -e "\n\n\e[0;34m********** Generate optimized autoload **********\e[0m"
 echo sudo -t -H -u $4 bash -c "sudo $3/composer.phar dumpautoload -o"
 sudo -t -H -u $4 bash -c "sudo $3/composer.phar dumpautoload -o"
 
+echo -e "\n\n\e[0;34m********** Set folder owners and permissions **********\e[0m"
+echo sudo -t -H -u $4 bash -c "sudo chown -R www-data:www-data $3"
+sudo -t -H -u $4 bash -c "sudo chown -R www-data:www-data $3"
+
 # Purge cache if you use a CDN
 # echo -e "\n\n\e[0;34m********** Purge CDN Cache **********\e[0m"
 # echo php curl_exec(curl_init("https://www.cloudflare.com/api_json.html?a=fpurge_ts&tkn=TOKEN&email=your@email.com&z=yourdomain.com&v=1"));
