@@ -45,6 +45,7 @@ node_modules/
 /app/cache/*
 
 /app/config/parameters.yml
+/app/config/parameters.yml.dist
 /web/.htaccess
 /web/uploads
 /web/app_dev.php
