@@ -6,7 +6,7 @@
 # generating optimized autoload
 
 # 1 - Location of the build checkout - double quoted, no trailing slash
-# 2 - Relative path to be deployed - no trailing slash
+# 2 - Relative path to be deployed - with trailing slash
 # 3 - Target server location - full server path
 # 4 - Target server sudo user
 
@@ -17,8 +17,8 @@ echo -e "\n\n\e[0;34mUnix path for Jenkins Workspace working dir is:\e[0m" $dirR
 echo -e "\n\e[0;34mUnix path for Deployable files dir is:\e[0m" $dirRoot/$2
 
 echo -e "\n\n\e[0;34m********** Start Synchronising files with Rsync **********\e[0m" 
-echo sudo -t -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude.txt --stats $dirRoot/$2/ $3" 
-sudo -t -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude.txt --stats $dirRoot/$2/ $3"
+echo sudo -t -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude.txt --stats $dirRoot/$2 $3" 
+sudo -t -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude.txt --stats $dirRoot/$2 $3"
 
 echo -e "\n\n\e[0;34m********** Set folder owners and permissions **********\e[0m"
 echo sudo -t -H -u $4 bash -c "sudo chown -R www-data:www-data $3"

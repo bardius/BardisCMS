@@ -9,7 +9,7 @@
 # disable maintenance mode
 
 # 1 - Location of the build checkout - double quoted, no trailing slash
-# 2 - Relative path to be deployed - no trailing slash
+# 2 - Relative path to be deployed - with trailing slash
 # 3 - Target server location - full server path
 # 4 - Target server sudo user
 
@@ -20,22 +20,22 @@ echo -e "\n\n\e[0;34mUnix path for Jenkins Workspace working dir is:\e[0m" $dirR
 echo -e "\n\e[0;34mUnix path for Deployable files dir is:\e[0m" $dirRoot/$2
 
 echo -e "\n\n\e[0;34m********** Put maintenance mode on **********\e[0m"
-echo sudo -H -u $4 bash -c "sudo mv $dirRoot/$2/web/.index.html $dirRoot/$2/web/index.html"
-sudo -H -u $4 bash -c "sudo mv $dirRoot/$2/web/.index.html $dirRoot/$2/web/index.html"
+echo sudo -H -u $4 bash -c "sudo mv $dirRoot/$2web/.index.html $dirRoot/$2web/index.html"
+sudo -H -u $4 bash -c "sudo mv $dirRoot/$2web/.index.html $dirRoot/$2web/index.html"
 echo sudo -H -u $4 bash -c "sudo mv $3/web/.index.html $3/web/index.html"
 sudo -H -u $4 bash -c "sudo mv $3/web/.index.html $3/web/index.html"
 
 echo -e "\n\n\e[0;34m********** Start Synchronising files with Rsync **********\e[0m" 
-echo sudo -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude-live.txt --stats $dirRoot/$2/ $3"
-sudo -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude-live.txt --stats $dirRoot/$2/ $3"
+echo sudo -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude-live.txt --stats $dirRoot/$2 $3"
+sudo -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude-live.txt --stats $dirRoot/$2 $3"
 
 echo -e "\n\n\e[0;34m********** Start Synchronising files in user upload/assets folders with Rsync **********\e[0m" 
-echo sudo -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude.txt --stats $dirRoot/$2/web/uploads $3/web/uploads" 
-sudo -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude.txt --stats $dirRoot/$2/web/uploads $3/web/uploads"
+echo sudo -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude.txt --stats $dirRoot/$2web/uploads $3/web/uploads" 
+sudo -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude.txt --stats $dirRoot/$2web/uploads $3/web/uploads"
 
 echo -e "\n\n\e[0;34m********** Revert Maintenace file filename **********\e[0m"
-echo sudo -H -u $5 bash -c "sudo mv $dirRoot/$2/index.html $dirRoot/$2/.index.html"
-sudo -H -u $5 bash -c "sudo mv $dirRoot/$2/index.html $dirRoot/$2/.index.html"
+echo sudo -H -u $5 bash -c "sudo mv $dirRoot/$2index.html $dirRoot/$2.index.html"
+sudo -H -u $5 bash -c "sudo mv $dirRoot/$2index.html $dirRoot/$2.index.html"
 
 echo -e "\n\n\e[0;34m********** Set folder owners and permissions **********\e[0m"
 echo sudo -H -u $4 bash -c "sudo chown -R www-data:www-data $3"
