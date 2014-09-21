@@ -17,20 +17,20 @@ echo -e "\n\n\e[0;34mUnix path for Jenkins Workspace working dir is:\e[0m" $dirR
 echo -e "\n\e[0;34mUnix path for Deployable files dir is:\e[0m" $dirRoot/$2
 
 echo -e "\n\n\e[0;34m********** Start Synchronising files with Rsync **********\e[0m" 
-echo sudo -t -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude.txt --stats $dirRoot/$2 $3" 
-sudo -t -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude.txt --stats $dirRoot/$2 $3"
+echo sudo -t -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --delete-excluded --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude.txt --stats $dirRoot/$2 $3" 
+sudo -t -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --delete-excluded --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude.txt --stats $dirRoot/$2 $3"
 
 echo -e "\n\n\e[0;34m********** Set folder owners and permissions **********\e[0m"
 echo sudo -t -H -u $4 bash -c "sudo chown -R www-data:www-data $3"
 sudo -t -H -u $4 bash -c "sudo chown -R www-data:www-data $3"
 
 echo -e "\n\n\e[0;34m********** Set permissions to folders **********\e[0m"
-echo sudo -t -H -u $4 bash -c "sudo find $3 -type d -print0 | xargs -0 sudo chmod 0755"
-sudo -t -H -u $4 bash -c "sudo find $3 -type d -print0 | xargs -0 sudo chmod 0755"
+echo sudo -t -H -u $4 bash -c "sudo find $3 -type d -print0 | sudo xargs -0 chmod 0755"
+sudo -t -H -u $4 bash -c "sudo find $3 -type d -print0 | sudo xargs -0 chmod 0755"
 
 echo -e "\n\n\e[0;34m********** Set permissions to files **********\e[0m"
-echo sudo -t -H -u $4 bash -c "sudo find $3 -type f -print0 | xargs -0 sudo chmod 0644"
-sudo -t -H -u $4 bash -c "sudo find $3 -type f -print0 | xargs -0 sudo chmod 0644"
+echo sudo -t -H -u $4 bash -c "sudo find $3 -type f -print0 | sudo xargs -0 chmod 0644"
+sudo -t -H -u $4 bash -c "sudo find $3 -type f -print0 | sudo xargs -0 chmod 0644"
 
 echo -e "\n\n\e[0;34m********** Set permissions to uploads folder **********\e[0m"
 echo sudo -t -H -u $4 bash -c "sudo chmod 0755 -R $3/web/uploads"

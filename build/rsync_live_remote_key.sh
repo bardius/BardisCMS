@@ -26,8 +26,8 @@ echo /usr/bin/ssh $5@$3 "sudo mv $4/web/.index.html $4/web/index.html"
 sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo mv $4/web/.index.html $4/web/index.html'"
 
 echo -e "\n\n\e[0;34m********** Start Synchronising files with Rsync **********\e[0m" 
-echo /usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude-live.txt --stats $dirRoot/$2 -e \"/usr/bin/ssh\" --rsync-path=\"sudo /usr/bin/rsync\" $5@$3:$4 
-sudo -H -u $5 bash -c "/usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude-live.txt --stats $dirRoot/$2 -e '/usr/bin/ssh' --rsync-path='sudo /usr/bin/rsync' $5@$3:$4"
+echo /usr/bin/rsync -arivzt --delete --delete-excluded --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude-live.txt --stats $dirRoot/$2 -e \"/usr/bin/ssh\" --rsync-path=\"sudo /usr/bin/rsync\" $5@$3:$4 
+sudo -H -u $5 bash -c "/usr/bin/rsync -arivzt --delete --delete-excluded --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude-live.txt --stats $dirRoot/$2 -e '/usr/bin/ssh' --rsync-path='sudo /usr/bin/rsync' $5@$3:$4"
 
 echo -e "\n\n\e[0;34m********** Start Synchronising files in user upload/assets folders with Rsync **********\e[0m" 
 echo /usr/bin/rsync -arivzt --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude.txt --stats $dirRoot/$2web/uploads/ -e \"/usr/bin/ssh\" --rsync-path=\"sudo /usr/bin/rsync\" $5@$3:$4/web/uploads 
@@ -42,12 +42,12 @@ echo /usr/bin/ssh $5@$3 "sudo chown -R www-data:www-data $4"
 sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo chown -R www-data:www-data $4'"
 
 echo -e "\n\n\e[0;34m********** Set permissions to folders **********\e[0m"
-echo /usr/bin/ssh $5@$3 "sudo find $4 -type d -print0 | xargs -0 sudo chmod 0755"
-sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo find $4 -type d -print0 | xargs -0 sudo chmod 0755'"
+echo /usr/bin/ssh $5@$3 "sudo find $4 -type d -print0 | sudo xargs -0 chmod 0755"
+sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo find $4 -type d -print0 | sudo xargs -0 chmod 0755'"
 
 echo -e "\n\n\e[0;34m********** Set permissions to files **********\e[0m"
-echo /usr/bin/ssh $5@$3 "sudo find $4 -type f -print0 | xargs -0 sudo chmod 0644"
-sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo find $4 -type f -print0 | xargs -0 sudo chmod 0644'"
+echo /usr/bin/ssh $5@$3 "sudo find $4 -type f -print0 | sudo xargs -0 chmod 0644"
+sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo find $4 -type f -print0 | sudo xargs -0 chmod 0644'"
 
 echo -e "\n\n\e[0;34m********** Set permissions to uploads folder **********\e[0m"
 echo /usr/bin/ssh $5@$3 "sudo chmod 0755 -R $4/web/uploads"

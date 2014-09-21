@@ -26,8 +26,8 @@ echo sudo -H -u $4 bash -c "sudo mv $3/web/.index.html $3/web/index.html"
 sudo -H -u $4 bash -c "sudo mv $3/web/.index.html $3/web/index.html"
 
 echo -e "\n\n\e[0;34m********** Start Synchronising files with Rsync **********\e[0m" 
-echo sudo -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude-live.txt --stats $dirRoot/$2 $3"
-sudo -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude-live.txt --stats $dirRoot/$2 $3"
+echo sudo -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --delete-excluded --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude-live.txt --stats $dirRoot/$2 $3"
+sudo -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --delete-excluded --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude-live.txt --stats $dirRoot/$2 $3"
 
 echo -e "\n\n\e[0;34m********** Start Synchronising files in user upload/assets folders with Rsync **********\e[0m" 
 echo sudo -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude.txt --stats $dirRoot/$2web/uploads $3/web/uploads" 
@@ -42,12 +42,12 @@ echo sudo -H -u $4 bash -c "sudo chown -R www-data:www-data $3"
 sudo -H -u $4 bash -c "sudo chown -R www-data:www-data $3"
 
 echo -e "\n\n\e[0;34m********** Set permissions to folders **********\e[0m"
-echo sudo -H -u $4 bash -c "sudo find $3 -type d -print0 | xargs -0 sudo chmod 0755"
-sudo -H -u $4 bash -c "sudo find $3 -type d -print0 | xargs -0 sudo chmod 0755"
+echo sudo -H -u $4 bash -c "sudo find $3 -type d -print0 | sudo xargs -0 chmod 0755"
+sudo -H -u $4 bash -c "sudo find $3 -type d -print0 | sudo xargs -0 chmod 0755"
 
 echo -e "\n\n\e[0;34m********** Set permissions to files **********\e[0m"
-echo sudo -H -u $4 bash -c "sudo find $3 -type f -print0 | xargs -0 sudo chmod 0644"
-sudo -H -u $4 bash -c "sudo find $3 -type f -print0 | xargs -0 sudo chmod 0644"
+echo sudo -H -u $4 bash -c "sudo find $3 -type f -print0 | sudo xargs -0 chmod 0644"
+sudo -H -u $4 bash -c "sudo find $3 -type f -print0 | sudo xargs -0 chmod 0644"
 
 echo -e "\n\n\e[0;34m********** Set permissions to uploads folder **********\e[0m"
 echo sudo -H -u $4 bash -c "sudo chmod 0755 -R $3/web/uploads"
