@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 //use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class RegistrationFormType extends AbstractType //BaseType {
+class RegistrationFormType extends AbstractType { //BaseType {
 
 private $campaignData;
 private $class;
