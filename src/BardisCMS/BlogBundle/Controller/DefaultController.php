@@ -290,7 +290,7 @@ class DefaultController extends Controller {
         $extraParams = urlencode($filterTags) . '|' . urlencode($filterCategories);
 
         $url = $this->get('router')->generate(
-            'BlogBundle_tagged_noslash', array('extraParams' => $extraParams), true
+                'BlogBundle_tagged_noslash', array('extraParams' => $extraParams), true
         );
         return $this->redirect($url);
     }

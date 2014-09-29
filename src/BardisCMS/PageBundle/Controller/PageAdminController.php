@@ -79,8 +79,8 @@ class PageAdminController extends Controller {
 
                 if ($this->isXmlHttpRequest()) {
                     return $this->renderJson(array(
-                            'result' => 'ok',
-                            'objectId' => $this->admin->getNormalizedIdentifier($object)
+                                'result' => 'ok',
+                                'objectId' => $this->admin->getNormalizedIdentifier($object)
                     ));
                 }
 
@@ -104,9 +104,9 @@ class PageAdminController extends Controller {
         $this->get('twig')->getExtension('form')->renderer->setTheme($view, $this->admin->getFormTheme());
 
         return $this->render($this->admin->getTemplate($templateKey), array(
-                'action' => 'create',
-                'form' => $view,
-                'object' => $object,
+                    'action' => 'create',
+                    'form' => $view,
+                    'object' => $object,
         ));
     }
 
@@ -116,10 +116,10 @@ class PageAdminController extends Controller {
 
         try {
             $fs->remove(
-                array(
-                    $this->get('kernel')->getRootDir() . '/../app/cache/prod/http_cache',
-                    $this->get('kernel')->getRootDir() . '/../app/cache/dev/http_cache'
-                )
+                    array(
+                        $this->get('kernel')->getRootDir() . '/../app/cache/prod/http_cache',
+                        $this->get('kernel')->getRootDir() . '/../app/cache/dev/http_cache'
+                    )
             );
             $this->get('session')->getFlashBag()->add('sonata_flash_success', 'HTTP Cache Cleared');
         } catch (IOExceptionInterface $e) {

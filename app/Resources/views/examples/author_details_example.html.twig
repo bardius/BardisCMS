@@ -1,11 +1,11 @@
 <div class="twelve column firstBlock authorDetails">
-        <div class="six column mobile-three">
-            <img src="{{ app.request.getBaseURL() }}/uploads/avatars/{{ page.author.username }}.jpg" alt="{{ page.author.firstname }} {{ page.author.lastname }}" />
-        </div>
-        <div class="six column contentBlock mobile-three">
+    <div class="six column mobile-three">
+        <img src="{{ app.request.getBaseURL() }}/uploads/avatars/{{ page.author.username }}.jpg" alt="{{ page.author.firstname }} {{ page.author.lastname }}" />
+    </div>
+    <div class="six column contentBlock mobile-three">
         <h5>Author</h5>
         <p>{{ page.author.firstname }} {{ page.author.lastname }}</p>
         <h5>Added</h5>
-	<p class="date">{{ page.date|date("d/m/Y") }}</p>
-        </div>
+        <p class="date">{{ page.date|date("d/m/Y") }}</p>
+    </div>
 </div>

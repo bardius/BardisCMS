@@ -21,29 +21,29 @@ class SkeletonRepository extends EntityRepository {
             $countqb = $this->_em->createQueryBuilder();
 
             $qb->select('DISTINCT p')
-                ->from('SkeletonBundle:Skeleton', 'p')
-                ->innerJoin('p.categories', 'c')
-                ->where($qb->expr()->andX(
-                        $qb->expr()->in('c.id', ':category'), $qb->expr()->in('p.publishState', ':publishState'), $qb->expr()->neq('p.pagetype', ':categorypagePageType'), $qb->expr()->neq('p.id', ':currentPage')
-                ))
-                ->orderBy('p.date', 'DESC')
-                ->setParameter('category', $categoryIds)
-                ->setParameter('publishState', $publishStates)
-                ->setParameter('categorypagePageType', 'category_page')
-                ->setParameter('currentPage', $currentPageId)
+                    ->from('SkeletonBundle:Skeleton', 'p')
+                    ->innerJoin('p.categories', 'c')
+                    ->where($qb->expr()->andX(
+                                    $qb->expr()->in('c.id', ':category'), $qb->expr()->in('p.publishState', ':publishState'), $qb->expr()->neq('p.pagetype', ':categorypagePageType'), $qb->expr()->neq('p.id', ':currentPage')
+                    ))
+                    ->orderBy('p.date', 'DESC')
+                    ->setParameter('category', $categoryIds)
+                    ->setParameter('publishState', $publishStates)
+                    ->setParameter('categorypagePageType', 'category_page')
+                    ->setParameter('currentPage', $currentPageId)
             ;
 
             $countqb->select('COUNT(DISTINCT p.id)')
-                ->from('SkeletonBundle:Skeleton', 'p')
-                ->innerJoin('p.categories', 'c')
-                ->where($countqb->expr()->andX(
-                        $countqb->expr()->in('c.id', ':category'), $countqb->expr()->in('p.publishState', ':publishState'), $countqb->expr()->neq('p.pagetype', ':categorypagePageType'), $countqb->expr()->neq('p.id', ':currentPage')
-                ))
-                ->orderBy('p.date', 'DESC')
-                ->setParameter('category', $categoryIds)
-                ->setParameter('publishState', $publishStates)
-                ->setParameter('categorypagePageType', 'category_page')
-                ->setParameter('currentPage', $currentPageId)
+                    ->from('SkeletonBundle:Skeleton', 'p')
+                    ->innerJoin('p.categories', 'c')
+                    ->where($countqb->expr()->andX(
+                                    $countqb->expr()->in('c.id', ':category'), $countqb->expr()->in('p.publishState', ':publishState'), $countqb->expr()->neq('p.pagetype', ':categorypagePageType'), $countqb->expr()->neq('p.id', ':currentPage')
+                    ))
+                    ->orderBy('p.date', 'DESC')
+                    ->setParameter('category', $categoryIds)
+                    ->setParameter('publishState', $publishStates)
+                    ->setParameter('categorypagePageType', 'category_page')
+                    ->setParameter('currentPage', $currentPageId)
             ;
 
             $totalResultsCount = intval($countqb->getQuery()->getSingleScalarResult());
@@ -61,33 +61,33 @@ class SkeletonRepository extends EntityRepository {
             $countqb = $this->_em->createQueryBuilder();
 
             $qb->select('DISTINCT p')
-                ->from('SkeletonBundle:Skeleton', 'p')
-                ->innerJoin('p.categories', 'c')
-                ->innerJoin('p.tags', 't')
-                ->where($qb->expr()->andX(
-                        $qb->expr()->in('c.id', ':category'), $qb->expr()->in('t.id', ':tag'), $qb->expr()->in('p.publishState', ':publishState'), $qb->expr()->neq('p.id', ':currentPage'), $qb->expr()->eq('p.pagetype', ':pagetype')
-                ))
-                ->orderBy('p.date', 'DESC')
-                ->setParameter('category', $categoryIds)
-                ->setParameter('tag', $tagIds)
-                ->setParameter('publishState', $publishStates)
-                ->setParameter('pagetype', 'skeleton_article')
-                ->setParameter('currentPage', $currentPageId)
+                    ->from('SkeletonBundle:Skeleton', 'p')
+                    ->innerJoin('p.categories', 'c')
+                    ->innerJoin('p.tags', 't')
+                    ->where($qb->expr()->andX(
+                                    $qb->expr()->in('c.id', ':category'), $qb->expr()->in('t.id', ':tag'), $qb->expr()->in('p.publishState', ':publishState'), $qb->expr()->neq('p.id', ':currentPage'), $qb->expr()->eq('p.pagetype', ':pagetype')
+                    ))
+                    ->orderBy('p.date', 'DESC')
+                    ->setParameter('category', $categoryIds)
+                    ->setParameter('tag', $tagIds)
+                    ->setParameter('publishState', $publishStates)
+                    ->setParameter('pagetype', 'skeleton_article')
+                    ->setParameter('currentPage', $currentPageId)
             ;
 
             $countqb->select('COUNT(DISTINCT p.id)')
-                ->from('SkeletonBundle:Skeleton', 'p')
-                ->innerJoin('p.categories', 'c')
-                ->innerJoin('p.tags', 't')
-                ->where($countqb->expr()->andX(
-                        $countqb->expr()->in('c.id', ':category'), $countqb->expr()->in('t.id', ':tag'), $countqb->expr()->in('p.publishState', ':publishState'), $countqb->expr()->neq('p.id', ':currentPage'), $countqb->expr()->eq('p.pagetype', ':pagetype')
-                ))
-                ->orderBy('p.date', 'DESC')
-                ->setParameter('category', $categoryIds)
-                ->setParameter('tag', $tagIds)
-                ->setParameter('publishState', $publishStates)
-                ->setParameter('pagetype', 'skeleton_article')
-                ->setParameter('currentPage', $currentPageId)
+                    ->from('SkeletonBundle:Skeleton', 'p')
+                    ->innerJoin('p.categories', 'c')
+                    ->innerJoin('p.tags', 't')
+                    ->where($countqb->expr()->andX(
+                                    $countqb->expr()->in('c.id', ':category'), $countqb->expr()->in('t.id', ':tag'), $countqb->expr()->in('p.publishState', ':publishState'), $countqb->expr()->neq('p.id', ':currentPage'), $countqb->expr()->eq('p.pagetype', ':pagetype')
+                    ))
+                    ->orderBy('p.date', 'DESC')
+                    ->setParameter('category', $categoryIds)
+                    ->setParameter('tag', $tagIds)
+                    ->setParameter('publishState', $publishStates)
+                    ->setParameter('pagetype', 'skeleton_article')
+                    ->setParameter('currentPage', $currentPageId)
             ;
 
             $totalResultsCount = intval($countqb->getQuery()->getSingleScalarResult());
@@ -105,29 +105,29 @@ class SkeletonRepository extends EntityRepository {
             $countqb = $this->_em->createQueryBuilder();
 
             $qb->select('DISTINCT p')
-                ->from('SkeletonBundle:Skeleton', 'p')
-                ->innerJoin('p.tags', 't')
-                ->where($qb->expr()->andX(
-                        $qb->expr()->in('t.id', ':tag'), $qb->expr()->in('p.publishState', ':publishState'), $qb->expr()->eq('p.pagetype', ':pagetype'), $qb->expr()->neq('p.id', ':currentPage')
-                ))
-                ->orderBy('p.date', 'DESC')
-                ->setParameter('tag', $tagIds)
-                ->setParameter('publishState', $publishStates)
-                ->setParameter('pagetype', 'skeleton_article')
-                ->setParameter('currentPage', $currentPageId)
+                    ->from('SkeletonBundle:Skeleton', 'p')
+                    ->innerJoin('p.tags', 't')
+                    ->where($qb->expr()->andX(
+                                    $qb->expr()->in('t.id', ':tag'), $qb->expr()->in('p.publishState', ':publishState'), $qb->expr()->eq('p.pagetype', ':pagetype'), $qb->expr()->neq('p.id', ':currentPage')
+                    ))
+                    ->orderBy('p.date', 'DESC')
+                    ->setParameter('tag', $tagIds)
+                    ->setParameter('publishState', $publishStates)
+                    ->setParameter('pagetype', 'skeleton_article')
+                    ->setParameter('currentPage', $currentPageId)
             ;
 
             $countqb->select('COUNT(DISTINCT p.id)')
-                ->from('SkeletonBundle:Skeleton', 'p')
-                ->innerJoin('p.tags', 't')
-                ->where($countqb->expr()->andX(
-                        $countqb->expr()->in('t.id', ':tag'), $countqb->expr()->in('p.publishState', ':publishState'), $countqb->expr()->eq('p.pagetype', ':pagetype'), $countqb->expr()->neq('p.id', ':currentPage')
-                ))
-                ->orderBy('p.date', 'DESC')
-                ->setParameter('tag', $tagIds)
-                ->setParameter('publishState', $publishStates)
-                ->setParameter('pagetype', 'skeleton_article')
-                ->setParameter('currentPage', $currentPageId)
+                    ->from('SkeletonBundle:Skeleton', 'p')
+                    ->innerJoin('p.tags', 't')
+                    ->where($countqb->expr()->andX(
+                                    $countqb->expr()->in('t.id', ':tag'), $countqb->expr()->in('p.publishState', ':publishState'), $countqb->expr()->eq('p.pagetype', ':pagetype'), $countqb->expr()->neq('p.id', ':currentPage')
+                    ))
+                    ->orderBy('p.date', 'DESC')
+                    ->setParameter('tag', $tagIds)
+                    ->setParameter('publishState', $publishStates)
+                    ->setParameter('pagetype', 'skeleton_article')
+                    ->setParameter('currentPage', $currentPageId)
             ;
 
             $totalResultsCount = intval($countqb->getQuery()->getSingleScalarResult());
@@ -144,25 +144,25 @@ class SkeletonRepository extends EntityRepository {
         $countqb = $this->_em->createQueryBuilder();
 
         $qb->select('p')
-            ->from('SkeletonBundle:Skeleton', 'DISTINCT p')
-            ->where($qb->expr()->andX(
-                    $qb->expr()->in('p.publishState', ':publishState'), $qb->expr()->eq('p.pagetype', ':pagetype'), $qb->expr()->neq('p.id', ':currentPage')
-            ))
-            ->orderBy('p.date', 'DESC')
-            ->setParameter('publishState', $publishStates)
-            ->setParameter('pagetype', 'skeleton_article')
-            ->setParameter('currentPage', $currentPageId)
+                ->from('SkeletonBundle:Skeleton', 'DISTINCT p')
+                ->where($qb->expr()->andX(
+                                $qb->expr()->in('p.publishState', ':publishState'), $qb->expr()->eq('p.pagetype', ':pagetype'), $qb->expr()->neq('p.id', ':currentPage')
+                ))
+                ->orderBy('p.date', 'DESC')
+                ->setParameter('publishState', $publishStates)
+                ->setParameter('pagetype', 'skeleton_article')
+                ->setParameter('currentPage', $currentPageId)
         ;
 
         $countqb->select('COUNT(DISTINCT p.id)')
-            ->from('SkeletonBundle:Skeleton', 'p')
-            ->where($countqb->expr()->andX(
-                    $countqb->expr()->in('p.publishState', ':publishState'), $countqb->expr()->eq('p.pagetype', ':pagetype'), $countqb->expr()->neq('p.id', ':currentPage')
-            ))
-            ->orderBy('p.date', 'DESC')
-            ->setParameter('publishState', $publishStates)
-            ->setParameter('pagetype', 'skeleton_article')
-            ->setParameter('currentPage', $currentPageId)
+                ->from('SkeletonBundle:Skeleton', 'p')
+                ->where($countqb->expr()->andX(
+                                $countqb->expr()->in('p.publishState', ':publishState'), $countqb->expr()->eq('p.pagetype', ':pagetype'), $countqb->expr()->neq('p.id', ':currentPage')
+                ))
+                ->orderBy('p.date', 'DESC')
+                ->setParameter('publishState', $publishStates)
+                ->setParameter('pagetype', 'skeleton_article')
+                ->setParameter('currentPage', $currentPageId)
         ;
 
         $totalResultsCount = intval($countqb->getQuery()->getSingleScalarResult());
@@ -176,14 +176,14 @@ class SkeletonRepository extends EntityRepository {
         $qb = $this->_em->createQueryBuilder();
 
         $qb->select('DISTINCT p')
-            ->from('SkeletonBundle:Skeleton', 'p')
-            ->innerJoin('p.categories', 'c')
-            ->where($qb->expr()->andX(
-                    $qb->expr()->in('c.id', ':category'), $qb->expr()->in('p.publishState', ':publishState')
-            ))
-            ->orderBy('p.pageOrder', 'ASC')
-            ->setParameter('category', $categoryIds)
-            ->setParameter('publishState', $publishStates);
+                ->from('SkeletonBundle:Skeleton', 'p')
+                ->innerJoin('p.categories', 'c')
+                ->where($qb->expr()->andX(
+                                $qb->expr()->in('c.id', ':category'), $qb->expr()->in('p.publishState', ':publishState')
+                ))
+                ->orderBy('p.pageOrder', 'ASC')
+                ->setParameter('category', $categoryIds)
+                ->setParameter('publishState', $publishStates);
 
         $pages = $qb->getQuery()->getResult();
 
@@ -194,12 +194,12 @@ class SkeletonRepository extends EntityRepository {
         $qb = $this->_em->createQueryBuilder();
 
         $qb->select('DISTINCT p')
-            ->from('SkeletonBundle:Skeleton', 'p')
-            ->where(
-                $qb->expr()->in('p.publishState', ':publishState')
-            )
-            ->orderBy('p.id', 'ASC')
-            ->setParameter('publishState', $publishStates)
+                ->from('SkeletonBundle:Skeleton', 'p')
+                ->where(
+                        $qb->expr()->in('p.publishState', ':publishState')
+                )
+                ->orderBy('p.id', 'ASC')
+                ->setParameter('publishState', $publishStates)
         ;
 
         $sitemapList = $qb->getQuery()->getResult();

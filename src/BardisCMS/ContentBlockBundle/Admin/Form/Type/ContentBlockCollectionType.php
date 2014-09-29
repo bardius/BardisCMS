@@ -28,13 +28,13 @@ class ContentBlockCollectionType extends CollectionType {
         if ($options['allow_add'] && $options['prototype']) {
             $prototype = $builder->create($options['prototype_name'], $options['type'], array_replace(array(
                 'label' => $options['prototype_name'],
-                    ), $options['options']));
+                            ), $options['options']));
             $builder->setAttribute('prototype', $prototype->getForm());
         }
 
         $resizeListener = new ResizeFormListener(
-            //$builder->getFormFactory(),
-            $options['type'], $options['options'], $options['allow_add'], $options['allow_delete']
+                //$builder->getFormFactory(),
+                $options['type'], $options['options'], $options['allow_add'], $options['allow_delete']
         );
 
         $builder->addEventSubscriber($resizeListener);
@@ -68,10 +68,10 @@ class ContentBlockCollectionType extends CollectionType {
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $optionsNormalizer = function (Options $options, $value) {
-                $value['block_name'] = 'entry';
+            $value['block_name'] = 'entry';
 
-                return $value;
-            };
+            return $value;
+        };
 
         $resolver->setDefaults(array(
             'allow_add' => true,

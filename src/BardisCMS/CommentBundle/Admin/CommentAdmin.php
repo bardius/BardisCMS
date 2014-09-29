@@ -34,22 +34,22 @@ class CommentAdmin extends Admin {
         $prefCommentTypeChoice = key($commentTypeChoice);
 
         $formMapper
-            ->with('Comment Details', array('collapsed' => false))
-            ->add('title', null, array('label' => 'Comment Title', 'required' => true))
-            ->add('username', null, array('label' => 'Username / Name of the commentator', 'required' => true))
-            ->add('comment', 'textarea', array('label' => 'Comment', 'required' => true))
-            ->add('approved', 'choice', array('choices' => array('0' => 'Hide', '1' => 'Show'), 'preferred_choices' => array('1'), 'label' => 'Approve Comment', 'required' => true))
-            ->add('created', 'date', array('widget' => 'single_text', 'format' => 'dd-MM-yyyy', 'attr' => array('class' => 'datepicker'), 'label' => 'Created Date', 'required' => true))
-            ->add('commentType', 'choice', array('choices' => $commentTypeChoice, 'preferred_choices' => array($prefCommentTypeChoice), 'label' => 'Comment Type', 'required' => true))
-            ->setHelps(array(
-                'title' => 'Set the title of the comment',
-                'commentType' => 'Set the page type that this applies to',
-                'username' => 'Set username/name of the userer that commented',
-                'created' => 'The comment creation date',
-                'comment' => 'The contents of the comment',
-                'approved' => 'Aproval Status'
-            ))
-            ->end()
+                ->with('Comment Details', array('collapsed' => false))
+                ->add('title', null, array('label' => 'Comment Title', 'required' => true))
+                ->add('username', null, array('label' => 'Username / Name of the commentator', 'required' => true))
+                ->add('comment', 'textarea', array('label' => 'Comment', 'required' => true))
+                ->add('approved', 'choice', array('choices' => array('0' => 'Hide', '1' => 'Show'), 'preferred_choices' => array('1'), 'label' => 'Approve Comment', 'required' => true))
+                ->add('created', 'date', array('widget' => 'single_text', 'format' => 'dd-MM-yyyy', 'attr' => array('class' => 'datepicker'), 'label' => 'Created Date', 'required' => true))
+                ->add('commentType', 'choice', array('choices' => $commentTypeChoice, 'preferred_choices' => array($prefCommentTypeChoice), 'label' => 'Comment Type', 'required' => true))
+                ->setHelps(array(
+                    'title' => 'Set the title of the comment',
+                    'commentType' => 'Set the page type that this applies to',
+                    'username' => 'Set username/name of the userer that commented',
+                    'created' => 'The comment creation date',
+                    'comment' => 'The contents of the comment',
+                    'approved' => 'Aproval Status'
+                ))
+                ->end()
         ;
     }
 
@@ -60,46 +60,46 @@ class CommentAdmin extends Admin {
         $commentTypeChoice = $commentSettings['commenttypes'];
 
         $datagridMapper
-            ->add('title')
-            ->add('commentType', 'doctrine_orm_string', array(), 'choice', array('choices' => $commentTypeChoice))
-            ->add('blogPost')
-            ->add('created', 'doctrine_orm_date_range', array('input_type' => 'date'), 'sonata_type_date_range')
-            ->add('username')
-            ->add('approved', 'doctrine_orm_string', array(), 'choice', array('choices' => array('0' => 'Hide', '1' => 'Show')))
+                ->add('title')
+                ->add('commentType', 'doctrine_orm_string', array(), 'choice', array('choices' => $commentTypeChoice))
+                ->add('blogPost')
+                ->add('created', 'doctrine_orm_date_range', array('input_type' => 'date'), 'sonata_type_date_range')
+                ->add('username')
+                ->add('approved', 'doctrine_orm_string', array(), 'choice', array('choices' => array('0' => 'Hide', '1' => 'Show')))
         ;
     }
 
     protected function configureListFields(ListMapper $listMapper) {
         $listMapper
-            ->addIdentifier('title')
-            ->addIdentifier('commentTypeAsString', null, array('sortable' => false, 'label' => 'Comment Type'))
-            ->addIdentifier('blogPost')
-            ->addIdentifier('username')
-            ->addIdentifier('created')
-            ->addIdentifier('approvedAsString', null, array('sortable' => false, 'label' => 'Aproval Status'))
-            ->add('_action', 'actions', array(
-                'actions' => array(
-                    'duplicate' => array(
-                        'template' => 'CommentBundle:Admin:duplicate.html.twig'
-                    ),
-                    'edit' => array(
-                        'template' => 'CommentBundle:Admin:edit.html.twig'
-                    ),
-                    'delete' => array(
-                        'template' => 'CommentBundle:Admin:delete.html.twig'
+                ->addIdentifier('title')
+                ->addIdentifier('commentTypeAsString', null, array('sortable' => false, 'label' => 'Comment Type'))
+                ->addIdentifier('blogPost')
+                ->addIdentifier('username')
+                ->addIdentifier('created')
+                ->addIdentifier('approvedAsString', null, array('sortable' => false, 'label' => 'Aproval Status'))
+                ->add('_action', 'actions', array(
+                    'actions' => array(
+                        'duplicate' => array(
+                            'template' => 'CommentBundle:Admin:duplicate.html.twig'
+                        ),
+                        'edit' => array(
+                            'template' => 'CommentBundle:Admin:edit.html.twig'
+                        ),
+                        'delete' => array(
+                            'template' => 'CommentBundle:Admin:delete.html.twig'
+                        )
                     )
-                )
-            ))
+                ))
         ;
     }
 
     public function validate(ErrorElement $errorElement, $object) {
         $errorElement
-            ->with('title')
-            ->assertLength(array('max' => 255))
-            ->assertNotBlank()
-            ->assertNotNull()
-            ->end()
+                ->with('title')
+                ->assertLength(array('max' => 255))
+                ->assertNotBlank()
+                ->assertNotNull()
+                ->end()
         ;
     }
 

@@ -22,8 +22,8 @@ class ContentImageType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $formBuilder, array $options) {
         $formBuilder
-            ->add('imageOrder', 'text', array('attr' => array('class' => 'imageOrderField'), 'label' => 'Image Ordering', 'required' => true))
-            ->add('imageFile', 'sonata_media_type', array('provider' => 'sonata.media.provider.image', 'context' => 'default', 'attr' => array('class' => 'imagefield'), 'label' => 'Image File', 'required' => true))
+                ->add('imageOrder', 'text', array('attr' => array('class' => 'imageOrderField'), 'label' => 'Image Ordering', 'required' => true))
+                ->add('imageFile', 'sonata_media_type', array('provider' => 'sonata.media.provider.image', 'context' => 'default', 'attr' => array('class' => 'imagefield'), 'label' => 'Image File', 'required' => true))
         ;
     }
 
@@ -32,10 +32,10 @@ class ContentImageType extends AbstractType {
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $optionsNormalizer = function (Options $options, $value) {
-                $value = 'BardisCMS\ContentBlockBundle\Entity\ContentImage';
+            $value = 'BardisCMS\ContentBlockBundle\Entity\ContentImage';
 
-                return $value;
-            };
+            return $value;
+        };
 
         $resolver->setNormalizers(array(
             'data_class' => $optionsNormalizer,

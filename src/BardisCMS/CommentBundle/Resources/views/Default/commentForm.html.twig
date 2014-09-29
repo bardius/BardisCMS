@@ -4,28 +4,28 @@
             <p><span class="noticeMsg">All fields are mandatory</span></p>
         </div>
         <div class="large-12 small-12 columns">
-			{{ form_errors(form) }}								
-            </div>
-            <div class="large-6 small-12 columns">
-			{{ form_row(form.title) }}										
-                </div>
-                <div class="large-6 small-12 columns">
-			{{ form_row(form.username) }}										
-                    </div>
-                    <div class="large-12 small-12 columns">
-			{{ form_row(form.comment) }}										
-                        </div>
-                        <div class="large-12 small-12 columns hidden">
-			{{ form_row(form.bottrap) }}								
-                            </div>
-                            <div class="large-12 small-12 columns">
-			{{ form_rest(form) }}										
-                                </div>
-                                <div class="large-12 small-12 columns">
-                                    <input type="submit" id="submitCommentBtn" class="button" type="submit" value="Submit" />
-			{% if formMessage is defined %}
-                                    <small class="contactForm-message error">{{ formMessage }}</small>
-			{% endif %}
-                                </div>
-                            </div>
-                        </form>          
+            {{ form_errors(form) }}								
+        </div>
+        <div class="large-6 small-12 columns">
+            {{ form_row(form.title) }}										
+        </div>
+        <div class="large-6 small-12 columns">
+            {{ form_row(form.username) }}										
+        </div>
+        <div class="large-12 small-12 columns">
+            {{ form_row(form.comment) }}										
+        </div>
+        <div class="large-12 small-12 columns hidden">
+            {{ form_row(form.bottrap) }}								
+        </div>
+        <div class="large-12 small-12 columns">
+            {{ form_rest(form) }}										
+        </div>
+        <div class="large-12 small-12 columns">
+            <input type="submit" id="submitCommentBtn" class="button" type="submit" value="Submit" />
+            {% if formMessage is defined %}
+                <small class="contactForm-message error">{{ formMessage }}</small>
+            {% endif %}
+        </div>
+    </div>
+</form>          

@@ -53,8 +53,8 @@ class MenuAdmin extends Admin {
         $prefPublishStateChoices = key($publishStateChoices);
 
         $menus = $this->getConfigurationPool()->getContainer()->get('doctrine.orm.entity_manager')
-            ->getRepository('MenuBundle:Menu')
-            ->findAll();
+                ->getRepository('MenuBundle:Menu')
+                ->findAll();
 
         $menusChoice['-'] = 'Hide From Menu';
         $menusChoice['0'] = 'Menu Root';
@@ -64,40 +64,40 @@ class MenuAdmin extends Admin {
         }
 
         $formMapper
-            ->with('Menu Item Essential Details', array('collapsed' => true))
-            ->add('title', null, array('label' => 'Title', 'required' => true))
-            ->add('menuType', 'choice', array('choices' => $menuTypeChoice, 'preferred_choices' => array($prefMenuTypeChoice), 'label' => 'Menu Item Type', 'required' => true))
-            ->add('route', 'choice', array('choices' => $actionsChoice, 'preferred_choices' => array($prefActionsChoice), 'label' => 'Link Action', 'required' => true))
-            ->setHelps(array(
-                'title' => 'Set the title of the menu item (link copy text)',
-                'menuType' => 'Set the type of the menu item linked page',
-                'route' => 'Select the action of the menu item'
-            ))
-            ->end()
-            ->with('Menu Item Taxonomy', array('collapsed' => true))
-            ->add('menuGroup', 'choice', array('choices' => $menuGroupsChoice, 'preferred_choices' => array($prefMenuGroupsChoice), 'label' => 'Menu Group', 'required' => true))
-            ->add('parent', 'choice', array('choices' => $menusChoice, 'attr' => array('class' => 'autoCompleteItems autoCompleteMenus', 'data-sonata-select2' => 'false'), 'label' => 'Parent Menu Item', 'required' => false))
-            ->add('ordering', null, array('label' => 'Menu Item Order', 'required' => true))
-            ->setHelps(array(
-                'menuGroup' => 'Set the menu group this menu item belongs to',
-                'parent' => 'Select the parent menu item',
-                'ordering' => 'Set the order of the menu item in accordance to the other menu items of the same menu level'
-            ))
-            ->end()
-            ->with('Menu Item Access Control', array('collapsed' => true))
-            ->add('accessLevel', 'choice', array('choices' => $accessLevelChoices, 'preferred_choices' => array($prefAccessLevelChoices), 'label' => 'Access Level', 'required' => true))
-            ->add('publishState', 'choice', array('choices' => $publishStateChoices, 'preferred_choices' => array($prefPublishStateChoices), 'label' => 'Publish State', 'required' => true))
-            ->setHelps(array(
-                'accessLevel' => 'Set the minimum access level the item is visible to',
-                'publishState' => 'Set the publish state of this menu item'
-            ))
-            ->end()
-            ->with('Menu Item Optional Details', array('collapsed' => true))
-            ->add('menuImage', 'sonata_media_type', array('provider' => 'sonata.media.provider.image', 'context' => 'icons', 'attr' => array('class' => 'imagefield'), 'label' => 'Menu Icon Image', 'required' => false))
-            ->setHelps(array(
-                'menuImage' => 'Set an image as Menu Icon'
-            ))
-            ->end()
+                ->with('Menu Item Essential Details', array('collapsed' => true))
+                ->add('title', null, array('label' => 'Title', 'required' => true))
+                ->add('menuType', 'choice', array('choices' => $menuTypeChoice, 'preferred_choices' => array($prefMenuTypeChoice), 'label' => 'Menu Item Type', 'required' => true))
+                ->add('route', 'choice', array('choices' => $actionsChoice, 'preferred_choices' => array($prefActionsChoice), 'label' => 'Link Action', 'required' => true))
+                ->setHelps(array(
+                    'title' => 'Set the title of the menu item (link copy text)',
+                    'menuType' => 'Set the type of the menu item linked page',
+                    'route' => 'Select the action of the menu item'
+                ))
+                ->end()
+                ->with('Menu Item Taxonomy', array('collapsed' => true))
+                ->add('menuGroup', 'choice', array('choices' => $menuGroupsChoice, 'preferred_choices' => array($prefMenuGroupsChoice), 'label' => 'Menu Group', 'required' => true))
+                ->add('parent', 'choice', array('choices' => $menusChoice, 'attr' => array('class' => 'autoCompleteItems autoCompleteMenus', 'data-sonata-select2' => 'false'), 'label' => 'Parent Menu Item', 'required' => false))
+                ->add('ordering', null, array('label' => 'Menu Item Order', 'required' => true))
+                ->setHelps(array(
+                    'menuGroup' => 'Set the menu group this menu item belongs to',
+                    'parent' => 'Select the parent menu item',
+                    'ordering' => 'Set the order of the menu item in accordance to the other menu items of the same menu level'
+                ))
+                ->end()
+                ->with('Menu Item Access Control', array('collapsed' => true))
+                ->add('accessLevel', 'choice', array('choices' => $accessLevelChoices, 'preferred_choices' => array($prefAccessLevelChoices), 'label' => 'Access Level', 'required' => true))
+                ->add('publishState', 'choice', array('choices' => $publishStateChoices, 'preferred_choices' => array($prefPublishStateChoices), 'label' => 'Publish State', 'required' => true))
+                ->setHelps(array(
+                    'accessLevel' => 'Set the minimum access level the item is visible to',
+                    'publishState' => 'Set the publish state of this menu item'
+                ))
+                ->end()
+                ->with('Menu Item Optional Details', array('collapsed' => true))
+                ->add('menuImage', 'sonata_media_type', array('provider' => 'sonata.media.provider.image', 'context' => 'icons', 'attr' => array('class' => 'imagefield'), 'label' => 'Menu Icon Image', 'required' => false))
+                ->setHelps(array(
+                    'menuImage' => 'Set an image as Menu Icon'
+                ))
+                ->end()
         ;
     }
 
@@ -112,47 +112,47 @@ class MenuAdmin extends Admin {
         $publishStateChoices = $menuSettings['publishState'];
 
         $datagridMapper
-            ->add('title')
-            ->add('menuGroup', 'doctrine_orm_string', array(), 'choice', array('choices' => $menuGroupsChoice))
-            ->add('menuType', 'doctrine_orm_string', array(), 'choice', array('choices' => $menuTypeChoice))
-            ->add('page')
-            ->add('blog')
-            ->add('publishState', 'doctrine_orm_string', array(), 'choice', array('choices' => $publishStateChoices))
-            ->add('accessLevel', 'doctrine_orm_string', array(), 'choice', array('choices' => $accessLevelChoices))
+                ->add('title')
+                ->add('menuGroup', 'doctrine_orm_string', array(), 'choice', array('choices' => $menuGroupsChoice))
+                ->add('menuType', 'doctrine_orm_string', array(), 'choice', array('choices' => $menuTypeChoice))
+                ->add('page')
+                ->add('blog')
+                ->add('publishState', 'doctrine_orm_string', array(), 'choice', array('choices' => $publishStateChoices))
+                ->add('accessLevel', 'doctrine_orm_string', array(), 'choice', array('choices' => $accessLevelChoices))
         ;
     }
 
     protected function configureListFields(ListMapper $listMapper) {
         $listMapper
-            ->addIdentifier('title')
-            ->addIdentifier('menuGroup')
-            ->addIdentifier('menuTypeAsString', null, array('sortable' => false, 'label' => 'Menu Item Type'))
-            ->addIdentifier('page')
-            ->addIdentifier('blog')
-            ->addIdentifier('accessLevelAsString', null, array('sortable' => false, 'label' => 'Access Level'))
-            ->addIdentifier('ordering')
-            ->addIdentifier('publishStateAsString', null, array('sortable' => false, 'label' => 'Publish State'))
-            ->add('_action', 'actions', array(
-                'actions' => array(
-                    'duplicate' => array(
-                        'template' => 'MenuBundle:Admin:duplicate.html.twig'
-                    ),
-                    'edit' => array(
-                        'template' => 'MenuBundle:Admin:edit.html.twig'
-                    ),
-                    'delete' => array(
-                        'template' => 'MenuBundle:Admin:delete.html.twig'
+                ->addIdentifier('title')
+                ->addIdentifier('menuGroup')
+                ->addIdentifier('menuTypeAsString', null, array('sortable' => false, 'label' => 'Menu Item Type'))
+                ->addIdentifier('page')
+                ->addIdentifier('blog')
+                ->addIdentifier('accessLevelAsString', null, array('sortable' => false, 'label' => 'Access Level'))
+                ->addIdentifier('ordering')
+                ->addIdentifier('publishStateAsString', null, array('sortable' => false, 'label' => 'Publish State'))
+                ->add('_action', 'actions', array(
+                    'actions' => array(
+                        'duplicate' => array(
+                            'template' => 'MenuBundle:Admin:duplicate.html.twig'
+                        ),
+                        'edit' => array(
+                            'template' => 'MenuBundle:Admin:edit.html.twig'
+                        ),
+                        'delete' => array(
+                            'template' => 'MenuBundle:Admin:delete.html.twig'
+                        )
                     )
-                )
-            ))
+                ))
         ;
     }
 
     public function validate(ErrorElement $errorElement, $object) {
         $errorElement
-            ->with('title')
-            ->assertLength(array('max' => 255))
-            ->end()
+                ->with('title')
+                ->assertLength(array('max' => 255))
+                ->end()
         ;
     }
 

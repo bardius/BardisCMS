@@ -23,7 +23,7 @@ class UserExtension extends Extension {
 
     public function load(array $configs, ContainerBuilder $container) {
         $loader = new XMLFileLoader(
-            $container, new FileLocator(__DIR__ . '/../Resources/config')
+                $container, new FileLocator(__DIR__ . '/../Resources/config')
         );
         $loader->load('services.xml');
     }

@@ -365,11 +365,11 @@ class DefaultController extends Controller {
 
                 // If data is valid send the email with the twig email template set in the views
                 $message = \Swift_Message::newInstance()
-                    ->setSubject('Enquiry from ' . $websiteTitle . ' website: ' . $emailData['firstname'] . ' ' . $emailData['surname'] - $emailData['email'])
-                    ->setFrom($settings->getEmailSender())
-                    ->setReplyTo($emailData['email'])
-                    ->setTo($settings->getEmailRecepient())
-                    ->setBody($this->renderView('PageBundle:Email:contactFormEmail.txt.twig', array('sender' => $emailData['firstname'] . ' ' . $emailData['surname'], 'mailData' => $emailData['comment'])));
+                        ->setSubject('Enquiry from ' . $websiteTitle . ' website: ' . $emailData['firstname'] . ' ' . $emailData['surname'] - $emailData['email'])
+                        ->setFrom($settings->getEmailSender())
+                        ->setReplyTo($emailData['email'])
+                        ->setTo($settings->getEmailRecepient())
+                        ->setBody($this->renderView('PageBundle:Email:contactFormEmail.txt.twig', array('sender' => $emailData['firstname'] . ' ' . $emailData['surname'], 'mailData' => $emailData['comment'])));
 
                 // The responce for the user upon successful submission
                 $successMsg = 'Thank you for contacting us, we will be in touch soon';
@@ -482,7 +482,7 @@ class DefaultController extends Controller {
 
         // Generate the proper route for the required results
         $url = $this->get('router')->generate(
-            'PageBundle_tagged_noslash', array('extraParams' => $extraParams), true
+                'PageBundle_tagged_noslash', array('extraParams' => $extraParams), true
         );
 
         // Redirect to the results

@@ -3,11 +3,9 @@
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
+class AppKernel extends Kernel {
 
-class AppKernel extends Kernel
-{
-    public function registerBundles()
-    {
+    public function registerBundles() {
         $bundles = array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
@@ -16,7 +14,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
-			new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
@@ -30,9 +28,9 @@ class AppKernel extends Kernel
             new Sonata\CacheBundle\SonataCacheBundle(),
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
-            new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),			
-			new Spy\TimelineBundle\SpyTimelineBundle(),
-			new Sonata\TimelineBundle\SonataTimelineBundle(),
+            new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
+            new Spy\TimelineBundle\SpyTimelineBundle(),
+            new Sonata\TimelineBundle\SonataTimelineBundle(),
             new Application\Sonata\TimelineBundle\ApplicationSonataTimelineBundle(),
             new Stfalcon\Bundle\TinymceBundle\StfalconTinymceBundle(),
             new Sonata\MediaBundle\SonataMediaBundle(),
@@ -47,9 +45,9 @@ class AppKernel extends Kernel
             new BardisCMS\ContentBlockBundle\ContentBlockBundle(),
             new BardisCMS\MobileDetectBundle\MobileDetectBundle(),
             new BardisCMS\CommentBundle\CommentBundle(),
-			new Misd\GuzzleBundle\MisdGuzzleBundle(),
-			new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-			new Minifier\MinifierBundle(),
+            new Misd\GuzzleBundle\MisdGuzzleBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new Minifier\MinifierBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -61,9 +59,8 @@ class AppKernel extends Kernel
         return $bundles;
     }
 
-    public function registerContainerConfiguration(LoaderInterface $loader)
-    {
-        $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
+    public function registerContainerConfiguration(LoaderInterface $loader) {
+        $loader->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
     }
-}
 
+}

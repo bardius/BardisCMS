@@ -8,17 +8,17 @@
         {% endif %} 
 
         {% if loop.index % 3 == 1 %}    
-        <div class="columns homepageItem homepageItem{{ loop.index }} {% if pageItem.introclass is not null %}{{ pageItem.introclass }}{% endif %} large-3 small-6">
-            {% include 'PageBundle:Contents:homepage-item-three.html.twig' with vars %}
+            <div class="columns homepageItem homepageItem{{ loop.index }} {% if pageItem.introclass is not null %}{{ pageItem.introclass }}{% endif %} large-3 small-6">
+                {% include 'PageBundle:Contents:homepage-item-three.html.twig' with vars %}
             </div>
         {% elseif loop.index % 3 == 2 %}
             <div class="columns homepageItem homepageItem{{ loop.index }} {% if pageItem.introclass is not null %}{{ pageItem.introclass }}{% endif %} large-6 small-6">
-            {% include 'PageBundle:Contents:homepage-item-six.html.twig' with vars %}
-                </div>
+                {% include 'PageBundle:Contents:homepage-item-six.html.twig' with vars %}
+            </div>
         {% elseif loop.index % 3 == 0 %}
-                <div class="columns homepageItem homepageItem{{ loop.index }} {% if pageItem.introclass is not null %}{{ pageItem.introclass }}{% endif %} large-3 small-6">
-            {% include 'PageBundle:Contents:homepage-item-three.html.twig' with vars %}
-                    </div>
+            <div class="columns homepageItem homepageItem{{ loop.index }} {% if pageItem.introclass is not null %}{{ pageItem.introclass }}{% endif %} large-3 small-6">
+                {% include 'PageBundle:Contents:homepage-item-three.html.twig' with vars %}
+            </div>
         {% endif %}
     {% endfor %}
-                </div>
+</div>

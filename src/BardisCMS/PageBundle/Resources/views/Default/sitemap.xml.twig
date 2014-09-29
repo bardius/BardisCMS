@@ -4,19 +4,19 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-{% for sitemapItem in sitemapList if sitemapItem.alias != '404' %}
-    <url>
-        {% if sitemapItem.pagetype == 'blog_article' or sitemapItem.pagetype == 'blog_cat_page' %}
-            <loc>{{ url('BlogBundle_page', { 'alias': sitemapItem.alias }) }}</loc>               
-        {% elseif sitemapItem.pagetype == 'blog_filtered_list' %}
+    {% for sitemapItem in sitemapList if sitemapItem.alias != '404' %}
+        <url>
+            {% if sitemapItem.pagetype == 'blog_article' or sitemapItem.pagetype == 'blog_cat_page' %}
+                <loc>{{ url('BlogBundle_page', { 'alias': sitemapItem.alias }) }}</loc>               
+                {% elseif sitemapItem.pagetype == 'blog_filtered_list' %}
                 <loc>{{ url('BlogBundle_tagged') }}</loc>                        
-        {% elseif sitemapItem.pagetype == 'blog_home' %}
-                    <loc>{{ url('BlogBundle_home') }}</loc>
-        {% elseif sitemapItem.pagetype == 'homepage' %}
-                        <loc>{{ url('PageBundle_index') }}</loc>          
-        {% else %}
-                            <loc>{{ url('PageBundle_page', { 'alias': sitemapItem.alias }) }}</loc>
-        {% endif %}
-                            </url>
-{% endfor %}
-                        </urlset>
+                {% elseif sitemapItem.pagetype == 'blog_home' %}
+                <loc>{{ url('BlogBundle_home') }}</loc>
+                {% elseif sitemapItem.pagetype == 'homepage' %}
+                <loc>{{ url('PageBundle_index') }}</loc>          
+                {% else %}
+                <loc>{{ url('PageBundle_page', { 'alias': sitemapItem.alias }) }}</loc>
+                {% endif %}
+        </url>
+    {% endfor %}
+</urlset>

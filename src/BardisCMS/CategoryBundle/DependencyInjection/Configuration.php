@@ -31,9 +31,9 @@ class Configuration implements ConfigurationInterface {
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
         $rootNode
-            ->children()
-            ->booleanNode('loadservices')->defaultFalse()->end()
-            ->end();
+                ->children()
+                ->booleanNode('loadservices')->defaultFalse()->end()
+                ->end();
 
         return $treeBuilder;
     }

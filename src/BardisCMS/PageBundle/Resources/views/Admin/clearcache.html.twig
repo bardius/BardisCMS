@@ -1,6 +1,6 @@
 {% if admin.hasRoute('clearcache') and admin.id(object) and admin.isGranted('EDIT', object)%}
-<a class="btn sonata-action-element" href="{{ admin.generateObjectUrl('clearcache', object) }}" title="{{ 'link_action_clear_cache'|trans({}, 'SonataAdminBundle') }}" target="_blank">
-    <i class="glyphicon glyphicon-refresh"></i>
+    <a class="btn sonata-action-element" href="{{ admin.generateObjectUrl('clearcache', object) }}" title="{{ 'link_action_clear_cache'|trans({}, 'SonataAdminBundle') }}" target="_blank">
+        <i class="glyphicon glyphicon-refresh"></i>
         {{ 'link_action_clear_cache'|trans({}, 'SonataAdminBundle') }}
-</a>
+    </a>
 {% endif %}

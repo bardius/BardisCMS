@@ -25,7 +25,7 @@ class FilterPagesForm extends AbstractType {
             'multiple' => true,
             'label' => 'Tags',
             'required' => false,
-            )
+                )
         );
 
         $builder->add('categories', 'entity', array(
@@ -35,7 +35,7 @@ class FilterPagesForm extends AbstractType {
             'multiple' => true,
             'label' => 'Categories',
             'required' => false,
-            )
+                )
         );
     }
 

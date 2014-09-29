@@ -1,95 +1,95 @@
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services/services-1.0.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-      <service id="sonata.admin.pages" class="BardisCMS\PageBundle\Admin\PageAdmin">
-          <tag name="sonata.admin" manager_type="orm" group="Pages" label="Website Pages" />
-          <argument />
-          <argument>BardisCMS\PageBundle\Entity\Page</argument>
-          <argument>PageBundle:PageAdmin</argument>
-          <call method="setTranslationDomain">
-              <argument>PageBundle</argument>
-          </call>
-      </service>
-      <service id="sonata.admin.categories" class="BardisCMS\CategoryBundle\Admin\CategoryAdmin">
-          <tag name="sonata.admin" manager_type="orm" group="Category" label="Categories" />
-          <argument />
-          <argument>BardisCMS\CategoryBundle\Entity\Category</argument>
-          <argument>CategoryBundle:CategoryAdmin</argument>
-          <call method="setTranslationDomain">
-              <argument>CategoryBundle</argument>
-          </call>
-      </service>
-      <service id="sonata.admin.tags" class="BardisCMS\TagBundle\Admin\TagAdmin">
-          <tag name="sonata.admin" manager_type="orm" group="Tag" label="Tags" />
-          <argument />
-          <argument>BardisCMS\TagBundle\Entity\Tag</argument>
-          <argument>TagBundle:TagAdmin</argument>
-          <call method="setTranslationDomain">
-              <argument>TagBundle</argument>
-          </call>
-      </service>
-      <service id="sonata.admin.blogs" class="BardisCMS\BlogBundle\Admin\BlogAdmin">
-          <tag name="sonata.admin" manager_type="orm" group="Blog" label="Blog Pages" />
-          <argument />
-          <argument>BardisCMS\BlogBundle\Entity\Blog</argument>
-          <argument>BlogBundle:BlogAdmin</argument>
-          <call method="setTranslationDomain">
-              <argument>BlogBundle</argument>
-          </call>
-      </service>
-      <service id="sonata.admin.menus" class="BardisCMS\MenuBundle\Admin\MenuAdmin">
-          <tag name="sonata.admin" manager_type="orm" group="Menus" label="Menus" />
-          <argument />
-          <argument>BardisCMS\MenuBundle\Entity\Menu</argument>
-          <argument>MenuBundle:MenuAdmin</argument>
-          <call method="setTranslationDomain">
-              <argument>MenuBundle</argument>
-          </call>
-      </service>
-      <service id="sonata.admin.contentblocks" class="BardisCMS\ContentBlockBundle\Admin\ContentBlockAdmin">
-          <tag name="sonata.admin" manager_type="orm" group="Content Blocks" label="Content Blocks" />
-          <argument />
-          <argument>BardisCMS\ContentBlockBundle\Entity\ContentBlock</argument>
-          <argument>SonataAdminBundle:CRUD</argument>
-          <call method="setTranslationDomain">
-              <argument>ContentBlockBundle</argument>
-          </call>
-      </service>
-      <service id="sonata.admin.settings" class="BardisCMS\SettingsBundle\Admin\SettingsAdmin">
-          <tag name="sonata.admin" manager_type="orm" group="Settings" label="Website Settings" />
-          <argument />
-          <argument>BardisCMS\SettingsBundle\Entity\Settings</argument>
-          <argument>SettingsBundle:SettingsAdmin</argument>
-          <call method="setTranslationDomain">
-              <argument>SettingsBundle</argument>
-          </call>
-      </service>
-      <service id="sonata.media.resizer.bardiscms" class="BardisCMS\ContentBlockBundle\Media\Resizer\BardisCMSResizer">
+        <service id="sonata.admin.pages" class="BardisCMS\PageBundle\Admin\PageAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Pages" label="Website Pages" />
+            <argument />
+            <argument>BardisCMS\PageBundle\Entity\Page</argument>
+            <argument>PageBundle:PageAdmin</argument>
+            <call method="setTranslationDomain">
+                <argument>PageBundle</argument>
+            </call>
+        </service>
+        <service id="sonata.admin.categories" class="BardisCMS\CategoryBundle\Admin\CategoryAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Category" label="Categories" />
+            <argument />
+            <argument>BardisCMS\CategoryBundle\Entity\Category</argument>
+            <argument>CategoryBundle:CategoryAdmin</argument>
+            <call method="setTranslationDomain">
+                <argument>CategoryBundle</argument>
+            </call>
+        </service>
+        <service id="sonata.admin.tags" class="BardisCMS\TagBundle\Admin\TagAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Tag" label="Tags" />
+            <argument />
+            <argument>BardisCMS\TagBundle\Entity\Tag</argument>
+            <argument>TagBundle:TagAdmin</argument>
+            <call method="setTranslationDomain">
+                <argument>TagBundle</argument>
+            </call>
+        </service>
+        <service id="sonata.admin.blogs" class="BardisCMS\BlogBundle\Admin\BlogAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Blog" label="Blog Pages" />
+            <argument />
+            <argument>BardisCMS\BlogBundle\Entity\Blog</argument>
+            <argument>BlogBundle:BlogAdmin</argument>
+            <call method="setTranslationDomain">
+                <argument>BlogBundle</argument>
+            </call>
+        </service>
+        <service id="sonata.admin.menus" class="BardisCMS\MenuBundle\Admin\MenuAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Menus" label="Menus" />
+            <argument />
+            <argument>BardisCMS\MenuBundle\Entity\Menu</argument>
+            <argument>MenuBundle:MenuAdmin</argument>
+            <call method="setTranslationDomain">
+                <argument>MenuBundle</argument>
+            </call>
+        </service>
+        <service id="sonata.admin.contentblocks" class="BardisCMS\ContentBlockBundle\Admin\ContentBlockAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Content Blocks" label="Content Blocks" />
+            <argument />
+            <argument>BardisCMS\ContentBlockBundle\Entity\ContentBlock</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+            <call method="setTranslationDomain">
+                <argument>ContentBlockBundle</argument>
+            </call>
+        </service>
+        <service id="sonata.admin.settings" class="BardisCMS\SettingsBundle\Admin\SettingsAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Settings" label="Website Settings" />
+            <argument />
+            <argument>BardisCMS\SettingsBundle\Entity\Settings</argument>
+            <argument>SettingsBundle:SettingsAdmin</argument>
+            <call method="setTranslationDomain">
+                <argument>SettingsBundle</argument>
+            </call>
+        </service>
+        <service id="sonata.media.resizer.bardiscms" class="BardisCMS\ContentBlockBundle\Media\Resizer\BardisCMSResizer">
             <tag name="sonata.media.resizer" />
             <argument type="service" id="sonata.media.adapter.image.gd" />
-      </service> 
-      <service id="sonata_user.form.type.registration" class="Application\Sonata\UserBundle\Form\Type\RegistrationFormType">
+        </service> 
+        <service id="sonata_user.form.type.registration" class="Application\Sonata\UserBundle\Form\Type\RegistrationFormType">
             <tag name="form.type" alias="registration" />
             <argument>%fos_user.model.user.class%</argument>
-			<argument type="service" id="request_stack" />
-      </service>	 
-	 <service id="sonata_user.services.helpers" class="Application\Sonata\UserBundle\Services\UserHelpers">
-			<argument type="service" id="security.context"/>
-     </service>	  
-      <service id="sonata.admin.comments" class="BardisCMS\CommentBundle\Admin\CommentAdmin">
-          <tag name="sonata.admin" manager_type="orm" group="Comments" label="Comments" />
-          <argument />
-          <argument>BardisCMS\CommentBundle\Entity\Comment</argument>
-          <argument>CommentBundle:CommentAdmin</argument>
-          <call method="setTranslationDomain">
-              <argument>CommentBundle</argument>
-          </call>
-      </service>
-	  <service id="sonata.block.service.clearcache" class="BardisCMS\PageBundle\Block\Service\ClearCacheService">
-		<tag name="sonata.block" />
-		<argument>sonata.block.clearcache</argument>
-		<argument type="service" id="templating" />
-	  </service>  
-   </services>
+            <argument type="service" id="request_stack" />
+        </service>	 
+        <service id="sonata_user.services.helpers" class="Application\Sonata\UserBundle\Services\UserHelpers">
+            <argument type="service" id="security.context"/>
+        </service>	  
+        <service id="sonata.admin.comments" class="BardisCMS\CommentBundle\Admin\CommentAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Comments" label="Comments" />
+            <argument />
+            <argument>BardisCMS\CommentBundle\Entity\Comment</argument>
+            <argument>CommentBundle:CommentAdmin</argument>
+            <call method="setTranslationDomain">
+                <argument>CommentBundle</argument>
+            </call>
+        </service>
+        <service id="sonata.block.service.clearcache" class="BardisCMS\PageBundle\Block\Service\ClearCacheService">
+            <tag name="sonata.block" />
+            <argument>sonata.block.clearcache</argument>
+            <argument type="service" id="templating" />
+        </service>  
+    </services>
 </container>

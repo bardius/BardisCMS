@@ -5,35 +5,35 @@
                 <legend>MESSAGE TO THE WEBSITE</legend>
             </div>
             <div class="large-6 small-12 columns">
-									{{ form_row(form.firstname) }}										
-                </div>
-                <div class="large-6 small-12 columns">
-									{{ form_row(form.surname) }}								
-                    </div>
-                    <div class="large-12 small-12 columns">
-									{{ form_row(form.email) }}								
-                        </div>
-                        <div class="large-12 small-12 columns">
-									{{ form_row(form.comment) }}								
-                            </div>
-                            <div class="large-12 small-12 columns hidden">
-									{{ form_row(form.bottrap) }}								
-                                </div>
-								{#
-								<div class="large-12 small-12 columns formFieldContainer">
-									{{ form_errors(form) }}								
-								</div>
-								#}
-                                <div class="large-12 small-12 columns">
-									{{ form_rest(form) }}
-                                        <small class="noticeMsg">All fields are mandatory</small>
-                                        <input type="submit" id="contactFormBtn" class="button" value="Submit" />
-									{% if formMessage is defined %}
-                                        <small class="contactForm-message error">
-										{{ formMessage }}
-                                            </small>
-									{% endif %}
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+                {{ form_row(form.firstname) }}										
+            </div>
+            <div class="large-6 small-12 columns">
+                {{ form_row(form.surname) }}								
+            </div>
+            <div class="large-12 small-12 columns">
+                {{ form_row(form.email) }}								
+            </div>
+            <div class="large-12 small-12 columns">
+                {{ form_row(form.comment) }}								
+            </div>
+            <div class="large-12 small-12 columns hidden">
+                {{ form_row(form.bottrap) }}								
+            </div>
+            {#
+            <div class="large-12 small-12 columns formFieldContainer">
+                    {{ form_errors(form) }}								
+            </div>
+            #}
+            <div class="large-12 small-12 columns">
+                {{ form_rest(form) }}
+                <small class="noticeMsg">All fields are mandatory</small>
+                <input type="submit" id="contactFormBtn" class="button" value="Submit" />
+                {% if formMessage is defined %}
+                    <small class="contactForm-message error">
+                        {{ formMessage }}
+                    </small>
+                {% endif %}
+            </div>
+        </div>
+    </form>
+</div>

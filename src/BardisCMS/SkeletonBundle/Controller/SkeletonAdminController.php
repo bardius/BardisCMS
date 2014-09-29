@@ -66,8 +66,8 @@ class SkeletonAdminController extends Controller {
 
                 if ($this->isXmlHttpRequest()) {
                     return $this->renderJson(array(
-                            'result' => 'ok',
-                            'objectId' => $this->admin->getNormalizedIdentifier($object)
+                                'result' => 'ok',
+                                'objectId' => $this->admin->getNormalizedIdentifier($object)
                     ));
                 }
 
@@ -91,9 +91,9 @@ class SkeletonAdminController extends Controller {
         $this->get('twig')->getExtension('form')->renderer->setTheme($view, $this->admin->getFormTheme());
 
         return $this->render($this->admin->getTemplate($templateKey), array(
-                'action' => 'create',
-                'form' => $view,
-                'object' => $object,
+                    'action' => 'create',
+                    'form' => $view,
+                    'object' => $object,
         ));
     }
 

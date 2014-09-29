@@ -59,9 +59,9 @@ class ClearCacheService extends BaseBlockService {
         $settings = $blockContext->getSettings();
 
         return $this->renderResponse($blockContext->getTemplate(), array(
-                'block' => $blockContext->getBlock(),
-                'settings' => $settings
-                ), $response);
+                    'block' => $blockContext->getBlock(),
+                    'settings' => $settings
+                        ), $response);
     }
 
 }

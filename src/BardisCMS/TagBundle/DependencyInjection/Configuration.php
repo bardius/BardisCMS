@@ -31,15 +31,15 @@ class Configuration implements ConfigurationInterface {
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
         $rootNode
-            ->children()
-            ->booleanNode('loadservices')->defaultFalse()->end()
-            ->arrayNode('tagcategories')
-            ->isRequired()
-            ->requiresAtLeastOneElement()
-            ->useAttributeAsKey('name')
-            ->prototype('scalar')->defaultValue(null)->end()
-            ->end()
-            ->end();
+                ->children()
+                ->booleanNode('loadservices')->defaultFalse()->end()
+                ->arrayNode('tagcategories')
+                ->isRequired()
+                ->requiresAtLeastOneElement()
+                ->useAttributeAsKey('name')
+                ->prototype('scalar')->defaultValue(null)->end()
+                ->end()
+                ->end();
 
         return $treeBuilder;
     }

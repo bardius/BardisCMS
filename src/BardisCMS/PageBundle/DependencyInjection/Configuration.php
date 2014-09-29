@@ -33,21 +33,21 @@ class Configuration implements ConfigurationInterface {
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
         $rootNode
-            ->children()
-            ->booleanNode('loadservices')->defaultTrue()->end()
-            ->arrayNode('pagetypes')
-            ->isRequired()
-            ->requiresAtLeastOneElement()
-            ->useAttributeAsKey('name')
-            ->prototype('scalar')->defaultValue(null)->end()
-            ->end()
-            ->arrayNode('mediasizes')
-            ->isRequired()
-            ->requiresAtLeastOneElement()
-            ->useAttributeAsKey('name')
-            ->prototype('scalar')->defaultValue(null)->end()
-            ->end()
-            ->end();
+                ->children()
+                ->booleanNode('loadservices')->defaultTrue()->end()
+                ->arrayNode('pagetypes')
+                ->isRequired()
+                ->requiresAtLeastOneElement()
+                ->useAttributeAsKey('name')
+                ->prototype('scalar')->defaultValue(null)->end()
+                ->end()
+                ->arrayNode('mediasizes')
+                ->isRequired()
+                ->requiresAtLeastOneElement()
+                ->useAttributeAsKey('name')
+                ->prototype('scalar')->defaultValue(null)->end()
+                ->end()
+                ->end();
 
         return $treeBuilder;
     }

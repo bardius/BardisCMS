@@ -1,33 +1,33 @@
 {% if form is defined %}
-<form id="add_comment_form" class="commentsForm" action="{{ path('CommentBundle_blog_comment_add_no_slash', { 'page_id' : page.id } ) }}" method="post" {{ form_enctype(form) }}>
-    <div class="row">
-        <div class="large-12 small-12 columns">
-            <p><span class="noticeMsg">All fields are mandatory</span></p>
-        </div>
-        <div class="large-12 small-12 columns">
-			{{ form_errors(form) }}								
+    <form id="add_comment_form" class="commentsForm" action="{{ path('CommentBundle_blog_comment_add_no_slash', { 'page_id' : page.id } ) }}" method="post" {{ form_enctype(form) }}>
+        <div class="row">
+            <div class="large-12 small-12 columns">
+                <p><span class="noticeMsg">All fields are mandatory</span></p>
+            </div>
+            <div class="large-12 small-12 columns">
+                {{ form_errors(form) }}								
             </div>
             <div class="large-6 small-12 columns">
-			{{ form_row(form.title) }}										
-                </div>
-                <div class="large-6 small-12 columns">
-			{{ form_row(form.username) }}										
-                    </div>
-                    <div class="large-12 small-12 columns">
-			{{ form_row(form.comment) }}										
-                        </div>
-                        <div class="large-12 small-12 columns hidden">
-			{{ form_row(form.bottrap) }}								
-                            </div>
-                            <div class="large-12 small-12 columns">
-			{{ form_rest(form) }}										
-                                </div>
-                                <div class="large-12 small-12 columns">
-                                    <input type="submit" id="submitCommentBtn" class="button" type="submit" value="Submit" />
-			{% if formMessage is defined %}
-                                    <small class="contactForm-message error">{{ formMessage }}</small>
-			{% endif %}
-                                </div>
-                            </div>
-                        </form>
+                {{ form_row(form.title) }}										
+            </div>
+            <div class="large-6 small-12 columns">
+                {{ form_row(form.username) }}										
+            </div>
+            <div class="large-12 small-12 columns">
+                {{ form_row(form.comment) }}										
+            </div>
+            <div class="large-12 small-12 columns hidden">
+                {{ form_row(form.bottrap) }}								
+            </div>
+            <div class="large-12 small-12 columns">
+                {{ form_rest(form) }}										
+            </div>
+            <div class="large-12 small-12 columns">
+                <input type="submit" id="submitCommentBtn" class="button" type="submit" value="Submit" />
+                {% if formMessage is defined %}
+                    <small class="contactForm-message error">{{ formMessage }}</small>
+                {% endif %}
+            </div>
+        </div>
+    </form>
 {% endif %}

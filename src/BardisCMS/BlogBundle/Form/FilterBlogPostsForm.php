@@ -32,7 +32,7 @@ class FilterBlogPostsForm extends AbstractType {
             'multiple' => true,
             'label' => 'Tags',
             'required' => false,
-            )
+                )
         );
 
         $builder->add('categories', 'entity', array(
@@ -43,7 +43,7 @@ class FilterBlogPostsForm extends AbstractType {
             'multiple' => true,
             'label' => 'Categories',
             'required' => false,
-            )
+                )
         );
     }
 
@@ -53,12 +53,12 @@ class FilterBlogPostsForm extends AbstractType {
         $qb = $this->entityManager->createQueryBuilder();
 
         $qb->select('DISTINCT c')
-            ->from('CategoryBundle:Category', 'c')
-            ->where($qb->expr()->andX(
-                    $qb->expr()->neq('c.title', ':title')
-            ))
-            ->orderBy('c.title', 'DESC')
-            ->setParameter('title', $title)
+                ->from('CategoryBundle:Category', 'c')
+                ->where($qb->expr()->andX(
+                                $qb->expr()->neq('c.title', ':title')
+                ))
+                ->orderBy('c.title', 'DESC')
+                ->setParameter('title', $title)
         ;
 
         return $qb;

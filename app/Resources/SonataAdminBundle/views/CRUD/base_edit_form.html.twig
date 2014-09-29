@@ -21,51 +21,51 @@
 
             {% block sonata_pre_fieldsets %}
                 <div class="row">
-            {% endblock %}
+                {% endblock %}
 
-            {% block sonata_tab_content %}
-				<div class="col-md-12">
-					<!-- Nav tabs -->
-					<ul class="nav nav-tabs">
-						{% for name, form_group in admin.formgroups %}
-						<li class="{% if loop.first %}active{% endif %}">
-							<a href="#{{ admin.uniqid }}_{{ loop.index }}" data-toggle="tab">{{ admin.trans(name, {}, form_group.translation_domain) }}</a>
-						</li>  
-						{% endfor %}
-					</ul>
-					<!-- Tab panels -->
-					<div class="tab-content">
-						{% for name, form_group in admin.formgroups %}
-						<div class="tab-pane{% if loop.first %} active{% endif %}" id="{{ admin.uniqid }}_{{ loop.index }}">
-							<div class="{{ form_group.class|default('') }}">
-								<div class="box box-success">
-									<div class="box-header">
-										<h4 class="box-title">
-											{{ admin.trans(name, {}, form_group.translation_domain) }}
-										</h4>
-									</div>
-									<div class="box-body">
-										<div class="sonata-ba-collapsed-fields">
-											{% if form_group.description != false %}
-												<p>{{ form_group.description|raw }}</p>
-											{% endif %}
+                {% block sonata_tab_content %}
+                    <div class="col-md-12">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs">
+                            {% for name, form_group in admin.formgroups %}
+                                <li class="{% if loop.first %}active{% endif %}">
+                                    <a href="#{{ admin.uniqid }}_{{ loop.index }}" data-toggle="tab">{{ admin.trans(name, {}, form_group.translation_domain) }}</a>
+                                </li>  
+                            {% endfor %}
+                        </ul>
+                        <!-- Tab panels -->
+                        <div class="tab-content">
+                            {% for name, form_group in admin.formgroups %}
+                                <div class="tab-pane{% if loop.first %} active{% endif %}" id="{{ admin.uniqid }}_{{ loop.index }}">
+                                    <div class="{{ form_group.class|default('') }}">
+                                        <div class="box box-success">
+                                            <div class="box-header">
+                                                <h4 class="box-title">
+                                                    {{ admin.trans(name, {}, form_group.translation_domain) }}
+                                                </h4>
+                                            </div>
+                                            <div class="box-body">
+                                                <div class="sonata-ba-collapsed-fields">
+                                                    {% if form_group.description != false %}
+                                                        <p>{{ form_group.description|raw }}</p>
+                                                    {% endif %}
 
-											{% for field_name in form_group.fields %}
-												{% if admin.formfielddescriptions[field_name] is defined %}
-													{{ form_row(form[field_name])}}
-												{% endif %}
-											{% endfor %}
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						{% endfor %}
-					</div>
-				</div>
-            {% endblock %}
+                                                    {% for field_name in form_group.fields %}
+                                                        {% if admin.formfielddescriptions[field_name] is defined %}
+                                                            {{ form_row(form[field_name])}}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endblock %}
 
-            {% block sonata_post_fieldsets %}
+                {% block sonata_post_fieldsets %}
                 </div>
             {% endblock %}
 

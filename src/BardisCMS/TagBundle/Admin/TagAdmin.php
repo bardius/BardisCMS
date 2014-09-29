@@ -28,16 +28,16 @@ class TagAdmin extends Admin {
         $tagcategoriesChoices = $tagSettings['tagcategories'];
 
         $formMapper
-            ->with('Tag Details', array('collapsed' => false))
-            ->add('title', null, array('label' => 'Tag Title', 'required' => true))
-            ->add('tagCategory', 'choice', array('choices' => $tagcategoriesChoices, 'label' => 'Tag Category', 'required' => false))
-            ->add('tagIcon', 'sonata_media_type', array('provider' => 'sonata.media.provider.image', 'context' => 'icons', 'attr' => array('class' => 'imagefield'), 'label' => 'Tag Icon', 'required' => false))
-            ->setHelps(array(
-                'title' => 'Set the title of the tag',
-                'tagCategory' => 'Set the category of the tag',
-                'tagIcon' => 'Set the icon of the of the tag'
-            ))
-            ->end()
+                ->with('Tag Details', array('collapsed' => false))
+                ->add('title', null, array('label' => 'Tag Title', 'required' => true))
+                ->add('tagCategory', 'choice', array('choices' => $tagcategoriesChoices, 'label' => 'Tag Category', 'required' => false))
+                ->add('tagIcon', 'sonata_media_type', array('provider' => 'sonata.media.provider.image', 'context' => 'icons', 'attr' => array('class' => 'imagefield'), 'label' => 'Tag Icon', 'required' => false))
+                ->setHelps(array(
+                    'title' => 'Set the title of the tag',
+                    'tagCategory' => 'Set the category of the tag',
+                    'tagIcon' => 'Set the icon of the of the tag'
+                ))
+                ->end()
         ;
     }
 
@@ -50,36 +50,36 @@ class TagAdmin extends Admin {
         $tagcategoriesChoices = $tagSettings['tagcategories'];
 
         $datagridMapper
-            ->add('title')
-            ->add('tagCategory', 'doctrine_orm_string', array(), 'choice', array('choices' => $tagcategoriesChoices))
+                ->add('title')
+                ->add('tagCategory', 'doctrine_orm_string', array(), 'choice', array('choices' => $tagcategoriesChoices))
         ;
     }
 
     protected function configureListFields(ListMapper $listMapper) {
         $listMapper
-            ->addIdentifier('title')
-            ->addIdentifier('tagCategoryAsString', null, array('sortable' => false, 'label' => 'Tag Category'))
-            ->addIdentifier('tagIcon')
-            ->add('_action', 'actions', array(
-                'actions' => array(
-                    'edit' => array(
-                        'template' => 'TagBundle:Admin:edit.html.twig'
-                    ),
-                    'delete' => array(
-                        'template' => 'TagBundle:Admin:delete.html.twig'
+                ->addIdentifier('title')
+                ->addIdentifier('tagCategoryAsString', null, array('sortable' => false, 'label' => 'Tag Category'))
+                ->addIdentifier('tagIcon')
+                ->add('_action', 'actions', array(
+                    'actions' => array(
+                        'edit' => array(
+                            'template' => 'TagBundle:Admin:edit.html.twig'
+                        ),
+                        'delete' => array(
+                            'template' => 'TagBundle:Admin:delete.html.twig'
+                        )
                     )
-                )
-            ))
+                ))
         ;
     }
 
     public function validate(ErrorElement $errorElement, $object) {
         $errorElement
-            ->with('title')
-            ->assertLength(array('max' => 255))
-            ->assertNotBlank()
-            ->assertNotNull()
-            ->end()
+                ->with('title')
+                ->assertLength(array('max' => 255))
+                ->assertNotBlank()
+                ->assertNotNull()
+                ->end()
         ;
     }
 

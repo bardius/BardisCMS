@@ -47,10 +47,10 @@ class MediaType extends AbstractType {
         )));
 
         $builder->addEventListener(FormEvents::BIND, function(FormEvent $event) {
-                if ($event->getForm()->get('unlink')->getData()) {
-                    $event->setData(null);
-                }
-            });
+            if ($event->getForm()->get('unlink')->getData()) {
+                $event->setData(null);
+            }
+        });
 
         $this->pool->getProvider($options['provider'])->buildMediaType($builder);
 

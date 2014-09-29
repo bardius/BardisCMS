@@ -123,8 +123,8 @@ class BardisCMSResizer implements ResizerInterface {
 
         // Generate thumbnail
         $content = $image
-            ->thumbnail(new Box($settings['width'], $settings['height']), $this->mode)
-            ->get($format, array('quality' => $settings['quality']));
+                ->thumbnail(new Box($settings['width'], $settings['height']), $this->mode)
+                ->get($format, array('quality' => $settings['quality']));
 
         $out->setContent($content);
     }
