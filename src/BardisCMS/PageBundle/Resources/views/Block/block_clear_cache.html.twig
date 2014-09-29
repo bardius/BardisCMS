@@ -1,11 +1,11 @@
 {% extends sonata_block.templates.block_base %}
 
 {% block block %}
-    <h3 class="sonata-clearcache-title">{{ settings.title }}</h3>
-	<div class="btn-group panel" align="left">
-		<a class="btn btn-warning" href="/admin/bardiscms/page/page/clearhttpcache">
-			<i class="glyphicon glyphicon-refresh"></i>
+<h3 class="sonata-clearcache-title">{{ settings.title }}</h3>
+<div class="btn-group panel" align="left">
+    <a class="btn btn-warning" href="/admin/bardiscms/page/page/clearhttpcache">
+        <i class="glyphicon glyphicon-refresh"></i>
             {% trans from 'SonataAdminBundle' %}clear_http_cache{% endtrans %}
-        </a>
-	</div>
+    </a>
+</div>
 {% endblock %}

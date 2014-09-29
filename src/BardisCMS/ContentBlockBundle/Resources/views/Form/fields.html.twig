@@ -7,73 +7,73 @@ This file is part of the BardisCMS.
 {% block sonata_media_type_widget %}
     {% if value is not empty and value.providerReference %}
 		{% if value.providerName == 'sonata.media.provider.image' %}
-            <div class="mediaPreviewHolder">
-                <h4>Existing Image</h4>
-                <p class="imagePreview">
-                    Preview image: <a class="imageLink" href="{% path value.id, 'big' %}" target="_blank">{% thumbnail value.id, 'adminthumb' %}</a>
-                </p>
+<div class="mediaPreviewHolder">
+    <h4>Existing Image</h4>
+    <p class="imagePreview">
+        Preview image: <a class="imageLink" href="{% path value.id, 'big' %}" target="_blank">{% thumbnail value.id, 'adminthumb' %}</a>
+    </p>
 				{{ block('form_widget') }}
-				<p>Remove image/media</p>
-            </div>
+    <p>Remove image/media</p>
+</div>
         {% endif %}
 		{% if value.providerName == 'sonata.media.provider.youtube' %}
-			<div class="mediaPreviewHolder">
-				<h4>Existing Video</h4>
-				<p class="videoPreview">
-					Preview video: {% media value.id, 'medium' %}</a>
-				</p>
+<div class="mediaPreviewHolder">
+    <h4>Existing Video</h4>
+    <p class="videoPreview">
+        Preview video: {% media value.id, 'medium' %}</a>
+    </p>
 				{{ block('form_widget') }}
-				<p>Remove video</p>
-			</div>
+    <p>Remove video</p>
+</div>
 		{% endif %}
 		{% if value.providerName == 'sonata.media.provider.vimeo' %}
-			<div class="mediaPreviewHolder">
-				<h4>Existing Video</h4>
-				<p class="videoPreview">
-					Preview video: {% media value.id, 'medium' %}</a>
-				</p>
+<div class="mediaPreviewHolder">
+    <h4>Existing Video</h4>
+    <p class="videoPreview">
+        Preview video: {% media value.id, 'medium' %}</a>
+    </p>
 				{{ block('form_widget') }}
-				<p>Remove video</p>
-			</div>
+    <p>Remove video</p>
+</div>
 		{% endif %}
         {% if value.providerName == 'sonata.media.provider.file' %}
-            <div class="mediaPreviewHolder">
-                <h4>Existing Attachment File</h4>
-                <p class="filePreview">
-                    Preview file: <a class="fileLink" href="{{ path('sonata_media_download', {'id': value.id}) }}" target="_blank">{{ value.name }}</a>
-                </p>
+<div class="mediaPreviewHolder">
+    <h4>Existing Attachment File</h4>
+    <p class="filePreview">
+        Preview file: <a class="fileLink" href="{{ path('sonata_media_download', {'id': value.id}) }}" target="_blank">{{ value.name }}</a>
+    </p>
 		{{ block('form_widget') }}
-		<p>Remove attachment file</p>
-            </div>
+    <p>Remove attachment file</p>
+</div>
         {% endif %}
     {% else %}
-    <div class="mediaPreviewHolder">
-	    <h4>No media selected</h4>    
+<div class="mediaPreviewHolder">
+    <h4>No media selected</h4>    
 	    {{ block('form_widget') }}
-	    <p>Remove media/file</p>
-	</div>
+    <p>Remove media/file</p>
+</div>
     {% endif %}
 {% endblock sonata_media_type_widget %}
 
 {% block contentblockcollection_widget_row %}
 {% spaceless %}
-	<fieldset id="block_{{ child.ordering.vars.value }}" class="sonata-ba-fielset-collapsed ui-state-default" style="float: left;padding: 10px;margin: 10px 0; background-color: #EEE; border: 1px solid #666;clear: left;">
-		<legend style="margin: 0;">
-		    <span title="expand/collapse" class="sonata-ba-collapsed" href="">
-			Content Block: {{ child.title.vars.value }}
-		    </span>
-		</legend>
-		<div class="sonata-collection-row sonata-ba-collapsed-fields" style="float: left;padding: 10px;margin: 10px 0; background-color: #EEE; border: 1px solid #666;">
-			<span style="display: none;">{{ form_label(child) }}</span>
+<fieldset id="block_{{ child.ordering.vars.value }}" class="sonata-ba-fielset-collapsed ui-state-default" style="float: left;padding: 10px;margin: 10px 0; background-color: #EEE; border: 1px solid #666;clear: left;">
+    <legend style="margin: 0;">
+        <span title="expand/collapse" class="sonata-ba-collapsed" href="">
+            Content Block: {{ child.title.vars.value }}
+        </span>
+    </legend>
+    <div class="sonata-collection-row sonata-ba-collapsed-fields" style="float: left;padding: 10px;margin: 10px 0; background-color: #EEE; border: 1px solid #666;">
+        <span style="display: none;">{{ form_label(child) }}</span>
 			{% if allow_delete %}
-				<span class="btn btn-danger sonata-action-element" style="float: left;display: block; clear: both;">
-					<a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-delete"><i class="fa fa-minus-circle"></i> Delete This Content Block</a>    
-				</span>
+        <span class="btn btn-danger sonata-action-element" style="float: left;display: block; clear: both;">
+            <a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-delete"><i class="fa fa-minus-circle"></i> Delete This Content Block</a>    
+        </span>
 			{% endif %}
 			{{ form_errors(child, { 'attr': {'style': 'float:left;width:100%;padding:10px 0;width:100%;'} }) }}
 			{{ form_widget(child, { 'attr': {'style': 'float:left;width:100%;padding:10px 0;width:100%;' ,'class': 'sonata-ba-collapsed-fields'} }) }}     
-		</div>
-	</fieldset>
+    </div>
+</fieldset>
 {% endspaceless %}
 {% endblock contentblockcollection_widget_row %}
 
@@ -84,16 +84,16 @@ This file is part of the BardisCMS.
         {% set child = prototype %}
         {% set attr = attr|merge({'data-prototype': block('contentblockcollection_widget_row') }) %}
     {% endif %}
-    <div style="float:left;" {{ block('widget_container_attributes') }}>
+<div style="float:left;" {{ block('widget_container_attributes') }}>
         {{ form_errors(form) }}	
         {% for child in form.children|sort_by_attribute('form.ordering')  %}
             {{ block('contentblockcollection_widget_row') }}
         {% endfor %}
         {{ form_rest(form) }}
         {% if allow_add %}
-            <span class="btn btn-default sonata-action-element" style="float: left;display: block; clear: both;">
-                <a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-add"><i class="fa fa-plus-square fa-fw"></i> Add New Content Block</a> 
-            </span>
+        <span class="btn btn-default sonata-action-element" style="float: left;display: block; clear: both;">
+            <a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-add"><i class="fa fa-plus-square fa-fw"></i> Add New Content Block</a> 
+        </span>
         {% endif %}
     </div>
 {% endspaceless %}
@@ -102,23 +102,23 @@ This file is part of the BardisCMS.
 
 {% block contentimagecollection_widget_row %}
 {% spaceless %}
-	<fieldset id="image_{{ child.imageOrder.vars.value }}" class="sonata-ba-fielset-collapsed ui-state-default" style="float: left;padding: 10px;margin: 10px 0; background-color: #EEE; border: 1px solid #666;clear: left;">
-		<legend style="margin: 0;">
-			<a title="expand/collapse" class="sonata-ba-collapsed" href="">
-                            Image File {{ child.imageOrder.vars.value }}
-			</a>
-		</legend>
-		<div class="sonata-collection-row sonata-ba-collapsed-fields" style="float: left;padding: 10px;margin: 10px 0; background-color: #EEE; border: 1px solid #666;">
-			<span style="display: none;">{{ form_label(child) }}</span>
+    <fieldset id="image_{{ child.imageOrder.vars.value }}" class="sonata-ba-fielset-collapsed ui-state-default" style="float: left;padding: 10px;margin: 10px 0; background-color: #EEE; border: 1px solid #666;clear: left;">
+        <legend style="margin: 0;">
+            <a title="expand/collapse" class="sonata-ba-collapsed" href="">
+                Image File {{ child.imageOrder.vars.value }}
+            </a>
+        </legend>
+        <div class="sonata-collection-row sonata-ba-collapsed-fields" style="float: left;padding: 10px;margin: 10px 0; background-color: #EEE; border: 1px solid #666;">
+            <span style="display: none;">{{ form_label(child) }}</span>
 			{% if allow_delete %}
-				<span class="btn btn-danger sonata-action-element" style="float: left;display: block; clear: both;">
-					<a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-delete"><i class="fa fa-minus-circle"></i> Delete This Image File</a>
-				</span>
+            <span class="btn btn-danger sonata-action-element" style="float: left;display: block; clear: both;">
+                <a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-delete"><i class="fa fa-minus-circle"></i> Delete This Image File</a>
+            </span>
 			{% endif %}
 			{{ form_errors(child, { 'attr': {'style': 'float:left;width:100%;padding:10px 0;width:100%;'} }) }}
 			{{ form_widget(child, { 'attr': {'style': 'float:left;width:100%;padding:10px 0;width:100%;' ,'class': 'sonata-ba-collapsed-fields'} }) }}     
-		</div>
-	</fieldset>
+        </div>
+    </fieldset>
 {% endspaceless %}
 {% endblock contentimagecollection_widget_row %}
 
@@ -140,7 +140,7 @@ This file is part of the BardisCMS.
                 <a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-add"><i class="fa fa-plus-square fa-fw"></i> Add New Image File</a> 
             </span>
         {% endif %}
-    </div>
+        </div>
 {% endspaceless %}
 
 {% endblock contentimagecollection_widget %}

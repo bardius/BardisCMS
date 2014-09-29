@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Category Bundle
  * This file is part of the BardisCMS.
@@ -11,6 +12,6 @@ namespace BardisCMS\CategoryBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class CategoryBundle extends Bundle
-{
+class CategoryBundle extends Bundle {
+    
 }

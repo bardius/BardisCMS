@@ -1,7 +1,7 @@
 {% for contentBlock in page.bannercontentblocks|sort_by_attribute('ordering') %}
     {% if contentBlock.publishedState == 1 %}
-		<div class="contentBlock {% if contentBlock.className is not null %}{{ contentBlock.className }}{% endif %} large-12 small-12 columns" {% if contentBlock.idName is not null %}id="{{ contentBlock.idName }}"{% endif %}>
+<div class="contentBlock {% if contentBlock.className is not null %}{{ contentBlock.className }}{% endif %} large-12 small-12 columns" {% if contentBlock.idName is not null %}id="{{ contentBlock.idName }}"{% endif %}>
 			{% include 'BlogBundle:Contents:bannercontentblock.html.twig' %}
-		</div>
+    </div>
     {% endif %}
 {% endfor %}

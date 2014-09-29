@@ -12,30 +12,26 @@ namespace Application\Sonata\UserBundle\Services;
 
 use Symfony\Component\Security\Core\SecurityContext;
 
-class UserHelpers {    
+class UserHelpers {
 
-	private $securityContext;
+    private $securityContext;
 
-	public function __construct(SecurityContext $securityContext) {
-		$this->securityContext = $securityContext;
-	}
-    
+    public function __construct(SecurityContext $securityContext) {
+        $this->securityContext = $securityContext;
+    }
+
     // Get the user role ( @TODO: this is very simple ACL and has to be improved )
-    public function getLoggedUserHighestRole()
-    {
-        
+    public function getLoggedUserHighestRole() {
+
         if ($this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
             $userRole = 'ROLE_SUPER_ADMIN';
-        }
-        else if ($this->securityContext->isGranted('ROLE_USER')) {
+        } else if ($this->securityContext->isGranted('ROLE_USER')) {
             $userRole = 'ROLE_USER';
-        }
-        else
-        {
+        } else {
             $userRole = '';
         }
-        
+
         return $userRole;
-    } 
+    }
 
 }

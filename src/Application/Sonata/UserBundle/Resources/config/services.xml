@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
 
         <service id="sonata_user.form.type.registration" class="Application\Sonata\UserBundle\Form\Type\RegistrationFormType">
             <tag name="form.type" alias="registration" />
             <argument>%fos_user.model.user.class%</argument>
-			<argument type="service" id="request_stack" />
+            <argument type="service" id="request_stack" />
         </service>
 
     </services>

@@ -21,8 +21,8 @@ use Sonata\TimelineBundle\Entity\Timeline as BaseTimeline;
  *
  * @author <yourname> <youremail>
  */
-class Timeline extends BaseTimeline
-{
+class Timeline extends BaseTimeline {
+
     /**
      * @var integer $id
      */
@@ -33,8 +33,8 @@ class Timeline extends BaseTimeline
      *
      * @return integer $id
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
 }

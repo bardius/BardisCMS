@@ -1,4 +1,5 @@
 <?php
+
 /*
  * ContentBlock Bundle
  * This file is part of the BardisCMS.
@@ -13,15 +14,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Application\Sonata\MediaBundle\Entity\Media;
 use BardisCMS\ContentBlockBundle\Entity\ContentBlock;
 
-
 /**
  * BardisCMS\ContentBlockBundle\Entity\ContentImage
  *
  * @ORM\Table(name="content_images")
  * @ORM\Entity
  */
-class ContentImage
-{
+class ContentImage {
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -29,25 +29,23 @@ class ContentImage
      */
     protected $id;
 
-	/**
-    * @ORM\OneToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", orphanRemoval=true, cascade={"persist", "remove"})
-    * @ORM\JoinColumn(name="imagefile", onDelete="CASCADE")
-    */ 
+    /**
+     * @ORM\OneToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="imagefile", onDelete="CASCADE")
+     */
     protected $imagefile;
 
     /**
      * @ORM\Column(type="integer")
-     */ 
+     */
     protected $imageOrder = 99;
 
-     /**
+    /**
      * @ORM\ManyToMany(targetEntity="ContentBlock", mappedBy="imageFiles", cascade={"persist"})
      */
     protected $contentblocks;
 
-   
-    public function __construct()
-    {
+    public function __construct() {
         $this->contentblocks = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -56,8 +54,7 @@ class ContentImage
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -67,8 +64,7 @@ class ContentImage
      * @param Application\Sonata\MediaBundle\Entity\Media $imagefile
      * @return ContentImage
      */
-    public function setImagefile(\Application\Sonata\MediaBundle\Entity\Media $imagefile = null)
-    {
+    public function setImagefile(\Application\Sonata\MediaBundle\Entity\Media $imagefile = null) {
         $this->imagefile = $imagefile;
         return $this;
     }
@@ -78,8 +74,7 @@ class ContentImage
      *
      * @return Application\Sonata\MediaBundle\Entity\Media 
      */
-    public function getImagefile()
-    {
+    public function getImagefile() {
         return $this->imagefile;
     }
 
@@ -89,8 +84,7 @@ class ContentImage
      * @param BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblock
      * @return ContentImage
      */
-    public function setContentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblock = null)
-    {
+    public function setContentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblock = null) {
         $this->contentblock = $contentblock;
         return $this;
     }
@@ -100,8 +94,7 @@ class ContentImage
      *
      * @return BardisCMS\ContentBlockBundle\Entity\ContentBlock 
      */
-    public function getContentblock()
-    {
+    public function getContentblock() {
         return $this->contentblock;
     }
 
@@ -111,8 +104,7 @@ class ContentImage
      * @param BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblockId
      * @return ContentImage
      */
-    public function setContentblockId(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblockId = null)
-    {
+    public function setContentblockId(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblockId = null) {
         $this->contentblock_id = $contentblockId;
         return $this;
     }
@@ -122,8 +114,7 @@ class ContentImage
      *
      * @return BardisCMS\ContentBlockBundle\Entity\ContentBlock 
      */
-    public function getContentblockId()
-    {
+    public function getContentblockId() {
         return $this->contentblock_id;
     }
 
@@ -133,8 +124,7 @@ class ContentImage
      * @param BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblocks
      * @return ContentImage
      */
-    public function addContentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblocks)
-    {
+    public function addContentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblocks) {
         $this->contentblocks[] = $contentblocks;
         return $this;
     }
@@ -144,8 +134,7 @@ class ContentImage
      *
      * @param BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblocks
      */
-    public function removeContentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblocks)
-    {
+    public function removeContentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblocks) {
         $this->contentblocks->removeElement($contentblocks);
     }
 
@@ -154,8 +143,7 @@ class ContentImage
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getContentblocks()
-    {
+    public function getContentblocks() {
         return $this->contentblocks;
     }
 
@@ -165,10 +153,9 @@ class ContentImage
      * @param integer $imageOrder
      * @return ContentImage
      */
-    public function setImageOrder($imageOrder)
-    {
+    public function setImageOrder($imageOrder) {
         $this->imageOrder = $imageOrder;
-    
+
         return $this;
     }
 
@@ -177,8 +164,8 @@ class ContentImage
      *
      * @return integer 
      */
-    public function getImageOrder()
-    {
+    public function getImageOrder() {
         return $this->imageOrder;
     }
+
 }

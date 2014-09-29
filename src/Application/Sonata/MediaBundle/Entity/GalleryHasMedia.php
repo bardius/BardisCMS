@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the <name> project.
  *
@@ -20,8 +21,7 @@ use Sonata\MediaBundle\Entity\BaseGalleryHasMedia as BaseGalleryHasMedia;
  *
  * @author <yourname> <youremail>
  */
-class GalleryHasMedia extends BaseGalleryHasMedia
-{
+class GalleryHasMedia extends BaseGalleryHasMedia {
 
     /**
      * @var integer $id
@@ -33,8 +33,8 @@ class GalleryHasMedia extends BaseGalleryHasMedia
      *
      * @return integer $id
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
 }

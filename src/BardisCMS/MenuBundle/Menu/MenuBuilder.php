@@ -15,209 +15,209 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class MenuBuilder{
+class MenuBuilder {
 
-	private $factory;
-	private $em;
-	private $container;
+    private $factory;
+    private $em;
+    private $container;
 
-	/**
-	 * @param FactoryInterface $factory
-	 */
-	public function __construct(FactoryInterface $factory, EntityManager $em, ContainerInterface $container) {
-		$this->factory = $factory;
-		$this->em = $em;
-		$this->container = $container;
-	}
+    /**
+     * @param FactoryInterface $factory
+     */
+    public function __construct(FactoryInterface $factory, EntityManager $em, ContainerInterface $container) {
+        $this->factory = $factory;
+        $this->em = $em;
+        $this->container = $container;
+    }
 
-	/**
-	 * @param Request $request
-	 * @param String $menugroup
-	 * @param String $cssClass
-	 * @param String $menuItemDecorator
-	 */
-	public function createMenu(Request $request, $menugroup, $cssClass, $menuItemDecorator) {
-		$repo = $this->em->getRepository('MenuBundle:Menu');
-		$menudata = $repo->findBy(array("menuGroup" => $menugroup), array("ordering" => "ASC"));
+    /**
+     * @param Request $request
+     * @param String $menugroup
+     * @param String $cssClass
+     * @param String $menuItemDecorator
+     */
+    public function createMenu(Request $request, $menugroup, $cssClass, $menuItemDecorator) {
+        $repo = $this->em->getRepository('MenuBundle:Menu');
+        $menudata = $repo->findBy(array("menuGroup" => $menugroup), array("ordering" => "ASC"));
 
-		$menudata = array_values($menudata);
-		$menudata = $this->buildTree($menudata);
+        $menudata = array_values($menudata);
+        $menudata = $this->buildTree($menudata);
 
-		$menu = $this->factory->createItem($menugroup);
-		$menu->setChildrenAttribute('class', $cssClass);
-		
-		$matcher = $this->container->get('knp_menu.matcher');
-		$voter = $this->container->get('bardiscms_menu.voter.request');
-		$matcher->addVoter($voter);
+        $menu = $this->factory->createItem($menugroup);
+        $menu->setChildrenAttribute('class', $cssClass);
 
-		//$menu->setCurrentUri($request->getRequestUri());
+        $matcher = $this->container->get('knp_menu.matcher');
+        $voter = $this->container->get('bardiscms_menu.voter.request');
+        $matcher->addVoter($voter);
 
-		$this->menuItemlevel = 0;
-		$this->setupMenuItem($menu, $menudata, $menuItemDecorator);
+        //$menu->setCurrentUri($request->getRequestUri());
 
-		return $menu;
-	}
+        $this->menuItemlevel = 0;
+        $this->setupMenuItem($menu, $menudata, $menuItemDecorator);
 
-	/**
-	 * @param Array $elements
-	 * @param String $parentId
-	 * */
-	public function buildTree(array &$elements, $parent = '0') {
-		$branch = array();
+        return $menu;
+    }
 
-		foreach ($elements as $element) {
-			if ($element->getParent() == $parent) {
-				$children = $this->buildTree($elements, $element->getId());
-				if ($children) {
-					$element->children = $children;
-				} else {
-					$element->children = null;
-				}
-				$branch[$element->getId()] = $element;
-				//unset($elements[$element->getId()]);
-			}
-		}
-		return $branch;
-	}
+    /**
+     * @param Array $elements
+     * @param String $parentId
+     * */
+    public function buildTree(array &$elements, $parent = '0') {
+        $branch = array();
 
-	/**
-	 * @param MenuItem $menu
-	 * @param Array $menudata
-	 * @param String $menuItemDecorator
-	 * */
-	public function setupMenuItem($menu, $menudata, $menuItemDecorator) {
-		$menuItemCounter = 0;
+        foreach ($elements as $element) {
+            if ($element->getParent() == $parent) {
+                $children = $this->buildTree($elements, $element->getId());
+                if ($children) {
+                    $element->children = $children;
+                } else {
+                    $element->children = null;
+                }
+                $branch[$element->getId()] = $element;
+                //unset($elements[$element->getId()]);
+            }
+        }
+        return $branch;
+    }
 
-		foreach ($menudata as $menuItem) {
-			$menuType = $menuItem->getMenuType();
-			$getPageFunction = 'get' . $menuType;
+    /**
+     * @param MenuItem $menu
+     * @param Array $menudata
+     * @param String $menuItemDecorator
+     * */
+    public function setupMenuItem($menu, $menudata, $menuItemDecorator) {
+        $menuItemCounter = 0;
 
-			$menuItemCounter++;
-			
-			if ($menuItem->getPublishstate() != '0') {
-				$urlParams = $menuItem->getMenuUrlExtras();
-				if (!empty($urlParams)) {
-					$urlParams = '/' . urlencode($urlParams);
-				}
+        foreach ($menudata as $menuItem) {
+            $menuType = $menuItem->getMenuType();
+            $getPageFunction = 'get' . $menuType;
 
-				switch ($menuType) {
+            $menuItemCounter++;
 
-					case 'http':
-						$targetURL = $menuItem->getExternalUrl();
+            if ($menuItem->getPublishstate() != '0') {
+                $urlParams = $menuItem->getMenuUrlExtras();
+                if (!empty($urlParams)) {
+                    $urlParams = '/' . urlencode($urlParams);
+                }
 
-						if ($targetURL === null) {
-							$targetURL = '#';
-						}
+                switch ($menuType) {
 
-						$menu->addChild($menuItem->getTitle(), array(
-							'uri' => $targetURL
-						));
-						$menu[$menuItem->getTitle()]->setLinkAttribute('target', '_blank');
-						$menu[$menuItem->getTitle()]->setLinkAttribute('rel', 'nofollow');
+                    case 'http':
+                        $targetURL = $menuItem->getExternalUrl();
 
-						break;
+                        if ($targetURL === null) {
+                            $targetURL = '#';
+                        }
 
-					case 'url':
-						$targetURL = $menuItem->getExternalUrl();
+                        $menu->addChild($menuItem->getTitle(), array(
+                            'uri' => $targetURL
+                        ));
+                        $menu[$menuItem->getTitle()]->setLinkAttribute('target', '_blank');
+                        $menu[$menuItem->getTitle()]->setLinkAttribute('rel', 'nofollow');
 
-						if ($targetURL === null) {
-							$targetURL = '#';
-						}
+                        break;
 
-						$menu->addChild($menuItem->getTitle(), array(
-							'uri' => $targetURL
-						));
+                    case 'url':
+                        $targetURL = $menuItem->getExternalUrl();
 
-						break;
+                        if ($targetURL === null) {
+                            $targetURL = '#';
+                        }
 
-					case 'seperator':
-						$menu->addChild($menuItem->getTitle());
-						$menu[$menuItem->getTitle()]->setLabelAttribute('class', 'divider');
+                        $menu->addChild($menuItem->getTitle(), array(
+                            'uri' => $targetURL
+                        ));
 
-						break;
+                        break;
 
-					case 'Page':
-						$pageFunction = $menuItem->$getPageFunction();
+                    case 'seperator':
+                        $menu->addChild($menuItem->getTitle());
+                        $menu[$menuItem->getTitle()]->setLabelAttribute('class', 'divider');
 
-						// If Link Action is not selected point to homepage else to alias or page id based route 
-						if ($pageFunction != null) {
-							$alias = $this->getPageAlias($pageFunction, $menuType);
+                        break;
 
-							if (null === $alias) {
-								$menu->addChild($menuItem->getTitle(), array('uri' => '/' . $menuItem->getRoute() . '/' . $pageFunction . $urlParams));
-							} elseif ('index' === $alias){
-								$menu->addChild($menuItem->getTitle(), array('uri' => '/'));
-							} else {
-								$menu->addChild($menuItem->getTitle(), array('uri' => '/' . $alias . $urlParams));
-							}
-						} else {
-							$menu->addChild($menuItem->getTitle(), array('uri' => '/'));
-						}
+                    case 'Page':
+                        $pageFunction = $menuItem->$getPageFunction();
 
-						break;
+                        // If Link Action is not selected point to homepage else to alias or page id based route 
+                        if ($pageFunction != null) {
+                            $alias = $this->getPageAlias($pageFunction, $menuType);
 
-					case 'Blog':
-						$pageFunction = $menuItem->$getPageFunction();
+                            if (null === $alias) {
+                                $menu->addChild($menuItem->getTitle(), array('uri' => '/' . $menuItem->getRoute() . '/' . $pageFunction . $urlParams));
+                            } elseif ('index' === $alias) {
+                                $menu->addChild($menuItem->getTitle(), array('uri' => '/'));
+                            } else {
+                                $menu->addChild($menuItem->getTitle(), array('uri' => '/' . $alias . $urlParams));
+                            }
+                        } else {
+                            $menu->addChild($menuItem->getTitle(), array('uri' => '/'));
+                        }
 
-						// If Link Action is not selected point to homepage else to alias or page id based route 
-						if ($pageFunction != null) {
-							$alias = $this->getPageAlias($pageFunction, $menuType);
+                        break;
 
-							if (null === $alias) {
-								$menu->addChild($menuItem->getTitle(), array('uri' => '/' . strtolower($menuType) . '/' . $menuItem->getRoute() . '/' . $menuItem->$getPageFunction() . $urlParams));
-							} else {
-								$menu->addChild($menuItem->getTitle(), array('uri' => '/' . strtolower($menuType) . '/' . $alias . $urlParams));
-							}
-						} else {
-							$menu->addChild($menuItem->getTitle(), array('uri' => '/'));
-						}
+                    case 'Blog':
+                        $pageFunction = $menuItem->$getPageFunction();
 
-						break;
+                        // If Link Action is not selected point to homepage else to alias or page id based route 
+                        if ($pageFunction != null) {
+                            $alias = $this->getPageAlias($pageFunction, $menuType);
 
-					default:
-						$menu->addChild($menuItem->getTitle());
-						$menu[$menuItem->getTitle()]->setLabelAttribute('class', 'divider');
-				}
+                            if (null === $alias) {
+                                $menu->addChild($menuItem->getTitle(), array('uri' => '/' . strtolower($menuType) . '/' . $menuItem->getRoute() . '/' . $menuItem->$getPageFunction() . $urlParams));
+                            } else {
+                                $menu->addChild($menuItem->getTitle(), array('uri' => '/' . strtolower($menuType) . '/' . $alias . $urlParams));
+                            }
+                        } else {
+                            $menu->addChild($menuItem->getTitle(), array('uri' => '/'));
+                        }
 
-				$menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemlevel);
-				$menu[$menuItem->getTitle()]->setLinkAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemlevel);
-				$menu[$menuItem->getTitle()]->setLinkAttribute('title', $menuItem->getTitle());
+                        break;
 
-				if ($menuItemDecorator == 'main') {
-					if ($menuItem->getMenuImage() != null) {
-						$menu[$menuItem->getTitle()]->setLabelAttribute('style', 'background-image:url("' . $menuItem->getMenuImage() . '");');
-					}
+                    default:
+                        $menu->addChild($menuItem->getTitle());
+                        $menu[$menuItem->getTitle()]->setLabelAttribute('class', 'divider');
+                }
 
-					if ($menuItem->children != null) {
-						$menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemlevel . ' has-dropdown not-click');
-						$this->menuItemlevel = $this->menuItemlevel + 1;
-						//$menu[$menuItem->getTitle()]->setAttribute('flyout-toggle', true);
-						$menu[$menuItem->getTitle()]->setChildrenAttribute('class', 'dropdown level' . $this->menuItemlevel);
-						$this->setupMenuItem($menu[$menuItem->getTitle()], $menuItem->children, $menuItemDecorator);
-						$this->menuItemlevel = $this->menuItemlevel - 1;
-					}
-				} else {
-					if ($menuItem->children != null) {
-						$this->menuItemlevel = $this->menuItemlevel + 1;
-						$menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemlevel);
-						$this->setupMenuItem($menu[$menuItem->getTitle()], $menuItem->children, $menuItemDecorator);
-						$this->menuItemlevel = $this->menuItemlevel - 1;
-					}
-				}
-			}
-		}
-	}
+                $menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemlevel);
+                $menu[$menuItem->getTitle()]->setLinkAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemlevel);
+                $menu[$menuItem->getTitle()]->setLinkAttribute('title', $menuItem->getTitle());
 
-	/**
-	 * @param Integer $pageId
-	 */
-	public function getPageAlias($pageId, $menuType) {
-		$repo = $this->em->getRepository($menuType . 'Bundle:' . $menuType);
-		$page = $repo->findOneById($pageId);
+                if ($menuItemDecorator == 'main') {
+                    if ($menuItem->getMenuImage() != null) {
+                        $menu[$menuItem->getTitle()]->setLabelAttribute('style', 'background-image:url("' . $menuItem->getMenuImage() . '");');
+                    }
 
-		$pageAlias = $page->getAlias();
+                    if ($menuItem->children != null) {
+                        $menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemlevel . ' has-dropdown not-click');
+                        $this->menuItemlevel = $this->menuItemlevel + 1;
+                        //$menu[$menuItem->getTitle()]->setAttribute('flyout-toggle', true);
+                        $menu[$menuItem->getTitle()]->setChildrenAttribute('class', 'dropdown level' . $this->menuItemlevel);
+                        $this->setupMenuItem($menu[$menuItem->getTitle()], $menuItem->children, $menuItemDecorator);
+                        $this->menuItemlevel = $this->menuItemlevel - 1;
+                    }
+                } else {
+                    if ($menuItem->children != null) {
+                        $this->menuItemlevel = $this->menuItemlevel + 1;
+                        $menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemlevel);
+                        $this->setupMenuItem($menu[$menuItem->getTitle()], $menuItem->children, $menuItemDecorator);
+                        $this->menuItemlevel = $this->menuItemlevel - 1;
+                    }
+                }
+            }
+        }
+    }
 
-		return $pageAlias;
-	}
+    /**
+     * @param Integer $pageId
+     */
+    public function getPageAlias($pageId, $menuType) {
+        $repo = $this->em->getRepository($menuType . 'Bundle:' . $menuType);
+        $page = $repo->findOneById($pageId);
+
+        $pageAlias = $page->getAlias();
+
+        return $pageAlias;
+    }
 
 }

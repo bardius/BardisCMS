@@ -1,6 +1,6 @@
 <div class="row collapsed homepageListing">
     {% for pageItem in pages %}
-            
+
         {% if pageItem.pagetype == 'blog_home' or pageItem.pagetype == 'blog_article' %}
             {% set vars = {'urlPart': 'blog/'} %}
         {% else %}
@@ -10,15 +10,15 @@
         {% if loop.index % 3 == 1 %}    
         <div class="columns homepageItem homepageItem{{ loop.index }} {% if pageItem.introclass is not null %}{{ pageItem.introclass }}{% endif %} large-3 small-6">
             {% include 'PageBundle:Contents:homepage-item-three.html.twig' with vars %}
-        </div>
+            </div>
         {% elseif loop.index % 3 == 2 %}
-        <div class="columns homepageItem homepageItem{{ loop.index }} {% if pageItem.introclass is not null %}{{ pageItem.introclass }}{% endif %} large-6 small-6">
+            <div class="columns homepageItem homepageItem{{ loop.index }} {% if pageItem.introclass is not null %}{{ pageItem.introclass }}{% endif %} large-6 small-6">
             {% include 'PageBundle:Contents:homepage-item-six.html.twig' with vars %}
-        </div>
+                </div>
         {% elseif loop.index % 3 == 0 %}
-        <div class="columns homepageItem homepageItem{{ loop.index }} {% if pageItem.introclass is not null %}{{ pageItem.introclass }}{% endif %} large-3 small-6">
+                <div class="columns homepageItem homepageItem{{ loop.index }} {% if pageItem.introclass is not null %}{{ pageItem.introclass }}{% endif %} large-3 small-6">
             {% include 'PageBundle:Contents:homepage-item-three.html.twig' with vars %}
-        </div>
+                    </div>
         {% endif %}
     {% endfor %}
-</div>
+                </div>

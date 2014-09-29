@@ -15,11 +15,10 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use BardisCMS\ContentBlockBundle\Entity\ContentBlock;
 
-class ContentBlockFixtures extends AbstractFixture implements OrderedFixtureInterface
-{
-    public function load(ObjectManager $manager)
-    {
-		
+class ContentBlockFixtures extends AbstractFixture implements OrderedFixtureInterface {
+
+    public function load(ObjectManager $manager) {
+
         $contentSampleHome = new ContentBlock();
         $contentSampleHome->setTitle('Sample Content Home');
         $contentSampleHome->setPublishedState(1);
@@ -28,9 +27,9 @@ class ContentBlockFixtures extends AbstractFixture implements OrderedFixtureInte
         $contentSampleHome->setOrdering(1);
         $contentSampleHome->setSizeClass('large-12');
         $contentSampleHome->setContentType('html');
-		$contentSampleHome->setHtmlText('<p>Quisque non arcu id ipsum imperdiet ultricies pharetra eu nibh. Etiam eros lectus, ullamcorper et congue in, lobortis sit amet lectus. In fermentum quam in arcu sodales, id varius est placerat. Fusce a dictum mi. Aliquam accumsan diam eget rutrum tincidunt. Nullam massa metus, placerat quis mattis nec</p>');
-		$manager->persist($contentSampleHome);
-		
+        $contentSampleHome->setHtmlText('<p>Quisque non arcu id ipsum imperdiet ultricies pharetra eu nibh. Etiam eros lectus, ullamcorper et congue in, lobortis sit amet lectus. In fermentum quam in arcu sodales, id varius est placerat. Fusce a dictum mi. Aliquam accumsan diam eget rutrum tincidunt. Nullam massa metus, placerat quis mattis nec</p>');
+        $manager->persist($contentSampleHome);
+
         $contentSample1 = new ContentBlock();
         $contentSample1->setTitle('Sample Content 1');
         $contentSample1->setPublishedState(1);
@@ -41,9 +40,9 @@ class ContentBlockFixtures extends AbstractFixture implements OrderedFixtureInte
         $contentSample1->setSizeClass('large-12');
         $contentSample1->setIdName('sampleId');
         $contentSample1->setContentType('html');
-		$contentSample1->setHtmlText('<p>Quisque non arcu id ipsum imperdiet ultricies pharetra eu nibh. Etiam eros lectus, ullamcorper et congue in, lobortis sit amet lectus. In fermentum quam in arcu sodales, id varius est placerat. Fusce a dictum mi. Aliquam accumsan diam eget rutrum tincidunt. Nullam massa metus, placerat quis mattis nec</p>');
-		$manager->persist($contentSample1);
-		
+        $contentSample1->setHtmlText('<p>Quisque non arcu id ipsum imperdiet ultricies pharetra eu nibh. Etiam eros lectus, ullamcorper et congue in, lobortis sit amet lectus. In fermentum quam in arcu sodales, id varius est placerat. Fusce a dictum mi. Aliquam accumsan diam eget rutrum tincidunt. Nullam massa metus, placerat quis mattis nec</p>');
+        $manager->persist($contentSample1);
+
         $contentSample2 = new ContentBlock();
         $contentSample2->setTitle('Sample Content 2');
         $contentSample2->setPublishedState(1);
@@ -52,9 +51,9 @@ class ContentBlockFixtures extends AbstractFixture implements OrderedFixtureInte
         $contentSample2->setOrdering(2);
         $contentSample2->setSizeClass('large-12');
         $contentSample2->setContentType('html');
-		$contentSample2->setHtmlText('<p>Quisque non arcu id ipsum imperdiet ultricies pharetra eu nibh. Etiam eros lectus, ullamcorper et congue in, lobortis sit amet lectus. In fermentum quam in arcu sodales, id varius est placerat. Fusce a dictum mi. Aliquam accumsan diam eget rutrum tincidunt. Nullam massa metus, placerat quis mattis nec</p>');
-		$manager->persist($contentSample2);
-		
+        $contentSample2->setHtmlText('<p>Quisque non arcu id ipsum imperdiet ultricies pharetra eu nibh. Etiam eros lectus, ullamcorper et congue in, lobortis sit amet lectus. In fermentum quam in arcu sodales, id varius est placerat. Fusce a dictum mi. Aliquam accumsan diam eget rutrum tincidunt. Nullam massa metus, placerat quis mattis nec</p>');
+        $manager->persist($contentSample2);
+
         $contentSampleContact = new ContentBlock();
         $contentSampleContact->setTitle('Sample Contact Form');
         $contentSampleContact->setPublishedState(1);
@@ -63,8 +62,8 @@ class ContentBlockFixtures extends AbstractFixture implements OrderedFixtureInte
         $contentSampleContact->setOrdering(1);
         $contentSampleContact->setSizeClass('large-12');
         $contentSampleContact->setContentType('contact');
-		$manager->persist($contentSampleContact);
-		
+        $manager->persist($contentSampleContact);
+
         $contentSampleBlog1 = new ContentBlock();
         $contentSampleBlog1->setTitle('Sample Blog Content 1');
         $contentSampleBlog1->setPublishedState(1);
@@ -75,9 +74,9 @@ class ContentBlockFixtures extends AbstractFixture implements OrderedFixtureInte
         $contentSampleBlog1->setSizeClass('large-12');
         $contentSampleBlog1->setIdName('sampleId');
         $contentSampleBlog1->setContentType('html');
-		$contentSampleBlog1->setHtmlText('<p>Quisque non arcu id ipsum imperdiet ultricies pharetra eu nibh. Etiam eros lectus, ullamcorper et congue in, lobortis sit amet lectus. In fermentum quam in arcu sodales, id varius est placerat. Fusce a dictum mi. Aliquam accumsan diam eget rutrum tincidunt. Nullam massa metus, placerat quis mattis nec</p>');
-		$manager->persist($contentSampleBlog1);
-		
+        $contentSampleBlog1->setHtmlText('<p>Quisque non arcu id ipsum imperdiet ultricies pharetra eu nibh. Etiam eros lectus, ullamcorper et congue in, lobortis sit amet lectus. In fermentum quam in arcu sodales, id varius est placerat. Fusce a dictum mi. Aliquam accumsan diam eget rutrum tincidunt. Nullam massa metus, placerat quis mattis nec</p>');
+        $manager->persist($contentSampleBlog1);
+
         $contentHomeSlide1 = new ContentBlock();
         $contentHomeSlide1->setTitle('Home Top Banner Slide 1');
         $contentHomeSlide1->setPublishedState(1);
@@ -87,8 +86,8 @@ class ContentBlockFixtures extends AbstractFixture implements OrderedFixtureInte
         $contentHomeSlide1->setSizeClass('large-12');
         $contentHomeSlide1->setContentType('slide');
         $contentHomeSlide1->setSlide($manager->merge($this->getReference('homeSlide1')));
-		$manager->persist($contentHomeSlide1);
-		
+        $manager->persist($contentHomeSlide1);
+
         $contentHomeSlide2 = new ContentBlock();
         $contentHomeSlide2->setTitle('Home Top Banner Slide 2');
         $contentHomeSlide2->setPublishedState(1);
@@ -98,21 +97,20 @@ class ContentBlockFixtures extends AbstractFixture implements OrderedFixtureInte
         $contentHomeSlide2->setSizeClass('large-12');
         $contentHomeSlide2->setContentType('slide');
         $contentHomeSlide2->setSlide($manager->merge($this->getReference('homeSlide2')));
-		$manager->persist($contentHomeSlide2);
-		
+        $manager->persist($contentHomeSlide2);
+
         $manager->flush();
-		
-		$this->addReference('contentSampleHome', $contentSampleHome);	
-		$this->addReference('contentSample1', $contentSample1);	
-		$this->addReference('contentSample2', $contentSample2);
-		$this->addReference('contentSampleContact', $contentSampleContact);	
-		$this->addReference('contentSampleBlog1', $contentSampleBlog1);
-		$this->addReference('contentHomeSlide1', $contentHomeSlide1);
-		$this->addReference('contentHomeSlide2', $contentHomeSlide2);
+
+        $this->addReference('contentSampleHome', $contentSampleHome);
+        $this->addReference('contentSample1', $contentSample1);
+        $this->addReference('contentSample2', $contentSample2);
+        $this->addReference('contentSampleContact', $contentSampleContact);
+        $this->addReference('contentSampleBlog1', $contentSampleBlog1);
+        $this->addReference('contentHomeSlide1', $contentHomeSlide1);
+        $this->addReference('contentHomeSlide2', $contentHomeSlide2);
     }
-	
-	public function getOrder()
-    {
+
+    public function getOrder() {
         return 5;
     }
 

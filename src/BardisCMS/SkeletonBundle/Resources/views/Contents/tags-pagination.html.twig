@@ -1,25 +1,25 @@
 {% if totalPages is defined %}
     {% if totalPages > 1 %}
-        <div class="twelve columns pagination">
-            <ul class="menu link-list">
-                <li>
-                    <a class="firstPageLink" href="{{ app.request.getBaseURL() }}/Skeleton/tagged{% if linkUrlParams %}/{{ linkUrlParams }}{% endif %}/0" title="First Page">First Page</a>
-                </li>
+<div class="twelve columns pagination">
+    <ul class="menu link-list">
+        <li>
+            <a class="firstPageLink" href="{{ app.request.getBaseURL() }}/Skeleton/tagged{% if linkUrlParams %}/{{ linkUrlParams }}{% endif %}/0" title="First Page">First Page</a>
+        </li>
                 {% if (currentpage - 1) >= 0 %}
-                    <li><a class="prevPageLink" href="{{ app.request.getBaseURL() }}/Skeleton/tagged{% if linkUrlParams %}/{{ linkUrlParams }}{% endif %}/{{ currentpage - 1 }}" title="Previous Page">Previous Page</a></li>
+        <li><a class="prevPageLink" href="{{ app.request.getBaseURL() }}/Skeleton/tagged{% if linkUrlParams %}/{{ linkUrlParams }}{% endif %}/{{ currentpage - 1 }}" title="Previous Page">Previous Page</a></li>
                 {% endif %}
                 {% for i in 0..(totalPages - 1) %}
                     {% if i != currentpage %}
-                        <li><a class="pageNumber" href="{{ app.request.getBaseURL() }}/Skeleton/tagged{% if linkUrlParams %}/{{ linkUrlParams }}{% endif %}/{{ i }}" title="Page {{ i }}">{{ i }}</a></li>
+            <li><a class="pageNumber" href="{{ app.request.getBaseURL() }}/Skeleton/tagged{% if linkUrlParams %}/{{ linkUrlParams }}{% endif %}/{{ i }}" title="Page {{ i }}">{{ i }}</a></li>
                     {% else %}
-                        <li><span class="pageNumber">{{ i }}</span></li>
+                <li><span class="pageNumber">{{ i }}</span></li>
                     {% endif %}
                 {% endfor %}
                 {% if (currentpage + 1) < totalPages %}
                     <li><a class="nextPageLink" href="{{ app.request.getBaseURL() }}/Skeleton/tagged{% if linkUrlParams %}/{{ linkUrlParams }}{% endif %}/{{ currentpage + 1 }}" title="Next Page">Next Page</a></li>
                 {% endif %} 
-                <li><a class="lastPageLink" href="{{ app.request.getBaseURL() }}/Skeleton/tagged{% if linkUrlParams %}/{{ linkUrlParams }}{% endif %}/{{ totalPages - 1 }}" title="Last Page">Last Page</a></li>
-            </ul>
-        </div>
+                        <li><a class="lastPageLink" href="{{ app.request.getBaseURL() }}/Skeleton/tagged{% if linkUrlParams %}/{{ linkUrlParams }}{% endif %}/{{ totalPages - 1 }}" title="Last Page">Last Page</a></li>
+                    </ul>
+                </div>
     {% endif %}
 {% endif %}

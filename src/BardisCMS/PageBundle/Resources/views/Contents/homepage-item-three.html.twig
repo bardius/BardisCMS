@@ -1,7 +1,7 @@
     {% if pageItem.introimage.id is defined %}
-        <a href="{{ app.request.getBaseURL() }}/{{ vars.urlPart }}{{ pageItem.alias }}" title="{{ pageItem.title }}" class="readMoreImage">
+<a href="{{ app.request.getBaseURL() }}/{{ vars.urlPart }}{{ pageItem.alias }}" title="{{ pageItem.title }}" class="readMoreImage">
         {% media pageItem.introimage.id, 'small' with {'alt': pageItem.title, 'title': ''} %}
-        </a>
+    </a>
     {% endif %}
 
     <div class="introItemTitle">

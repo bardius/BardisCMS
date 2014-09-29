@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Menu Bundle
  * This file is part of the BardisCMS.
@@ -11,7 +12,6 @@ namespace BardisCMS\MenuBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
-{
-
+class DefaultController extends Controller {
+    
 }

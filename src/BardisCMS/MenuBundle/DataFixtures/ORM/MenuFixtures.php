@@ -15,12 +15,11 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use BardisCMS\MenuBundle\Entity\Menu;
 
-class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface
-{
-    public function load(ObjectManager $manager)
-    {
+class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
+
+    public function load(ObjectManager $manager) {
         $menuHome = new Menu();
-		$menuHome->setPage($manager->merge($this->getReference('homepage')));
+        $menuHome->setPage($manager->merge($this->getReference('homepage')));
         $menuHome->setTitle('Homepage');
         $menuHome->setMenuType('Page');
         $menuHome->setRoute('showPage');
@@ -29,10 +28,10 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface
         $menuHome->setMenuGroup('Main Menu');
         $menuHome->setPublishState(1);
         $menuHome->setOrdering(0);
-		$manager->persist($menuHome);
-		
+        $manager->persist($menuHome);
+
         $menuBlog = new Menu();
-		$menuBlog->setBlog($manager->merge($this->getReference('bloghome')));
+        $menuBlog->setBlog($manager->merge($this->getReference('bloghome')));
         $menuBlog->setTitle('Blog');
         $menuBlog->setMenuType('Blog');
         $menuBlog->setRoute('showPage');
@@ -41,10 +40,10 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface
         $menuBlog->setMenuGroup('Main Menu');
         $menuBlog->setPublishState(1);
         $menuBlog->setOrdering(2);
-		$manager->persist($menuBlog);
-		
+        $manager->persist($menuBlog);
+
         $menuEvents = new Menu();
-		$menuEvents->setBlog($manager->merge($this->getReference('blogevents')));
+        $menuEvents->setBlog($manager->merge($this->getReference('blogevents')));
         $menuEvents->setTitle('Events');
         $menuEvents->setMenuType('Blog');
         $menuEvents->setRoute('showPage');
@@ -53,10 +52,10 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface
         $menuEvents->setMenuGroup('Main Menu');
         $menuEvents->setPublishState(1);
         $menuEvents->setOrdering(3);
-		$manager->persist($menuEvents);
-		
+        $manager->persist($menuEvents);
+
         $menuNews = new Menu();
-		$menuNews->setBlog($manager->merge($this->getReference('blognews')));
+        $menuNews->setBlog($manager->merge($this->getReference('blognews')));
         $menuNews->setTitle('News');
         $menuNews->setMenuType('Blog');
         $menuNews->setRoute('showPage');
@@ -65,10 +64,10 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface
         $menuNews->setMenuGroup('Main Menu');
         $menuNews->setPublishState(1);
         $menuNews->setOrdering(4);
-		$manager->persist($menuNews);
-		
+        $manager->persist($menuNews);
+
         $menuSamplePage1 = new Menu();
-		$menuSamplePage1->setPage($manager->merge($this->getReference('page2')));
+        $menuSamplePage1->setPage($manager->merge($this->getReference('page2')));
         $menuSamplePage1->setTitle('Sports');
         $menuSamplePage1->setMenuType('Page');
         $menuSamplePage1->setRoute('showPage');
@@ -77,10 +76,10 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface
         $menuSamplePage1->setMenuGroup('Main Menu');
         $menuSamplePage1->setPublishState(1);
         $menuSamplePage1->setOrdering(5);
-		$manager->persist($menuSamplePage1);
-		
+        $manager->persist($menuSamplePage1);
+
         $menuSamplePage2 = new Menu();
-		$menuSamplePage2->setPage($manager->merge($this->getReference('page1')));
+        $menuSamplePage2->setPage($manager->merge($this->getReference('page1')));
         $menuSamplePage2->setTitle('E-Magazine');
         $menuSamplePage2->setMenuType('Page');
         $menuSamplePage2->setRoute('showPage');
@@ -89,10 +88,10 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface
         $menuSamplePage2->setMenuGroup('Main Menu');
         $menuSamplePage2->setPublishState(1);
         $menuSamplePage2->setOrdering(6);
-		$manager->persist($menuSamplePage2);
-		
+        $manager->persist($menuSamplePage2);
+
         $menuContactPage = new Menu();
-		$menuContactPage->setPage($manager->merge($this->getReference('pagecontact')));
+        $menuContactPage->setPage($manager->merge($this->getReference('pagecontact')));
         $menuContactPage->setTitle('Contact Us');
         $menuContactPage->setMenuType('Page');
         $menuContactPage->setRoute('showPage');
@@ -101,10 +100,10 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface
         $menuContactPage->setMenuGroup('Main Menu');
         $menuContactPage->setPublishState(1);
         $menuContactPage->setOrdering(7);
-		$manager->persist($menuContactPage);
-		
+        $manager->persist($menuContactPage);
+
         $menuSitemapPage = new Menu();
-		$menuSitemapPage->setPage($manager->merge($this->getReference('pagesitemap')));
+        $menuSitemapPage->setPage($manager->merge($this->getReference('pagesitemap')));
         $menuSitemapPage->setTitle('Sitemap');
         $menuSitemapPage->setMenuType('Page');
         $menuSitemapPage->setRoute('showPage');
@@ -113,22 +112,21 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface
         $menuSitemapPage->setMenuGroup('Footer Menu');
         $menuSitemapPage->setPublishState(1);
         $menuSitemapPage->setOrdering(0);
-		$manager->persist($menuSitemapPage);
-		
+        $manager->persist($menuSitemapPage);
+
         $manager->flush();
-		
-		$this->addReference('menuHome', $menuHome);
-		$this->addReference('menuSamplePage2', $menuSamplePage1);
-		$this->addReference('menuSamplePage', $menuSamplePage2);
-		$this->addReference('menuBlog', $menuBlog);
-		$this->addReference('menuNews', $menuNews);	
-		$this->addReference('menuEvents', $menuEvents);		
-		$this->addReference('menuContactPage', $menuContactPage);
-		$this->addReference('menuSitemapPage', $menuSitemapPage);
+
+        $this->addReference('menuHome', $menuHome);
+        $this->addReference('menuSamplePage2', $menuSamplePage1);
+        $this->addReference('menuSamplePage', $menuSamplePage2);
+        $this->addReference('menuBlog', $menuBlog);
+        $this->addReference('menuNews', $menuNews);
+        $this->addReference('menuEvents', $menuEvents);
+        $this->addReference('menuContactPage', $menuContactPage);
+        $this->addReference('menuSitemapPage', $menuSitemapPage);
     }
-	
-	public function getOrder()
-    {
+
+    public function getOrder() {
         return 16;
     }
 

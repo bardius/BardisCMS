@@ -1,47 +1,47 @@
 <div class="large-12 small-12 column {{ pageItem.pagetype }}Item {% if pageItem.introclass is not null %}{{ pageItem.introclass }}{% endif %}">
     {% if pageItem.introimage.id is defined %}
         {% if pageItem.alias is not null %}
-            <a href="{{ app.request.getBaseURL() }}/blog/{{ pageItem.alias }}" title="{{ pageItem.title }}" class="readMoreImage">
+        <a href="{{ app.request.getBaseURL() }}/blog/{{ pageItem.alias }}" title="{{ pageItem.title }}" class="readMoreImage">
         {% else %}
-            <a href="{{ url('BlogBundle_showPage', { 'id': pageItem.id }) }}" title="{{ pageItem.title }}" class="readMoreImage">
+                <a href="{{ url('BlogBundle_showPage', { 'id': pageItem.id }) }}" title="{{ pageItem.title }}" class="readMoreImage">
         {% endif %}
                 {% media pageItem.introimage.id, 'big' with {'alt': pageItem.title, 'title': ''} %}
-            </a>
+                    </a>
     {% else %}
         {% if pageItem.alias is not null %}
-            <a href="{{ app.request.getBaseURL() }}/blog/{{ pageItem.alias }}" title="{{ pageItem.title }}" class="readMoreImage">
+                    <a href="{{ app.request.getBaseURL() }}/blog/{{ pageItem.alias }}" title="{{ pageItem.title }}" class="readMoreImage">
         {% else %}
-            <a href="{{ url('BlogBundle_showPage', { 'id': pageItem.id }) }}" title="{{ pageItem.title }}" class="readMoreImage">
+                            <a href="{{ url('BlogBundle_showPage', { 'id': pageItem.id }) }}" title="{{ pageItem.title }}" class="readMoreImage">
         {% endif %}
-                <img src="{{ app.request.uriForPath('/images/site_assets/default-category-list-item.jpg') }}" alt="{{ pageItem.title }}" />
-             </a>  
+                                    <img src="{{ app.request.uriForPath('/images/site_assets/default-category-list-item.jpg') }}" alt="{{ pageItem.title }}" />
+                                </a>  
     {% endif %}
-    
-    <div class="introItemText">
+
+                                <div class="introItemText">
         {% if pageItem.alias is not null %}
-            <h3><a href="{{ app.request.getBaseURL() }}/blog/{{ pageItem.alias }}" title="{{ pageItem.title }}">
+                                        <h3><a href="{{ app.request.getBaseURL() }}/blog/{{ pageItem.alias }}" title="{{ pageItem.title }}">
         {% else %}
-            <h3><a href="{{ url('BlogBundle_showPage', { 'id': pageItem.id }) }}" title="{{ pageItem.title }}">
+                                                        <h3><a href="{{ url('BlogBundle_showPage', { 'id': pageItem.id }) }}" title="{{ pageItem.title }}">
         {% endif %}{{ pageItem.title }}
-            </a></h3>
+                                                                    </a></h3>
         {% if pageItem.tags is not null %}
-            <span class="tags">
+                                                                <span class="tags">
                 {% for title in pageItem.tags %}
-                <a class="tag" href="{{ app.request.getBaseURL() }}/blog/tagged/{{ title|url_encode() }}" title="{{ title }}">
+                                                                        <a class="tag" href="{{ app.request.getBaseURL() }}/blog/tagged/{{ title|url_encode() }}" title="{{ title }}">
                     {{ title }} 
-                </a>          
+                                                                            </a>          
                 {% endfor %} 
-            </span>
+                                                                        </span>
         {% endif %}
         {% if pageItem.introtext is not null %}
             {{ pageItem.introtext|raw }}
         {% endif %}
         {% if pageItem.alias is not null %}
-            <a href="{{ app.request.getBaseURL() }}/blog/{{ pageItem.alias }}" title="Read more">
+                                                                        <a href="{{ app.request.getBaseURL() }}/blog/{{ pageItem.alias }}" title="Read more">
         {% else %}
-            <a href="{{ url('BlogBundle_showPage', { 'id': pageItem.id }) }}" title="Read more">
+                                                                                <a href="{{ url('BlogBundle_showPage', { 'id': pageItem.id }) }}" title="Read more">
         {% endif %}
-                <span>Read more</span>
-            </a>
-    </div>
-</div>
+                                                                                        <span>Read more</span>
+                                                                                    </a>
+                                                                                    </div>
+                                                                                    </div>

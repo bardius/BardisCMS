@@ -16,7 +16,7 @@ This file is part of the BardisCMS.
 {% block form_errors %}
 {% spaceless %}
     {% if errors|length > 0 %}
-    <small class="error">
+<small class="error">
         {% for error in errors %}
             {{ error.message }}
         {% endfor %}

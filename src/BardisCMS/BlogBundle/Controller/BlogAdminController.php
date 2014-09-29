@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Blog Bundle
  * This file is part of the BardisCMS.
@@ -6,28 +7,27 @@
  * (c) George Bardis <george@bardis.info>
  *
  */
+
 namespace BardisCMS\BlogBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class BlogAdminController extends Controller
-{
-    
-    public function duplicateAction($id = null)
-    {
+class BlogAdminController extends Controller {
+
+    public function duplicateAction($id = null) {
         // the key used to lookup the template
         $templateKey = 'edit';
-        
+
         $id = $this->get('request')->get($this->admin->getIdParameter());
 
         $clonedObject = $this->admin->getObject($id);
-        $clonedObject->setTitle($clonedObject->getTitle().' Clone');
-        $clonedObject->setAlias($clonedObject->getAlias().'-clone');
+        $clonedObject->setTitle($clonedObject->getTitle() . ' Clone');
+        $clonedObject->setAlias($clonedObject->getAlias() . '-clone');
         $date = new \DateTime();
         $clonedObject->setDate($date);
-        
+
         $object = $this->admin->getNewInstance();
 
         if (!$object) {
@@ -42,15 +42,15 @@ class BlogAdminController extends Controller
 
         $form = $this->admin->getForm();
         $form->setData($clonedObject);
-        
+
         foreach ($form->getData()->getMaincontentblocks() as $maincontentblock) {
             unset($maincontentblock);
         }
-        
+
         foreach ($form->getData()->getBannercontentblocks() as $bannercontentblock) {
             unset($bannercontentblock);
         }
-        
+
         foreach ($form->getData()->getModalcontentblocks() as $modalcontentblock) {
             unset($modalcontentblock);
         }
@@ -66,12 +66,12 @@ class BlogAdminController extends Controller
 
                 if ($this->isXmlHttpRequest()) {
                     return $this->renderJson(array(
-                        'result' => 'ok',
-                        'objectId' => $this->admin->getNormalizedIdentifier($object)
+                            'result' => 'ok',
+                            'objectId' => $this->admin->getNormalizedIdentifier($object)
                     ));
                 }
 
-                $this->get('session')->setFlash('sonata_flash_success','flash_create_success');
+                $this->get('session')->setFlash('sonata_flash_success', 'flash_create_success');
                 // redirect to edit mode
                 return $this->redirectTo($object);
             }
@@ -91,9 +91,10 @@ class BlogAdminController extends Controller
         $this->get('twig')->getExtension('form')->renderer->setTheme($view, $this->admin->getFormTheme());
 
         return $this->render($this->admin->getTemplate($templateKey), array(
-            'action' => 'create',
-            'form'   => $view,
-            'object' => $object,
+                'action' => 'create',
+                'form' => $view,
+                'object' => $object,
         ));
     }
+
 }

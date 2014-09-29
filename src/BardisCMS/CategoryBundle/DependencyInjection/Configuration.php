@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Category Bundle
  * This file is part of the BardisCMS.
@@ -6,6 +7,7 @@
  * (c) George Bardis <george@bardis.info>
  *
  */
+
 namespace BardisCMS\CategoryBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -16,13 +18,12 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  */
-class Configuration implements ConfigurationInterface
-{
+class Configuration implements ConfigurationInterface {
+
     /**
      * {@inheritDoc}
      */
-    public function getConfigTreeBuilder()
-    {
+    public function getConfigTreeBuilder() {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('category');
 
@@ -30,10 +31,11 @@ class Configuration implements ConfigurationInterface
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
         $rootNode
-            ->children()                                        
-                ->booleanNode('loadservices')->defaultFalse()->end()
+            ->children()
+            ->booleanNode('loadservices')->defaultFalse()->end()
             ->end();
 
         return $treeBuilder;
     }
+
 }

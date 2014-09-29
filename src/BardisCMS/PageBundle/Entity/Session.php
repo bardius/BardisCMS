@@ -20,22 +20,21 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Session {
 
-	/**
-	 * @ORM\Column(type="string", length=255)
-	 * @ORM\Id
-	 */
-	protected $session_id;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @ORM\Id
+     */
+    protected $session_id;
 
-	/**
-	 * @ORM\Column(type="text")
-	 */
-	protected $session_value;
+    /**
+     * @ORM\Column(type="text")
+     */
+    protected $session_value;
 
-	/**
-	 * @ORM\Column(type="integer", length=11)
-	 */
-	protected $session_time;
-	
+    /**
+     * @ORM\Column(type="integer", length=11)
+     */
+    protected $session_time;
 
     /**
      * Set session_id
@@ -44,10 +43,9 @@ class Session {
      *
      * @return Session
      */
-    public function setSessionId($sessionId)
-    {
+    public function setSessionId($sessionId) {
         $this->session_id = $sessionId;
-    
+
         return $this;
     }
 
@@ -56,8 +54,7 @@ class Session {
      *
      * @return string 
      */
-    public function getSessionId()
-    {
+    public function getSessionId() {
         return $this->session_id;
     }
 
@@ -68,10 +65,9 @@ class Session {
      *
      * @return Session
      */
-    public function setSessionValue($sessionValue)
-    {
+    public function setSessionValue($sessionValue) {
         $this->session_value = $sessionValue;
-    
+
         return $this;
     }
 
@@ -80,8 +76,7 @@ class Session {
      *
      * @return string 
      */
-    public function getSessionValue()
-    {
+    public function getSessionValue() {
         return $this->session_value;
     }
 
@@ -92,10 +87,9 @@ class Session {
      *
      * @return Session
      */
-    public function setSessionTime($sessionTime)
-    {
+    public function setSessionTime($sessionTime) {
         $this->session_time = $sessionTime;
-    
+
         return $this;
     }
 
@@ -104,8 +98,8 @@ class Session {
      *
      * @return integer 
      */
-    public function getSessionTime()
-    {
+    public function getSessionTime() {
         return $this->session_time;
     }
+
 }

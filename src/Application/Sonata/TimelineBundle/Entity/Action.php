@@ -21,8 +21,8 @@ use Sonata\TimelineBundle\Entity\Action as BaseAction;
  *
  * @author <yourname> <youremail>
  */
-class Action extends BaseAction
-{
+class Action extends BaseAction {
+
     /**
      * @var integer $id
      */
@@ -33,8 +33,8 @@ class Action extends BaseAction
      *
      * @return integer $id
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
 }

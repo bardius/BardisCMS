@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the <name> project.
  *
@@ -20,60 +21,56 @@ use Sonata\UserBundle\Entity\BaseUser as BaseUser;
  *
  * @author <yourname> <youremail>
  */
-class User extends BaseUser
-{
+class User extends BaseUser {
 
     /**
      * @var integer $id
      */
     protected $id;
-    
+
     /**
      * @var string
      */
     protected $bakeFrequency;
-    
-    
+
     /**
      * @var string
      */
     protected $sex;
-    
+
     /**
      * @var array
      */
     protected $bakeChoises;
-    
+
     /**
      * @var string
      */
     protected $children;
-    
+
     /**
      * @var string
      */
     protected $age;
-    
+
     /**
      * @var string
      */
     protected $campaign;
-    
+
     /**
      * Get id
      *
      * @return integer $id
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
-    
+
     /**
      * @return string
      */
-    public function getBakeFrequency()
-    {
+    public function getBakeFrequency() {
         return $this->bakeFrequency;
     }
 
@@ -83,17 +80,15 @@ class User extends BaseUser
      * @param string $bakeFrequency
      * @return bakeFrequency
      */
-    public function setBakeFrequency($bakeFrequency)
-    {
+    public function setBakeFrequency($bakeFrequency) {
         $this->bakeFrequency = $bakeFrequency;
         return $this;
     }
-    
+
     /**
      * @return string
      */
-    public function getSex()
-    {
+    public function getSex() {
         return $this->sex;
     }
 
@@ -103,17 +98,15 @@ class User extends BaseUser
      * @param string $sex
      * @return sex
      */
-    public function setSex($sex)
-    {
+    public function setSex($sex) {
         $this->sex = $sex;
         return $this;
     }
-    
+
     /**
      * @return string
      */
-    public function getCampaign()
-    {
+    public function getCampaign() {
         return $this->campaign;
     }
 
@@ -123,17 +116,15 @@ class User extends BaseUser
      * @param string $campaign
      * @return campaign
      */
-    public function setCampaign($campaign)
-    {
+    public function setCampaign($campaign) {
         $this->campaign = $campaign;
         return $this;
     }
-    
+
     /**
      * @return string
      */
-    public function getBakeChoises()
-    {
+    public function getBakeChoises() {
         return $this->bakeChoises;
     }
 
@@ -143,8 +134,7 @@ class User extends BaseUser
      * @param string $bakeChoises
      * @return bakeChoises
      */
-    public function setBakeChoises($bakeChoises)
-    {
+    public function setBakeChoises($bakeChoises) {
         $this->bakeChoises = $bakeChoises;
         return $this;
     }
@@ -155,17 +145,15 @@ class User extends BaseUser
      * @param string $children
      * @return children
      */
-    public function setChildren($children)
-    {
+    public function setChildren($children) {
         $this->children = $children;
         return $this;
     }
-    
+
     /**
      * @return string
      */
-    public function getChildren()
-    {
+    public function getChildren() {
         return $this->children;
     }
 
@@ -175,34 +163,30 @@ class User extends BaseUser
      * @param string $age
      * @return age
      */
-    public function setAge($age)
-    {
+    public function setAge($age) {
         $this->age = $age;
         return $this;
     }
-    
+
     /**
      * @return string
      */
-    public function getAge()
-    {
+    public function getAge() {
         return $this->age;
     }
-    
-    public function setEmail($email){
-        $this->email    = $email;
-        if ($this->getUsername() == null)
-        {
+
+    public function setEmail($email) {
+        $this->email = $email;
+        if ($this->getUsername() == null) {
             $this->username = $email;
             $this->password = $email;
             $this->plainPassword = $email;
         }
     }
-    
-    public function setEmailCanonical($emailCanonical){
-        $this->emailCanonical   = $emailCanonical;
-        if ($this->getUsernameCanonical() == null)
-        {
+
+    public function setEmailCanonical($emailCanonical) {
+        $this->emailCanonical = $emailCanonical;
+        if ($this->getUsernameCanonical() == null) {
             $this->usernameCanonical = $emailCanonical;
         }
     }
@@ -210,8 +194,7 @@ class User extends BaseUser
     /**
      * @return string
      */
-    public function getFullname()
-    {
+    public function getFullname() {
         return sprintf("%s %s", $this->getEmail());
     }
 
@@ -220,10 +203,8 @@ class User extends BaseUser
      *
      * @return string
      */
-    public function __toString()
-    {
-        return $this->getUsername() ?: '-';
+    public function __toString() {
+        return $this->getUsername() ? : '-';
     }
-
 
 }

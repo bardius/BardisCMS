@@ -22,21 +22,21 @@ use Symfony\Component\Config\FileLocator;
  */
 class PageExtension extends Extension {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public function load(array $configs, ContainerBuilder $container) {
-		$configuration = new Configuration();
-		$config = $this->processConfiguration($configuration, $configs);
+    /**
+     * {@inheritDoc}
+     */
+    public function load(array $configs, ContainerBuilder $container) {
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
 
-		// Setting the name of the variable in the container pool for this injection values
-		$container->setParameter('page_settings', $config);
+        // Setting the name of the variable in the container pool for this injection values
+        $container->setParameter('page_settings', $config);
 
-		// Setting the path and filename injection values file
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));   
+        // Setting the path and filename injection values file
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         if (isset($config['loadservices']) && $config['loadservices']) {
             $loader->load('services.yml');
         }
-	}
+    }
 
 }

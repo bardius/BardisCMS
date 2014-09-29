@@ -8,9 +8,9 @@ This file is part of the BardisCMS.
 {% block form_row %}
 {% spaceless %}
         {{ form_label(form) }}
-		<div class="formFieldContainer">
+<div class="formFieldContainer">
 			{{ form_widget(form) }}
-		</div>
+    </div>
 		{{ form_errors(form) }}
 {% endspaceless %}
 {% endblock form_row %}
@@ -22,7 +22,7 @@ This file is part of the BardisCMS.
         {% for error in errors %}
             {{ error.message }}
         {% endfor %}
-    </small>
+        </small>
     {% endif %}
 {% endspaceless %}
 {% endblock form_errors %}

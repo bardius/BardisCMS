@@ -12,67 +12,68 @@ namespace BardisCMS\SettingsBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 
-class SetPageSettings{
+class SetPageSettings {
 
-	private $em;
-	private $conn;
+    private $em;
+    private $conn;
 
-	public function __construct(EntityManager $em) {
-		$this->em = $em;
-		$this->conn = $em->getConnection();
-	}
+    public function __construct(EntityManager $em) {
+        $this->em = $em;
+        $this->conn = $em->getConnection();
+    }
 
-	public function setPageSettings($page = null) {
-		$settings = $this->em->getRepository('SettingsBundle:Settings')->findOneByActivateSettings(true);
-		
-		if (!empty($page)) {
-			if (is_object($settings)) {
-				if ($settings->getUseWebsiteAuthor()) {
-					$page->metaAuthor = $settings->getWebsiteAuthor();
-				} else {
-					$page->metaAuthor = $page->getAuthor()->getUsername();
-				}
+    public function setPageSettings($page = null) {
+        $settings = $this->em->getRepository('SettingsBundle:Settings')->findOneByActivateSettings(true);
 
-				// Set the page title basd on page and site title and the keywords based on that generated title
-				$pageTitle = $page->getTitle();
-				$titleKeywords = trim(preg_replace("/\b[A-za-z0-9']{1,3}\b/", "", strtolower($pageTitle)));
-				$titleKeywords = str_replace(' ', ',', preg_replace('!\s+!', ' ', $titleKeywords));
-				$fromTitle = $pageTitle . ' ' . $settings->getFromTitle();
-				$pageTitle .= ' - ' . $settings->getWebsiteTitle();
+        if (!empty($page)) {
+            if (is_object($settings)) {
+                if ($settings->getUseWebsiteAuthor()) {
+                    $page->metaAuthor = $settings->getWebsiteAuthor();
+                } else {
+                    $page->metaAuthor = $page->getAuthor()->getUsername();
+                }
 
-				$page->pagetitle = $pageTitle;
+                // Set the page title basd on page and site title and the keywords based on that generated title
+                $pageTitle = $page->getTitle();
+                $titleKeywords = trim(preg_replace("/\b[A-za-z0-9']{1,3}\b/", "", strtolower($pageTitle)));
+                $titleKeywords = str_replace(' ', ',', preg_replace('!\s+!', ' ', $titleKeywords));
+                $fromTitle = $pageTitle . ' ' . $settings->getFromTitle();
+                $pageTitle .= ' - ' . $settings->getWebsiteTitle();
 
-				// Get the Google Analytics 
-				$page->enableGA = $settings->getEnableGoogleAnalytics();
-				$page->gaID = $settings->getGoogleAnalyticsId();
+                $page->pagetitle = $pageTitle;
 
-				// Set the page meta keywords and description basd on user input values if any
-				if ($page->getKeywords() == null) {
-					$page->setKeywords($settings->getMetaKeywords() . ',' . $titleKeywords);
-				} else {
-					$page->setKeywords($page->getKeywords() . ',' . $titleKeywords);
-				}
+                // Get the Google Analytics 
+                $page->enableGA = $settings->getEnableGoogleAnalytics();
+                $page->gaID = $settings->getGoogleAnalyticsId();
 
-				if ($page->getDescription() == null) {
-					$page->setDescription($settings->getMetaDescription() . ' ' . $fromTitle);
-				} else {
-					$page->setDescription($page->getDescription() . ' ' . $fromTitle);
-				}
-			} else {
-				// Set the meta values depending if settings do not exist
-				$page->metaAuthor = '';
-				$pageTitle = $page->getTitle();
-				$titleKeywords = trim(preg_replace("/\b[A-za-z0-9']{1,3}\b/", "", strtolower($pageTitle)));
-				$titleKeywords = str_replace(' ', ',', preg_replace('!\s+!', ' ', $titleKeywords));
-				$page->pagetitle = $pageTitle;
-				$page->enableGA = false;
-				$page->gaID = null;
+                // Set the page meta keywords and description basd on user input values if any
+                if ($page->getKeywords() == null) {
+                    $page->setKeywords($settings->getMetaKeywords() . ',' . $titleKeywords);
+                } else {
+                    $page->setKeywords($page->getKeywords() . ',' . $titleKeywords);
+                }
 
-				$page->setDescription($page->getDescription());
-				$page->setKeywords($page->getKeywords() . ',' . $titleKeywords);
-			}
-		}
-		
-		return $page;
-	}
+                if ($page->getDescription() == null) {
+                    $page->setDescription($settings->getMetaDescription() . ' ' . $fromTitle);
+                } else {
+                    $page->setDescription($page->getDescription() . ' ' . $fromTitle);
+                }
+            } else {
+                // Set the meta values depending if settings do not exist
+                $page->metaAuthor = '';
+                $pageTitle = $page->getTitle();
+                $titleKeywords = trim(preg_replace("/\b[A-za-z0-9']{1,3}\b/", "", strtolower($pageTitle)));
+                $titleKeywords = str_replace(' ', ',', preg_replace('!\s+!', ' ', $titleKeywords));
+                $page->pagetitle = $pageTitle;
+                $page->enableGA = false;
+                $page->gaID = null;
+
+                $page->setDescription($page->getDescription());
+                $page->setKeywords($page->getKeywords() . ',' . $titleKeywords);
+            }
+        }
+
+        return $page;
+    }
+
 }

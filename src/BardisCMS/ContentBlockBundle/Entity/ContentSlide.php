@@ -1,4 +1,5 @@
 <?php
+
 /*
  * ContentBlock Bundle
  * This file is part of the BardisCMS.
@@ -12,15 +13,14 @@ namespace BardisCMS\ContentBlockBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Application\Sonata\MediaBundle\Entity\Media;
 
-
 /**
  * BardisCMS\ContentBlockBundle\Entity\ContentSlide
  *
  * @ORM\Table(name="content_slides")
  * @ORM\Entity
  */
-class ContentSlide
-{
+class ContentSlide {
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -31,17 +31,17 @@ class ContentSlide
     /**
      * @ORM\OneToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", orphanRemoval=true, cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="imagefile", onDelete="CASCADE")
-     */ 
+     */
     protected $imagefile;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     */ 
+     */
     protected $imageLinkTitle = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     */ 
+     */
     protected $imageLinkURL = null;
 
     /**
@@ -49,8 +49,7 @@ class ContentSlide
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -60,8 +59,7 @@ class ContentSlide
      * @param Application\Sonata\MediaBundle\Entity\Media $imagefile
      * @return ContentImage
      */
-    public function setImagefile(\Application\Sonata\MediaBundle\Entity\Media $imagefile = null)
-    {
+    public function setImagefile(\Application\Sonata\MediaBundle\Entity\Media $imagefile = null) {
         $this->imagefile = $imagefile;
         return $this;
     }
@@ -71,8 +69,7 @@ class ContentSlide
      *
      * @return Application\Sonata\MediaBundle\Entity\Media 
      */
-    public function getImagefile()
-    {
+    public function getImagefile() {
         return $this->imagefile;
     }
 
@@ -81,10 +78,9 @@ class ContentSlide
      *
      * @param string $imageLinkTitle
      */
-    public function setImageLinkTitle($imageLinkTitle)
-    {
+    public function setImageLinkTitle($imageLinkTitle) {
         $this->imageLinkTitle = $imageLinkTitle;
-    
+
         return $this;
     }
 
@@ -93,8 +89,7 @@ class ContentSlide
      *
      * @return string 
      */
-    public function getImageLinkTitle()
-    {
+    public function getImageLinkTitle() {
         return $this->imageLinkTitle;
     }
 
@@ -104,10 +99,9 @@ class ContentSlide
      * @param integer $imageLinkURL
      * @return ContentImage
      */
-    public function setImageLinkURL($imageLinkURL)
-    {
+    public function setImageLinkURL($imageLinkURL) {
         $this->imageLinkURL = $imageLinkURL;
-    
+
         return $this;
     }
 
@@ -116,8 +110,8 @@ class ContentSlide
      *
      * @return integer 
      */
-    public function getImageLinkURL()
-    {
+    public function getImageLinkURL() {
         return $this->imageLinkURL;
     }
+
 }

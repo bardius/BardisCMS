@@ -8,15 +8,14 @@ use BardisCMS\PageBundle\Entity\Page;
 use BardisCMS\BlogBundle\Entity\Blog;
 use Application\Sonata\MediaBundle\Entity\Media;
 
-
 /**
  * BardisCMS\CategoryBundle\Entity\Category
  *
  * @ORM\Table(name="categories")
  * @ORM\Entity
  */
-class Category
-{
+class Category {
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -26,51 +25,47 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255)
-     */ 
+     */
     protected $title;
-
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     */ 
+     */
     protected $categoryClass = null;
 
     /**
      * @ORM\OneToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="categoryIcon", referencedColumnName="id", onDelete="SET NULL")
-     */ 
+     */
     protected $categoryIcon;
 
-   /**
-    * @ORM\ManyToMany(targetEntity="BardisCMS\PageBundle\Entity\Page", mappedBy="categories", cascade={"persist"})
-    */
+    /**
+     * @ORM\ManyToMany(targetEntity="BardisCMS\PageBundle\Entity\Page", mappedBy="categories", cascade={"persist"})
+     */
     protected $pages;
 
-   /**
-    * @ORM\ManyToMany(targetEntity="BardisCMS\BlogBundle\Entity\Blog", mappedBy="categories", cascade={"persist"})
-    */
+    /**
+     * @ORM\ManyToMany(targetEntity="BardisCMS\BlogBundle\Entity\Blog", mappedBy="categories", cascade={"persist"})
+     */
     protected $blogs;
-	
-	/**
+
+    /**
      * @ORM\Column(name="date_last_modified", type="datetime")
      * @Gedmo\Timestampable(on="update")
      */
     private $dateLastModified;
-	
 
-    public function __construct()
-    {
-        $this->pages    = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->blogs    = new \Doctrine\Common\Collections\ArrayCollection();
-    } 
+    public function __construct() {
+        $this->pages = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->blogs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -80,8 +75,7 @@ class Category
      * @param string $title
      * @return Category
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
         return $this;
     }
@@ -91,8 +85,7 @@ class Category
      *
      * @return string 
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -102,8 +95,7 @@ class Category
      * @param string $categoryClass
      * @return Category
      */
-    public function setCategoryClass($categoryClass)
-    {
+    public function setCategoryClass($categoryClass) {
         $this->categoryClass = $categoryClass;
         return $this;
     }
@@ -113,8 +105,7 @@ class Category
      *
      * @return string 
      */
-    public function getCategoryClass()
-    {
+    public function getCategoryClass() {
         return $this->categoryClass;
     }
 
@@ -124,8 +115,7 @@ class Category
      * @param Application\Sonata\MediaBundle\Entity\Media $categoryIcon
      * @return Category
      */
-    public function setCategoryIcon(\Application\Sonata\MediaBundle\Entity\Media $categoryIcon = null)
-    {
+    public function setCategoryIcon(\Application\Sonata\MediaBundle\Entity\Media $categoryIcon = null) {
         $this->categoryIcon = $categoryIcon;
         return $this;
     }
@@ -135,8 +125,7 @@ class Category
      *
      * @return Application\Sonata\MediaBundle\Entity\Media 
      */
-    public function getCategoryIcon()
-    {
+    public function getCategoryIcon() {
         return $this->categoryIcon;
     }
 
@@ -146,8 +135,7 @@ class Category
      * @param BardisCMS\BlogBundle\Entity\Blog $blogs
      * @return Category
      */
-    public function addBlog(\BardisCMS\BlogBundle\Entity\Blog $blogs)
-    {
+    public function addBlog(\BardisCMS\BlogBundle\Entity\Blog $blogs) {
         $this->blogs[] = $blogs;
         return $this;
     }
@@ -157,8 +145,7 @@ class Category
      *
      * @param BardisCMS\BlogBundle\Entity\Blog $blogs
      */
-    public function removeBlog(\BardisCMS\BlogBundle\Entity\Blog $blogs)
-    {
+    public function removeBlog(\BardisCMS\BlogBundle\Entity\Blog $blogs) {
         $this->blogs->removeElement($blogs);
     }
 
@@ -167,19 +154,17 @@ class Category
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getBlogs()
-    {
+    public function getBlogs() {
         return $this->blogs;
     }
-    
+
     /**
      * Add pages
      *
      * @param BardisCMS\PageBundle\Entity\Page $pages
      * @return Category
      */
-    public function addPage(\BardisCMS\PageBundle\Entity\Page $pages)
-    {
+    public function addPage(\BardisCMS\PageBundle\Entity\Page $pages) {
         $this->pages[] = $pages;
         return $this;
     }
@@ -189,8 +174,7 @@ class Category
      *
      * @param BardisCMS\PageBundle\Entity\Page $pages
      */
-    public function removePage(\BardisCMS\PageBundle\Entity\Page $pages)
-    {
+    public function removePage(\BardisCMS\PageBundle\Entity\Page $pages) {
         $this->pages->removeElement($pages);
     }
 
@@ -199,33 +183,30 @@ class Category
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getPages()
-    {
+    public function getPages() {
         return $this->pages;
     }
-		
-	/**
-	 * Get dateLastModified
-	 *
-	 * @return integer 
-	 */
-    public function getDateLastModified()
-    {
+
+    /**
+     * Get dateLastModified
+     *
+     * @return integer 
+     */
+    public function getDateLastModified() {
         return $this->dateLastModified;
     }
-	
+
     /**
      * toString Title
      *
      * @return string 
      */
-    public function __toString()
-    {
-		if($this->getTitle()){
-			return (string)$this->getTitle();			
-		}
-		else{
-			return (string)'New Category';
-		}
+    public function __toString() {
+        if ($this->getTitle()) {
+            return (string) $this->getTitle();
+        } else {
+            return (string) 'New Category';
+        }
     }
+
 }
