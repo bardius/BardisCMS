@@ -27,7 +27,7 @@ class Session {
     protected $session_id;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="blob")
      */
     protected $session_value;
 
@@ -35,6 +35,12 @@ class Session {
      * @ORM\Column(type="integer", length=11)
      */
     protected $session_time;
+
+    /**
+     * @ORM\Column(type="integer", length=11)
+     */
+    protected $sess_lifetime;
+
 
     /**
      * Set session_id
@@ -52,7 +58,7 @@ class Session {
     /**
      * Get session_id
      *
-     * @return string 
+     * @return string
      */
     public function getSessionId() {
         return $this->session_id;
@@ -74,32 +80,32 @@ class Session {
     /**
      * Get session_value
      *
-     * @return string 
+     * @return string
      */
     public function getSessionValue() {
         return $this->session_value;
     }
 
     /**
-     * Set session_time
+     * Set session_lifetime
      *
-     * @param integer $sessionTime
+     * @param integer $sessionLifetime
      *
      * @return Session
      */
-    public function setSessionTime($sessionTime) {
-        $this->session_time = $sessionTime;
+    public function setSessionLifetimeime($sessionLifetime) {
+        $this->session_time = $sessionLifetime;
 
         return $this;
     }
 
     /**
-     * Get session_time
+     * Get session_lifetime
      *
-     * @return integer 
+     * @return integer
      */
-    public function getSessionTime() {
-        return $this->session_time;
+    public function getSessionLifetime() {
+        return $this->session_lifetime;
     }
 
 }
