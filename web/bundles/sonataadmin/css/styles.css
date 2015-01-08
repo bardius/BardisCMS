@@ -318,6 +318,21 @@ form.sonata-filter-form.form-stacked {
     max-height: 25px;
 }
 
+.filter_container .select2-container .select2-choice {
+    height: 23px;
+}
+
+body.fixed .sonata-list-table {
+    position: relative;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 5px;
+}
+
+.navbar-nav.navbar-right:last-child {
+    margin-right: 0;
+}
+
 /* Overrides */
 
 /* x-editable */
@@ -431,4 +446,8 @@ div.mosaic-box.sonata-ba-list-row-selected > div.mosaic-inner-box {
 div.mosaic-box.sonata-ba-list-row-selected > div.mosaic-inner-text {
     border: 1px solid #333;
     border-top: none;
+}
+
+div.form-group div.select2-container {
+    width: 80% !important;
 }

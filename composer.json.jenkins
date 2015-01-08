@@ -1,4 +1,4 @@
-
+{
     "name": "bardis/cms-symfony2",
     "type": "symfony-distribution",
     "description": "BardisCMS is a Symfony2 CMS distribution with integrated Zurb Foundation 5 (Bower and Grunt with custom builds included for better workflow) for front end and all the major bundles pre-configured (Sonata Admin, User, Media, FOSUser, KnpMenu, Guzzle) combined with extra bundles to provide a fully functional out of the box responsive CMS for websites",
@@ -23,7 +23,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "v2.6.1"
+        "symfony/symfony": "v2.6.3"
     },
     "require-dev": {
         "doctrine/orm": ">=2.3.0",
