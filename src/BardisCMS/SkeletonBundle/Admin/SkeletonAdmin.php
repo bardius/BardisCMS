@@ -44,8 +44,6 @@ class SkeletonAdmin extends Admin {
                 ->add('date', 'date', array('widget' => 'single_text', 'format' => 'dd-MM-yyyy', 'attr' => array('class' => 'datepicker'), 'label' => 'Publish Date', 'required' => true))
                 ->add('author', 'entity', array('class' => 'Application\Sonata\UserBundle\Entity\User', 'property' => 'username', 'expanded' => false, 'multiple' => false, 'label' => 'Author', 'data' => $loggedUser->getUsername(), 'required' => true))
                 ->add('alias', null, array('attr' => array('class' => 'pageAliasField'), 'label' => 'Skeleton Page Alias', 'required' => false))
-                ->add('categories', 'entity', array('class' => 'BardisCMS\CategoryBundle\Entity\Category', 'property' => 'title', 'expanded' => true, 'multiple' => true, 'label' => 'Add to Category', 'required' => true))
-                ->add('tags', 'entity', array('class' => 'BardisCMS\TagBundle\Entity\Tag', 'property' => 'title', 'expanded' => true, 'multiple' => true, 'label' => 'Associated Tags', 'required' => false))
                 ->add('pagetype', 'choice', array('choices' => $pagetypeChoices, 'preferred_choices' => array($prefPagetypeChoice), 'label' => 'Skeleton Page Type', 'required' => true))
                 ->add('showPageTitle', 'choice', array('choices' => array('0' => 'Hide Title', '1' => 'Show Title'), 'preferred_choices' => array('1'), 'label' => 'Title Display', 'required' => true))
                 ->add('pageclass', null, array('label' => 'Skeleton Page CSS Class', 'required' => false))
@@ -61,19 +59,19 @@ class SkeletonAdmin extends Admin {
                     'pageclass' => 'Set the CSS class that wraps Skeleton Page'
                 ))
                 ->end()
-                ->with('Skeleton Page Metatags', array('collapsed' => true))
-                ->add('keywords', null, array('label' => 'Meta Keywords', 'required' => false))
-                ->add('description', null, array('label' => 'Meta Description', 'required' => false))
+                ->with('Categories & Tags', array('collapsed' => true))
+                ->add('categories', 'entity', array('class' => 'BardisCMS\CategoryBundle\Entity\Category', 'property' => 'title', 'expanded' => true, 'multiple' => true, 'label' => 'Associated Categories', 'required' => false))
+                ->add('tags', 'entity', array('class' => 'BardisCMS\TagBundle\Entity\Tag', 'property' => 'title', 'expanded' => true, 'multiple' => true, 'label' => 'Associated Tags', 'required' => false))
                 ->setHelps(array(
-                    'keywords' => 'Set the keyword metadata of the Skeleton page of leave empty to autogenerate',
-                    'description' => 'Set the description metadata of the Skeleton page of leave empty to autogenerate'
+                    'tags' => 'Select the associated tags',
+                    'categories' => 'Select the associated categories'
                 ))
                 ->end()
                 ->with('Skeleton Listing Page Intro', array('collapsed' => true))
                 ->add('introtext', 'textarea', array('attr' => array('class' => 'tinymce', 'data-theme' => 'advanced'), 'label' => 'Intro Text/HTML', 'required' => false))
                 ->add('introimage', 'sonata_media_type', array('provider' => 'sonata.media.provider.image', 'context' => 'intro', 'attr' => array('class' => 'imagefield'), 'label' => 'Intro Image', 'required' => false))
                 ->add('introvideo', 'sonata_media_type', array('provider' => 'sonata.media.provider.vimeo', 'context' => 'intro', 'attr' => array('class' => 'videofield'), 'label' => 'Vimeo Video Id', 'required' => false))
-                ->add('intromediasize', 'choice', array('choices' => $introMediaSizeChoices, 'preferred_choices' => array($prefIntroMediaSizeChoice), 'label' => 'Media Size', 'required' => true))
+                //->add('intromediasize', 'choice', array('choices' => $introMediaSizeChoices, 'preferred_choices' => array($prefIntroMediaSizeChoice), 'label' => 'Media Size', 'required' => true))
                 ->add('pageOrder', null, array('label' => 'Intro Item Ordering in Homepage', 'required' => true))
                 ->add('introclass', null, array('label' => 'Intro Item CSS Class', 'required' => false))
                 ->setHelps(array(
@@ -82,6 +80,14 @@ class SkeletonAdmin extends Admin {
                     'introvideo' => 'Set the video content to display for intro listing items',
                     'pageOrder' => 'Set the order of this Skeleton page intro for the homepage',
                     'introclass' => 'Set the CSS class that wraps content to display for intro listing items'
+                ))
+                ->end()
+                ->with('Skeleton Page Metatags Manual Override', array('collapsed' => true))
+                ->add('keywords', null, array('label' => 'Meta Keywords', 'required' => false))
+                ->add('description', null, array('label' => 'Meta Description', 'required' => false))
+                ->setHelps(array(
+                    'keywords' => 'Set the keyword metadata of the page of leave empty to autogenerate',
+                    'description' => 'Set the description metadata of the page of leave empty to autogenerate'
                 ))
                 ->end()
         ;
