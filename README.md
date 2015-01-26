@@ -30,7 +30,7 @@ You can find the documentation for Zurb Foundation 5 here http://foundation.zurb
 
 Requirements
 
-* [PHP](http://www.php.net) 5.3 or later
+* [PHP](http://www.php.net) 5.4 or later
 * Installation via [Composer](http://getcomposer.org/)
 
 
