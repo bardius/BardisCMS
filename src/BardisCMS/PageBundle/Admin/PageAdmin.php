@@ -147,6 +147,7 @@ class PageAdmin extends Admin {
                 case 'category_page':
                 case 'page_tag_list':
                 case 'sitemap':
+                case 'user_profile':                  
                 case 'homepage':
                     $formMapper
                             ->with('Page Contents', array('collapsed' => true))

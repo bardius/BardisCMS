@@ -7,8 +7,9 @@ page:
         three_columned:     Three Column Page
         contact:            Contact Form Page
         category_page:      Category Page
-        page_tag_list:			Filtered Results
+        page_tag_list:		Filtered Results
         homepage:           Homepage
+        user_profile:       User Profile
         sitemap:            Sitemap
     
     mediasizes:
@@ -58,11 +59,11 @@ menu:
         showPage:   Show Page
     
     menutypes:
-        Page:					Page
-        Blog:					Blog Page
-        http:					External URL
-        url:					Internal URL
-        seperator:		Seperator
+        Page:		Page
+        Blog:		Blog Page
+        http:		External URL
+        url:		Internal URL
+        seperator:  Seperator
         
     menugroups:
         Main Menu:          Main Menu

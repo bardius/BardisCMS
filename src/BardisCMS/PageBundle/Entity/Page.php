@@ -810,7 +810,8 @@ class Page {
             case('two_columned'): return "Two Column Page";
             case('three_columned'): return "Three Column Page";
             case('category_page'): return "Category Page";
-            case('page_tag_list'): return "Tagged Page list";
+            case('page_tag_list'): return "Tagged Page List";
+            case('user_profile'): return "User Profile Page";
             case('homepage'): return "Homepage";
             default: return $this->getPagetype();
         }

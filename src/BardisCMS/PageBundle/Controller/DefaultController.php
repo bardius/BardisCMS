@@ -15,6 +15,7 @@ use BardisCMS\PageBundle\Form\FilterPagesForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\UserBundle\Model\UserInterface;
 
 class DefaultController extends Controller {
 
@@ -28,6 +29,25 @@ class DefaultController extends Controller {
         }
 
         $linkUrlParams = $extraParams;
+
+        return $this->showPageAction($page->getId(), $extraParams, $currentpage, $totalpageitems, $linkUrlParams);
+    }
+
+    // Get the page id based on alias from route and user details from username
+    public function userProfileAction($alias, $userName = null, $currentpage = 0, $totalpageitems = 0) {
+
+        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($alias);
+
+        if (!$page) {
+            return $this->render404Page();
+        }
+
+        if (!isset($userName) || !$this->get('sonata_user.services.helpers')->getUserByUsername($userName)) {
+            return $this->render404Page();
+        }
+
+        $linkUrlParams = $userName;
+        $extraParams = $userName;
 
         return $this->showPageAction($page->getId(), $extraParams, $currentpage, $totalpageitems, $linkUrlParams);
     }
@@ -223,6 +243,30 @@ class DefaultController extends Controller {
                 $totalPages = $pageList['totalPages'];
 
                 $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'filterForm' => $filterForm->createView(), 'mobile' => $serveMobile));
+                break;
+
+            case 'user_profile':
+                // Get the logged user
+                $logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
+                
+                // Get the details of the requested user
+                $userName = $extraParams;
+                $user_details_to_show = array(
+                    'page_username' => $userName,
+                    'logged_username' => '',
+                    'page_user' => $this->get('sonata_user.services.helpers')->getUserByUsername($userName)
+                );
+                
+                if (!is_object($logged_user) || !$logged_user instanceof UserInterface) {
+                    // Public profile
+                }
+                else{
+                    // Private profile
+                    $user_details_to_show['logged_username'] = $logged_user->getUsername();
+                }
+
+                // Render user profile page type
+                $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'mobile' => $serveMobile, 'user_details_to_show' => $user_details_to_show));
                 break;
 
             case 'homepage':
