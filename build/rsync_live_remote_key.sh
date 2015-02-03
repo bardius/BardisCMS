@@ -1,7 +1,7 @@
-# This script will use rsync to 
-# Enable maintenance mode 
-# copy the files for the Jenkins job workspace to the provided target server:directory, 
-# copy the asset files for the Jenkins job workspace to the provided target server:directory, 
+# This script will use rsync to
+# Enable maintenance mode
+# copy the files for the Jenkins job workspace to the provided target server:directory,
+# copy the asset files for the Jenkins job workspace to the provided target server:directory,
 # excluding the files listed in exclude.txt (regular expression list)
 # setting proper file owner and permissions
 # clearing the Symfony2 cache
@@ -25,12 +25,12 @@ sudo -H -u $5 bash -c "sudo mv $dirRoot/$2web/.index.html $dirRoot/$2web/index.h
 echo /usr/bin/ssh $5@$3 "sudo mv $4/web/.index.html $4/web/index.html"
 sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo mv $4/web/.index.html $4/web/index.html'"
 
-echo -e "\n\n\e[0;34m********** Start Synchronising files with Rsync **********\e[0m" 
-echo /usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude-live.txt --stats $dirRoot/$2 -e \"/usr/bin/ssh\" --rsync-path=\"sudo /usr/bin/rsync\" $5@$3:$4 
+echo -e "\n\n\e[0;34m********** Start Synchronising files with Rsync **********\e[0m"
+echo /usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude-live.txt --stats $dirRoot/$2 -e \"/usr/bin/ssh\" --rsync-path=\"sudo /usr/bin/rsync\" $5@$3:$4
 sudo -H -u $5 bash -c "/usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude-live.txt --stats $dirRoot/$2 -e '/usr/bin/ssh' --rsync-path='sudo /usr/bin/rsync' $5@$3:$4"
 
-echo -e "\n\n\e[0;34m********** Start Synchronising files in user upload/assets folders with Rsync **********\e[0m" 
-echo /usr/bin/rsync -arivzt --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude.txt --stats $dirRoot/$2web/uploads/ -e \"/usr/bin/ssh\" --rsync-path=\"sudo /usr/bin/rsync\" $5@$3:$4/web/uploads 
+echo -e "\n\n\e[0;34m********** Start Synchronising files in user upload/assets folders with Rsync **********\e[0m"
+echo /usr/bin/rsync -arivzt --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude.txt --stats $dirRoot/$2web/uploads/ -e \"/usr/bin/ssh\" --rsync-path=\"sudo /usr/bin/rsync\" $5@$3:$4/web/uploads
 sudo -H -u $5 bash -c "/usr/bin/rsync -arivzt --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude.txt --stats $dirRoot/$2web/uploads/ -e '/usr/bin/ssh' --rsync-path='sudo /usr/bin/rsync' $5@$3:$4/web/uploads"
 
 echo -e "\n\n\e[0;34m********** Revert Maintenace file filename **********\e[0m"
@@ -50,16 +50,16 @@ echo /usr/bin/ssh $5@$3 "sudo find $4 -type f -print0 | sudo xargs -0 chmod 0644
 sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo find $4 -type f -print0 | sudo xargs -0 chmod 0644'"
 
 echo -e "\n\n\e[0;34m********** Set permissions to uploads folder **********\e[0m"
-echo /usr/bin/ssh $5@$3 "sudo chmod 0755 -R $4/web/uploads"
-sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo chmod 0755 -R $4/web/uploads'"
+echo /usr/bin/ssh $5@$3 "sudo chmod 0777 -R $4/web/uploads"
+sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo chmod 0777 -R $4/web/uploads'"
 
 echo -e "\n\n\e[0;34m********** Set permissions to cache folder **********\e[0m"
-echo /usr/bin/ssh $5@$3 "sudo chmod 0755 -R $4/app/cache"
-sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo chmod 0755 -R $4/app/cache'"
+echo /usr/bin/ssh $5@$3 "sudo chmod 0777 -R $4/app/cache"
+sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo chmod 0777 -R $4/app/cache'"
 
 echo -e "\n\n\e[0;34m********** Set permissions to logs folder **********\e[0m"
-echo /usr/bin/ssh $5@$3 "sudo chmod 0755 -R $4/app/logs"
-sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo chmod 0755 -R $4/app/logs'"
+echo /usr/bin/ssh $5@$3 "sudo chmod 0777 -R $4/app/logs"
+sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo chmod 0777 -R $4/app/logs'"
 
 echo -e "\n\n\e[0;34m********** Clear Cache **********\e[0m"
 echo /usr/bin/ssh $5@$3 "sudo php $3/app/console cache:clear --no-debug"
@@ -71,11 +71,6 @@ sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo php $3/app/console cache:clear -
 echo -e "\n\n\e[0;34m********** Generate optimized autoload **********\e[0m"
 echo /usr/bin/ssh $5@$3 "sudo $3/composer.phar dumpautoload -o"
 sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo $3/composer.phar dumpautoload -o'"
-
-# Purge cache if you use a CDN
-# echo -e "\n\n\e[0;34m********** Purge CDN Cache **********\e[0m"
-# echo php curl_exec(curl_init("https://www.cloudflare.com/api_json.html?a=fpurge_ts&tkn=TOKEN&email=your@email.com&z=yourdomain.com&v=1"));
-# php curl_exec(curl_init("https://www.cloudflare.com/api_json.html?a=fpurge_ts&tkn=TOKEN&email=your@email.com&z=yourdomain.com&v=1"));
 
 echo -e "\n\n\e[0;34m********** Disable maintenance mode **********\e[0m"
 echo /usr/bin/ssh $5@$3 "sudo mv $4/web/index.html $4/web/.index.html"
