@@ -11,10 +11,10 @@
 
 ![](http://www.bardis.info/bardisCMS.png)
 
-Symfony2 (v2.6.3) distribution with integrated Zurb Foundation 5 (v5.5)
+Symfony2 (v2.6.4) distribution with integrated Zurb Foundation 5 (v5.5)
 ============================================================================
 
-BardisCMS is a Symfony2 (v2.6.3) distribution with integrated Zurb Foundation 5 Framewok.
+BardisCMS is a Symfony2 (v2.6.4) distribution with integrated Zurb Foundation 5 Framewok.
 
 Travis CI, Bower and Grunt with custom builds are included for better workflow on front end.
 
@@ -30,7 +30,7 @@ You can find the documentation for Zurb Foundation 5 here http://foundation.zurb
 
 Requirements
 
-* [PHP](http://www.php.net) 5.3 or later
+* [PHP](http://www.php.net) 5.4 or later
 * Installation via [Composer](http://getcomposer.org/)
 
 
@@ -52,11 +52,13 @@ The fastest way to get everything running is (must have nodejs, ruby and sass ge
 	5. alter your app/config/parameters.yml with your db and environment details
 	6. composer.phar install -o
 	7. npm install -g bower (if you have never installed in past)
-	8. npm install -g grunt-cli (if you have never installed in past)
-	9. npm install
-	10. grunt first_deployment
-	11. setup your vhost
-	12. login to the admin (/admin username:admin, pass: admin)
+	8. npm install grunt
+	9. npm install -g grunt-cli
+	10. npm install
+	11. bower install
+	12. grunt first_deployment
+	13. setup your vhost
+	14. login to the admin (/admin username:admin, pass: admin)
 
 
 Manual Deployment / Local Installation

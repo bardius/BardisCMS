@@ -28,9 +28,9 @@ class LoadSettings {
 
         if (empty($settings)) {
             return null;
-        } else {
-            return $settings;
         }
+
+        return $settings;
     }
 
 }

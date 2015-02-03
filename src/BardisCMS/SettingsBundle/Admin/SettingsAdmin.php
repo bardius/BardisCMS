@@ -26,6 +26,7 @@ class SettingsAdmin extends Admin {
                 ->add('metaKeywords', null, array('attr' => array(), 'label' => 'Default Meta Keywords', 'required' => false))
                 ->add('fromTitle', null, array('attr' => array(), 'label' => 'Meta Description Owner', 'required' => false))
                 ->add('websiteAuthor', null, array('attr' => array(), 'label' => 'Website Default Author', 'required' => false))
+                ->add('websiteTwitter', null, array('attr' => array(), 'label' => 'Website Twitter User', 'required' => false))
                 ->add('useWebsiteAuthor', null, array('attr' => array(), 'label' => 'Use Default Author', 'required' => false))
                 ->add('googleAnalyticsId', null, array('attr' => array(), 'label' => 'Google Analytics Id', 'required' => false))
                 ->add('enableGoogleAnalytics', null, array('attr' => array(), 'label' => 'Enable Google Analytics', 'required' => false))
@@ -61,7 +62,7 @@ class SettingsAdmin extends Admin {
                             'template' => 'SettingsBundle:Admin:edit.html.twig'
                         )
                     )
-                        )
+                )
         );
     }
 

@@ -2,7 +2,7 @@
     "name": "bardis-cms-symfony2",
     "title": "Symfony2 BardisCMS & Foundation 5",
     "description": "Foundation 5 front end framework for Symfony2 BardisCMS",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "homepage": "",
     "authors": [{
             "name": "George Bardis",
@@ -27,13 +27,14 @@
         "grunt-contrib-watch": "~0.6.1",
         "grunt-contrib-uglify": "~0.7.0",
         "grunt-csso": "~0.7.0",
-        "load-grunt-tasks": "~2.0.0",
+        "load-grunt-tasks": "~3.1.0",
         "grunt-jscs": "~1.2.0",
-        "grunt-autoprefixer": "~2.1.0",
-        "grunt-symfony2": "~0.4.0",
+        "grunt-autoprefixer": "~2.2.0",
         "grunt-composer": "~0.4.1",
         "grunt-bower-task": "~0.4.0",
-        "grunt-csssplit": "~0.2.1"
+        "grunt-csssplit": "~0.2.2",
+        "grunt-combine-mq": "~0.6.0",
+        "grunt-symfony2": "~0.4.0"
     },
     "keywords": [],
     "scripts": {

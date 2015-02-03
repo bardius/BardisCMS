@@ -50,6 +50,11 @@ class Settings {
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+    protected $websiteTwitter = null;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     protected $websiteAuthor = null;
 
     /**
@@ -100,7 +105,7 @@ class Settings {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId() {
         return $this->id;
@@ -121,7 +126,7 @@ class Settings {
     /**
      * Get metaDescription
      *
-     * @return string 
+     * @return string
      */
     public function getMetaDescription() {
         return $this->metaDescription;
@@ -142,7 +147,7 @@ class Settings {
     /**
      * Get metaKeywords
      *
-     * @return string 
+     * @return string
      */
     public function getMetaKeywords() {
         return $this->metaKeywords;
@@ -163,7 +168,7 @@ class Settings {
     /**
      * Get fromTitle
      *
-     * @return string 
+     * @return string
      */
     public function getFromTitle() {
         return $this->fromTitle;
@@ -184,10 +189,31 @@ class Settings {
     /**
      * Get websiteTitle
      *
-     * @return string 
+     * @return string
      */
     public function getWebsiteTitle() {
         return $this->websiteTitle;
+    }
+
+    /**
+     * Set websiteTwitter
+     *
+     * @param string $websiteTwitter
+     * @return Settings
+     */
+    public function setWebsiteTwitter($websiteTwitter) {
+        $this->websiteTwitter = $websiteTwitter;
+
+        return $this;
+    }
+
+    /**
+     * Get websiteTwitter
+     *
+     * @return string
+     */
+    public function getWebsiteTwitter() {
+        return $this->websiteTwitter;
     }
 
     /**
@@ -205,7 +231,7 @@ class Settings {
     /**
      * Get websiteAuthor
      *
-     * @return string 
+     * @return string
      */
     public function getWebsiteAuthor() {
         return $this->websiteAuthor;
@@ -226,7 +252,7 @@ class Settings {
     /**
      * Get useWebsiteAuthor
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getUseWebsiteAuthor() {
         return $this->useWebsiteAuthor;
@@ -247,7 +273,7 @@ class Settings {
     /**
      * Get enableGoogleAnalytics
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getEnableGoogleAnalytics() {
         return $this->enableGoogleAnalytics;
@@ -268,7 +294,7 @@ class Settings {
     /**
      * Get googleAnalyticsId
      *
-     * @return string 
+     * @return string
      */
     public function getGoogleAnalyticsId() {
         return $this->googleAnalyticsId;
@@ -289,7 +315,7 @@ class Settings {
     /**
      * Get emailSender
      *
-     * @return string 
+     * @return string
      */
     public function getEmailSender() {
         return $this->emailSender;
@@ -310,7 +336,7 @@ class Settings {
     /**
      * Get emailRecepient
      *
-     * @return string 
+     * @return string
      */
     public function getEmailRecepient() {
         return $this->emailRecepient;
@@ -331,7 +357,7 @@ class Settings {
     /**
      * Get itemsPerPage
      *
-     * @return string 
+     * @return string
      */
     public function getItemsPerPage() {
         return $this->itemsPerPage;
@@ -352,7 +378,7 @@ class Settings {
     /**
      * Get blogItemsPerPage
      *
-     * @return string 
+     * @return string
      */
     public function getBlogItemsPerPage() {
         return $this->blogItemsPerPage;
@@ -373,7 +399,7 @@ class Settings {
     /**
      * Get activateSettings
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActivateSettings() {
         return $this->activateSettings;
@@ -394,7 +420,7 @@ class Settings {
     /**
      * Get activateSettings
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActivateHttpCache() {
         return $this->activateHttpCache;
