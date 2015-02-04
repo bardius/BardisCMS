@@ -23,13 +23,16 @@ var IASCallbacks = function () {
     var context = args[0],
         deferred = args[1],
         callbackArguments = args[2];
+
     this.isFiring = true;
 
     for (var i = 0, l = this.list.length; i < l; i++) {
-      if (false === this.list[i].fn.apply(context, callbackArguments)) {
-        deferred.reject();
+      if (this.list[i] != undefined) {
+        if (false === this.list[i].fn.apply(context, callbackArguments)) {
+          deferred.reject();
 
-        break;
+          break;
+        }
       }
     }
 
@@ -126,7 +129,7 @@ IASCallbacks.prototype = {
    * @returns {object|void}
    */
   fireWith: function (context, args) {
-    var deferred = $.Deferred();
+    var deferred = jQuery.Deferred();
 
     if (this.isDisabled) {
       return deferred.reject();

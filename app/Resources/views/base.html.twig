@@ -12,9 +12,6 @@
         <link rel="alternate" hreflang="en" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
         <link rel="canonical" href="{{ url(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" />
 
-        <link rel='canonical' href='{{ app.request.getHttpHost() }}{{ app.request.getRequestURI() }}' />
-        <link rel="alternate" hreflang="en" href="{{ app.request.getHttpHost() }}{{ app.request.getRequestURI() }}" />
-
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta name="apple-mobile-web-app-title" content="">
@@ -38,13 +35,13 @@
         <link rel="icon" type="image/png" href="{{ app.request.uriForPath('/images/favicons/favicon-32x32.png') }}" sizes="32x32">
 
         <!-- Styles -->
-        {% stylesheets output="css/deployed/compiled_bundle_1.css" 'css/styles_bundle_1.css' %}
+        {% stylesheets 'css/styles_bundle_1.css' output="css/deployed/styles_bundle_1.css" %}
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
         {% block stylesheets %}{% endblock %}
 
-        {% javascripts filter="minifier_js" output='js/deployed/modernizr.min.js' 'js/release/modernizr.min.js' %}
+        {% javascripts 'js/release/modernizr.min.js' filter="minifier_js" output="js/deployed/modernizr.min.js" %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
 
@@ -59,15 +56,14 @@
         <!-- Twitter Cards -->
         <meta name="twitter:site" content="@{{ page.twitterUser }}" />
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="{% block OgTitle %}Page Title{% endblock %} | {% block OgSiteName %}Site Title{% endblock %}" />
-        <meta name="twitter:description" content="{% block metaOgDescription %}Page Description{% endblock %}" />
-        <meta name="twitter:image:src" content="{% block OgImage %}{{ app.request.uriForPath('/images/favicons/logo_media.jpg') }}{% endblock %}" />
+        <meta name="twitter:title" content="{% block MetaTwitterTitle %}Page Title | Site Title{% endblock %}" />
+        <meta name="twitter:description" content="{% block MetaTwitterDescription %}Page Description{% endblock %}" />
+        <meta name="twitter:image:src" content="{% block MetaTwitterImage %}{{ app.request.uriForPath('/images/favicons/logo_media.jpg') }}{% endblock %}" />
 
         <!-- Facebook Opengraph -->
-        <meta property="og:title" content="{% block OgTitle %}Page Title{% endblock %} | {% block OgSiteName %}Site Title{% endblock %}" />
+        <meta property="og:title" content="{% block OgTitle %}Page Title | Site Title{% endblock %}" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="{% block OgSiteName %}Site Title{% endblock %}">
-        <meta property="og:url" content="{{ page.siteURL }}" />
         <meta property="og:image" content="{% block OgImage %}{{ app.request.uriForPath('/images/favicons/logo_media.jpg') }}{% endblock %}" />
         <meta property="og:description" content="{% block metaOgDescription %}Page Description{% endblock %}" />
 
@@ -112,7 +108,7 @@
             </div>
         </div>
 
-        {% javascripts output='js/deployed/scripts.min.js' 'js/release/scripts.min.js' %}
+        {% javascripts 'js/release/scripts.min.js' output="js/deployed/scripts.min.js" %}
 
         <script type="text/javascript" src="{{ asset_url }}"></script>
 

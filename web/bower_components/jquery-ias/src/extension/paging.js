@@ -111,11 +111,24 @@ IASPagingExtension.prototype.initialize = function(ias) {
  */
 IASPagingExtension.prototype.bind = function(ias) {
   try {
-    ias.on('prev', $.proxy(this.onPrev, this), this.priority);
+    ias.on('prev', jQuery.proxy(this.onPrev, this), this.priority);
   } catch (exception) {}
 
-  ias.on('next', $.proxy(this.onNext, this), this.priority);
-  ias.on('scroll', $.proxy(this.onScroll, this), this.priority);
+  ias.on('next', jQuery.proxy(this.onNext, this), this.priority);
+  ias.on('scroll', jQuery.proxy(this.onScroll, this), this.priority);
+};
+
+/**
+ * @public
+ * @param {object} ias
+ */
+IASPagingExtension.prototype.unbind = function(ias) {
+  try {
+    ias.off('prev', this.onPrev);
+  } catch (exception) {}
+
+  ias.off('next', this.onNext);
+  ias.off('scroll', this.onScroll);
 };
 
 /**

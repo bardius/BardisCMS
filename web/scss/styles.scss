@@ -2,20 +2,20 @@
    Foundation Styles Overrides
 ----------------------------------------- */
 
-header, nav, article, footer, address, 
+header, nav, article, footer, address,
 section, aside, hgroup, figure{
-	display: block;
+    display: block;
 }
 
-body, div, dl, dt, dd, ul, ol, li, pre, 
+body, div, dl, dt, dd, ul, ol, li, pre,
 form, fieldset, p, blockquote, th, td {
 }
 
 h1, h2, h3, h4, h5, h6{
 }
-  
-iframe { 
-    left: 0; 
+
+iframe {
+    left: 0;
     border: none!important;
 }
 
@@ -25,38 +25,38 @@ a{
 a:hover, a:focus{
 }
 
-.inv{ 
-	font-size: 1px; 
-	overflow: hidden;
-	text-indent: -100%;
-	display: inline-block;
+.inv{
+    font-size: 1px;
+    overflow: hidden;
+    text-indent: -100%;
+    display: inline-block;
 }
 
 .hidden{
-	display: none!important;
-	visibility: hidden!important;
+    display: none!important;
+    visibility: hidden!important;
 }
 
-img{ 
+img{
     border: none;
 }
-    
-strong { 
+
+strong {
     font-size: inherit;
     line-height: inherit;
     font-weight: bold;
 }
-    
-table { 
-    font-size: inherit; 
+
+table {
+    font-size: inherit;
     float: left;
     border-spacing: 0!important;
     border-collapse: collapse!important;
 }
-    
-td{ 
+
+td{
     text-align: center;
-	padding: 5px;
+    padding: 5px;
 }
 
 .clearBoth{
@@ -64,7 +64,7 @@ td{
 }
 
 [class*="column"] + [class*="column"]:last-child {
-	float: left;
+    float: left;
 }
 
 .hidden{
@@ -76,13 +76,13 @@ td{
   -----------------------------------------*/
 
 body{
-	min-height: 100%;
-	width: 100%;
+    min-height: 100%;
+    width: 100%;
 }
 
 .superWrapper{
     width: 100%;
-	min-height: 100%;
+    min-height: 100%;
     min-width: 320px;
 }
 
@@ -93,7 +93,7 @@ body{
 }
 
 .pageContents{
-	min-height: 300px;
+    min-height: 300px;
 }
 
 
@@ -106,33 +106,33 @@ header{
     position: relative;
     background-color: #CCC;
 
-	#logo{
-		position: relative;
-		z-index: 98;
+    #logo{
+        position: relative;
+        z-index: 98;
 
-		.logo{
-			float: left;
-			display: block;
-			margin: 0;    
-		}
+        .logo{
+            float: left;
+            display: block;
+            margin: 0;
+        }
 
-		a{
-			display: block;
-			width: 100%;
-			-webkit-animation-duration: 1s!important;
-			animation-duration: 1s!important;
+        a{
+            display: block;
+            width: 100%;
+            -webkit-animation-duration: 1s!important;
+            animation-duration: 1s!important;
 
-			&:hover{
-				-webkit-animation-name: pulse;
-				animation-name: pulse;
-			}
+            &:hover{
+                -webkit-animation-name: pulse;
+                animation-name: pulse;
+            }
 
-			img{
-				display: block;
-				max-width: 100%;
-			}
-		}
-	}
+            img{
+                display: block;
+                max-width: 100%;
+            }
+        }
+    }
 }
 
 /*-------------------------------------------
@@ -140,94 +140,94 @@ header{
   -----------------------------------------*/
 
 .top-bar{
-	margin:10px 0;
+    margin:10px 0;
 }
 
 /*-------------------------------------------
     Orbit Slideshow
   -----------------------------------------*/
 
-.bannerSlide{	
-	z-index: 1;
-	
-	&.active{
-		z-index: 2;
-	}
+.bannerSlide{
+    z-index: 1;
+
+    &.active{
+        z-index: 2;
+    }
 }
 
 /*-------------------------------------------
     Homepage Page styles
   -----------------------------------------*/
 
-.homepageItem{	
-	margin: 10px 0;
-	
-		img{
-			width: 100%;
-		}
+.homepageItem{
+    margin: 10px 0;
+
+    img{
+        width: 100%;
+    }
 }
- 
+
 /*-------------------------------------------
     Generic Page styles
-  -----------------------------------------*/ 
+  -----------------------------------------*/
 
 .readMoreImage {
-	width: 100%;
+    width: 100%;
 }
 
 /* -----------------------------------------
-	Pagination
+        Pagination
 ----------------------------------------- */
 
 .paginationHolder {
-	margin-top: rem-calc(30);
-	
-	ul{
-		text-align: center;
-		
-		li{
-			float: none;
-			display: inline-block;
-			height: auto;
-			margin: 4px 0;
-			
-			a {
-				color: $white-color;
-				font-size: rem-calc(12);
-				letter-spacing: 1px;
-				line-height: 1.4;
-				font-family: $alt-font-family;
-				background: none #ccc;
-				
-				&:hover, &:focus {
-					color: $white-color;
-					background: none $primary-color;				
-				}
-			}		
-		
-			&.current{
+    margin-top: rem-calc(30);
 
-				a{
-					color: $white-color;
-					background: none $dark-gray-color;
-					font-weight: normal;
+    ul{
+        text-align: center;
 
-					&:hover, &:focus {
-						color: $white-color;
-						background: none $dark-gray-color;				
-					}
-				}
-			}
-		}
-	}
+        li{
+            float: none;
+            display: inline-block;
+            height: auto;
+            margin: 4px 0;
+
+            a {
+                color: $white-color;
+                font-size: rem-calc(12);
+                letter-spacing: 1px;
+                line-height: 1.4;
+                font-family: $alt-font-family;
+                background: none #ccc;
+
+                &:hover, &:focus {
+                    color: $white-color;
+                    background: none $primary-color;
+                }
+            }
+
+            &.current{
+
+                a{
+                    color: $white-color;
+                    background: none $dark-gray-color;
+                    font-weight: normal;
+
+                    &:hover, &:focus {
+                        color: $white-color;
+                        background: none $dark-gray-color;
+                    }
+                }
+            }
+        }
+    }
 }
- 
+
 /* -----------------------------------------
    Filter form styles
 ----------------------------------------- */
 
 #filterResultsFormHolder{
-    margin-top: 28px;     
+    margin-top: 28px;
     position: relative;
     padding-bottom: 68px;
 }
@@ -297,9 +297,9 @@ header{
 
 #filterResultsForm #filterResultsBtn:hover{
     cursor: pointer;
-    background: url(../images/site_assets/indexSlideArrow.png) no-repeat 80% 50% #011A48;    
+    background: url(../images/site_assets/indexSlideArrow.png) no-repeat 80% 50% #011A48;
 }
-    
+
 #filterResultsForm .checkAllBox label{
     font-size: 0.9285em;
     font-size: 0.9285rem;
@@ -308,7 +308,7 @@ header{
     text-transform: none;
     color: #052763;
     cursor: pointer;
-    margin-bottom:0;    
+    margin-bottom:0;
 }
 
 .customCheckBox input{
@@ -320,7 +320,7 @@ header{
     float: left;
     clear: left;
 }
- 
+
 .customCheckBox input + label {
     padding: 3px 3px 3px 22px;
     padding: 3px 3px 3px 1.6rem;
@@ -337,7 +337,7 @@ header{
     float: left;
     clear: none;
 }
- 
+
 .customCheckBox input + label:after {
     content: '\00a0';
     font-size: 14px;
@@ -365,50 +365,50 @@ header{
 }
 
 .customCheckBox input:checked + label:after {
-	content: '\2714';
-	color: #FFF;
-	box-shadow: 0 1px 2px rgba(0,0,0,0), inset 0px -15px 10px -12px rgba(0,0,0,0), inset 15px 10px -12px rgba(13,59,131,0);
-	border: none;
-	background-color: #052763;
+    content: '\2714';
+    color: #FFF;
+    box-shadow: 0 1px 2px rgba(0,0,0,0), inset 0px -15px 10px -12px rgba(0,0,0,0), inset 15px 10px -12px rgba(13,59,131,0);
+    border: none;
+    background-color: #052763;
 }
 
 .filterResultsFormBtns {
-	
-	.customCheckBox {
-		
-		input{
-			display: none;
-		}
-		
-		input + label {
-			display: inline-block;
-			position: relative;
-			line-height: 1.2;
-			font-size: rem-calc(24);
-			cursor: pointer;
-			margin: 0;
-			color: $secondary-color;
-			text-transform: none;
-			
-			transition: all 300ms ease-in-out;	
-			
-			&:after {
-				content: '\00a0';
-				font-size: rem-calc(20);
-				color: $dark-gray-color;
-				line-height: 1.2;
-				padding-left: 12px;
-			}
-			
-			&:hover {
-				color: $dark-gray-color;
-				
-				&:after {
-					content: '\2716';
-				}
-			}
-		}
-	}
+
+    .customCheckBox {
+
+        input{
+            display: none;
+        }
+
+        input + label {
+            display: inline-block;
+            position: relative;
+            line-height: 1.2;
+            font-size: rem-calc(24);
+            cursor: pointer;
+            margin: 0;
+            color: $secondary-color;
+            text-transform: none;
+
+            transition: all 300ms ease-in-out;
+
+            &:after {
+                content: '\00a0';
+                font-size: rem-calc(20);
+                color: $dark-gray-color;
+                line-height: 1.2;
+                padding-left: 12px;
+            }
+
+            &:hover {
+                color: $dark-gray-color;
+
+                &:after {
+                    content: '\2716';
+                }
+            }
+        }
+    }
 }
 
 /* -----------------------------------------
@@ -431,7 +431,7 @@ header{
    Google Map
 ----------------------------------------- */
 
-#map_canvas { 
+#map_canvas {
     width: 95%;
     height: 100%;
     float: left;
@@ -442,86 +442,88 @@ header{
 ----------------------------------------- */
 
 footer{
-	background: #CCC;
-	
-	&.row{
-		margin-top: rem-calc(30);
-	}	
+    background: #CCC;
+
+    &.row{
+        margin-top: rem-calc(30);
+    }
+
+    .smo-menu-item{
+        display: block;
+        width: 24px;
+        height: 24px;
+        background: #000;
+    }
 }
 
 /* ---------------------------------------------------
    Media Queries for mobile / tablets responsivenes
 ----------------------------------------------------- */
 
-@media only screen and (device-width: 320px) and (orientation:portrait){
-    
-    html {
-        font-size: 10px!important;
-    }
-}
+@media #{$small-only} {
 
-@media only screen and (device-width: 320px) and (orientation:landscape){
-    
     html {
         font-size: 11px!important;
     }
-   
+}
+
+@media #{$medium-down} {
+
+    html {
+        font-size: 13px!important;
+    }
+}
+
+@media #{$medium-only} {
+
+}
+
+@media #{$medium-up} {
+
+}
+
+@media #{$large-up} {
+
+}
+
+@media only screen and (device-width: 320px) and (orientation:portrait){
+
+}
+
+@media only screen and (device-width: 320px) and (orientation:landscape){
+
 }
 
 @media only screen and (max-width: 380px){
-    
-    html {
-        font-size: 10px!important;
-    }
+
 }
 
 @media only screen and (max-width: 498px){
-    
-    html {
-        font-size: 10px!important;
-    }
+
 }
 
 @media only screen and (max-width: 766px) and (min-width: 499px){
-    
-    html {
-        font-size: 12px!important;
-    }
+
 }
 
-
 @media only screen and (max-width: 767px){
-    
-    html {
-        font-size: 13px!important;
-    }
+
 }
 
 @media only screen and (device-width:768px) and (orientation:portrait){
-    
-    html {
-        font-size: 12px!important;
-    }
+
 }
 
 @media only screen and (device-width:768px) and (orientation:landscape){
-    
-    html {
-        font-size: 13px!important;
-    }
+
 }
 
 @media only screen and (max-width: 959px) and (min-width: 768px){
-    
-    html {
-        font-size: 13px!important;
-    }
+
 }
 
 @media only screen and (min-width: 960px) {
-    html {
-        font-size: 14px!important;
-    }
+
 }
 
 @media print {

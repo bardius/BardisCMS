@@ -1,27 +1,45 @@
-(function (CMS, $) {
+/*
+ Project: BardisCMS
+ Authors: George Bardis
+ */
+
+// Create a closure to maintain scope of the '$' and CMS
+;
+(function (CMS, $, window, document, undefined) {
+
+    'use strict';
 
     $(function () {
-        CMS.foundationConfig.init();
+        CMS.Config.init();
     });
-    // END DOC READY
 
-    /* Optional triggers
+    CMS.Config = {
+        $body: $(document.body),
+        init: function () {
 
-     // WINDOW.LOAD
-     $(window).load(function() {
+            CMS.foundationConfig.init();
+            CMS.UI.init();
 
-     });
+            CMS.windowResize.init();
 
-     // WINDOW.RESIZE
-     $(window).resize(function() {
+            if (CMS.Supports.touch) {
+                CMS.touch.init();
+            }
 
-     });
-     */
+            if (CMS.environment.isMobile()) {
+                CMS.mobileSpecific.init();
+            }
+
+            $(window).load(function () {
+
+            });
+        }
+    };
 
     CMS.foundationConfig = {
         init: function () {
 
-            // Start the foundation Javascript Plugins
+            // Start the foundation Plugins Configuration
             $(document).foundation({
                 reveal: {
                     animation: 'fadeAndPop',
@@ -36,7 +54,7 @@
                     pause_on_hover: true,
                     resume_on_mouseout: false,
                     animation_speed: 700,
-                    stack_on_small: true,
+                    stack_on_small: false,
                     navigation_arrows: true,
                     slide_number: false,
                     bullets: true,
@@ -44,17 +62,33 @@
                     variable_height: false
                 },
                 dropdown: {
+                },
+                offcanvas: {
+                    open_method: 'move', // Sets method in which offcanvas opens, can also be 'overlap'
+                    close_on_click: true
                 }
             });
+        }
+    };
 
+    CMS.UI = {
+        init: function () {
+
+            // Start the AJAX based forms
+            CMS.Forms.ajaxSubmittedForm('#contactform', '#contactFormBtn');
+            CMS.Forms.ajaxSubmittedForm('#add_comment_form', '#submitCommentBtn');
+
+            // Setup the filters
+            CMS.Forms.setupFilters();
+        }
+    };
+
+    CMS.Forms = {
+        setupFilters: function () {
             $('#resetFilters').change(function () {
                 var checkboxes = $(this).closest('form').find(':checkbox').not(this);
                 checkboxes.removeAttr('checked');
             });
-
-            // Start the AJAX based contact form
-            CMS.foundationConfig.ajaxSubmittedForm('#contactform', '#contactFormBtn');
-            CMS.foundationConfig.ajaxSubmittedForm('#add_comment_form', '#submitCommentBtn');
         },
         ajaxSubmittedForm: function (formId, formSubmitBtnId) {
 
@@ -85,11 +119,8 @@
 
                                 var errorArray = responce.errors;
 
+                                // find type of input, return validation
                                 $.each(errorArray, function (key, val) {
-                                    console.log(key);
-                                    console.log(formId + '_' + key);
-                                    console.log(val[0]);
-                                    // find type of input, return validation
                                     $(formId + '_' + key).addClass('error');
                                     $(formId + '_' + key).after($('<small class="formError error">' + val[0] + '</small>').hide());
                                 });
@@ -103,16 +134,26 @@
                 });
             }
         }
-
-        /*
-         * Intercharge custom query sample
-         *
-         $(document).foundation('interchange', {
-         named_queries : {
-         my_custom_query_for_max_200 : 'only screen and (max-width: 200px)'
-         }
-         });
-         */
     };
 
-})(window.CMS = window.CMS || {}, jQuery);
+    CMS.touch = {
+        init: function () {
+
+        }
+    };
+
+    CMS.mobileSpecific = {
+        init: function () {
+
+        }
+    };
+
+    CMS.windowResize = {
+        init: function () {
+            $(window).smartresize(function () {
+                notifications.sendNotification(notifications.WINDOW_RESIZE);
+            });
+        }
+    };
+
+})(window.CMS = window.CMS || {}, jQuery, window, document);

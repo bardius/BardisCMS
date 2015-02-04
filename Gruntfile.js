@@ -30,27 +30,27 @@ module.exports = function (grunt) {
                 modernizrReleaseFile: 'modernizr.min.js',
                 // <%=config.js.scriptFileList%>
                 scriptFileList: [
-                    'public_html/bower_components/jquery/dist/jquery.min.js',
+                    'web/bower_components/jquery/jquery.min.js',
                     // Include only used Foundation 5 scripts if needed instead of the minified full framework ones
-                    //'public_html/bower_components/foundation/js/foundation.js',
-                    //'public_html/bower_components/foundation/js/foundation/*.js',
+                    //'web/bower_components/foundation/js/foundation.js',
+                    //'web/bower_components/foundation/js/foundation/*.js',
 
                     // Include all Foundation 5 scripts
                     'web/bower_components/foundation/js/foundation.min.js',
-                    'public_html/js/helpers/environment.js',
-                    'public_html/js/helpers/supports.js',
-                    'public_html/js/helpers/console.js',
-                    'public_html/js/helpers/limit.js',
-                    'public_html/js/helpers/notification-dispatcher.js',
-                    'public_html/js/helpers/smartResize.js',
-                    'public_html/js/libs/mobile/normalized.addressbar.js',
+                    'web/js/helpers/environment.js',
+                    'web/js/helpers/supports.js',
+                    'web/js/helpers/console.js',
+                    'web/js/helpers/limit.js',
+                    'web/js/helpers/notification-dispatcher.js',
+                    'web/js/helpers/smartResize.js',
+                    'web/js/libs/mobile/normalized.addressbar.js',
                     //'web/bower_components/jquery-ias/src/jquery-ias.js',
                     //'web/bower_components/jquery-ias/src/callbacks.js',
                     //'web/bower_components/jquery-ias/src/extension/spinner.js',
                     //'web/bower_components/jquery-ias/src/extension/noneleft.js',
                     'web/js/scripts.js'
                 ],
-                scriptsHead: [
+                modernizrScriptFile: [
                     'web/bower_components/modernizr/modernizr.js'
                 ]
             },

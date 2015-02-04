@@ -9,7 +9,7 @@
  */
 
 var IASSpinnerExtension = function(options) {
-  options = $.extend({}, this.defaults, options);
+  options = jQuery.extend({}, this.defaults, options);
 
   this.ias = null;
   this.uid = new Date().getTime();
@@ -51,9 +51,9 @@ var IASSpinnerExtension = function(options) {
    * @returns {jQuery|boolean}
    */
   this.getSpinner = function() {
-    var $spinner = $('#ias_spinner_' + this.uid);
+    var $spinner = jQuery('#ias_spinner_' + this.uid);
 
-    if ($spinner.size() > 0) {
+    if ($spinner.length > 0) {
       return $spinner;
     }
 
@@ -64,16 +64,16 @@ var IASSpinnerExtension = function(options) {
    * @returns {boolean}
    */
   this.hasSpinner = function() {
-    var $spinner = $('#ias_spinner_' + this.uid);
+    var $spinner = jQuery('#ias_spinner_' + this.uid);
 
-    return ($spinner.size() > 0);
+    return ($spinner.length > 0);
   };
 
   /**
    * @returns {jQuery}
    */
   this.createSpinner = function() {
-    var $spinner = $(this.html).attr('id', 'ias_spinner_' + this.uid);
+    var $spinner = jQuery(this.html).attr('id', 'ias_spinner_' + this.uid);
 
     $spinner.hide();
 
@@ -89,13 +89,25 @@ var IASSpinnerExtension = function(options) {
 IASSpinnerExtension.prototype.bind = function(ias) {
   this.ias = ias;
 
-  ias.on('next', $.proxy(this.showSpinner, this));
+  ias.on('next', jQuery.proxy(this.showSpinner, this));
+  ias.on('render', jQuery.proxy(this.removeSpinner, this));
 
   try {
-    ias.on('prev', $.proxy(this.showSpinnerBefore, this));
+    ias.on('prev', jQuery.proxy(this.showSpinnerBefore, this));
   } catch (exception) {}
+};
 
-  ias.on('render', $.proxy(this.removeSpinner, this));
+/**
+ * @public
+ * @param {object} ias
+ */
+IASSpinnerExtension.prototype.unbind = function(ias) {
+  ias.off('next', this.showSpinner);
+  ias.off('render', this.removeSpinner);
+
+  try {
+    ias.off('prev', this.showSpinnerBefore);
+  } catch (exception) {}
 };
 
 /**

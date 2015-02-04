@@ -1,16 +1,34 @@
 <div class="large-12 small-12 columns smoIcons">
-    <ul>
+    <ul class="smo-share inline-list">
         <li>
-            <a class="smoIcon fbIcon" href="http://www.facebook.com/sharer.php?u={{ app.request.uri|url_encode() }}&amp;t={{ page.title|url_encode() }}%20-%20Maynard%20Malone" title="Share This on Facebook" target="_blank"></a>
+            <a class="smo-menu-item fbIcon" href="https://www.facebook.com/sharer.php?m2w&amp;s=100&amp;p[title]={{ page.title|url_encode() }}%20-%20BardisCMS%20BardisCMS&amp;p[summary]=&amp;p[url]={{ app.request.uri|url_encode() }}&amp;p[images][0]=" title="Share on Facebook" rel="external" target="_blank">
+                <span class="inv">Share on Facebook</span>
+            </a>
         </li>
         <li>
-            <a class="smoIcon tweetIcon" href="http://twitter.com/share?text={{ page.title|url_encode() }}%20-%20Maynard%20Malone&amp;url={{ app.request.uri|url_encode() }}" title="Tweet This" target="_blank"></a>
+            <a class="smo-menu-item tweetIcon" href="https://twitter.com/share?text={{ page.title|url_encode() }}%20-%20BardisCMS%20BardisCMS&amp;url={{ app.request.uri|url_encode() }}" title="Share on Twitter" rel="external" target="_blank">
+                <span class="inv">Share on Twitter</span>
+            </a>
         </li>
         <li>
-            <a class="smoIcon linkedinIcon" href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ app.request.uri|url_encode() }}&amp;title={{ page.title|url_encode() }}%20-%20Maynard%20Malone&amp;source={{ app.request.uri|url_encode() }}" title="Share This on LinkedIn" target="_blank"></a>
+            <a class="smo-menu-item pinterestIcon" href="//pinterest.com/pin/create/button/?url={{ app.request.uri|url_encode() }}&amp;description={{ page.title|url_encode() }}%20-%20BardisCMS%20BardisCMS&amp;media={{ app.request.uri|url_encode() }}" title="Share on Pinterest" rel="external" target="_blank">
+                <span class="inv">Share on Pinterest</span>
+            </a>
         </li>
         <li>
-            <a class="smoIcon gplusIcon" href="https://plus.google.com/share?url={{ app.request.uri|url_encode() }}" title="Share This on Google+" target="_blank"></a>
+            <a class="smo-menu-item linkedinIcon" href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ app.request.uri|url_encode() }}&amp;title={{ page.title|url_encode() }}%20-%20BardisCMS%20BardisCMS&amp;source={{ app.request.uri|url_encode() }}" title="Share This on LinkedIn" rel="external" target="_blank">
+                <span class="inv">Share This on LinkedIn</span>
+            </a>
+        </li>
+        <li>
+            <a class="smo-menu-item gplusIcon" href="https://plus.google.com/share?url={{ app.request.uri|url_encode() }}" title="Share This on Google+" rel="external" target="_blank">
+                <span class="inv">Share This on Google+</span>
+            </a>
+        </li>
+        <li>
+            <a class="smo-menu-item emailMenuItem" href="mailto:?subject={{ page.title|url_encode() }}%20-%20BardisCMS%20BardisCMS&amp;body={{ page.title|url_encode() }}%20-%20BardisCMS%20BardisCMS%0D%0A{{ app.request.uri|url_encode() }}%0D%0A%0D%0A" title="Share by Email" rel="external">
+                <span class="inv">Share by Email</span>
+            </a>
         </li>
     </ul>
 </div>
