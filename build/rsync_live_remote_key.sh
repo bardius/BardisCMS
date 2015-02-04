@@ -68,6 +68,14 @@ sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo php $3/app/console cache:clear -
 echo /usr/bin/ssh $5@$3 "sudo php $3/app/console cache:clear --env=prod --no-debug"
 sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo php $3/app/console cache:clear --env=prod --no-debug'"
 
+echo -e "\n\n\e[0;34m********** Set permissions to cache folder **********\e[0m"
+echo /usr/bin/ssh $5@$3 "sudo chmod 0777 -R $4/app/cache"
+sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo chmod 0777 -R $4/app/cache'"
+
+echo -e "\n\n\e[0;34m********** Set permissions to cache folder files **********\e[0m"
+echo /usr/bin/ssh $5@$3 "sudo find $4/app/cache -type f -print0 | sudo xargs -0 chmod 0644"
+sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo find $4/app/cache -type f -print0 | sudo xargs -0 chmod 0644'"
+
 echo -e "\n\n\e[0;34m********** Generate optimized autoload **********\e[0m"
 echo /usr/bin/ssh $5@$3 "sudo php $3/composer.phar dumpautoload -o"
 sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo php $3/composer.phar dumpautoload -o'"
