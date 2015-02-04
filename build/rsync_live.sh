@@ -69,8 +69,8 @@ echo sudo -H -u $4 bash -c "sudo php $3/app/console cache:clear --env=prod --no-
 sudo -H -u $4 bash -c "sudo php $3/app/console cache:clear --env=prod --no-debug"
 
 echo -e "\n\n\e[0;34m********** Generate optimized autoload **********\e[0m"
-echo sudo -H -u $4 bash -c "sudo $3/composer.phar dumpautoload -o"
-sudo -H -u $4 bash -c "sudo $3/composer.phar dumpautoload -o"
+echo sudo -H -u $4 bash -c "sudo php $3/composer.phar dumpautoload -o"
+sudo -H -u $4 bash -c "sudo php $3/composer.phar dumpautoload -o"
 
 echo -e "\n\n\e[0;34m********** Disable maintenance mode **********\e[0m"
 echo sudo -H -u $4 bash -c "sudo mv $4/index.html $4/.index.html"

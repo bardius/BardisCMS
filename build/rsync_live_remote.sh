@@ -69,8 +69,8 @@ echo /usr/bin/ssh $5@$3 "sudo php $3/app/console cache:clear --env=prod --no-deb
 sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo php $3/app/console cache:clear --env=prod --no-debug'"
 
 echo -e "\n\n\e[0;34m********** Generate optimized autoload **********\e[0m"
-echo /usr/bin/ssh $5@$3 "sudo $3/composer.phar dumpautoload -o"
-sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo $3/composer.phar dumpautoload -o'"
+echo /usr/bin/ssh $5@$3 "sudo php $3/composer.phar dumpautoload -o"
+sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo php $3/composer.phar dumpautoload -o'"
 
 echo -e "\n\n\e[0;34m********** Disable maintenance mode **********\e[0m"
 echo /usr/bin/ssh $5@$3 "sudo mv $4/web/index.html $4/web/.index.html"

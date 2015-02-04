@@ -52,8 +52,8 @@ echo sudo -t -H -u $4 bash -c "sudo php $3/app/console cache:clear --env=prod --
 sudo -t -H -u $4 bash -c "sudo php $3/app/console cache:clear --env=prod --no-debug"
 
 echo -e "\n\n\e[0;34m********** Generate optimized autoload **********\e[0m"
-echo sudo -t -H -u $4 bash -c "sudo $3/composer.phar dumpautoload -o"
-sudo -t -H -u $4 bash -c "sudo $3/composer.phar dumpautoload -o"
+echo sudo -t -H -u $4 bash -c "sudo php $3/composer.phar dumpautoload -o"
+sudo -t -H -u $4 bash -c "sudo php $3/composer.phar dumpautoload -o"
 
 echo -e "\n\n\e[0;34m********** Set folder owners and permissions **********\e[0m"
 echo sudo -t -H -u $4 bash -c "sudo chown -R www-data:www-data $3"
