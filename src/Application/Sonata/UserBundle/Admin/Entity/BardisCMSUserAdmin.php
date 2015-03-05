@@ -80,7 +80,7 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
                 ->with('Security')
                 ->add('token')
                 ->add('twoStepVerificationCode')
-                ->end();
+                ->end()
         ;
     }
 
@@ -89,11 +89,14 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
      */
     public function configureFormFields(FormMapper $formMapper) {
         $formMapper
+                ->tab('General')
                 ->with('General', array('collapsed' => false))
                 ->add('username')
                 ->add('email')
                 ->add('plainPassword', 'text', array('required' => false))
                 ->end()
+                ->end()
+                ->tab('Profile')
                 ->with('Profile', array('collapsed' => true))
                 ->add('firstname', null, array('label' => 'First Name', 'required' => false))
                 ->add('lastname', null, array('label' => 'Surname', 'required' => false))
@@ -102,7 +105,8 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
                 ->add('bakeChoises', 'choice', array('choices' => array('biscuits' => 'biscuits', 'breads' => 'breads', 'brownies' => 'brownies', 'cakes' => 'cakes', 'cupcakes' => 'cupcakes', 'desserts' => 'desserts', 'muffins' => 'muffins', 'pancakes' => 'pancakes', 'pies' => 'pies'), 'label' => 'Which of the following do you bake?', 'required' => false, 'expanded' => true, 'multiple' => true))
                 ->add('children', 'choice', array('choices' => array('no' => 'No', 'yes' => 'Yes'), 'label' => 'Do you have children?', 'required' => false, 'expanded' => true, 'multiple' => false))
                 ->add('campaign', null, array('label' => 'Campaign Name', 'required' => false))
-                ->end();
+                ->end()
+                ->end()
         ;
 
         if (!$this->getSubject()->hasRole('ROLE_SUPER_ADMIN')) {
@@ -116,17 +120,23 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
                     ->add('expired', null, array('required' => false))
                     ->add('enabled', null, array('required' => false))
                     ->add('credentialsExpired', null, array('required' => false))
-                    ->end();
+                    ->end()
+            ;
         }
 
         $formMapper
+                ->tab('Security')
                 ->with('Security', array('collapsed' => true))
                 ->add('token', null, array('required' => false))
                 ->add('twoStepVerificationCode', null, array('required' => false))
                 ->end()
+                ->end()
+                ->tab('Groups')
                 ->with('Groups', array('collapsed' => true))
                 ->add('groups', 'sonata_type_model', array('required' => false, 'expanded' => true, 'multiple' => true))
-                ->end();
+                ->end()
+                ->end()
+        ;
     }
 
     /**

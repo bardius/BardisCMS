@@ -38,6 +38,7 @@ class SkeletonAdmin extends Admin {
         $loggedUserRole = $loggedUser->getRoles();
 
         $formMapper
+                ->tab('Skeleton Page Essential Details')
                 ->with('Skeleton Page Essential Details', array('collapsed' => true))
                 ->add('title', null, array('attr' => array('class' => 'pageTitleField'), 'label' => 'Skeleton Page Title', 'required' => true))
                 ->add('publishState', 'choice', array('choices' => array('0' => 'Unpublished', '1' => 'Published', '2' => 'Preview'), 'preferred_choices' => array('2'), 'label' => 'Publish Status', 'required' => true))
@@ -59,6 +60,8 @@ class SkeletonAdmin extends Admin {
                     'pageclass' => 'Set the CSS class that wraps Skeleton Page'
                 ))
                 ->end()
+                ->end()
+                ->tab('Categories & Tags')
                 ->with('Categories & Tags', array('collapsed' => true))
                 ->add('categories', 'entity', array('class' => 'BardisCMS\CategoryBundle\Entity\Category', 'property' => 'title', 'expanded' => true, 'multiple' => true, 'label' => 'Associated Categories', 'required' => false))
                 ->add('tags', 'entity', array('class' => 'BardisCMS\TagBundle\Entity\Tag', 'property' => 'title', 'expanded' => true, 'multiple' => true, 'label' => 'Associated Tags', 'required' => false))
@@ -67,6 +70,8 @@ class SkeletonAdmin extends Admin {
                     'categories' => 'Select the associated categories'
                 ))
                 ->end()
+                ->end()
+                ->tab('Skeleton Listing Page Intro')
                 ->with('Skeleton Listing Page Intro', array('collapsed' => true))
                 ->add('introtext', 'textarea', array('attr' => array('class' => 'tinymce', 'data-theme' => 'advanced'), 'label' => 'Intro Text/HTML', 'required' => false))
                 ->add('introimage', 'sonata_media_type', array('provider' => 'sonata.media.provider.image', 'context' => 'intro', 'attr' => array('class' => 'imagefield'), 'label' => 'Intro Image', 'required' => false))
@@ -82,6 +87,8 @@ class SkeletonAdmin extends Admin {
                     'introclass' => 'Set the CSS class that wraps content to display for intro listing items'
                 ))
                 ->end()
+                ->end()
+                ->tab('Skeleton Page Metatags Manual Override')
                 ->with('Skeleton Page Metatags Manual Override', array('collapsed' => true))
                 ->add('keywords', null, array('label' => 'Meta Keywords', 'required' => false))
                 ->add('description', null, array('label' => 'Meta Description', 'required' => false))
@@ -89,6 +96,7 @@ class SkeletonAdmin extends Admin {
                     'keywords' => 'Set the keyword metadata of the page of leave empty to autogenerate',
                     'description' => 'Set the description metadata of the page of leave empty to autogenerate'
                 ))
+                ->end()
                 ->end()
         ;
 
@@ -98,6 +106,7 @@ class SkeletonAdmin extends Admin {
             switch ($this->subject->getPagetype()) {
                 case 'skeleton_article':
                     $formMapper
+                            ->tab('Skeleton Page Contents')
                             ->with('Skeleton Page Contents', array('collapsed' => true))
                             ->add('bannercontentblocks', 'contentblockcollection', array('attr' => array('class' => 'bannercontentblocks'), 'label' => 'Top Contents'))
                             ->add('maincontentblocks', 'contentblockcollection', array('attr' => array('class' => 'maincontentblocks'), 'label' => 'Main Contents'))
@@ -108,10 +117,12 @@ class SkeletonAdmin extends Admin {
                                 'modalcontentblocks' => 'Select the contents in the order you want them to appear in the modal windows'
                             ))
                             ->end()
+                            ->end()
                     ;
                     break;
                 default:
                     $formMapper
+                            ->tab('Skeleton Page Contents')
                             ->with('Skeleton Page Contents', array('collapsed' => true))
                             ->add('maincontentblocks', 'contentblockcollection', array('attr' => array('class' => 'maincontentblocks'), 'label' => 'Main Contents'))
                             ->add('modalcontentblocks', 'contentblockcollection', array('attr' => array('class' => 'modalcontentblocks'), 'label' => 'Modal Windows Contents'))
@@ -119,6 +130,7 @@ class SkeletonAdmin extends Admin {
                                 'maincontentblocks' => 'Select the contents in the order you want them to appear in the Skeleton Page',
                                 'modalcontentblocks' => 'Select the contents in the order you want them to appear in the modal windows'
                             ))
+                            ->end()
                             ->end()
                     ;
             }

@@ -39,6 +39,7 @@ class PageAdmin extends Admin {
 
         // using sonata admin to generate the edit page form and its fields
         $formMapper
+                ->tab('Page Essential Details')
                 ->with('Page Essential Details', array('collapsed' => false))
                 ->add('title', null, array('attr' => array('class' => 'pageTitleField'), 'label' => 'Page Title', 'required' => true))
                 ->add('publishState', 'choice', array('choices' => array('0' => 'Unpublished', '1' => 'Published', '2' => 'Preview'), 'preferred_choices' => array('2'), 'label' => 'Publish State', 'required' => true))
@@ -60,6 +61,8 @@ class PageAdmin extends Admin {
                     'bgimage' => 'Set the Top Banner Image of the page'
                 ))
                 ->end()
+                ->end()
+                ->tab('Categories & Tags')
                 ->with('Categories & Tags', array('collapsed' => true))
                 ->add('categories', 'entity', array('class' => 'BardisCMS\CategoryBundle\Entity\Category', 'property' => 'title', 'expanded' => true, 'multiple' => true, 'label' => 'Associated Categories', 'required' => false))
                 ->add('tags', 'entity', array('class' => 'BardisCMS\TagBundle\Entity\Tag', 'property' => 'title', 'expanded' => true, 'multiple' => true, 'label' => 'Associated Tags', 'required' => false))
@@ -68,6 +71,8 @@ class PageAdmin extends Admin {
                     'categories' => 'Select the associated categories'
                 ))
                 ->end()
+                ->end()
+                ->tab('Homepage & Listing Page Intro')
                 ->with('Homepage & Listing Page Intro', array('collapsed' => true))
                 ->add('introtext', 'textarea', array('attr' => array('class' => 'tinymce', 'data-theme' => 'advanced'), 'label' => 'Intro Text/HTML', 'required' => false))
                 ->add('introimage', 'sonata_media_type', array('provider' => 'sonata.media.provider.image', 'context' => 'intro', 'attr' => array('class' => 'imagefield'), 'label' => 'Intro Image', 'required' => false))
@@ -81,6 +86,8 @@ class PageAdmin extends Admin {
                     'introclass' => 'Set the CSS class that wraps content to display for category listing items'
                 ))
                 ->end()
+                ->end()
+                ->tab('Page Metatags Manual Override')
                 ->with('Page Metatags Manual Override', array('collapsed' => true))
                 ->add('keywords', null, array('label' => 'Meta Keywords', 'required' => false))
                 ->add('description', null, array('label' => 'Meta Description', 'required' => false))
@@ -88,6 +95,7 @@ class PageAdmin extends Admin {
                     'keywords' => 'Set the keyword metadata of the page of leave empty to autogenerate',
                     'description' => 'Set the description metadata of the page of leave empty to autogenerate'
                 ))
+                ->end()
                 ->end()
         ;
 
@@ -97,6 +105,7 @@ class PageAdmin extends Admin {
             switch ($this->subject->getPagetype()) {
                 case 'one_columned':
                     $formMapper
+                            ->tab('Page Contents')
                             ->with('Page Contents', array('collapsed' => true))
                             ->add('bannercontentblocks', 'contentblockcollection', array('attr' => array('class' => 'bannercontentblocks'), 'label' => 'Top Banner Contents'))
                             ->add('maincontentblocks', 'contentblockcollection', array('attr' => array('class' => 'maincontentblocks'), 'label' => 'Page Contents'))
@@ -107,11 +116,13 @@ class PageAdmin extends Admin {
                                 'modalcontentblocks' => 'Enter the contents for the modal windows'
                             ))
                             ->end()
+                            ->end()
                     ;
                     break;
                 case 'two_columned':
                 case 'contact':
                     $formMapper
+                            ->tab('Page Contents')
                             ->with('Page Contents', array('collapsed' => true))
                             ->add('bannercontentblocks', 'contentblockcollection', array('attr' => array('class' => 'bannercontentblocks'), 'label' => 'Top Banner Contents'))
                             ->add('maincontentblocks', 'contentblockcollection', array('attr' => array('class' => 'maincontentblocks'), 'label' => 'Left Column Contents'))
@@ -124,10 +135,12 @@ class PageAdmin extends Admin {
                                 'modalcontentblocks' => 'Enter the contents for the modal windows'
                             ))
                             ->end()
+                            ->end()
                     ;
                     break;
                 case 'three_columned':
                     $formMapper
+                            ->tab('Page Contents')
                             ->with('Page Contents', array('collapsed' => true))
                             ->add('bannercontentblocks', 'contentblockcollection', array('attr' => array('class' => 'bannercontentblocks'), 'label' => 'Top Banner Contents'))
                             ->add('maincontentblocks', 'contentblockcollection', array('attr' => array('class' => 'maincontentblocks'), 'label' => 'Left Column Contents'))
@@ -142,6 +155,7 @@ class PageAdmin extends Admin {
                                 'modalcontentblocks' => 'Enter the contents for the modal windows'
                             ))
                             ->end()
+                            ->end()
                     ;
                     break;
                 case 'category_page':
@@ -150,6 +164,7 @@ class PageAdmin extends Admin {
                 case 'user_profile':                  
                 case 'homepage':
                     $formMapper
+                            ->tab('Page Contents')
                             ->with('Page Contents', array('collapsed' => true))
                             ->add('bannercontentblocks', 'contentblockcollection', array('attr' => array('class' => 'bannercontentblocks'), 'label' => 'Top Banner Contents'))
                             ->add('maincontentblocks', 'contentblockcollection', array('attr' => array('class' => 'maincontentblocks'), 'label' => 'Contents Below Item Listing'))
@@ -160,10 +175,12 @@ class PageAdmin extends Admin {
                                 'modalcontentblocks' => 'Enter the contents for the modal windows'
                             ))
                             ->end()
+                            ->end()
                     ;
                     break;
                 default:
                     $formMapper
+                            ->tab('Page Contents')
                             ->with('Page Contents', array('collapsed' => true))
                             ->add('maincontentblocks', 'contentblockcollection', array('attr' => array('class' => 'maincontentblocks'), 'label' => 'Page Contents'))
                             ->add('modalcontentblocks', 'contentblockcollection', array('attr' => array('class' => 'modalcontentblocks'), 'label' => 'Modal Windows Contents'))
@@ -171,6 +188,7 @@ class PageAdmin extends Admin {
                                 'maincontentblocks' => 'Enter the contents for the page',
                                 'modalcontentblocks' => 'Enter the contents for the modal windows'
                             ))
+                            ->end()
                             ->end()
                     ;
             }

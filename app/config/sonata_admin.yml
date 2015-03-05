@@ -1,13 +1,15 @@
 sonata_admin:
-    title:					CMS - Website Admin
+    title:				CMS - Website Admin
     title_logo:			/images/site_assets/adminlogo.jpg
     
     options:
-        html5_validate:											true      # use html5 validation
-        confirm_exit:												true      # enabled confirmation when quitting with unsaved changes
+        form_type:                          horizontal
+        title_mode:                         single_text
+        html5_validate:						true      # use html5 validation
+        confirm_exit:						true      # enabled confirmation when quitting with unsaved changes
         dropdown_number_groups_per_colums:	4
-        # use_select2:											false      # enable select2
-        # pager_links:											10         # pager max links to display
+        # use_select2:						false      # enable select2
+        # pager_links:						10         # pager max links to display
     
     security:
         handler: sonata.admin.security.handler.acl # sonata.admin.security.handler.noop
@@ -54,7 +56,7 @@ sonata_admin:
     dashboard:
         blocks:
             - 
-              position:		left
+              position:         left
               type:				sonata.admin.block.admin_list
               settings: 
                 groups: 
@@ -63,7 +65,7 @@ sonata_admin:
                   - sonata_tags
                   - sonata_comments
             - 
-              position:		center
+              position:         center
               type:				sonata.admin.block.admin_list
               settings: 
                 groups: 
@@ -73,19 +75,19 @@ sonata_admin:
                   - sonata_contentblocks
                   - sonata_medias
             - 
-              position:		right
+              position:         right
               type:				sonata.block.service.text
               settings: 
-                content:	>
+                content:        >
                   <h2>Welcome!</h2><p>The current dashboard presents the all items from the Bundles that you can manage and a timeline with the latest actions</p>
             - 
-              position:		right
+              position:         right
               type:				sonata.block.service.clearcache
             - 
-              position:		right
+              position:         right
               type:				sonata.timeline.block.timeline
               settings: 
-                context:			SONATA_ADMIN
+                context:		SONATA_ADMIN
                 max_per_page:	15
 
         groups:

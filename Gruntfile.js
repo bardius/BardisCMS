@@ -70,6 +70,10 @@ module.exports = function (grunt) {
                 // <%= config.f5scss.path %>
                 path: 'web/bower_components/foundation/scss'
             },
+            jstests: {
+                // <%= config.jstests.path %>
+                path: 'web/js/tests'
+            },
             bower: {
                 // <%= config.bower.path %>
                 path: './web/bower_components'
@@ -261,6 +265,22 @@ module.exports = function (grunt) {
             }
         },
         /**
+         * Jasmine
+         * Run Jasmine unit tests
+         */
+        jasmine: {
+            test: {
+              src: '<%=config.js.releaseDir%>/*.js',
+                options: {                    
+                    vendor: [
+                      'web/bower_components/jquery/jquery.min.js',
+                      'web/bower_components/jasmine-jquery/lib/jasmine-jquery.js'
+                    ],
+                    specs: '<%= config.jstests.path %>/*.spec.js'
+                }
+            }
+        },
+        /**
          * Bower install
          * https://github.com/yatskevich/grunt-bower-task
          * Install bower dependencies
@@ -387,6 +407,7 @@ module.exports = function (grunt) {
      * grunt deployment_prod :      run uglify, sass, autoprefixer, csssplit, sf2-console
      * grunt setup :                run bower install, uglify, sass, autoprefixer, csssplit, sf2-console
      * grunt first_deployment :     run bower install, uglify, sass, autoprefixer, csssplit, sf2-console
+     * grunt jasmine :              run jshint, jasmine
      * grunt travis :               run uglify, sass, autoprefixer, csssplit, sf2-console
      ============================================================================================ */
 
@@ -513,6 +534,17 @@ module.exports = function (grunt) {
         'sf2-console:assetic_dump_prod'
     ]);
 
+
+    /**
+     * GRUNT JASMINE 
+     * A task for testing
+     * run jshint, jasmine
+     */
+    grunt.registerTask('jasmine', [
+        //'jshint',
+        'jasmine'
+    ]);
+    
 
     /**
      * GRUNT TRAVIS

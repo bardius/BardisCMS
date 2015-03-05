@@ -64,6 +64,7 @@ class MenuAdmin extends Admin {
         }
 
         $formMapper
+                ->tab('Menu Item Essential Details')
                 ->with('Menu Item Essential Details', array('collapsed' => true))
                 ->add('title', null, array('label' => 'Title', 'required' => true))
                 ->add('menuType', 'choice', array('choices' => $menuTypeChoice, 'preferred_choices' => array($prefMenuTypeChoice), 'label' => 'Menu Item Type', 'required' => true))
@@ -74,6 +75,8 @@ class MenuAdmin extends Admin {
                     'route' => 'Select the action of the menu item'
                 ))
                 ->end()
+                ->end()
+                ->tab('Menu Item Taxonomy')
                 ->with('Menu Item Taxonomy', array('collapsed' => true))
                 ->add('menuGroup', 'choice', array('choices' => $menuGroupsChoice, 'preferred_choices' => array($prefMenuGroupsChoice), 'label' => 'Menu Group', 'required' => true))
                 ->add('parent', 'choice', array('choices' => $menusChoice, 'attr' => array('class' => 'autoCompleteItems autoCompleteMenus', 'data-sonata-select2' => 'false'), 'label' => 'Parent Menu Item', 'required' => false))
@@ -84,6 +87,8 @@ class MenuAdmin extends Admin {
                     'ordering' => 'Set the order of the menu item in accordance to the other menu items of the same menu level'
                 ))
                 ->end()
+                ->end()
+                ->tab('Menu Item Access Control')
                 ->with('Menu Item Access Control', array('collapsed' => true))
                 ->add('accessLevel', 'choice', array('choices' => $accessLevelChoices, 'preferred_choices' => array($prefAccessLevelChoices), 'label' => 'Access Level', 'required' => true))
                 ->add('publishState', 'choice', array('choices' => $publishStateChoices, 'preferred_choices' => array($prefPublishStateChoices), 'label' => 'Publish State', 'required' => true))
@@ -92,6 +97,8 @@ class MenuAdmin extends Admin {
                     'publishState' => 'Set the publish state of this menu item'
                 ))
                 ->end()
+                ->end()
+                ->tab('Menu Item Optional Details')
                 ->with('Menu Item Optional Details', array('collapsed' => true))
                 ->add('menuImage', 'sonata_media_type', array('provider' => 'sonata.media.provider.image', 'context' => 'icons', 'attr' => array('class' => 'imagefield'), 'label' => 'Menu Icon Image', 'required' => false))
                 ->setHelps(array(
