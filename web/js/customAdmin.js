@@ -75,12 +75,15 @@ jQuery(document).ready(function ($) {
     }
 
     // Collapse/expand content blocks on click of the legend
-    $('.sonata-ba-fielset-collapsed .sonata-ba-collapsed').on('click', function (e) {
+    $('.sonata-ba-field-standard-natural').on('click', function (e) {
         e.preventDefault();
 
-        var $this = $(this);
-        var $collapse = $this.closest('.sonata-ba-fielset-collapsed').find('.sonata-ba-collapsed-fields');
-        $collapse.collapse('toggle');
+        var target = $(e.target);
+        
+        if (target.hasClass("sonata-ba-collapsed")) {        
+            var $collapse = target.closest('.sonata-ba-fielset-collapsed').find('.sonata-ba-collapsed-fields');
+            $collapse.collapse('toggle');
+        }
     });
 
     // Reorder content blocks by dragging them.
@@ -122,28 +125,28 @@ jQuery(document).ready(function ($) {
     $.widget("custom.combobox", {
         _create: function () {
             this.wrapper = $("<span>")
-                    .addClass("custom-combobox")
-                    .insertAfter(this.element);
+                .addClass("custom-combobox")
+                .insertAfter(this.element);
             this.element.hide();
             this._createAutocomplete();
             this._createShowAllButton();
         },
         _createAutocomplete: function () {
             var selected = this.element.children(":selected"),
-                    value = selected.val() ? selected.text() : "";
+                value = selected.val() ? selected.text() : "";
             this.input = $("<input>")
-                    .appendTo(this.wrapper)
-                    .val(value)
-                    .attr("title", "")
-                    .addClass("custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left")
-                    .autocomplete({
-                        delay: 0,
-                        minLength: 0,
-                        source: $.proxy(this, "_source")
-                    })
-                    .tooltip({
-                        tooltipClass: "ui-state-highlight"
-                    });
+                .appendTo(this.wrapper)
+                .val(value)
+                .attr("title", "")
+                .addClass("custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left")
+                .autocomplete({
+                    delay: 0,
+                    minLength: 0,
+                    source: $.proxy(this, "_source")
+                })
+                .tooltip({
+                    tooltipClass: "ui-state-highlight"
+                });
             this._on(this.input, {
                 autocompleteselect: function (event, ui) {
                     ui.item.option.selected = true;
@@ -156,34 +159,34 @@ jQuery(document).ready(function ($) {
         },
         _createShowAllButton: function () {
             var input = this.input,
-                    wasOpen = false;
+                wasOpen = false;
             $("<a>")
-                    .attr("tabIndex", -1)
-                    .attr("title", "Show All Items")
-                    .tooltip()
-                    .appendTo(this.wrapper)
-                    .button({
-                        icons: {
-                            primary: "ui-icon-triangle-1-s"
-                        },
-                        text: false
-                    })
-                    .removeClass("ui-corner-all")
-                    .addClass("custom-combobox-toggle ui-corner-right")
-                    .mousedown(function () {
-                        wasOpen = input.autocomplete("widget").is(":visible");
-                    })
-                    .on('click', function () {
-                        input.focus();
+                .attr("tabIndex", -1)
+                .attr("title", "Show All Items")
+                .tooltip()
+                .appendTo(this.wrapper)
+                .button({
+                    icons: {
+                        primary: "ui-icon-triangle-1-s"
+                    },
+                    text: false
+                })
+                .removeClass("ui-corner-all")
+                .addClass("custom-combobox-toggle ui-corner-right")
+                .mousedown(function () {
+                    wasOpen = input.autocomplete("widget").is(":visible");
+                })
+                .on('click', function () {
+                    input.focus();
 
-                        // Close if already visible
-                        if (wasOpen) {
-                            return;
-                        }
+                    // Close if already visible
+                    if (wasOpen) {
+                        return;
+                    }
 
-                        // Pass empty string as value to search for, displaying all results
-                        input.autocomplete("search", "");
-                    });
+                    // Pass empty string as value to search for, displaying all results
+                    input.autocomplete("search", "");
+                });
         },
         _source: function (request, response) {
             var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
@@ -208,8 +211,8 @@ jQuery(document).ready(function ($) {
 
             // Search for a match (case-insensitive)
             var value = this.input.val(),
-                    valueLowerCase = value.toLowerCase(),
-                    valid = false;
+                valueLowerCase = value.toLowerCase(),
+                valid = false;
             this.element.children("option").each(function () {
                 if ($(this).text().toLowerCase() === valueLowerCase) {
                     this.selected = valid = true;
@@ -224,9 +227,9 @@ jQuery(document).ready(function ($) {
 
             // Remove invalid value
             this.input
-                    .val("")
-                    .attr("title", value + " didn't match any item")
-                    .tooltip("open");
+                .val("")
+                .attr("title", value + " didn't match any item")
+                .tooltip("open");
             this.element.val("");
             this._delay(function () {
                 this.input.tooltip("close").attr("title", "");
