@@ -1,0 +1,29 @@
+{% set page = {'title': 'Page Title | Site Title'} %}
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ page.title }}{% endblock %}
+{% block metaDescription %}{{ page.title }}{% endblock %}
+{% block metaKeywords %}{% endblock %}
+
+{% block OgTitle %}{{ page.title }}{% endblock %}
+{% block MetaTwitterUser %}{% endblock %}
+
+{% block content %}
+    <div class="row websitePage registerPage">
+        <div class="large-12 columns pageSummary">  
+            <h2>Join</h2>                
+        </div>
+        <div class="large-12 column pageText">
+        {% block fos_user_content %}{% endblock fos_user_content %}  
+    </div>
+    <div class="large-12 column">
+        {% for key, messages in app.session.flashbag.all %}
+            {% for message in messages %}
+            <p class="{{ key }}">{{ message|trans({}, 'FOSUserBundle') }}</p>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block gAnalytics %}{% endblock %}
