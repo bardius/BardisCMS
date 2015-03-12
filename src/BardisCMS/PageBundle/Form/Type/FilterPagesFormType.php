@@ -8,12 +8,12 @@
  *
  */
 
-namespace BardisCMS\PageBundle\Form;
+namespace BardisCMS\PageBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class FilterPagesForm extends AbstractType {
+class FilterPagesFormType extends AbstractType {
 
     // Creating the filters form and the fields
     public function buildForm(FormBuilderInterface $builder, array $options) {

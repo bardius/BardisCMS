@@ -80,6 +80,17 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $pagecontact->addMaincontentblock($manager->merge($this->getReference('contentSampleContact')));
         $manager->persist($pagecontact);
 
+        $pagecontact = new Page();
+        $pagecontact->setDate(new \DateTime());
+        $pagecontact->setTitle('User Profile Page');
+        $pagecontact->setAuthor($manager->merge($this->getReference('admin')));
+        $pagecontact->setAlias('user-profile');
+        $pagecontact->setShowPageTitle(1);
+        $pagecontact->setPublishState(1);
+        $pagecontact->setIntrotext('');
+        $pagecontact->setPagetype('user_profile');
+        $manager->persist($pageuser_profile);
+
         $page1 = new Page();
         $page1->setDate(new \DateTime());
         $page1->setTitle('Test Page 1');
@@ -145,6 +156,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $this->addReference('homepage', $pagehome);
         $this->addReference('404page', $page404);
         $this->addReference('pagecontact', $pagecontact);
+        $this->addReference('pageuser_profile', $pageuser_profile);
         $this->addReference('pagesitemap', $pagesitemap);
         $this->addReference('pagefiltered', $pagefiltered);
         $this->addReference('page1', $page1);

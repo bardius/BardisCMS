@@ -11,7 +11,7 @@
 namespace BardisCMS\PageBundle\Controller;
 
 use BardisCMS\PageBundle\Form\Type\ContactFormType;
-use BardisCMS\PageBundle\Form\FilterPagesForm;
+use BardisCMS\PageBundle\Form\Type\FilterPagesFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,7 +54,7 @@ class DefaultController extends Controller {
         $this->settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
         // Get the highest user role security permission
         $this->userRole = $this->get('sonata_user.services.helpers')->getLoggedUserHighestRole();
-        // Check if mobile content should be served		
+        // Check if mobile content should be served
         $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 
         // Set the flag for allowing HHTP cache
@@ -78,7 +78,7 @@ class DefaultController extends Controller {
         $this->currentpage = $currentpage;
         $this->totalpageitems = $totalpageitems;
 
-        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($alias);
+        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($this->alias);
 
         if (!$page) {
             return $this->render404Page();
@@ -96,25 +96,25 @@ class DefaultController extends Controller {
         $this->alias = $alias;
         $this->currentpage = $currentpage;
         $this->totalpageitems = $totalpageitems;
+        $this->userName = $userName;
 
-        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($alias);
+        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($this->alias);
 
-        if (!$page || !isset($userName) || !$this->get('sonata_user.services.helpers')->getUserByUsername($userName)) {
+        if (!$page || !isset($this->userName) || !$this->get('sonata_user.services.helpers')->getUserByUsername($this->userName)) {
             return $this->render404Page();
         }
 
         $this->page = $page;
         $this->id = $this->page->getId();
 
-        $this->userName = $userName;
-        $this->linkUrlParams = $userName;
-        $this->extraParams = $userName;
+        $this->linkUrlParams = $this->userName;
+        $this->extraParams = $this->userName;
 
         return $this->showPageAction();
     }
 
     // Display a page based on the id and the render variables from the settings and the routing
-    protected function showPageAction() {
+    public function showPageAction() {
 
         // Simple publishing ACL based on publish state and user role
         if ($this->page->getPublishState() == 0) {
@@ -125,30 +125,16 @@ class DefaultController extends Controller {
             return $this->render404Page();
         }
 
-        //dump($this->container->getParameter('kernel.environment'));
-        
         // Return cached page if enabled
         if ($this->enableHTTPCache) {
 
-            $response = new Response();
+            $response = $this->setResponceCacheHeaders(new Response());
 
-            // set a custom Cache-Control directive
-            $response->headers->addCacheControlDirective('must-revalidate', true);
-            // set multiple vary headers
-            $response->setVary(array('Accept-Encoding', 'User-Agent'));
-            // create a Response with a Last-Modified header
-            $response->setLastModified($this->page->getDateLastModified());
-            // Set response as public. Otherwise it will be private by default.
-            $response->setPublic();
-
-            //dump($response->isNotModified($this->getRequest()));
-            //dump($response->getStatusCode());			
             if (!$response->isNotModified($this->getRequest())) {
                 // Marks the Response stale
                 $response->expire();
             } else {
                 // return the 304 Response immediately
-                $response->setSharedMaxAge(3600);
                 return $response;
             }
         }
@@ -156,7 +142,7 @@ class DefaultController extends Controller {
         // Set the website settings and metatags
         $this->page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($this->page);
 
-        // Set the pagination variables        
+        // Set the pagination variables
         if (is_object($this->settings)) {
             if (!$this->totalpageitems) {
                 $this->totalpageitems = $this->settings->getItemsPerPage();
@@ -191,7 +177,7 @@ class DefaultController extends Controller {
                 break;
 
             case 'contact':
-                // Render contact page type				
+                // Render contact page type
                 $response = $this->ContactForm($this->getRequest());
                 break;
 
@@ -201,25 +187,20 @@ class DefaultController extends Controller {
         }
 
         if ($this->enableHTTPCache) {
-            // set a custom Cache-Control directive
-            $response->setPublic();
-            $response->setLastModified($this->page->getDateLastModified());
-            $response->setVary(array('Accept-Encoding', 'User-Agent'));
-            $response->headers->addCacheControlDirective('must-revalidate', true);
-            $response->setSharedMaxAge(3600);
+            $response = $this->setResponceCacheHeaders($response);
         }
 
         return $response;
     }
 
-    // Get and format the filtering arguments to use with the actions 
+    // Get and format the filtering arguments to use with the actions
     public function filterPagesAction(Request $request) {
 
         $filterTags = 'all';
         $filterCategories = 'all';
 
         // Create the filters form
-        $filterForm = $this->createForm(new FilterPagesForm());
+        $filterForm = $this->createForm(new FilterPagesFormType());
         $filterData = null;
 
         // If the filter form has been submited
@@ -259,10 +240,7 @@ class DefaultController extends Controller {
         $response = $this->render('PageBundle:Default:sitemap.xml.twig', array('sitemapList' => $sitemapList));
 
         if ($this->enableHTTPCache) {
-            // set a custom Cache-Control directive
-            $response->setPublic();
-            $response->setVary(array('Accept-Encoding', 'User-Agent'));
-            $response->setSharedMaxAge(3600);
+            $response = $this->setResponceCacheHeaders($response);
         }
 
         return $response;
@@ -276,7 +254,7 @@ class DefaultController extends Controller {
         return $response;
     }
 
-    // Get and display to the 404 error page
+    // Render the 404 error page
     protected function render404Page() {
 
         // Get the page with alias 404
@@ -293,18 +271,13 @@ class DefaultController extends Controller {
         $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page))->setStatusCode(404);
 
         if ($this->enableHTTPCache) {
-            // set a custom Cache-Control directive
-            $response->setPublic();
-            $response->setLastModified($this->page->getDateLastModified());
-            $response->setVary(array('Accept-Encoding', 'User-Agent'));
-            $response->headers->addCacheControlDirective('must-revalidate', true);
-            $response->setSharedMaxAge(3600);
+            $response = $this->setResponceCacheHeaders($response);
         }
 
         return $response;
     }
 
-    // Get and display to the home page
+    // Render the home page
     protected function renderHomePage() {
 
         // Render homepage page type
@@ -325,17 +298,18 @@ class DefaultController extends Controller {
         return $response;
     }
 
+
+    // Render user profile page type
     protected function renderUserProfilePage() {
 
         // Get the logged user
         $logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
 
         // Get the details of the requested user
-        $userName = $this->extraParams;
         $user_details_to_show = array(
-            'page_username' => $userName,
+            'page_username' => $this->userName,
             'logged_username' => '',
-            'page_user' => $this->get('sonata_user.services.helpers')->getUserByUsername($userName)
+            'page_user' => $this->get('sonata_user.services.helpers')->getUserByUsername($this->userName)
         );
 
         if (!is_object($logged_user) || !$logged_user instanceof UserInterface) {
@@ -353,10 +327,9 @@ class DefaultController extends Controller {
         return $response;
     }
 
+    // Render tag list page type
     protected function renderTagListPage() {
-
-        // Render tag list page type
-        $filterForm = $this->createForm(new FilterPagesForm());
+        $filterForm = $this->createForm(new FilterPagesFormType());
         $filterData = $this->getRequestedFilters($this->extraParams);
         $tagIds = $this->getTagFilterIds($filterData['tags']->toArray());
         $categoryIds = $this->getCategoryFilterIds($filterData['categories']->toArray());
@@ -377,9 +350,8 @@ class DefaultController extends Controller {
         return $response;
     }
 
+    // Render category list page type
     protected function renderCategoryPage() {
-
-        // Render category list page type
         $tagIds = $this->getTagFilterIds($this->page->getTags()->toArray());
         $categoryIds = $this->getCategoryFilterIds($this->page->getCategories()->toArray());
 
@@ -455,7 +427,7 @@ class DefaultController extends Controller {
                 $formhasErrors = true;
             }
 
-            // Return the responce to the user
+            // Return the response to the user
             if ($ajaxForm) {
 
                 $ajaxFormData = array(
@@ -476,13 +448,8 @@ class DefaultController extends Controller {
         else {
             $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'form' => $form->createView(), 'ajaxform' => $ajaxForm));
 
-            if ($this->container->getParameter('kernel.environment') == 'prod') {
-                // set a custom Cache-Control directive
-                $response->setPublic();
-                $response->setLastModified($this->page->getDateLastModified());
-                $response->setVary(array('Accept-Encoding', 'User-Agent'));
-                $response->headers->addCacheControlDirective('must-revalidate', true);
-                $response->setSharedMaxAge(3600);
+            if ($this->enableHTTPCache) {
+                $response = $this->setResponceCacheHeaders($response);
             }
 
             return $response;
@@ -517,7 +484,7 @@ class DefaultController extends Controller {
 
     // Get the tags and / or categories for filtering from the request
     // filters are like: tag1,tag2|category1,category1 and each argument
-    // is url encoded. 
+    // is url encoded.
     // If 'all' is passed as argument value, everything is fetched
     protected function getRequestedFilters() {
 
@@ -628,6 +595,18 @@ class DefaultController extends Controller {
         }
 
         return $filterTags;
+    }
+
+    // set a custom Cache-Control directives
+    protected function setResponceCacheHeaders(Response $response) {
+
+        $response->setPublic();
+        $response->setLastModified($this->page->getDateLastModified());
+        $response->setVary(array('Accept-Encoding', 'User-Agent'));
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->setSharedMaxAge(3600);
+
+        return $response;
     }
 
     // Sort homepage items by the pageOrder value of the objects returned after the merge
