@@ -16,11 +16,63 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\UserBundle\Model\UserInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DefaultController extends Controller {
 
+    // Adding variables required for the rendering of the page
+    protected $container;
+    private $alias;
+    private $id;
+    private $extraParams;
+    private $currentpage;
+    private $totalpageitems;
+    private $linkUrlParams;
+    private $page;
+    private $publishStates;
+    private $userName;
+    private $settings;
+    private $serveMobile;
+    private $userRole;
+
+    // Override the ContainerAware setcontainer to accomodate the extra variables
+    public function setContainer(ContainerInterface $container = null) {
+        $this->container = $container;
+
+        // Setting the scoped variables required for the rendering of the page
+        $this->alias = null;
+        $this->id = null;
+        $this->extraParams = null;
+        $this->currentpage = null;
+        $this->totalpageitems = null;
+        $this->linkUrlParams = null;
+        $this->page = null;
+        $this->userName = null;
+        
+        // Get the settings from setting bundle
+        $this->settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
+        // Get the highest user role security permission
+        $this->userRole = $this->get('sonata_user.services.helpers')->getLoggedUserHighestRole();
+        // Check if mobile content should be served		
+        $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();        
+        
+        // Set the publish status that is avaliable for the user
+        // Very basic ACL
+        if ($this->userRole == "") {
+            $this->publishStates = array(1);
+        } else {
+            $this->publishStates = array(1, 2);
+        }
+    }
+
     // Get the page id based on alias from route
-    public function aliasAction($alias, $extraParams = null, $currentpage = 0, $totalpageitems = 0) {
+    public function aliasAction($alias = '/', $extraParams = null, $currentpage = 0, $totalpageitems = 0) {
+
+        $this->alias = $alias;
+        $this->extraParams = $extraParams;
+        $this->linkUrlParams = $extraParams;
+        $this->currentpage = $currentpage;
+        $this->totalpageitems = $totalpageitems;
 
         $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($alias);
 
@@ -28,60 +80,50 @@ class DefaultController extends Controller {
             return $this->render404Page();
         }
 
-        $linkUrlParams = $extraParams;
+        $this->page = $page;
+        $this->id = $this->page->getId();
 
-        return $this->showPageAction($page->getId(), $extraParams, $currentpage, $totalpageitems, $linkUrlParams);
+        return $this->showPageAction();
     }
 
     // Get the page id based on alias from route and user details from username
     public function userProfileAction($alias, $userName = null, $currentpage = 0, $totalpageitems = 0) {
 
+        $this->alias = $alias;
+        $this->currentpage = $currentpage;
+        $this->totalpageitems = $totalpageitems;
+
         $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($alias);
 
-        if (!$page) {
+        if (!$page || !isset($userName) || !$this->get('sonata_user.services.helpers')->getUserByUsername($userName)) {
             return $this->render404Page();
         }
 
-        if (!isset($userName) || !$this->get('sonata_user.services.helpers')->getUserByUsername($userName)) {
-            return $this->render404Page();
-        }
+        $this->page = $page;
+        $this->id = $this->page->getId();
+        
+        $this->userName = $userName;
+        $this->linkUrlParams = $userName;
+        $this->extraParams = $userName;
 
-        $linkUrlParams = $userName;
-        $extraParams = $userName;
-
-        return $this->showPageAction($page->getId(), $extraParams, $currentpage, $totalpageitems, $linkUrlParams);
+        return $this->showPageAction();
     }
 
     // Display a page based on the id and the render variables from the settings and the routing
-    public function showPageAction($id, $extraParams = null, $currentpage = null, $totalpageitems = null, $linkUrlParams = null) {
-
-        // Get data to display
-        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->find($id);
-
-        // Get the highest user role security permission
-        $userRole = $this->get('sonata_user.services.helpers')->getLoggedUserHighestRole();
-
-        // Load the settings from the settings bundle
-        $settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
+    public function showPageAction() {
 
         // Simple publishing ACL based on publish state and user role
-        if ($page->getPublishState() == 0) {
+        if ($this->page->getPublishState() == 0) {
             return $this->render404Page();
         }
 
-        if ($page->getPublishState() == 2 && $userRole == '') {
+        if ($this->page->getPublishState() == 2 && $this->userRole == "") {
             return $this->render404Page();
         }
 
-        if ($userRole == "") {
-            $publishStates = array(1);
-        } else {
-            $publishStates = array(1, 2);
-        }
+        //dump($this->container->getParameter('kernel.environment'));
 
-        //var_dump($this->container->getParameter('kernel.environment'));
-
-        if ($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()) {
+        if ($this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache()) {
 
             $response = new Response();
 
@@ -90,12 +132,12 @@ class DefaultController extends Controller {
             // set multiple vary headers
             $response->setVary(array('Accept-Encoding', 'User-Agent'));
             // create a Response with a Last-Modified header
-            $response->setLastModified($page->getDateLastModified());
+            $response->setLastModified($this->page->getDateLastModified());
             // Set response as public. Otherwise it will be private by default.
             $response->setPublic();
 
-            //var_dump($response->isNotModified($this->getRequest()));
-            //var_dump($response->getStatusCode());			
+            //dump($response->isNotModified($this->getRequest()));
+            //dump($response->getStatusCode());			
             if (!$response->isNotModified($this->getRequest())) {
                 // Marks the Response stale
                 $response->expire();
@@ -107,30 +149,30 @@ class DefaultController extends Controller {
         }
 
         // Set the website settings and metatags
-        $page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($page);
+        $this->page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($this->page);
 
         // Set the pagination variables        
-        if (is_object($settings)) {
-            if (!$totalpageitems) {
-                $totalpageitems = $settings->getItemsPerPage();
+        if (is_object($this->settings)) {
+            if (!$this->totalpageitems) {
+                $this->totalpageitems = $this->settings->getItemsPerPage();
             }
         } else {
-            $totalpageitems = 10;
+            $this->totalpageitems = 10;
         }
 
         // Render the correct view depending on pagetype
-        return $this->renderPage($page, $id, $publishStates, $extraParams, $currentpage, $totalpageitems, $linkUrlParams);
+        return $this->renderPage();
     }
 
     // Get the tags and / or categories for filtering from the request
     // filters are like: tag1,tag2|category1,category1 and each argument
     // is url encoded. 
     // If 'all' is passed as argument value, everything is fetched
-    protected function getRequestedFilters($extraParams) {
+    protected function getRequestedFilters() {
 
         $selectedTags = array();
         $selectedCategories = array();
-        $extraParams = explode('|', urldecode($extraParams));
+        $extraParams = explode('|', urldecode($this->extraParams));
 
         // Getting the tags from the params
         if (isset($extraParams[0])) {
@@ -199,110 +241,104 @@ class DefaultController extends Controller {
     }
 
     // Get the required data to display to the correct view depending on pagetype
-    protected function renderPage($page, $id, $publishStates, $extraParams, $currentpage, $totalpageitems, $linkUrlParams) {
+    protected function renderPage() {
 
-        // Check if mobile content should be served		
-        $serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
-        $settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
-
-        switch ($page->getPagetype()) {
+        switch ($this->page->getPagetype()) {
 
             case 'category_page':
                 // Render category list page type
-                $tagIds = $this->getTagFilterIds($page->getTags()->toArray());
-                $categoryIds = $this->getCategoryFilterIds($page->getCategories()->toArray());
+                $tagIds = $this->getTagFilterIds($this->page->getTags()->toArray());
+                $categoryIds = $this->getCategoryFilterIds($this->page->getCategories()->toArray());
 
                 if (!empty($tagIds)) {
-                    $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedCategoryItems($categoryIds, $id, $publishStates, $currentpage, $totalpageitems, $tagIds);
+                    $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedCategoryItems($categoryIds, $this->id, $this->publishStates, $this->currentpage, $this->totalpageitems, $tagIds);
                 } else {
-                    $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getCategoryItems($categoryIds, $id, $publishStates, $currentpage, $totalpageitems);
+                    $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getCategoryItems($categoryIds, $this->id, $this->publishStates, $this->currentpage, $this->totalpageitems);
                 }
 
                 $pages = $pageList['pages'];
                 $totalPages = $pageList['totalPages'];
 
-                $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'mobile' => $serveMobile));
+                $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $this->extraParams, 'currentpage' => $this->currentpage, 'linkUrlParams' => $this->linkUrlParams, 'totalpageitems' => $this->totalpageitems, 'mobile' => $this->serveMobile));
                 break;
 
             case 'page_tag_list':
                 // Render tag list page type
                 $filterForm = $this->createForm(new FilterPagesForm());
-                $filterData = $this->getRequestedFilters($extraParams);
+                $filterData = $this->getRequestedFilters($this->extraParams);
                 $tagIds = $this->getTagFilterIds($filterData['tags']->toArray());
                 $categoryIds = $this->getCategoryFilterIds($filterData['categories']->toArray());
 
                 $filterForm->setData($filterData);
 
                 if (!empty($categoryIds)) {
-                    $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedCategoryItems($categoryIds, $id, $publishStates, $currentpage, $totalpageitems, $tagIds);
+                    $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedCategoryItems($categoryIds, $this->id, $this->publishStates, $this->currentpage, $this->totalpageitems, $tagIds);
                 } else {
-                    $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedItems($tagIds, $id, $publishStates, $currentpage, $totalpageitems);
+                    $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedItems($tagIds, $this->id, $this->publishStates, $this->currentpage, $this->totalpageitems);
                 }
 
                 $pages = $pageList['pages'];
                 $totalPages = $pageList['totalPages'];
 
-                $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'filterForm' => $filterForm->createView(), 'mobile' => $serveMobile));
+                $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $this->extraParams, 'currentpage' => $this->currentpage, 'linkUrlParams' => $this->linkUrlParams, 'totalpageitems' => $this->totalpageitems, 'filterForm' => $filterForm->createView(), 'mobile' => $this->serveMobile));
                 break;
 
             case 'user_profile':
                 // Get the logged user
                 $logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
-                
+
                 // Get the details of the requested user
-                $userName = $extraParams;
+                $userName = $this->extraParams;
                 $user_details_to_show = array(
                     'page_username' => $userName,
                     'logged_username' => '',
                     'page_user' => $this->get('sonata_user.services.helpers')->getUserByUsername($userName)
                 );
-                
+
                 if (!is_object($logged_user) || !$logged_user instanceof UserInterface) {
                     // Public profile
-                }
-                else{
+                    // add logic here
+                } else {
                     // Private profile
+                    // add logic here
                     $user_details_to_show['logged_username'] = $logged_user->getUsername();
                 }
 
                 // Render user profile page type
-                $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'mobile' => $serveMobile, 'user_details_to_show' => $user_details_to_show));
+                $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'mobile' => $this->serveMobile, 'user_details_to_show' => $user_details_to_show));
                 break;
 
             case 'homepage':
                 // Render homepage page type
-                $categoryIds = $this->getCategoryFilterIds($page->getCategories()->toArray());
+                $categoryIds = $this->getCategoryFilterIds($this->page->getCategories()->toArray());
 
                 // Get the items to display in homepage from all bundles that should supply contents
-                $pages = array();
-                $blogpages = array();
-
                 // Get the pages for the category id of homepage but take ou the current (homepage) page item from the results
-                $pages = $this->getDoctrine()->getRepository('PageBundle:Page')->getHomepageItems($categoryIds, $id, $publishStates);
-                $blogpages = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getHomepageItems($categoryIds, $publishStates);
+                $page_pages = $this->getDoctrine()->getRepository('PageBundle:Page')->getHomepageItems($categoryIds, $this->id, $this->publishStates);
+                $blog_pages = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getHomepageItems($categoryIds, $this->publishStates);
 
-                $pages = array_merge($pages, $blogpages);
+                $pages = array_merge($page_pages, $blog_pages);
 
                 // Sort all the items based on custom sorting
                 usort($pages, array("BardisCMS\PageBundle\Controller\DefaultController", "sortHomepageItemsCompare"));
 
-                $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'blogs' => $blogpages, 'mobile' => $serveMobile));
+                $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'pages' => $pages, 'blogs' => $blog_pages, 'mobile' => $this->serveMobile));
                 break;
 
             case 'contact':
                 // Render contact page type				
-                return $this->ContactForm($this->getRequest(), $page);
+                return $this->ContactForm($this->getRequest());
                 break;
 
             default:
                 // Render normal page type
-                $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'mobile' => $serveMobile));
+                $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'mobile' => $this->serveMobile));
         }
 
         if ($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()) {
             // set a custom Cache-Control directive
             $response->setPublic();
-            $response->setLastModified($page->getDateLastModified());
+            $response->setLastModified($this->page->getDateLastModified());
             $response->setVary(array('Accept-Encoding', 'User-Agent'));
             $response->headers->addCacheControlDirective('must-revalidate', true);
             $response->setSharedMaxAge(3600);
@@ -315,23 +351,22 @@ class DefaultController extends Controller {
     protected function render404Page() {
 
         // Get the page with alias 404
-        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias('404');
-        $settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
+        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias('404');
 
         // Check if page exists
-        if (!$page) {
-            throw $this->createNotFoundException('No 404 error page exists. No page found for with alias 404. Page has id: ' . $page->getId());
+        if (!$this->page) {
+            throw $this->createNotFoundException('No 404 error page exists. No page found for with alias 404. Page has id: ' . $this->page->getId());
         }
 
         // Set the website settings and metatags
-        $page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($page);
+        $this->page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($this->page);
 
-        $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page))->setStatusCode(404);
+        $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page))->setStatusCode(404);
 
         if ($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()) {
             // set a custom Cache-Control directive
             $response->setPublic();
-            $response->setLastModified($page->getDateLastModified());
+            $response->setLastModified($this->page->getDateLastModified());
             $response->setVary(array('Accept-Encoding', 'User-Agent'));
             $response->headers->addCacheControlDirective('must-revalidate', true);
             $response->setSharedMaxAge(3600);
@@ -343,23 +378,14 @@ class DefaultController extends Controller {
     // Get and display all items from all bundles in the sitemap xml
     public function sitemapAction() {
 
-        $userRole = $this->get('sonata_user.services.helpers')->getLoggedUserHighestRole();
-        $settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
+        $page_pages = $this->getDoctrine()->getRepository('PageBundle:Page')->getSitemapList($this->publishStates);
+        $blog_pages = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getSitemapList($this->publishStates);
 
-        if ($userRole == "") {
-            $publishStates = array(1);
-        } else {
-            $publishStates = array(1, 2);
-        }
-
-        $sitemapList = $this->getDoctrine()->getRepository('PageBundle:Page')->getSitemapList($publishStates);
-        $blogpages = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getSitemapList($publishStates);
-
-        $sitemapList = array_merge($sitemapList, $blogpages);
+        $sitemapList = array_merge($page_pages, $blog_pages);
 
         $response = $this->render('PageBundle:Default:sitemap.xml.twig', array('sitemapList' => $sitemapList));
 
-        if ($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()) {
+        if ($this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache()) {
             // set a custom Cache-Control directive
             $response->setPublic();
             $response->setVary(array('Accept-Encoding', 'User-Agent'));
@@ -378,12 +404,10 @@ class DefaultController extends Controller {
     }
 
     // Get the contact form page
-    protected function contactForm(Request $request, $page) {
-        // Load the settings from the setting bundle
-        $settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
+    protected function contactForm(Request $request) {
 
-        if (is_object($settings)) {
-            $websiteTitle = $settings->getWebsiteTitle();
+        if (is_object($this->settings)) {
+            $websiteTitle = $this->settings->getWebsiteTitle();
         } else {
             $websiteTitle = '';
         }
@@ -410,9 +434,9 @@ class DefaultController extends Controller {
                 // If data is valid send the email with the twig email template set in the views
                 $message = \Swift_Message::newInstance()
                         ->setSubject('Enquiry from ' . $websiteTitle . ' website: ' . $emailData['firstname'] . ' ' . $emailData['surname'] - $emailData['email'])
-                        ->setFrom($settings->getEmailSender())
+                        ->setFrom($this->settings->getEmailSender())
                         ->setReplyTo($emailData['email'])
-                        ->setTo($settings->getEmailRecepient())
+                        ->setTo($this->settings->getEmailRecepient())
                         ->setBody($this->renderView('PageBundle:Email:contactFormEmail.txt.twig', array('sender' => $emailData['firstname'] . ' ' . $emailData['surname'], 'mailData' => $emailData['comment'])));
 
                 // The responce for the user upon successful submission
@@ -451,17 +475,17 @@ class DefaultController extends Controller {
 
                 return $ajaxFormResponce;
             } else {
-                return $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'form' => $form->createView(), 'ajaxform' => $ajaxForm, 'formMessage' => $formMessage));
+                return $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'form' => $form->createView(), 'ajaxform' => $ajaxForm, 'formMessage' => $formMessage));
             }
         }
         // If the form has not been submited yet
         else {
-            $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page, 'form' => $form->createView(), 'ajaxform' => $ajaxForm));
+            $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'form' => $form->createView(), 'ajaxform' => $ajaxForm));
 
             if ($this->container->getParameter('kernel.environment') == 'prod') {
                 // set a custom Cache-Control directive
                 $response->setPublic();
-                $response->setLastModified($page->getDateLastModified());
+                $response->setLastModified($this->page->getDateLastModified());
                 $response->setVary(array('Accept-Encoding', 'User-Agent'));
                 $response->headers->addCacheControlDirective('must-revalidate', true);
                 $response->setSharedMaxAge(3600);
@@ -522,11 +546,11 @@ class DefaultController extends Controller {
         }
 
         // Use the filters based on the routing structure
-        $extraParams = urlencode($filterTags) . '|' . urlencode($filterCategories);
+        $this->extraParams = urlencode($filterTags) . '|' . urlencode($filterCategories);
 
         // Generate the proper route for the required results
         $url = $this->get('router')->generate(
-                'PageBundle_tagged_noslash', array('extraParams' => $extraParams), true
+                'PageBundle_tagged_noslash', array('extraParams' => $this->extraParams), true
         );
 
         // Redirect to the results
@@ -579,5 +603,4 @@ class DefaultController extends Controller {
         }
         return ($introItemA->getPageOrder() < $introItemB->getPageOrder()) ? -1 : 1;
     }
-
 }
