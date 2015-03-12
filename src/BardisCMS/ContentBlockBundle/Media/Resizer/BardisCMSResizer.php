@@ -44,7 +44,7 @@ class BardisCMSResizer implements ResizerInterface {
         $size = $image->getSize();
         $originalRatio = $size->getWidth() / $size->getHeight();
 
-        if ($settings['width'] == null && $settings['height'] == null) {
+        if ($settings['width'] === null && $settings['height'] === null) {
             $settings['width'] = $size->getWidth();
             $settings['height'] = $size->getHeight();
         }
@@ -135,16 +135,16 @@ class BardisCMSResizer implements ResizerInterface {
     public function getBox(MediaInterface $media, array $settings) {
         $size = $media->getBox();
 
-        if ($settings['width'] == null && $settings['height'] == null) {
+        if ($settings['width'] === null && $settings['height'] === null) {
             $settings['width'] = $size->getWidth();
             $settings['height'] = $size->getHeight();
         }
 
-        if ($settings['height'] == null) {
+        if ($settings['height'] === null) {
             $settings['height'] = (int) ($settings['width'] * $size->getHeight() / $size->getWidth());
         }
 
-        if ($settings['width'] == null) {
+        if ($settings['width'] === null) {
             $settings['width'] = (int) ($settings['height'] * $size->getWidth() / $size->getHeight());
         }
 

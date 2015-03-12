@@ -87,7 +87,7 @@ class SortByAttribute extends \Twig_Extension {
                 } elseif (method_exists($v, $isser)) {
                     $v = $v->$isser();
                 } else {
-                    if ($isInForm == true) {
+                    if ($isInForm === true) {
                         $arrExcludedItemsFromSorting[$v->vars['value']->$getter()] = $v;
                     } else {
                         array_push($arrExcludedItemsFromSorting, $v);
@@ -122,7 +122,7 @@ class SortByAttribute extends \Twig_Extension {
             $arrItemsToSort[$k] = $array[$k];
         }
 
-        if ($isInForm == true) {
+        if ($isInForm === true) {
             ksort($arrExcludedItemsFromSorting);
         }
 

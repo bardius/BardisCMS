@@ -154,13 +154,13 @@ class DefaultController extends Controller {
             $page->enableGA = $settings->getEnableGoogleAnalytics();
             $page->gaID = $settings->getGoogleAnalyticsId();
 
-            if ($page->getKeywords() == null) {
+            if ($page->getKeywords() === null) {
                 $page->setKeywords($settings->getMetaKeywords() . ',' . $titleKeywords);
             } else {
                 $page->setKeywords($page->getKeywords() . ',' . $titleKeywords);
             }
 
-            if ($page->getDescription() == null) {
+            if ($page->getDescription() === null) {
                 $page->setDescription($settings->getMetaDescription() . ' ' . $fromTitle);
             } else {
                 $page->setDescription($page->getDescription() . ' ' . $fromTitle);

@@ -177,7 +177,7 @@ class User extends BaseUser {
 
     public function setEmail($email) {
         $this->email = $email;
-        if ($this->getUsername() == null) {
+        if ($this->getUsername() === null) {
             $this->username = $email;
             $this->password = $email;
             $this->plainPassword = $email;
@@ -186,7 +186,7 @@ class User extends BaseUser {
 
     public function setEmailCanonical($emailCanonical) {
         $this->emailCanonical = $emailCanonical;
-        if ($this->getUsernameCanonical() == null) {
+        if ($this->getUsernameCanonical() === null) {
             $this->usernameCanonical = $emailCanonical;
         }
     }

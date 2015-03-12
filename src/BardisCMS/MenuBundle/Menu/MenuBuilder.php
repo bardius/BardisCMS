@@ -140,7 +140,7 @@ class MenuBuilder {
                         $pageFunction = $menuItem->$getPageFunction();
 
                         // If Link Action is not selected point to homepage else to alias or page id based route 
-                        if ($pageFunction != null) {
+                        if ($pageFunction !== null) {
                             $alias = $this->getPageAlias($pageFunction, $menuType);
 
                             if (null === $alias) {
@@ -160,7 +160,7 @@ class MenuBuilder {
                         $pageFunction = $menuItem->$getPageFunction();
 
                         // If Link Action is not selected point to homepage else to alias or page id based route 
-                        if ($pageFunction != null) {
+                        if ($pageFunction !== null) {
                             $alias = $this->getPageAlias($pageFunction, $menuType);
 
                             if (null === $alias) {
@@ -184,11 +184,11 @@ class MenuBuilder {
                 $menu[$menuItem->getTitle()]->setLinkAttribute('title', $menuItem->getTitle());
 
                 if ($menuItemDecorator == 'main') {
-                    if ($menuItem->getMenuImage() != null) {
+                    if ($menuItem->getMenuImage() !== null) {
                         $menu[$menuItem->getTitle()]->setLabelAttribute('style', 'background-image:url("' . $menuItem->getMenuImage() . '");');
                     }
 
-                    if ($menuItem->children != null) {
+                    if ($menuItem->children !== null) {
                         $menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemlevel . ' has-dropdown not-click');
                         $this->menuItemlevel = $this->menuItemlevel + 1;
                         //$menu[$menuItem->getTitle()]->setAttribute('flyout-toggle', true);
@@ -197,7 +197,7 @@ class MenuBuilder {
                         $this->menuItemlevel = $this->menuItemlevel - 1;
                     }
                 } else {
-                    if ($menuItem->children != null) {
+                    if ($menuItem->children !== null) {
                         $this->menuItemlevel = $this->menuItemlevel + 1;
                         $menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemlevel);
                         $this->setupMenuItem($menu[$menuItem->getTitle()], $menuItem->children, $menuItemDecorator);

@@ -52,13 +52,13 @@ class SetPageSettings {
             $page->gaID = $settings->getGoogleAnalyticsId();
 
             // Set the page meta keywords and description basd on user input values if any
-            if ($page->getKeywords() == null) {
+            if ($page->getKeywords() === null) {
                 $page->setKeywords($settings->getMetaKeywords() . ',' . $titleKeywords);
             } else {
                 $page->setKeywords($page->getKeywords() . ',' . $titleKeywords);
             }
 
-            if ($page->getDescription() == null) {
+            if ($page->getDescription() === null) {
                 $page->setDescription($settings->getMetaDescription() . ' ' . $fromTitle);
             } else {
                 $page->setDescription($page->getDescription() . ' ' . $fromTitle);
