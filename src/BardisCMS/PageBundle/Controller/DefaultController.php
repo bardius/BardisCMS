@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DefaultController extends Controller {
 
-    // Adding variables required for the rendering of the page
+    // Adding variables required for the rendering of pages
     protected $container;
     private $alias;
     private $id;
@@ -34,6 +34,7 @@ class DefaultController extends Controller {
     private $settings;
     private $serveMobile;
     private $userRole;
+    private $enableHTTPCache;
 
     // Override the ContainerAware setcontainer to accomodate the extra variables
     public function setContainer(ContainerInterface $container = null) {
@@ -48,16 +49,19 @@ class DefaultController extends Controller {
         $this->linkUrlParams = null;
         $this->page = null;
         $this->userName = null;
-        
+
         // Get the settings from setting bundle
         $this->settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
         // Get the highest user role security permission
         $this->userRole = $this->get('sonata_user.services.helpers')->getLoggedUserHighestRole();
         // Check if mobile content should be served		
-        $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();        
-        
+        $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
+
+        // Set the flag for allowing HHTP cache
+        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+
         // Set the publish status that is avaliable for the user
-        // Very basic ACL
+        // Very basic ACL permission check
         if ($this->userRole == "") {
             $this->publishStates = array(1);
         } else {
@@ -101,7 +105,7 @@ class DefaultController extends Controller {
 
         $this->page = $page;
         $this->id = $this->page->getId();
-        
+
         $this->userName = $userName;
         $this->linkUrlParams = $userName;
         $this->extraParams = $userName;
@@ -110,7 +114,7 @@ class DefaultController extends Controller {
     }
 
     // Display a page based on the id and the render variables from the settings and the routing
-    public function showPageAction() {
+    protected function showPageAction() {
 
         // Simple publishing ACL based on publish state and user role
         if ($this->page->getPublishState() == 0) {
@@ -122,8 +126,9 @@ class DefaultController extends Controller {
         }
 
         //dump($this->container->getParameter('kernel.environment'));
-
-        if ($this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache()) {
+        
+        // Return cached page if enabled
+        if ($this->enableHTTPCache) {
 
             $response = new Response();
 
@@ -164,170 +169,30 @@ class DefaultController extends Controller {
         return $this->renderPage();
     }
 
-    // Get the tags and / or categories for filtering from the request
-    // filters are like: tag1,tag2|category1,category1 and each argument
-    // is url encoded. 
-    // If 'all' is passed as argument value, everything is fetched
-    protected function getRequestedFilters() {
-
-        $selectedTags = array();
-        $selectedCategories = array();
-        $extraParams = explode('|', urldecode($this->extraParams));
-
-        // Getting the tags from the params
-        if (isset($extraParams[0])) {
-            if ($extraParams[0] == 'all') {
-                $selectedTags[] = null;
-            } else {
-                $tags = explode(',', $extraParams[0]);
-                foreach ($tags as $tag) {
-                    $selectedTags[] = $this->getDoctrine()->getRepository('TagBundle:Tag')->findOneByTitle(urldecode($tag));
-                }
-            }
-        } else {
-            $selectedTags[] = null;
-        }
-
-        // Getting the categories from the params
-        if (isset($extraParams[1])) {
-            if ($extraParams[1] == 'all') {
-                $selectedCategories[] = null;
-            } else {
-                $categories = explode(',', $extraParams[1]);
-                foreach ($categories as $category) {
-                    $selectedCategories[] = $this->getDoctrine()->getRepository('CategoryBundle:Category')->findOneByTitle(urldecode($category));
-                }
-            }
-        } else {
-            $selectedCategories[] = null;
-        }
-
-        // Set the tags and category objects to properly use the filters
-        $filterParams = array('tags' => new \Doctrine\Common\Collections\ArrayCollection($selectedTags), 'categories' => new \Doctrine\Common\Collections\ArrayCollection($selectedCategories));
-
-        return $filterParams;
-    }
-
-    // Get the ids of the filter categories
-    protected function getCategoryFilterIds($selectedCategoriesArray) {
-
-        $categoryIds = array();
-
-        if (empty($selectedCategoriesArray[0])) {
-            $selectedCategoriesArray = $this->getDoctrine()->getRepository('CategoryBundle:Category')->findAll();
-        }
-
-        foreach ($selectedCategoriesArray as $selectedCategoriesEntity) {
-            $categoryIds[] = $selectedCategoriesEntity->getId();
-        }
-
-        return $categoryIds;
-    }
-
-    // Get the ids of the filter tags
-    protected function getTagFilterIds($selectedTagsArray) {
-
-        $tagIds = array();
-
-        if (empty($selectedTagsArray[0])) {
-            $selectedTagsArray = $this->getDoctrine()->getRepository('TagBundle:Tag')->findAll();
-        }
-
-        foreach ($selectedTagsArray as $selectedTagEntity) {
-            $tagIds[] = $selectedTagEntity->getId();
-        }
-
-        return $tagIds;
-    }
-
     // Get the required data to display to the correct view depending on pagetype
     protected function renderPage() {
 
         switch ($this->page->getPagetype()) {
 
             case 'category_page':
-                // Render category list page type
-                $tagIds = $this->getTagFilterIds($this->page->getTags()->toArray());
-                $categoryIds = $this->getCategoryFilterIds($this->page->getCategories()->toArray());
-
-                if (!empty($tagIds)) {
-                    $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedCategoryItems($categoryIds, $this->id, $this->publishStates, $this->currentpage, $this->totalpageitems, $tagIds);
-                } else {
-                    $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getCategoryItems($categoryIds, $this->id, $this->publishStates, $this->currentpage, $this->totalpageitems);
-                }
-
-                $pages = $pageList['pages'];
-                $totalPages = $pageList['totalPages'];
-
-                $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $this->extraParams, 'currentpage' => $this->currentpage, 'linkUrlParams' => $this->linkUrlParams, 'totalpageitems' => $this->totalpageitems, 'mobile' => $this->serveMobile));
+                $response = $this->renderCategoryPage();
                 break;
 
             case 'page_tag_list':
-                // Render tag list page type
-                $filterForm = $this->createForm(new FilterPagesForm());
-                $filterData = $this->getRequestedFilters($this->extraParams);
-                $tagIds = $this->getTagFilterIds($filterData['tags']->toArray());
-                $categoryIds = $this->getCategoryFilterIds($filterData['categories']->toArray());
-
-                $filterForm->setData($filterData);
-
-                if (!empty($categoryIds)) {
-                    $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedCategoryItems($categoryIds, $this->id, $this->publishStates, $this->currentpage, $this->totalpageitems, $tagIds);
-                } else {
-                    $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedItems($tagIds, $this->id, $this->publishStates, $this->currentpage, $this->totalpageitems);
-                }
-
-                $pages = $pageList['pages'];
-                $totalPages = $pageList['totalPages'];
-
-                $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $this->extraParams, 'currentpage' => $this->currentpage, 'linkUrlParams' => $this->linkUrlParams, 'totalpageitems' => $this->totalpageitems, 'filterForm' => $filterForm->createView(), 'mobile' => $this->serveMobile));
+                $response = $this->renderTagListPage();
                 break;
 
             case 'user_profile':
-                // Get the logged user
-                $logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
-
-                // Get the details of the requested user
-                $userName = $this->extraParams;
-                $user_details_to_show = array(
-                    'page_username' => $userName,
-                    'logged_username' => '',
-                    'page_user' => $this->get('sonata_user.services.helpers')->getUserByUsername($userName)
-                );
-
-                if (!is_object($logged_user) || !$logged_user instanceof UserInterface) {
-                    // Public profile
-                    // add logic here
-                } else {
-                    // Private profile
-                    // add logic here
-                    $user_details_to_show['logged_username'] = $logged_user->getUsername();
-                }
-
-                // Render user profile page type
-                $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'mobile' => $this->serveMobile, 'user_details_to_show' => $user_details_to_show));
+                $response = $this->renderUserProfilePage();
                 break;
 
             case 'homepage':
-                // Render homepage page type
-                $categoryIds = $this->getCategoryFilterIds($this->page->getCategories()->toArray());
-
-                // Get the items to display in homepage from all bundles that should supply contents
-                // Get the pages for the category id of homepage but take ou the current (homepage) page item from the results
-                $page_pages = $this->getDoctrine()->getRepository('PageBundle:Page')->getHomepageItems($categoryIds, $this->id, $this->publishStates);
-                $blog_pages = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getHomepageItems($categoryIds, $this->publishStates);
-
-                $pages = array_merge($page_pages, $blog_pages);
-
-                // Sort all the items based on custom sorting
-                usort($pages, array("BardisCMS\PageBundle\Controller\DefaultController", "sortHomepageItemsCompare"));
-
-                $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'pages' => $pages, 'blogs' => $blog_pages, 'mobile' => $this->serveMobile));
+                $response = $this->renderHomePage();
                 break;
 
             case 'contact':
                 // Render contact page type				
-                return $this->ContactForm($this->getRequest());
+                $response = $this->ContactForm($this->getRequest());
                 break;
 
             default:
@@ -335,7 +200,7 @@ class DefaultController extends Controller {
                 $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'mobile' => $this->serveMobile));
         }
 
-        if ($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()) {
+        if ($this->enableHTTPCache) {
             // set a custom Cache-Control directive
             $response->setPublic();
             $response->setLastModified($this->page->getDateLastModified());
@@ -343,6 +208,70 @@ class DefaultController extends Controller {
             $response->headers->addCacheControlDirective('must-revalidate', true);
             $response->setSharedMaxAge(3600);
         }
+
+        return $response;
+    }
+
+    // Get and format the filtering arguments to use with the actions 
+    public function filterPagesAction(Request $request) {
+
+        $filterTags = 'all';
+        $filterCategories = 'all';
+
+        // Create the filters form
+        $filterForm = $this->createForm(new FilterPagesForm());
+        $filterData = null;
+
+        // If the filter form has been submited
+        if ($request->getMethod() == 'POST') {
+
+            // Bind the data with the form
+            $filterForm->handleRequest($request);
+
+            // Get the data from the form
+            $filterData = $filterForm->getData();
+
+            // Assign the filters to categories and tags
+            $filterTags = $this->getTagFilterTitles($filterData['tags']);
+            $filterCategories = $this->getCategoryFilterTitles($filterData['categories']);
+        }
+
+        // Use the filters based on the routing structure
+        $this->extraParams = urlencode($filterTags) . '|' . urlencode($filterCategories);
+
+        // Generate the proper route for the required results
+        $url = $this->get('router')->generate(
+                'PageBundle_tagged_noslash', array('extraParams' => $this->extraParams), true
+        );
+
+        // Redirect to the results
+        return $this->redirect($url);
+    }
+
+    // Get and display all items from all bundles in the sitemap xml
+    public function sitemapAction() {
+
+        $page_pages = $this->getDoctrine()->getRepository('PageBundle:Page')->getSitemapList($this->publishStates);
+        $blog_pages = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getSitemapList($this->publishStates);
+
+        $sitemapList = array_merge($page_pages, $blog_pages);
+
+        $response = $this->render('PageBundle:Default:sitemap.xml.twig', array('sitemapList' => $sitemapList));
+
+        if ($this->enableHTTPCache) {
+            // set a custom Cache-Control directive
+            $response->setPublic();
+            $response->setVary(array('Accept-Encoding', 'User-Agent'));
+            $response->setSharedMaxAge(3600);
+        }
+
+        return $response;
+    }
+
+    // Get and display the sitemap xsl to style the xml of the sitemap
+    public function sitemapxslAction() {
+
+        $response = $this->render('PageBundle:Default:sitemap.xsl.twig');
 
         return $response;
     }
@@ -363,7 +292,7 @@ class DefaultController extends Controller {
 
         $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page))->setStatusCode(404);
 
-        if ($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()) {
+        if ($this->enableHTTPCache) {
             // set a custom Cache-Control directive
             $response->setPublic();
             $response->setLastModified($this->page->getDateLastModified());
@@ -375,30 +304,95 @@ class DefaultController extends Controller {
         return $response;
     }
 
-    // Get and display all items from all bundles in the sitemap xml
-    public function sitemapAction() {
+    // Get and display to the home page
+    protected function renderHomePage() {
 
-        $page_pages = $this->getDoctrine()->getRepository('PageBundle:Page')->getSitemapList($this->publishStates);
-        $blog_pages = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getSitemapList($this->publishStates);
+        // Render homepage page type
+        $categoryIds = $this->getCategoryFilterIds($this->page->getCategories()->toArray());
 
-        $sitemapList = array_merge($page_pages, $blog_pages);
+        // Get the items to display in homepage from all bundles that should supply contents
+        // Get the pages for the category id of homepage but take ou the current (homepage) page item from the results
+        $page_pages = $this->getDoctrine()->getRepository('PageBundle:Page')->getHomepageItems($categoryIds, $this->id, $this->publishStates);
+        $blog_pages = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getHomepageItems($categoryIds, $this->publishStates);
 
-        $response = $this->render('PageBundle:Default:sitemap.xml.twig', array('sitemapList' => $sitemapList));
+        $pages = array_merge($page_pages, $blog_pages);
 
-        if ($this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache()) {
-            // set a custom Cache-Control directive
-            $response->setPublic();
-            $response->setVary(array('Accept-Encoding', 'User-Agent'));
-            $response->setSharedMaxAge(3600);
-        }
+        // Sort all the items based on custom sorting
+        usort($pages, array("BardisCMS\PageBundle\Controller\DefaultController", "sortHomepageItemsCompare"));
+
+        $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'pages' => $pages, 'blogs' => $blog_pages, 'mobile' => $this->serveMobile));
 
         return $response;
     }
 
-    // Get and display the sitemap xsl to style the xml of the sitemap
-    public function sitemapxslAction() {
+    protected function renderUserProfilePage() {
 
-        $response = $this->render('PageBundle:Default:sitemap.xsl.twig');
+        // Get the logged user
+        $logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
+
+        // Get the details of the requested user
+        $userName = $this->extraParams;
+        $user_details_to_show = array(
+            'page_username' => $userName,
+            'logged_username' => '',
+            'page_user' => $this->get('sonata_user.services.helpers')->getUserByUsername($userName)
+        );
+
+        if (!is_object($logged_user) || !$logged_user instanceof UserInterface) {
+            // Public profile
+            // add logic here
+        } else {
+            // Private profile
+            // add logic here
+            $user_details_to_show['logged_username'] = $logged_user->getUsername();
+        }
+
+        // Render user profile page type
+        $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'mobile' => $this->serveMobile, 'user_details_to_show' => $user_details_to_show));
+
+        return $response;
+    }
+
+    protected function renderTagListPage() {
+
+        // Render tag list page type
+        $filterForm = $this->createForm(new FilterPagesForm());
+        $filterData = $this->getRequestedFilters($this->extraParams);
+        $tagIds = $this->getTagFilterIds($filterData['tags']->toArray());
+        $categoryIds = $this->getCategoryFilterIds($filterData['categories']->toArray());
+
+        $filterForm->setData($filterData);
+
+        if (!empty($categoryIds)) {
+            $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedCategoryItems($categoryIds, $this->id, $this->publishStates, $this->currentpage, $this->totalpageitems, $tagIds);
+        } else {
+            $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedItems($tagIds, $this->id, $this->publishStates, $this->currentpage, $this->totalpageitems);
+        }
+
+        $pages = $pageList['pages'];
+        $totalPages = $pageList['totalPages'];
+
+        $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $this->extraParams, 'currentpage' => $this->currentpage, 'linkUrlParams' => $this->linkUrlParams, 'totalpageitems' => $this->totalpageitems, 'filterForm' => $filterForm->createView(), 'mobile' => $this->serveMobile));
+
+        return $response;
+    }
+
+    protected function renderCategoryPage() {
+
+        // Render category list page type
+        $tagIds = $this->getTagFilterIds($this->page->getTags()->toArray());
+        $categoryIds = $this->getCategoryFilterIds($this->page->getCategories()->toArray());
+
+        if (!empty($tagIds)) {
+            $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedCategoryItems($categoryIds, $this->id, $this->publishStates, $this->currentpage, $this->totalpageitems, $tagIds);
+        } else {
+            $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getCategoryItems($categoryIds, $this->id, $this->publishStates, $this->currentpage, $this->totalpageitems);
+        }
+
+        $pages = $pageList['pages'];
+        $totalPages = $pageList['totalPages'];
+
+        $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $this->extraParams, 'currentpage' => $this->currentpage, 'linkUrlParams' => $this->linkUrlParams, 'totalpageitems' => $this->totalpageitems, 'mobile' => $this->serveMobile));
 
         return $response;
     }
@@ -521,40 +515,80 @@ class DefaultController extends Controller {
         return $errors;
     }
 
-    // Get and format the filtering arguments to use with the actions 
-    public function filterPagesAction(Request $request) {
+    // Get the tags and / or categories for filtering from the request
+    // filters are like: tag1,tag2|category1,category1 and each argument
+    // is url encoded. 
+    // If 'all' is passed as argument value, everything is fetched
+    protected function getRequestedFilters() {
 
-        $filterTags = 'all';
-        $filterCategories = 'all';
+        $selectedTags = array();
+        $selectedCategories = array();
+        $extraParams = explode('|', urldecode($this->extraParams));
 
-        // Create the filters form
-        $filterForm = $this->createForm(new FilterPagesForm());
-        $filterData = null;
-
-        // If the filter form has been submited
-        if ($request->getMethod() == 'POST') {
-
-            // Bind the data with the form
-            $filterForm->handleRequest($request);
-
-            // Get the data from the form
-            $filterData = $filterForm->getData();
-
-            // Assign the filters to categories and tags
-            $filterTags = $this->getTagFilterTitles($filterData['tags']);
-            $filterCategories = $this->getCategoryFilterTitles($filterData['categories']);
+        // Getting the tags from the params
+        if (isset($extraParams[0])) {
+            if ($extraParams[0] == 'all') {
+                $selectedTags[] = null;
+            } else {
+                $tags = explode(',', $extraParams[0]);
+                foreach ($tags as $tag) {
+                    $selectedTags[] = $this->getDoctrine()->getRepository('TagBundle:Tag')->findOneByTitle(urldecode($tag));
+                }
+            }
+        } else {
+            $selectedTags[] = null;
         }
 
-        // Use the filters based on the routing structure
-        $this->extraParams = urlencode($filterTags) . '|' . urlencode($filterCategories);
+        // Getting the categories from the params
+        if (isset($extraParams[1])) {
+            if ($extraParams[1] == 'all') {
+                $selectedCategories[] = null;
+            } else {
+                $categories = explode(',', $extraParams[1]);
+                foreach ($categories as $category) {
+                    $selectedCategories[] = $this->getDoctrine()->getRepository('CategoryBundle:Category')->findOneByTitle(urldecode($category));
+                }
+            }
+        } else {
+            $selectedCategories[] = null;
+        }
 
-        // Generate the proper route for the required results
-        $url = $this->get('router')->generate(
-                'PageBundle_tagged_noslash', array('extraParams' => $this->extraParams), true
-        );
+        // Set the tags and category objects to properly use the filters
+        $filterParams = array('tags' => new \Doctrine\Common\Collections\ArrayCollection($selectedTags), 'categories' => new \Doctrine\Common\Collections\ArrayCollection($selectedCategories));
 
-        // Redirect to the results
-        return $this->redirect($url);
+        return $filterParams;
+    }
+
+    // Get the ids of the filter categories
+    protected function getCategoryFilterIds($selectedCategoriesArray) {
+
+        $categoryIds = array();
+
+        if (empty($selectedCategoriesArray[0])) {
+            $selectedCategoriesArray = $this->getDoctrine()->getRepository('CategoryBundle:Category')->findAll();
+        }
+
+        foreach ($selectedCategoriesArray as $selectedCategoriesEntity) {
+            $categoryIds[] = $selectedCategoriesEntity->getId();
+        }
+
+        return $categoryIds;
+    }
+
+    // Get the ids of the filter tags
+    protected function getTagFilterIds($selectedTagsArray) {
+
+        $tagIds = array();
+
+        if (empty($selectedTagsArray[0])) {
+            $selectedTagsArray = $this->getDoctrine()->getRepository('TagBundle:Tag')->findAll();
+        }
+
+        foreach ($selectedTagsArray as $selectedTagEntity) {
+            $tagIds[] = $selectedTagEntity->getId();
+        }
+
+        return $tagIds;
     }
 
     // Get the titles of the filter categories
@@ -603,4 +637,5 @@ class DefaultController extends Controller {
         }
         return ($introItemA->getPageOrder() < $introItemB->getPageOrder()) ? -1 : 1;
     }
+
 }
