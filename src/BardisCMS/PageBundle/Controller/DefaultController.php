@@ -178,7 +178,7 @@ class DefaultController extends Controller {
 
             case 'contact':
                 // Render contact page type
-                $response = $this->ContactForm($this->getRequest());
+                $response = $this->processContactForm($this->getRequest());
                 break;
 
             default:
@@ -213,8 +213,8 @@ class DefaultController extends Controller {
             $filterData = $filterForm->getData();
 
             // Assign the filters to categories and tags
-            $filterTags = $this->getTagFilterTitles($filterData['tags']);
-            $filterCategories = $this->getCategoryFilterTitles($filterData['categories']);
+            $filterTags = $this->get('bardiscms_page.services.helpers')->getTagFilterTitles($filterData['tags']);
+            $filterCategories = $this->get('bardiscms_page.services.helpers')->getCategoryFilterTitles($filterData['categories']);
         }
 
         // Use the filters based on the routing structure
@@ -281,7 +281,7 @@ class DefaultController extends Controller {
     protected function renderHomePage() {
 
         // Render homepage page type
-        $categoryIds = $this->getCategoryFilterIds($this->page->getCategories()->toArray());
+        $categoryIds = $this->get('bardiscms_page.services.helpers')->getCategoryFilterIds($this->page->getCategories()->toArray());
 
         // Get the items to display in homepage from all bundles that should supply contents
         // Get the pages for the category id of homepage but take ou the current (homepage) page item from the results
@@ -330,9 +330,9 @@ class DefaultController extends Controller {
     // Render tag list page type
     protected function renderTagListPage() {
         $filterForm = $this->createForm(new FilterPagesFormType());
-        $filterData = $this->getRequestedFilters($this->extraParams);
-        $tagIds = $this->getTagFilterIds($filterData['tags']->toArray());
-        $categoryIds = $this->getCategoryFilterIds($filterData['categories']->toArray());
+        $filterData = $this->get('bardiscms_page.services.helpers')->getRequestedFilters($this->extraParams);
+        $tagIds = $this->get('bardiscms_page.services.helpers')->getTagFilterIds($filterData['tags']->toArray());
+        $categoryIds = $this->get('bardiscms_page.services.helpers')->getCategoryFilterIds($filterData['categories']->toArray());
 
         $filterForm->setData($filterData);
 
@@ -352,8 +352,8 @@ class DefaultController extends Controller {
 
     // Render category list page type
     protected function renderCategoryPage() {
-        $tagIds = $this->getTagFilterIds($this->page->getTags()->toArray());
-        $categoryIds = $this->getCategoryFilterIds($this->page->getCategories()->toArray());
+        $tagIds = $this->get('bardiscms_page.services.helpers')->getTagFilterIds($this->page->getTags()->toArray());
+        $categoryIds = $this->get('bardiscms_page.services.helpers')->getCategoryFilterIds($this->page->getCategories()->toArray());
 
         if (!empty($tagIds)) {
             $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedCategoryItems($categoryIds, $this->id, $this->publishStates, $this->currentpage, $this->totalpageitems, $tagIds);
@@ -370,7 +370,7 @@ class DefaultController extends Controller {
     }
 
     // Get the contact form page
-    protected function contactForm(Request $request) {
+    protected function processContactForm(Request $request) {
 
         if (is_object($this->settings)) {
             $websiteTitle = $this->settings->getWebsiteTitle();
@@ -422,7 +422,7 @@ class DefaultController extends Controller {
             } else {
                 // Validate the data and get errors
                 $successMsg = '';
-                $errorList = $this->getFormErrorMessages($form);
+                $errorList = $this->get('bardiscms_page.services.helpers')->getFormErrorMessages($form);
                 $formMessage = 'There was an error submitting your form. Please try again.';
                 $formhasErrors = true;
             }
@@ -456,148 +456,6 @@ class DefaultController extends Controller {
         }
     }
 
-    // Get the error messages of the contact form assosiated with their fields in an array
-    private function getFormErrorMessages(\Symfony\Component\Form\Form $form) {
-
-        $errors = array();
-        $formErrors = iterator_to_array($form->getErrors(false, true));
-
-        foreach ($formErrors as $key => $error) {
-            $template = $error->getMessageTemplate();
-            $parameters = $error->getMessageParameters();
-
-            foreach ($parameters as $var => $value) {
-                $template = str_replace($var, $value, $template);
-            }
-
-            $errors[$key] = $template;
-        }
-        if ($form->count()) {
-            foreach ($form as $child) {
-                if (!$child->isValid()) {
-                    $errors[$child->getName()] = $this->getFormErrorMessages($child);
-                }
-            }
-        }
-        
-        return $errors;
-    }
-
-    // Get the tags and / or categories for filtering from the request
-    // filters are like: tag1,tag2|category1,category1 and each argument
-    // is url encoded.
-    // If 'all' is passed as argument value, everything is fetched
-    protected function getRequestedFilters() {
-
-        $selectedTags = array();
-        $selectedCategories = array();
-        $extraParams = explode('|', urldecode($this->extraParams));
-
-        // Getting the tags from the params
-        if (isset($extraParams[0])) {
-            if ($extraParams[0] == 'all') {
-                $selectedTags[] = null;
-            } else {
-                $tags = explode(',', $extraParams[0]);
-                foreach ($tags as $tag) {
-                    $selectedTags[] = $this->getDoctrine()->getRepository('TagBundle:Tag')->findOneByTitle(urldecode($tag));
-                }
-            }
-        } else {
-            $selectedTags[] = null;
-        }
-
-        // Getting the categories from the params
-        if (isset($extraParams[1])) {
-            if ($extraParams[1] == 'all') {
-                $selectedCategories[] = null;
-            } else {
-                $categories = explode(',', $extraParams[1]);
-                foreach ($categories as $category) {
-                    $selectedCategories[] = $this->getDoctrine()->getRepository('CategoryBundle:Category')->findOneByTitle(urldecode($category));
-                }
-            }
-        } else {
-            $selectedCategories[] = null;
-        }
-
-        // Set the tags and category objects to properly use the filters
-        $filterParams = array('tags' => new \Doctrine\Common\Collections\ArrayCollection($selectedTags), 'categories' => new \Doctrine\Common\Collections\ArrayCollection($selectedCategories));
-
-        return $filterParams;
-    }
-
-    // Get the ids of the filter categories
-    protected function getCategoryFilterIds($selectedCategoriesArray) {
-
-        $categoryIds = array();
-
-        if (empty($selectedCategoriesArray[0])) {
-            $selectedCategoriesArray = $this->getDoctrine()->getRepository('CategoryBundle:Category')->findAll();
-        }
-
-        foreach ($selectedCategoriesArray as $selectedCategoriesEntity) {
-            $categoryIds[] = $selectedCategoriesEntity->getId();
-        }
-
-        return $categoryIds;
-    }
-
-    // Get the ids of the filter tags
-    protected function getTagFilterIds($selectedTagsArray) {
-
-        $tagIds = array();
-
-        if (empty($selectedTagsArray[0])) {
-            $selectedTagsArray = $this->getDoctrine()->getRepository('TagBundle:Tag')->findAll();
-        }
-
-        foreach ($selectedTagsArray as $selectedTagEntity) {
-            $tagIds[] = $selectedTagEntity->getId();
-        }
-
-        return $tagIds;
-    }
-
-    // Get the titles of the filter categories
-    protected function getCategoryFilterTitles($selectedCategoriesArray) {
-
-        $categories = array();
-
-        if (!empty($selectedCategoriesArray)) {
-            foreach ($selectedCategoriesArray as $selectedCategoriesEntity) {
-                $categories[] = $selectedCategoriesEntity->getTitle();
-            }
-        }
-
-        $filterCategories = implode(',', $categories);
-
-        if (empty($filterCategories)) {
-            $filterCategories = 'all';
-        }
-
-        return $filterCategories;
-    }
-
-    // Get the titles of the filter tags
-    protected function getTagFilterTitles($selectedTagsArray) {
-        $tags = array();
-
-        if (!empty($selectedTagsArray)) {
-            foreach ($selectedTagsArray as $selectedTagEntity) {
-                $tags[] = $selectedTagEntity->getTitle();
-            }
-        }
-
-        $filterTags = implode(',', $tags);
-
-        if (empty($filterTags)) {
-            $filterTags = 'all';
-        }
-
-        return $filterTags;
-    }
-
     // set a custom Cache-Control directives
     protected function setResponceCacheHeaders(Response $response) {
 
@@ -617,5 +475,4 @@ class DefaultController extends Controller {
         }
         return ($introItemA->getPageOrder() < $introItemB->getPageOrder()) ? -1 : 1;
     }
-
 }

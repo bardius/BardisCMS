@@ -14,7 +14,7 @@
                     <a href="{{ url('BlogBundle_showPage', { 'id': pageItem.id }) }}" title="{{ pageItem.title }}" class="readMoreImage">
                     {% endif %}
                     <img src="{{ app.request.uriForPath('/images/site_assets/default-category-list-item.jpg') }}" alt="{{ pageItem.title }}" />
-                </a>  
+                </a>
             {% endif %}
 
             <div class="introItemText">
@@ -28,9 +28,9 @@
                             <span class="tags">
                                 {% for title in pageItem.tags %}
                                     <a class="tag" href="{{ app.request.getBaseURL() }}/blog/tagged/{{ title|url_encode() }}" title="{{ title }}">
-                                        {{ title }} 
-                                    </a>          
-                                {% endfor %} 
+                                        {{ title }}
+                                    </a>
+                                {% endfor %}
                             </span>
                         {% endif %}
                         {% if pageItem.introtext is not null %}

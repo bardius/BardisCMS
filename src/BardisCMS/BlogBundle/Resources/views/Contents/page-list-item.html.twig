@@ -14,7 +14,7 @@
             {% else %}
                 <div class="large-12 small-12 columns introItemText">
                 {% endif %}
-                <h3>	
+                <h3>
                     {% if pageItem.alias is not null %}
                         <a href="{{ app.request.getBaseURL() }}/blog/{{ pageItem.alias }}" title="{{ pageItem.title }}">
                         {% else %}
@@ -30,12 +30,12 @@
                 </p>
                 {% if pageItem.tags is not null %}
                     <p class="tagList">
-                        Tags: 
+                        Tags:
                         {% for title in pageItem.tags %}
                             <a class="tag" href="{{ app.request.getBaseURL() }}/blog/tagged/{{ title|url_encode() }}" title="{{ title }}">
-                                {{ title }}          
-                            </a> 
-                        {% endfor %} 
+                                {{ title }}
+                            </a>
+                        {% endfor %}
                     </p>
                 {% endif %}
                 {% if pageItem.introtext is not null %}
@@ -43,9 +43,9 @@
                 {% endif %}
                 <p class="readMore">
                     {% if pageItem.alias is not null %}
-                        <a href="{{ app.request.getBaseURL() }}/blog/{{ pageItem.alias }}" title="Want more? Hit Me!">
+                        <a href="{{ app.request.getBaseURL() }}/blog/{{ pageItem.alias }}" title="Read more">
                         {% else %}
-                            <a href="{{ url('BlogBundle_showPage', { 'id': pageItem.id }) }}" title="Want more? Hit Me!">
+                            <a href="{{ url('BlogBundle_showPage', { 'id': pageItem.id }) }}" title="Read more">
                             {% endif %}
                             <span class="hasArrow">Read more</span>
                         </a>

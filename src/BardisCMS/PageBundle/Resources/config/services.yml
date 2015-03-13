@@ -1,7 +1,7 @@
 parameters:
-#    page.services.core_page_helper_class: BardisCMS\PageBundle\Services\CorePageHelper
-    
+    page.services.helpers_class: BardisCMS\PageBundle\Services\Helpers
+
 services:
-#    bardiscms_page.services.core_page_helper:
-#        class: %page.services.core_page_helper_class%
-#        arguments: ["@doctrine.orm.entity_manager"]
+    bardiscms_page.services.helpers:
+        class: %page.services.helpers_class%
+        arguments: ["@doctrine.orm.entity_manager"]
