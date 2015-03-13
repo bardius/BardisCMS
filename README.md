@@ -300,7 +300,7 @@ Included Bundles List
 
 Apache benchmark testing (30000 req, 1000 concurent)
 ----------------------------------------------
-The test was run for the homepage in a small AWS istance.
+The test was run for the home page in a small AWS instance with Ubuntu 14 and Varnish.
 
 Concurrency Level:      1000
 Time taken for tests:   5.102 seconds
