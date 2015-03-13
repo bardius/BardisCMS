@@ -80,15 +80,15 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $pagecontact->addMaincontentblock($manager->merge($this->getReference('contentSampleContact')));
         $manager->persist($pagecontact);
 
-        $pagecontact = new Page();
-        $pagecontact->setDate(new \DateTime());
-        $pagecontact->setTitle('User Profile Page');
-        $pagecontact->setAuthor($manager->merge($this->getReference('admin')));
-        $pagecontact->setAlias('user-profile');
-        $pagecontact->setShowPageTitle(1);
-        $pagecontact->setPublishState(1);
-        $pagecontact->setIntrotext('');
-        $pagecontact->setPagetype('user_profile');
+        $pageuser_profile = new Page();
+        $pageuser_profile->setDate(new \DateTime());
+        $pageuser_profile->setTitle('User Profile Page');
+        $pageuser_profile->setAuthor($manager->merge($this->getReference('admin')));
+        $pageuser_profile->setAlias('user-profile');
+        $pageuser_profile->setShowPageTitle(1);
+        $pageuser_profile->setPublishState(1);
+        $pageuser_profile->setIntrotext('');
+        $pageuser_profile->setPagetype('user_profile');
         $manager->persist($pageuser_profile);
 
         $page1 = new Page();

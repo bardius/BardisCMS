@@ -1,5 +1,5 @@
 imports:
-  
+
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.xml }
@@ -14,63 +14,63 @@ imports:
 
 # framework configuration
 framework:
-  
-    secret:                 %secret%    
+
+    secret:                 %secret%
     http_method_override:   true
     trusted_proxies:        [192.0.0.1, 10.0.0.0/8, 127.0.0.1] #[]
     ide:                    ~
     test:                   false # true only for testing env
     default_locale:         %locale%
-    
+
     csrf_protection:
         enabled:			false
-        
+
     # form configuration
     form:
         enabled:            true
         csrf_protection:
             enabled:        true
-    
+
     # esi configuration
     esi:
-        enabled:            false    
-    
+        enabled:            false
+
     # fragments configuration
     fragments:
         enabled:            false
         path:               /_fragment
-        
-    # router configuration    
+
+    # router configuration
     router:
         resource:			"%kernel.root_dir%/config/routing.yml"
        # type:          ~
        # http_port:     80
        # https_port:    443
-       
+
     # translator configuration
     translator:
         enabled:            true
         fallback:           en
-        
+
     # validation configuration
     validation:
         enabled:            true
         cache:              ~
         enable_annotations: true
         translation_domain: validators
-        
+
     # annotation configuration
     annotations:
         cache:              file
         file_cache_dir:     %kernel.cache_dir%/annotations
         debug:              %kernel.debug%
-        
+
     # templating configuration
     templating:
         assets_version:				~
         assets_version_format:		%%s?%%s
         hinclude_default_template:  ~
-        
+
         form:
             resources:
                 # Default:
@@ -78,18 +78,18 @@ framework:
                 # BardisCMS:
                 - ContentBlockBundle:Form:fields.html.twig
                 - PageBundle:Form:fields.html.twig
-                
+
         assets_base_urls:
             http:               []
             ssl:                []
-            
+
         cache:                  ~
-        
+
         engines:
             - twig
-            
+
         loaders:                []
-        
+
         packages:
             # Prototype
             name:
@@ -99,9 +99,9 @@ framework:
                     http:           []
                     ssl:            []
 
-    
+
     # Session storage configuration
-    session:        
+    session:
         # storage_id:           session.storage.native
         # handler_id:           session.handler.native_file
         name:                   bardiscms
@@ -115,16 +115,16 @@ framework:
         # gc_maxlifetime:       ~
         # save_path:            %kernel.cache_dir%/sessions
         handler_id:             session.handler.pdo
-        # time in seconds 
+        # time in seconds
         cookie_lifetime:		43200
 
 # Doctrine Configuration
 doctrine:
-  
+
     dbal:
       types:
         json:			Sonata\Doctrine\Types\JsonType
-        
+
       default_connection:       default
       # Database connections
       connections:
@@ -139,8 +139,8 @@ doctrine:
           memory:       true
           unix_socket:  %unix_socket%
           charset:      UTF8
-         
-         # Config for multible connections 
+
+         # Config for multible connections
          # doctrine.dbal.[name]_connection service
          # customer:
          #   dbname:           customer
@@ -155,11 +155,11 @@ doctrine:
         # result_cache_driver:          apc
         # query_cache_driver:           apc
         # connection:                   default
-        
+
         # query_cache_driver:
         #     type:                     service
         #     id:                       bardiscms_doctrine_orm_cache
-        
+
         # result_cache_driver:
         #    type:                      memcache
         #     host:                     localhost
@@ -168,7 +168,7 @@ doctrine:
 
 # Session storage table
 parameters:
-  
+
    pdo.db_options:
         db_table:    session
         db_id_col:   session_id
@@ -177,10 +177,10 @@ parameters:
 
 # Session services
 services:
-  
+
     pdo:
         class: PDO
-        arguments:          
+        arguments:
             dsn:        %pdo_service_dsn%
             user:       "%database_user%"
             password:   "%database_password%"
@@ -193,54 +193,54 @@ services:
 
 # Twig Configuration
 twig:
-  
+
     debug:              %kernel.debug%
     strict_variables:   %kernel.debug%
     cache:              "%kernel.cache_dir%/twig"
     charset:            "%kernel.charset%"
-    
+
     globals:
         # Examples:
         pi:             3.14
-    
+
     form:
       resources:
         - 'ContentBlockBundle:Form:fields.html.twig'
         - 'PageBundle:Form:fields.html.twig'
 
-# Assetic Configuration       
+# Assetic Configuration
 minifier:
-  
+
     filter:
         name:
             css:        minifier_css
             js:         minifier_js
-            
+
 assetic:
-  
-    debug:              %kernel.debug%   
-    
+
+    debug:              %kernel.debug%
+
     use_controller:
         enabled:        "%kernel.debug%"
-        profiler:       false        
-        
+        profiler:       false
+
     read_from:          "%kernel.root_dir%/../web"
     write_to:           "%kernel.root_dir%/../web"
-    
+
     bundles:
       - PageBundle
       - BlogBundle
       - CommentBundle
       - FOSUserBundle
-    
+
     filters:
-      
+
         cssrewrite:		~
         #jsminplus:		~
         #    apply_to:		"\.js"
         #cssmin:				~
         #    apply_to:		"\.css$"
-        
+
         scss:					~
         #scssphp:
         #  apply_to: "\.scss$"
@@ -253,7 +253,7 @@ assetic:
 
 # Swiftmailer Configuration
 swiftmailer:
-  
+
     transport:  %mailer_transport%
     host:       %mailer_host%
     username:   %mailer_user%
@@ -262,21 +262,21 @@ swiftmailer:
 
 # ACL and User management configuration
 fos_user:
-  
+
     db_driver:          orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name:      main
     user_class:         Application\Sonata\UserBundle\Entity\User
-    
+
     group:
         group_class:    Application\Sonata\UserBundle\Entity\Group
-        
+
     from_email:
         address:        info@domain.com
         sender_name:    BardisCMS
-        
+
     service:
         mailer:         fos_user.mailer.twig_swift
-        
+
     registration:
         form:
             type:       registration
@@ -285,43 +285,44 @@ fos_user:
             template:   FOSUserBundle:Registration:confirm_email.txt.twig
 
 sonata_user:
-  
+
     security_acl:   true
-    
+
     #sonata_user_impersonating:
     #    pattern: /
     #    defaults: { _controller: SonataPageBundle:Page:catchAll }
     impersonating_route:    sonata_user_impersonating
-    
+
     admin:
         user:
             class:  Application\Sonata\UserBundle\Admin\Entity\BardisCMSUserAdmin
 
 # Doctrine Extensions
 stof_doctrine_extensions:
-          
+
     default_locale:         en_GB
-    
+
     orm:
         default:
           timestampable:    true
-    
+
     # Only used if you activated the Uploadable extension
     uploadable:
-      
+
         # Default file path: This is one of the three ways you can configure the path for the Uploadable extension
         default_file_path:          %kernel.root_dir%/../web/uploads
-        
+
         # Mime type guesser class: Optional. By default, we provide an adapter for the one present in the HttpFoundation component of Symfony
         mime_type_guesser_class:    Stof\DoctrineExtensionsBundle\Uploadable\MimeTypeGuesserAdapter
 
         # Default file info class implementing FileInfoInterface: Optional. By default we provide a class which is prepared to receive an UploadedFile instance.
         default_file_info_class:    Stof\DoctrineExtensionsBundle\Uploadable\UploadedFileInfo
- 
-        
+
+
 knp_menu:
     twig:  # use "twig: false" to disable the Twig extension and the TwigRenderer
         template:       knp_menu.html.twig
-        
+
     templating:         false # if true, enables the helper for PHP templates
     default_renderer:   twig # The renderer to use, list is also available by default
+    

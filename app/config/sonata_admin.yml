@@ -1,7 +1,7 @@
 sonata_admin:
     title:				CMS - Website Admin
     title_logo:			/images/site_assets/adminlogo.jpg
-    
+
     options:
         form_type:                          horizontal
         title_mode:                         single_text
@@ -10,11 +10,11 @@ sonata_admin:
         dropdown_number_groups_per_colums:	4
         # use_select2:						false      # enable select2
         # pager_links:						10         # pager max links to display
-    
+
     security:
         handler: sonata.admin.security.handler.acl # sonata.admin.security.handler.noop
-        
-        # acl security information        
+
+        # acl security information
         information:
             GUEST:    [VIEW, LIST]
             STAFF:    [EDIT, LIST, CREATE]
@@ -25,9 +25,9 @@ sonata_admin:
         admin_permissions: [CREATE, LIST, DELETE, UNDELETE, EXPORT, OPERATOR, MASTER]
         # permission related to the objects
         object_permissions: [VIEW, EDIT, DELETE, UNDELETE, OPERATOR, MASTER, OWNER]
-            
-    
-    templates:        
+
+
+    templates:
         user_block:           SonataAdminBundle:Core:user_block.html.twig
         layout:               SonataAdminBundle::standard_layout.html.twig
         ajax:                 SonataAdminBundle::ajax_layout.html.twig
@@ -52,41 +52,41 @@ sonata_admin:
         base_list_field:      SonataAdminBundle:CRUD:base_list_field.html.twig
         pager_links:          SonataAdminBundle:Pager:links.html.twig
         pager_results:        SonataAdminBundle:Pager:results.html.twig
-        
+
     dashboard:
         blocks:
-            - 
+            -
               position:         left
               type:				sonata.admin.block.admin_list
-              settings: 
-                groups: 
+              settings:
+                groups:
                   - sonata_pages
                   - sonata_categories
                   - sonata_tags
                   - sonata_comments
-            - 
+            -
               position:         center
               type:				sonata.admin.block.admin_list
-              settings: 
-                groups: 
+              settings:
+                groups:
                   - sonata_settings
                   - sonata_menus
                   - sonata_users
                   - sonata_contentblocks
                   - sonata_medias
-            - 
+            -
               position:         right
               type:				sonata.block.service.text
-              settings: 
+              settings:
                 content:        >
                   <h2>Welcome!</h2><p>The current dashboard presents the all items from the Bundles that you can manage and a timeline with the latest actions</p>
-            - 
+            -
               position:         right
               type:				sonata.block.service.clearcache
-            - 
+            -
               position:         right
               type:				sonata.timeline.block.timeline
-              settings: 
+              settings:
                 context:		SONATA_ADMIN
                 max_per_page:	15
 
@@ -129,3 +129,4 @@ sonata_admin:
               items:
                   - sonata.media.admin.media
                   - sonata.media.admin.gallery
+                  
