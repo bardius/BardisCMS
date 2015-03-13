@@ -300,6 +300,8 @@ Included Bundles List
 
 Apache benchmark testing (30000 req, 1000 concurent)
 ----------------------------------------------
+The test was run for the homepage in a small AWS istance.
+
 Concurrency Level:      1000
 Time taken for tests:   5.102 seconds
 Complete requests:      30000
@@ -313,22 +315,22 @@ Time per request:       0.170 [ms] (mean, across all concurrent requests)
 Transfer rate:          21225.14 [Kbytes/sec] received
 
 Connection Times (ms)
-              min  mean[+/-sd] median   max
+               min  mean[+/-sd] median   max
 Connect:        0    3  17.0      0     125
 Processing:     6  156 809.7     11    4949
 Waiting:        6  156 809.7     11    4949
 Total:          6  160 824.9     11    5040
 
 Percentage of the requests served within a certain time (ms)
-  50%     11
-  66%     12
-  75%     12
-  80%     12
-  90%     13
-  95%     15
-  98%   4738
-  99%   4892
- 100%   5040 (longest request)
+50%     11
+66%     12
+75%     12
+80%     12
+90%     13
+95%     15
+98%   4738
+99%   4892
+100%   5040 (longest request)
 
 
 
