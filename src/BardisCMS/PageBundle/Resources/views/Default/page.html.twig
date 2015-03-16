@@ -17,7 +17,7 @@
 {% block body_start %}
     {#
     {% if page.bannercontentblocks|length > 0 %}
-<div class="pageTopBanner">		
+<div class="pageTopBanner">
             {% include 'PageBundle:Contents:bannercontentblocks.html.twig' %}
 </div>
     {% endif %}
@@ -25,29 +25,29 @@
 {% endblock %}
 
 {% block content %}
-    {% if page.bannercontentblocks|length > 0 %}	
-        {% include 'PageBundle:Contents:bannercontentblocks.html.twig' %}
+    {% if page.bannercontentblocks|length > 0 %}
+        {% include 'PageBundle:Contents:bannercontentblocks.html.twig' with {contentblocks: page.bannercontentblocks} %}
     {% endif %}
-    {% if page.pagetype == 'one_columned' %} 
-        <div class="large-12 small-12 columns websitePage {% if page.pageclass is not null %}{{ page.pageclass }}{% endif %}">  
+    {% if page.pagetype == 'one_columned' %}
+        <div class="large-12 small-12 columns websitePage {% if page.pageclass is not null %}{{ page.pageclass }}{% endif %}">
             <div class="row">
-                {% if page.showPageTitle == 1 %} 
-                    <div class="large-12 small-12 columns pageTitle">  
+                {% if page.showPageTitle == 1 %}
+                    <div class="large-12 small-12 columns pageTitle">
                         <h2>{{ page.title }}</h2>
                     </div>
                 {% endif %}
                 <div class="large-12 small-12 columns pageText">
                     <div class="row">
-                        {% include 'PageBundle:Contents:maincontentblocks.html.twig' %}
+                        {% include 'PageBundle:Contents:maincontentblocks.html.twig' with {contentblocks: page.maincontentblocks} %}
                     </div>
                 </div>
             </div>
         </div>
     {% elseif page.pagetype == 'two_columned' %}
-        <div class="large-12 small-12 columns websitePage {% if page.pageclass is not null %}{{ page.pageclass }}{% endif %}">  
+        <div class="large-12 small-12 columns websitePage {% if page.pageclass is not null %}{{ page.pageclass }}{% endif %}">
             <div class="row">
-                {% if page.showPageTitle == 1 %} 
-                    <div class="large-12 small-12 columns pageTitle">  
+                {% if page.showPageTitle == 1 %}
+                    <div class="large-12 small-12 columns pageTitle">
                         <h2>{{ page.title }}</h2>
                     </div>
                 {% endif %}
@@ -55,12 +55,12 @@
                     <div class="row">
                         <div class="large-7 small-12 columns">
                             <div class="row">
-                                {% include 'PageBundle:Contents:maincontentblocks.html.twig' %}
+                                {% include 'PageBundle:Contents:maincontentblocks.html.twig' with {contentblocks: page.maincontentblocks} %}
                             </div>
                         </div>
                         <div class="large-5 small-12 columns">
                             <div class="row">
-                                {% include 'PageBundle:Contents:secondarycontentblocks.html.twig' %}
+                                {% include 'PageBundle:Contents:secondarycontentblocks.html.twig' with {contentblocks: page.secondarycontentblocks} %}
                             </div>
                         </div>
                     </div>
@@ -68,10 +68,10 @@
             </div>
         </div>
     {% elseif page.pagetype == 'contact' %}
-        <div class="large-12 small-12 columns websitePage contactPage {% if page.pageclass is not null %}{{ page.pageclass }}{% endif %}">  
+        <div class="large-12 small-12 columns websitePage contactPage {% if page.pageclass is not null %}{{ page.pageclass }}{% endif %}">
             <div class="row">
-                {% if page.showPageTitle == 1 %} 
-                    <div class="large-12 small-12 columns pageTitle">  
+                {% if page.showPageTitle == 1 %}
+                    <div class="large-12 small-12 columns pageTitle">
                         <h2>{{ page.title }}</h2>
                     </div>
                 {% endif %}
@@ -79,52 +79,52 @@
                     <div class="row">
                         <div class="large-8 small-12 columns contactPageLeft">
                             <div class="row">
-                                {% include 'PageBundle:Contents:maincontentblocks.html.twig' %}
+                                {% include 'PageBundle:Contents:maincontentblocks.html.twig' with {contentblocks: page.maincontentblocks} %}
                             </div>
                         </div>
                         <div class="large-4 small-12 columns contactPageRight">
                             <div class="row">
-                                {% include 'PageBundle:Contents:secondarycontentblocks.html.twig' %}
+                                {% include 'PageBundle:Contents:secondarycontentblocks.html.twig' with {contentblocks: page.secondarycontentblocks} %}
                             </div>
-                        </div>						
-                    </div>						
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     {% elseif page.pagetype == 'three_columned' %}
-        <div class="large-12 small-12 columns websitePage {% if page.pageclass is not null %}{{ page.pageclass }}{% endif %}">  
+        <div class="large-12 small-12 columns websitePage {% if page.pageclass is not null %}{{ page.pageclass }}{% endif %}">
             <div class="row">
-                {% if page.showPageTitle == 1 %} 
-                    <div class="large-12 small-12 columns pageTitle">  
+                {% if page.showPageTitle == 1 %}
+                    <div class="large-12 small-12 columns pageTitle">
                         <h2>{{ page.title }}</h2>
                     </div>
                 {% endif %}
                 <div class="large-12 small-12 columns pageText">
                     <div class="row">
                         <div class="large-4 small-12 columns">
-                            <div class="row">							
-                                {% include 'PageBundle:Contents:maincontentblocks.html.twig' %}
+                            <div class="row">
+                                {% include 'PageBundle:Contents:maincontentblocks.html.twig' with {contentblocks: page.maincontentblocks} %}
                             </div>
                         </div>
                         <div class="large-4 small-12 columns">
                             <div class="row">
-                                {% include 'PageBundle:Contents:secondarycontentblocks.html.twig' %} 
-                            </div>      
+                                {% include 'PageBundle:Contents:secondarycontentblocks.html.twig' with {contentblocks: page.secondarycontentblocks} %}
+                            </div>
                         </div>
                         <div class="large-4 small-12 columns">
                             <div class="row">
-                                {% include 'PageBundle:Contents:extracontentblocks.html.twig' %}
+                                {% include 'PageBundle:Contents:extracontentblocks.html.twig' with {contentblocks: page.extracontentblocks} %}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    {% elseif page.pagetype == 'sitemap' %} 
-        <div class="large-12 small-12 columns websitePage {% if page.pageclass is not null %}{{ page.pageclass }}{% endif %}">  
+    {% elseif page.pagetype == 'sitemap' %}
+        <div class="large-12 small-12 columns websitePage {% if page.pageclass is not null %}{{ page.pageclass }}{% endif %}">
             <div class="row">
-                {% if page.showPageTitle == 1 %} 
-                    <div class="large-12 small-12 columns pageTitle">  
+                {% if page.showPageTitle == 1 %}
+                    <div class="large-12 small-12 columns pageTitle">
                         <h2>{{ page.title }}</h2>
                     </div>
                 {% endif %}
@@ -132,7 +132,7 @@
                     <div class="row">
                         <div class="large-12 small-12 columns">
                             <div class="row">
-                                {% include 'PageBundle:Contents:maincontentblocks.html.twig' %}
+                                {% include 'PageBundle:Contents:maincontentblocks.html.twig' with {contentblocks: page.maincontentblocks} %}
                             </div>
                         </div>
                         <div class="large-12 small-12 columns">
@@ -148,29 +148,29 @@
     {% elseif page.pagetype == 'homepage' %}
         <div class="large-12 small-12 columns homePage">
             <div class="row">
-                {% if page.showPageTitle == 1 %} 
+                {% if page.showPageTitle == 1 %}
                     <div class="large-12 small-12 columns pageTitle">
                         <h2>{{ page.title }}</h2>
                     </div>
                 {% endif %}
-                {% if page.maincontentblocks is not empty %}			
+                {% if page.maincontentblocks is not empty %}
                     <div class="large-12 small-12 columns pageText">
                         <div class="row collapse">
-                            {% include 'PageBundle:Contents:maincontentblocks.html.twig' %}
+                            {% include 'PageBundle:Contents:maincontentblocks.html.twig' with {contentblocks: page.maincontentblocks} %}
                         </div>
                     </div>
                 {% endif %}
                 <div class="large-12 small-12 columns {{ page.pagetype }}List">
                     <div class="row homepageListing">
                         {% if pages %}
-                            {% include 'PageBundle:Contents:homepage-list.html.twig' with {'pages': pages, 'mobile': mobile} %}                
-                        {% endif %}  
+                            {% include 'PageBundle:Contents:homepage-list.html.twig' with {'pages': pages, 'mobile': mobile} %}
+                        {% endif %}
                     </div>
                 </div>
                 {% if page.secondarycontentblocks is not empty %}
                     <div class="large-12 small-12 columns pageText">
                         <div class="row collapse">
-                            {% include 'PageBundle:Contents:secondarycontentblocks.html.twig' %}
+                            {% include 'PageBundle:Contents:secondarycontentblocks.html.twig' with {contentblocks: page.secondarycontentblocks} %}
                         </div>
                     </div>
                 {% endif %}
@@ -179,21 +179,21 @@
     {% elseif page.pagetype == 'category_page' or page.pagetype == 'page_tag_list' %}
         <div class="large-12 small-12 columns categoryPage">
             <div class="row">
-                {% if page.showPageTitle == 1 %} 
-                    <div class="large-12 small-12 columns">  
+                {% if page.showPageTitle == 1 %}
+                    <div class="large-12 small-12 columns">
                         <h2>{{ page.title }}</h2>
                     </div>
                 {% endif %}
-                {% if page.maincontentblocks is not empty %}			
+                {% if page.maincontentblocks is not empty %}
                     <div class="large-12 small-12 columns pageText">
                         <div class="row">
-                            {% include 'PageBundle:Contents:maincontentblocks.html.twig' %}
+                            {% include 'PageBundle:Contents:maincontentblocks.html.twig' with {contentblocks: page.maincontentblocks} %}
                         </div>
                     </div>
                 {% endif %}
                 <div class="large-12 small-12 columns {{ page.pagetype }}List">
                     <div class="row">
-                        {% if page.pagetype == 'page_tag_list' %} 
+                        {% if page.pagetype == 'page_tag_list' %}
                             {% include 'PageBundle:Contents:filterPagesFormHolder.html.twig' %}
                         {% endif %}
                         <div class="large-12 small-12 columns categoryListing">
@@ -204,40 +204,40 @@
                                             {% if pageItem.pagetype == 'blog_home' or pageItem.pagetype == 'blog_article' %}
                                                 {% include 'PageBundle:Contents:page-list-blog-item.html.twig' %}
                                             {% else %}
-                                                {% include 'PageBundle:Contents:page-list-item.html.twig' %}                            
-                                            {% endif %}                            
+                                                {% include 'PageBundle:Contents:page-list-item.html.twig' %}
+                                            {% endif %}
                                         </div>
                                     {% endfor %}
-                                {% endif %} 
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
-                {% if page.secondarycontentblocks is not empty %}		
+                {% if page.secondarycontentblocks is not empty %}
                     <div class="large-12 small-12 columns pageText">
                         <div class="row">
-                            {% include 'PageBundle:Contents:secondarycontentblocks.html.twig' %}
+                            {% include 'PageBundle:Contents:secondarycontentblocks.html.twig' with {contentblocks: page.secondarycontentblocks} %}
                         </div>
                     </div>
                 {% endif %}
-                {% if page.pagetype == 'category_page' %} 
+                {% if page.pagetype == 'category_page' %}
                     {% include 'PageBundle:Contents:pagination.html.twig' %}
-                {% elseif page.pagetype == 'page_tag_list' %} 
-                    {% include 'PageBundle:Contents:tags-pagination.html.twig' %}            
-                {% endif %} 
+                {% elseif page.pagetype == 'page_tag_list' %}
+                    {% include 'PageBundle:Contents:tags-pagination.html.twig' %}
+                {% endif %}
             </div>
         </div>
-    {% else %} 
+    {% else %}
         <div class="large-12 small-12 columns">
-            <div class="row">	
-                {% if page.showPageTitle == 1 %} 
-                    <div class="large-12 small-12 columns">  
+            <div class="row">
+                {% if page.showPageTitle == 1 %}
+                    <div class="large-12 small-12 columns">
                         <h2>{{ page.title }}</h2>
                     </div>
                 {% endif %}
                 {% if page.maincontentblocks is not empty %}
                     <div class="large-12 small-12 columns">
-                        {% include 'PageBundle:Contents:maincontentblocks.html.twig' %}
+                        {% include 'PageBundle:Contents:maincontentblocks.html.twig' with {contentblocks: page.maincontentblocks} %}
                     </div>
                 {% endif %}
             </div>
@@ -250,5 +250,5 @@
 {% endblock %}
 
 {% block modal %}
-    {% include 'PageBundle:Contents:modalcontentblocks.html.twig' %}
+    {% include 'PageBundle:Contents:modalcontentblocks.html.twig' with {contentblocks: page.modalcontentblocks} %}
 {% endblock %}

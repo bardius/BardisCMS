@@ -44,7 +44,7 @@ class ContentBlockAdmin extends Admin {
         $formMapper
                 ->with('Content Block Details', array('collapsed' => false))
                 ->add('title', 'text', array('label' => 'Content Block Title', 'required' => true))
-                //->add('availability', 'choice', array('choices' => array('page' => 'One Page Only', 'global' => 'All Pages'),'preferred_choices' => array('0'), 'label' => 'Available to', 'required' => true))
+                ->add('availability', 'choice', array('choices' => array('page' => 'One Page Only', 'global' => 'All Pages'),'preferred_choices' => array('0'), 'label' => 'Available to', 'required' => true))
                 ->add('publishedState', 'choice', array('choices' => array('0' => 'Unpublished', '1' => 'Published'), 'preferred_choices' => array('1'), 'label' => 'Publish State', 'required' => true))
                 ->add('showTitle', 'choice', array('choices' => array('0' => 'Hide Title', '1' => 'Show Title'), 'preferred_choices' => array('1'), 'label' => 'Title Display State', 'required' => true))
                 ->add('ordering', 'hidden', array('attr' => array('class' => 'orderField'), 'label' => 'Content Block Ordering', 'required' => true))
@@ -68,8 +68,8 @@ class ContentBlockAdmin extends Admin {
 
         $datagridMapper
                 ->add('title')
-                //->add('availability')
-                ->add('publishState', 'doctrine_orm_string', array(), 'choice', array('choices' => array('0' => 'Unpublished', '1' => 'Published', '2' => 'Preview')))
+                ->add('availability', 'doctrine_orm_string', array(), 'choice', array('choices' => array('page' => 'Page Only', 'global' => 'Global')))
+                ->add('publishState', 'doctrine_orm_string', array(), 'choice', array('choices' => array('0' => 'Unpublished', '1' => 'Published')))
                 ->add('contentType', 'doctrine_orm_string', array(), 'choice', array('choices' => $contentTypeChoices))
                 ->add('className')
         ;
@@ -78,7 +78,7 @@ class ContentBlockAdmin extends Admin {
     protected function configureListFields(ListMapper $listMapper) {
         $listMapper
                 ->addIdentifier('title')
-                //->addIdentifier('availability')
+                ->addIdentifier('availability', null, array('sortable' => false, 'label' => 'Availability'))
                 ->addIdentifier('publishStateAsString', null, array('sortable' => false, 'label' => 'Publish State'))
                 ->addIdentifier('showTitleAsString', null, array('sortable' => false, 'label' => 'Title Visibility'))
                 ->addIdentifier('className')

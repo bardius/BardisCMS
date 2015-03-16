@@ -71,6 +71,9 @@ class AddContentTypeFieldSubscriber implements EventSubscriberInterface {
             case 'slide':
                 $form->add($this->factory->createNamed('slide', 'contentslide', null, array('auto_initialize' => false, 'label' => 'Slide Contents')));
                 break;
+            case 'globalblock':
+                $form->add($this->factory->createNamed('globalblock', 'contentglobalblock', null, array('auto_initialize' => false, 'label' => 'Global Block Contents')));
+                break;
             default:
         }
     }

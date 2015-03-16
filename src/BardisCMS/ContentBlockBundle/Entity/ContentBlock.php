@@ -165,6 +165,12 @@ class ContentBlock {
     protected $youtube;
 
     /**
+     * @ORM\OneToOne(targetEntity="BardisCMS\ContentBlockBundle\Entity\ContentGlobalBlock", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="globalblock", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $globalblock;
+
+    /**
      * @ORM\Column(name="date_last_modified", type="datetime")
      * @Gedmo\Timestampable(on="update")
      */
@@ -186,7 +192,7 @@ class ContentBlock {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId() {
         return $this->id;
@@ -207,7 +213,7 @@ class ContentBlock {
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle() {
         return $this->title;
@@ -228,7 +234,7 @@ class ContentBlock {
     /**
      * Get publishedState
      *
-     * @return integer 
+     * @return integer
      */
     public function getPublishedState() {
         return $this->publishedState;
@@ -249,7 +255,7 @@ class ContentBlock {
     /**
      * Get availability
      *
-     * @return string 
+     * @return string
      */
     public function getAvailability() {
         return $this->availability;
@@ -270,7 +276,7 @@ class ContentBlock {
     /**
      * Get showTitle
      *
-     * @return integer 
+     * @return integer
      */
     public function getShowTitle() {
         return $this->showTitle;
@@ -291,7 +297,7 @@ class ContentBlock {
     /**
      * Get ordering
      *
-     * @return integer 
+     * @return integer
      */
     public function getOrdering() {
         return $this->ordering;
@@ -312,7 +318,7 @@ class ContentBlock {
     /**
      * Get className
      *
-     * @return string 
+     * @return string
      */
     public function getClassName() {
         return $this->className;
@@ -333,7 +339,7 @@ class ContentBlock {
     /**
      * Get sizeClass
      *
-     * @return string 
+     * @return string
      */
     public function getSizeClass() {
         return $this->sizeClass;
@@ -354,7 +360,7 @@ class ContentBlock {
     /**
      * Get mediaSize
      *
-     * @return string 
+     * @return string
      */
     public function getMediaSize() {
         return $this->mediaSize;
@@ -375,7 +381,7 @@ class ContentBlock {
     /**
      * Get idName
      *
-     * @return string 
+     * @return string
      */
     public function getIdName() {
         return $this->idName;
@@ -396,7 +402,7 @@ class ContentBlock {
     /**
      * Get contentType
      *
-     * @return string 
+     * @return string
      */
     public function getContentType() {
         return $this->contentType;
@@ -417,7 +423,7 @@ class ContentBlock {
     /**
      * Get htmlText
      *
-     * @return string 
+     * @return string
      */
     public function getHtmlText() {
         return $this->htmlText;
@@ -447,7 +453,7 @@ class ContentBlock {
     /**
      * Get maincontents
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMaincontents() {
         return $this->maincontents;
@@ -477,7 +483,7 @@ class ContentBlock {
     /**
      * Get secondarycontents
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSecondarycontents() {
         return $this->secondarycontents;
@@ -507,7 +513,7 @@ class ContentBlock {
     /**
      * Get extracontents
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getExtracontents() {
         return $this->extracontents;
@@ -537,7 +543,7 @@ class ContentBlock {
     /**
      * Get modalcontents
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getModalcontents() {
         return $this->modalcontents;
@@ -567,7 +573,7 @@ class ContentBlock {
     /**
      * Get blog_extracontents
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getBlogExtracontents() {
         return $this->blog_extracontents;
@@ -597,7 +603,7 @@ class ContentBlock {
     /**
      * Get blog_maincontents
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getBlogMaincontents() {
         return $this->blog_maincontents;
@@ -627,7 +633,7 @@ class ContentBlock {
     /**
      * Get blog_modalcontents
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getBlogModalcontents() {
         return $this->blog_modalcontents;
@@ -657,7 +663,7 @@ class ContentBlock {
     /**
      * Get bannercontents
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getBannercontents() {
         return $this->bannercontents;
@@ -687,7 +693,7 @@ class ContentBlock {
     /**
      * Get blog_bannercontents
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getBlogBannercontents() {
         return $this->blog_bannercontents;
@@ -717,7 +723,7 @@ class ContentBlock {
     /**
      * Get imageFiles
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getImageFiles() {
         return $this->imageFiles;
@@ -738,7 +744,7 @@ class ContentBlock {
     /**
      * Get slide
      *
-     * @return \BardisCMS\ContentBlockBundle\Entity\ContentSlide 
+     * @return \BardisCMS\ContentBlockBundle\Entity\ContentSlide
      */
     public function getSlide() {
         return $this->slide;
@@ -759,7 +765,7 @@ class ContentBlock {
     /**
      * Get fileFile
      *
-     * @return \Application\Sonata\MediaBundle\Entity\Media 
+     * @return \Application\Sonata\MediaBundle\Entity\Media
      */
     public function getFileFile() {
         return $this->fileFile;
@@ -780,7 +786,7 @@ class ContentBlock {
     /**
      * Get vimeo
      *
-     * @return \Application\Sonata\MediaBundle\Entity\Media 
+     * @return \Application\Sonata\MediaBundle\Entity\Media
      */
     public function getVimeo() {
         return $this->vimeo;
@@ -801,16 +807,37 @@ class ContentBlock {
     /**
      * Get youtube
      *
-     * @return \Application\Sonata\MediaBundle\Entity\Media 
+     * @return \Application\Sonata\MediaBundle\Entity\Media
      */
     public function getYoutube() {
         return $this->youtube;
     }
 
     /**
+     * Set globalblock
+     *
+     * @param \BardisCMS\ContentBlockBundle\Entity\ContentGlobalBlock $globalblock
+     * @return ContentBlock
+     */
+    public function setGlobalblock(\BardisCMS\ContentBlockBundle\Entity\ContentGlobalBlock $globalblock = null) {
+        $this->globalblock = $globalblock;
+
+        return $this;
+    }
+
+    /**
+     * Get globalblock
+     *
+     * @return \BardisCMS\ContentBlockBundle\Entity\ContentGlobalBlock
+     */
+    public function getGlobalblock() {
+        return $this->globalblock;
+    }
+
+    /**
      * Get dateLastModified
      *
-     * @return integer 
+     * @return integer
      */
     public function getDateLastModified() {
         return $this->dateLastModified;
@@ -819,7 +846,7 @@ class ContentBlock {
     /**
      * toString Title
      *
-     * @return string 
+     * @return string
      */
     public function __toString() {
         if ($this->getTitle()) {
@@ -832,20 +859,19 @@ class ContentBlock {
     /**
      * toString PublishState
      *
-     * @return string 
+     * @return string
      */
     public function getPublishStateAsString() {
         switch ($this->getPublishedState()) {
             case(0): return "Unpublished";
             case(1): return "Published";
-            case(2): return "Preview";
         }
     }
 
     /**
      * toString ShowTitle
      *
-     * @return string 
+     * @return string
      */
     public function getShowTitleAsString() {
         switch ($this->getShowTitle()) {
@@ -857,7 +883,19 @@ class ContentBlock {
     /**
      * toString ShowTitle
      *
-     * @return string 
+     * @return string
+     */
+    public function getAvailabilityAsString() {
+        switch ($this->getAvailability()) {
+            case('page'): return "Page Only";
+            case('global'): return "Global";
+        }
+    }
+
+    /**
+     * toString ShowTitle
+     *
+     * @return string
      */
     public function getContentTypeAsString() {
         switch ($this->getContentType()) {
@@ -866,6 +904,9 @@ class ContentBlock {
             case('file'): return "File Attachment";
             case('youtube'): return "YouTube Video";
             case('vimeo'): return "Vimeo Video";
+            case('slide'): return "Banner Slide";
+            case('contact'): return "Contact Form";
+            case('globalblock'): return "Global Content Block";
         }
     }
 

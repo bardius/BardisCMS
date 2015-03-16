@@ -1,5 +1,5 @@
-{% if page.modalcontentblocks is not null %}
-    {% for contentBlock in page.modalcontentblocks|sort_by_attribute('ordering') %}
+{% if contentblocks is not null %}
+    {% for contentBlock in contentblocks|sort_by_attribute('ordering') %}
         {% if contentBlock.publishedState == 1 %}
             <div class="reveal-modal contentBlock {% if contentBlock.className is not null %}{{ contentBlock.className }}{% endif %} small-12 {% if contentBlock.sizeClass is null %}large-12{% else %}{{ contentBlock.sizeClass }}{% endif %} columns {% if contentBlock.contentType == 'contact' %}{{ contentBlock.contentType }}{% endif %}" {% if contentBlock.idName is not null %}id="{{ contentBlock.idName }}"{% endif %} data-reveal>
                 {% if contentBlock.showTitle == 1 %}
@@ -35,13 +35,13 @@
                     <div class="flex-video vimeo">
                         {% media contentBlock.vimeo.id, contentBlock.mediaSize %}
                     </div>
-                {% elseif contentBlock.contentType == 'contact' %}                 
-                    {% include 'PageBundle:Contents:contactFormHolder.html.twig' %} 
+                {% elseif contentBlock.contentType == 'contact' %}
+                    {% include 'PageBundle:Contents:contactFormHolder.html.twig' %}
                 {% else %}
                     <p class="error">No content yet. Please Add content from the administation panel.</p>
                 {% endif %}
-                <a class="close-reveal-modal">&#215;</a>
-            </div>
-        {% endif %}
-    {% endfor %}
+            <a class="close-reveal-modal">&#215;</a>
+        </div>
+    {% endif %}
+{% endfor %}
 {% endif %}
