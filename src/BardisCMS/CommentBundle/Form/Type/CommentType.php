@@ -8,7 +8,7 @@
  *
  */
 
-namespace BardisCMS\CommentBundle\Form;
+namespace BardisCMS\CommentBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

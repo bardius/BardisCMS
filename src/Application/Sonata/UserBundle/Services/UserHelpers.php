@@ -29,7 +29,6 @@ class UserHelpers {
 
     /**
      * Get the user role
-     * @TODO: this is very simple ACL and has to be improved
      * 
      * @return String
      */

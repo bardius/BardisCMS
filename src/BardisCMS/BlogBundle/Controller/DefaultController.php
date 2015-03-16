@@ -11,7 +11,7 @@
 namespace BardisCMS\BlogBundle\Controller;
 
 use BardisCMS\CommentBundle\Entity\Comment;
-use BardisCMS\CommentBundle\Form\CommentType;
+use BardisCMS\CommentBundle\Form\Type\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;

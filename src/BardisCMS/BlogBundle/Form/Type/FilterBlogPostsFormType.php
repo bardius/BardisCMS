@@ -8,13 +8,13 @@
  *
  */
 
-namespace BardisCMS\BlogBundle\Form;
+namespace BardisCMS\BlogBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityManager;
 
-class FilterBlogPostsForm extends AbstractType {
+class FilterBlogPostsFormType extends AbstractType {
 
     private $entityManager;
 
@@ -49,7 +49,6 @@ class FilterBlogPostsForm extends AbstractType {
 
     public function getFilters($title) {
 
-        //$filterList = array();
         $qb = $this->entityManager->createQueryBuilder();
 
         $qb->select('DISTINCT c')

@@ -4,7 +4,7 @@ parameters:
 services:
             
   blog.form.filterblogpostsform:
-    class: BardisCMS\BlogBundle\Form\FilterBlogPostsForm        
+    class: BardisCMS\BlogBundle\Form\Type\FilterBlogPostsFormType        
     arguments: ["@doctrine.orm.entity_manager"]        
     tags:
       - { name: form.type, alias: filterblogpostsform }

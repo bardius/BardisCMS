@@ -10,7 +10,7 @@
 
 namespace BardisCMS\SkeletonBundle\Controller;
 
-use BardisCMS\SkeletonBundle\Form\FilterResultsForm;
+use BardisCMS\SkeletonBundle\Form\Type\FilterResultsFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -190,7 +190,7 @@ class DefaultController extends Controller {
 
             $response = $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'mobile' => $serveMobile));
         } else if ($page->getPagetype() == 'skeleton_filtered_list') {
-            $filterForm = $this->createForm(new FilterResultsForm());
+            $filterForm = $this->createForm(new FilterResultsFormType());
             $filterData = $this->getRequestedFilters($extraParams);
             $tagIds = $this->getTagFilterIds($filterData['tags']->toArray());
             $categoryIds = $this->getCategoryFilterIds($filterData['categories']->toArray());
@@ -262,7 +262,7 @@ class DefaultController extends Controller {
 
         $filterTags = 'all';
         $filterCategories = 'all';
-        $filterForm = $this->createForm(new FilterResultsForm());
+        $filterForm = $this->createForm(new FilterResultsFormType());
         $filterData = null;
 
         if ($request->getMethod() == 'POST') {

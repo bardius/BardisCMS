@@ -8,12 +8,12 @@
  *
  */
 
-namespace BardisCMS\SkeletonBundle\Form;
+namespace BardisCMS\SkeletonBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class FilterResultsForm extends AbstractType {
+class FilterResultsFormType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
