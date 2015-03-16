@@ -243,5 +243,4 @@ class PageRepository extends EntityRepository {
 
         return $pageList;
     }
-
 }

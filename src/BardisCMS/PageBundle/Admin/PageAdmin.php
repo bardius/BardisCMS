@@ -34,10 +34,10 @@ class PageAdmin extends Admin {
         reset($introMediaSizeChoices);
         $prefIntroMediaSizeChoice = key($introMediaSizeChoices);
 
-        //getting the container services that exist
+        // Getting the user from container services that exist
         $loggedUser = $this->getConfigurationPool()->getContainer()->get('security.context')->getToken()->getUser();
 
-        // using sonata admin to generate the edit page form and its fields
+        // Using sonata admin to generate the edit page form and its fields
         $formMapper
                 ->tab('Page Essential Details')
                 ->with('Page Essential Details', array('collapsed' => false))
@@ -101,7 +101,7 @@ class PageAdmin extends Admin {
 
         // Check if it is a new entry. If it is hide the content block management
         if (!is_null($this->getSubject()->getId())) {
-            //setting up the available content block holders for each pagetype
+            // Setting up the available content block holders for each pagetype
             switch ($this->subject->getPagetype()) {
                 case 'one_columned':
                     $formMapper
@@ -195,7 +195,7 @@ class PageAdmin extends Admin {
         }
     }
 
-    // Using sonata admin to generate th page listing grid filters
+    // Using sonata admin to generate the page listing grid filters
     protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
 
         // Getting the container parameters set in the config file that exist after the dependency injection

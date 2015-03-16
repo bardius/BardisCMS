@@ -20,6 +20,7 @@ use Sonata\AdminBundle\Route\RouteCollection;
 class SkeletonAdmin extends Admin {
 
     protected function configureFormFields(FormMapper $formMapper) {
+        
         // Getting the container parameters set in the config file that exist
         $skeletonSettings = $this->getConfigurationPool()->getContainer()->getParameter('skeleton_settings');
 
@@ -33,10 +34,10 @@ class SkeletonAdmin extends Admin {
         reset($introMediaSizeChoices);
         $prefIntroMediaSizeChoice = key($introMediaSizeChoices);
 
-        // Getting the container services that exist and then the user roles
+        // Getting the user from container services that exist
         $loggedUser = $this->getConfigurationPool()->getContainer()->get('security.context')->getToken()->getUser();
-        $loggedUserRole = $loggedUser->getRoles();
 
+        // Using sonata admin to generate the edit page form and its fields
         $formMapper
                 ->tab('Skeleton Page Essential Details')
                 ->with('Skeleton Page Essential Details', array('collapsed' => true))
@@ -52,10 +53,8 @@ class SkeletonAdmin extends Admin {
                     'title' => 'Set the title of the Skeleton Page',
                     'publishState' => 'Set the publish status of the Skeleton Page',
                     'date' => 'Set the publishing date of the Skeleton Page',
-                    'author' => 'The Author of the skeleton page ( ' . $loggedUserRole[0] . ' )',
+                    'author' => 'The Author of the skeleton page',
                     'alias' => 'Set the URL alias of the Skeleton Page',
-                    'categories' => 'Select categories for this Skeleton Page',
-                    'tags' => 'Select tags for this Skeleton Page',
                     'pagetype' => 'Select the type of the Skeleton Page (Skeleton Page template)',
                     'pageclass' => 'Set the CSS class that wraps Skeleton Page'
                 ))
@@ -137,7 +136,9 @@ class SkeletonAdmin extends Admin {
         }
     }
 
+    // Using sonata admin to generate the page listing grid filters
     protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
+        
         // Getting the container parameters set in the config file that exist
         $skeletonSettings = $this->getConfigurationPool()->getContainer()->getParameter('skeleton_settings');
 
@@ -155,6 +156,7 @@ class SkeletonAdmin extends Admin {
         ;
     }
 
+    // Using sonata admin to generate th page listing grid and the grid item actions
     protected function configureListFields(ListMapper $listMapper) {
         $listMapper
                 ->addIdentifier('title')
@@ -182,6 +184,7 @@ class SkeletonAdmin extends Admin {
         ;
     }
 
+    // Adding the validation rules for the page form
     public function validate(ErrorElement $errorElement, $object) {
         $errorElement
                 ->with('title')
@@ -197,6 +200,7 @@ class SkeletonAdmin extends Admin {
         ;
     }
 
+    // Adding the route names for the page actions
     protected function configureRoutes(RouteCollection $collection) {
         $collection->add('duplicate', $this->getRouterIdParameter() . '/duplicate');
         $collection->add('edit', $this->getRouterIdParameter() . '/edit');

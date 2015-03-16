@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class FilterResultsFormType extends AbstractType {
 
+    // Creating the filters form and the fields
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
         $builder->add('tags', 'entity', array(
@@ -39,7 +40,7 @@ class FilterResultsFormType extends AbstractType {
     }
 
     public function getName() {
+        // Define the name of the form to call it for rendering
         return 'filterresultsform';
     }
-
 }

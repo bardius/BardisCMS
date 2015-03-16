@@ -1,3 +1,5 @@
+# Starting the routing of the pages based on predefined paths
+
 SkeletonBundle_tagged_noslash:
     pattern:   /Skeleton/tagged/{extraParams}/{currentpage}/{totalpageitems}
     defaults:  { _controller: SkeletonBundle:Default:alias, alias: tagged, extraParams: all, currentpage: 0, totalpageitems: 0}
@@ -22,8 +24,11 @@ SkeletonBundle_tagged:
 SkeletonBundle_filtered:
     pattern:  /Skeleton/filterPages
     defaults: { _controller: SkeletonBundle:Default:filterPages }
+
+# Starting the routing of the pages based on alias
+# articles is the alias of the skeleton home (amend if different)
     
-SkeletonBundle_page_full:
+SkeletonBundle_page_noslash:
     pattern:   /Skeleton/{alias}/{currentpage}/{totalpageitems}/{extraParams}
     defaults:  { _controller: SkeletonBundle:Default:alias, alias: articles, extraParams: all, currentpage: 0, totalpageitems: 0}
     requirements:
@@ -40,7 +45,7 @@ SkeletonBundle_page_only_page:
     pattern:   /Skeleton/{alias}/{currentpage}
     defaults:  { _controller: SkeletonBundle:Default:alias, alias: articles, extraParams: all, currentpage: 0, totalpageitems: 0 }
         
-SkeletonBundle_page_normal:
+SkeletonBundle_page:
     pattern:   /Skeleton/{alias}
     defaults:  { _controller: SkeletonBundle:Default:alias, alias: articles, extraParams: all, currentpage: 0, totalpageitems: 0 }
         
@@ -51,3 +56,5 @@ SkeletonBundle_home:
 #SkeletonBundle_showPage:
 #    pattern:  /Skeleton/showSkeletonPage/{id}
 #    defaults: { _controller: SkeletonBundle:Default:showPage }
+#    requirements:
+#        id: \d+

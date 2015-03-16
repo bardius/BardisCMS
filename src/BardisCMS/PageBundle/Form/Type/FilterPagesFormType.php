@@ -43,5 +43,4 @@ class FilterPagesFormType extends AbstractType {
         // Define the name of the form to call it for rendering
         return 'filterpagesform';
     }
-
 }

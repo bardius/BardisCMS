@@ -192,6 +192,7 @@ class Page {
      */
     public function setDate($date) {
         $this->date = $date;
+        
         return $this;
     }
 
@@ -212,6 +213,7 @@ class Page {
      */
     public function setTitle($title) {
         $this->title = $title;
+        
         return $this;
     }
 
@@ -232,6 +234,7 @@ class Page {
      */
     public function setAuthor($author) {
         $this->author = $author;
+        
         return $this;
     }
 
@@ -252,6 +255,7 @@ class Page {
      */
     public function setPageclass($pageclass) {
         $this->pageclass = $pageclass;
+        
         return $this;
     }
 
@@ -393,6 +397,7 @@ class Page {
      */
     public function setIntroclass($introclass) {
         $this->introclass = $introclass;
+        
         return $this;
     }
 
@@ -413,6 +418,7 @@ class Page {
      */
     public function setPagetype($pagetype) {
         $this->pagetype = $pagetype;
+        
         return $this;
     }
 
@@ -433,6 +439,7 @@ class Page {
      */
     public function addMaincontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks) {
         $this->maincontentblocks[] = $maincontentblocks;
+        
         return $this;
     }
 
@@ -462,6 +469,7 @@ class Page {
      */
     public function addSecondarycontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $secondarycontentblocks) {
         $this->secondarycontentblocks[] = $secondarycontentblocks;
+        
         return $this;
     }
 
@@ -491,6 +499,7 @@ class Page {
      */
     public function addExtracontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $extracontentblocks) {
         $this->extracontentblocks[] = $extracontentblocks;
+        
         return $this;
     }
 
@@ -520,6 +529,7 @@ class Page {
      */
     public function addModalcontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks) {
         $this->modalcontentblocks[] = $modalcontentblocks;
+        
         return $this;
     }
 
@@ -549,6 +559,7 @@ class Page {
      */
     public function addCategory(\BardisCMS\CategoryBundle\Entity\Category $categories) {
         $this->categories[] = $categories;
+        
         return $this;
     }
 
@@ -578,6 +589,7 @@ class Page {
      */
     public function addTag(\BardisCMS\TagBundle\Entity\Tag $tags) {
         $this->tags[] = $tags;
+        
         return $this;
     }
 
@@ -607,6 +619,7 @@ class Page {
      */
     public function addCategories(\BardisCMS\CategoryBundle\Entity\Category $categories) {
         $this->categories[] = $categories;
+        
         return $this;
     }
 
@@ -627,6 +640,7 @@ class Page {
      */
     public function setIntromediasize($intromediasize) {
         $this->intromediasize = $intromediasize;
+        
         return $this;
     }
 
@@ -647,6 +661,7 @@ class Page {
      */
     public function setAlias($alias) {
         $this->alias = $alias;
+        
         return $this;
     }
 
@@ -768,6 +783,7 @@ class Page {
      */
     public function setDateLastModified($dateLastModified) {
         $this->dateLastModified = $dateLastModified;
+        
         return $this;
     }
 
@@ -816,5 +832,4 @@ class Page {
             default: return $this->getPagetype();
         }
     }
-
 }

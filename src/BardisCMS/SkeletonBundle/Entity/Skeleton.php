@@ -11,13 +11,13 @@
 namespace BardisCMS\SkeletonBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Application\Sonata\MediaBundle\Entity\Media;
-use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use BardisCMS\ContentBlockBundle\Entity\ContentBlock;
 use BardisCMS\CategoryBundle\Entity\Category;
 use BardisCMS\TagBundle\Entity\Tag;
+use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 
 /**
  * BardisCMS\SkeletonBundle\Entity\Skeleton
@@ -147,6 +147,12 @@ class Skeleton {
      * @ORM\JoinTable(name="skeleton_modalcontent_blocks")
      * */
     protected $modalcontentblocks;
+
+    /**
+     * @ORM\Column(name="date_last_modified", type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $dateLastModified;
 
     public function __construct() {
         $this->modalcontentblocks = new \Doctrine\Common\Collections\ArrayCollection();
@@ -651,6 +657,27 @@ class Skeleton {
     }
 
     /**
+     * Get dateLastModified
+     *
+     * @return integer 
+     */
+    public function getDateLastModified() {
+        return $this->dateLastModified;
+    }
+
+    /**
+     * Set dateLastModified
+     *
+     * @param integer $dateLastModified
+     * @return Page
+     */
+    public function setDateLastModified($dateLastModified) {
+        $this->dateLastModified = $dateLastModified;
+        
+        return $this;
+    }
+
+    /**
      * toString Title
      *
      * @return string 
@@ -669,6 +696,7 @@ class Skeleton {
      * @return string 
      */
     public function getPublishStateAsString() {
+        // Defining the string values of the publish states
         switch ($this->getPublishState()) {
             case(0): return "Unpublished";
             case(1): return "Published";
@@ -682,11 +710,11 @@ class Skeleton {
      * @return string 
      */
     public function getPagetypeAsString() {
+        // Defining the string values of the page types
         switch ($this->getPagetype()) {
             case('skeleton_article'): return "Skeleton Article";
             case('skeleton_filtered_list'): return "Skeleton Filtered Results";
             case('skeleton_home'): return "Skeleton Homepage";
         }
     }
-
 }

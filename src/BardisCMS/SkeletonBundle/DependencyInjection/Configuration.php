@@ -25,6 +25,8 @@ class Configuration implements ConfigurationInterface {
      */
     public function getConfigTreeBuilder() {
         $treeBuilder = new TreeBuilder();
+        
+        // Setting the name of the root node for the cong options of theis bundle dependecy injection
         $rootNode = $treeBuilder->root('skeleton');
 
         // Here you should define the parameters that are allowed to
@@ -32,7 +34,7 @@ class Configuration implements ConfigurationInterface {
         // more information on that topic.
         $rootNode
                 ->children()
-                ->booleanNode('loadservices')->defaultFalse()->end()
+                ->booleanNode('loadservices')->defaultTrue()->end()
                 ->arrayNode('pagetypes')
                 ->isRequired()
                 ->requiresAtLeastOneElement()

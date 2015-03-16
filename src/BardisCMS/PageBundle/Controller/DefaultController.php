@@ -329,6 +329,7 @@ class DefaultController extends Controller {
 
     // Render tag list page type
     protected function renderTagListPage() {
+        
         $filterForm = $this->createForm(new FilterPagesFormType());
         $filterData = $this->get('bardiscms_page.services.helpers')->getRequestedFilters($this->extraParams);
         $tagIds = $this->get('bardiscms_page.services.helpers')->getTagFilterIds($filterData['tags']->toArray());
