@@ -13,13 +13,12 @@
 {% block siteLogoKeywords %}{{ page.keywords }}{% endblock %}
 {% block siteLogoDescription %}{{ page.title }} {{ page.description }}{% endblock %}
 
-
 {% block body_start %}
     {#
     {% if page.bannercontentblocks|length > 0 %}
-<div class="pageTopBanner">
-            {% include 'PageBundle:Contents:bannercontentblocks.html.twig' %}
-</div>
+        <div class="pageTopBanner">
+            {% include 'PageBundle:Contents:bannercontentblocks.html.twig' with {contentblocks: page.bannercontentblocks %}
+        </div>
     {% endif %}
     #}
 {% endblock %}

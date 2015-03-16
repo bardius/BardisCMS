@@ -1,4 +1,4 @@
-{% for contentBlock in page.maincontentblocks|sort_by_attribute('ordering') %}
+{% for contentBlock in contentblocks|sort_by_attribute('ordering') %}
     {% if contentBlock.publishedState == 1 %}
         <div class="contentBlock {% if loop.index == 1 %}firstBlock{% endif %} {% if contentBlock.className is not null %}{{ contentBlock.className }}{% endif %} small-12 {% if contentBlock.sizeClass is null %}large-12{% else %}{{ contentBlock.sizeClass }}{% endif %} columns {% if contentBlock.contentType == 'contact' %}{{ contentBlock.contentType }}{% endif %}" {% if contentBlock.idName is not null %}id="{{ contentBlock.idName }}"{% endif %}>
             {% if contentBlock.showTitle == 1 %}
@@ -25,19 +25,22 @@
                     {% endfor %}
                 {% endif %}
             {% elseif contentBlock.contentType == 'file' and contentBlock.fileFile.id is defined %}
-                <p>
-                    Download file: <a class="fileLink" href="{{ path('sonata_media_download', {'id': contentBlock.fileFile.id}) }}" target="_blank">{{ contentBlock.fileFile.name }}</a>
-                <p>
-                {% elseif contentBlock.contentType == 'youtube' and contentBlock.youtube.id is defined %}
+                Download file: <a class="fileLink" href="{{ path('sonata_media_download', {'id': contentBlock.fileFile.id}) }}" target="_blank">{{ contentBlock.fileFile.name }}</a>
+            {% elseif contentBlock.contentType == 'youtube' and contentBlock.youtube.id is defined %}
                 <div class="flex-video">
                     {% media contentBlock.youtube.id, contentBlock.mediaSize %}
                 </div>
             {% elseif contentBlock.contentType == 'vimeo'  and contentBlock.vimeo.id is defined %}
                 <div class="flex-video vimeo">
                     {% media contentBlock.vimeo.id, contentBlock.mediaSize %}
-                </div>       
+                </div>
+            {% elseif contentBlock.contentType == 'globalblock' %}
+                {% set contentBlockAsArray = [contentBlock.globalblock.contentblock] %}
+                <div class="row collapse">
+                {% include 'BlogBundle:Contents:maincontentblocks.html.twig' with {contentblocks: contentBlockAsArray} %}
+                </div>
             {% else %}
-                <p class="error">No content yet. Please Add content from the administation panel.</p>
+                <p class="error">No content yet.</p>
             {% endif %}
         </div>
     {% endif %}

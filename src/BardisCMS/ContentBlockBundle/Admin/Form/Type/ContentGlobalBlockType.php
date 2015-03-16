@@ -52,15 +52,18 @@ class ContentGlobalBlockType extends AbstractType {
         // Initalize the query builder variables
         $qb = $this->entityManager->createQueryBuilder();
         $availability = 'global';
+        $excludedContentType = 'globalblock';
 
         // The query to get all global content blocks
         $qb->select('DISTINCT b')
                 ->from('ContentBlockBundle:ContentBlock', 'b')
                 ->where(
-                        $qb->expr()->eq('b.availability', ':availability')
+                        $qb->expr()->eq('b.availability', ':availability'),
+                        $qb->expr()->neq('b.contentType', ':excludedContentType')
                 )
                 ->orderBy('b.title', 'ASC')
                 ->setParameter('availability', $availability)
+                ->setParameter('excludedContentType', $excludedContentType)
         ;
 
         return $qb;

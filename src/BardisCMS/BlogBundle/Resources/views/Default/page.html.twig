@@ -14,14 +14,19 @@
 {% block siteLogoDescription %}{{ page.title }} {{ page.description }}{% endblock %}
 
 {% block body_start %}
-    {% if page.bannercontentblocks is not empty %}
-        <div class="pageTopBanner">		
-            {% include 'BlogBundle:Contents:bannercontentblocks.html.twig' %}
+    {#
+    {% if page.bannercontentblocks|length > 0 %}
+        <div class="pageTopBanner">
+            {% include 'BlogBundle:Contents:bannercontentblocks.html.twig' with {contentblocks: page.bannercontentblocks %}
         </div>
     {% endif %}
+    #}
 {% endblock %}
 
 {% block content %}
+    {% if page.bannercontentblocks|length > 0 %}
+        {% include 'BlogBundle:Contents:bannercontentblocks.html.twig' with {contentblocks: page.bannercontentblocks} %}
+    {% endif %}
     <div class="large-12 small-12 columns blogPage blogArticlePage{% if page.pageclass is not null %}{{ page.pageclass }}{% endif %}">
         {% if page.pagetype == 'blog_article' %}
             <div class="row">
@@ -34,7 +39,7 @@
                 </div>			
                 {% if page.maincontentblocks is not empty %}
                     <div class="large-12 small-12 columns">
-                        {% include 'BlogBundle:Contents:maincontentblocks.html.twig' %}
+                        {% include 'BlogBundle:Contents:maincontentblocks.html.twig' with {contentblocks: page.maincontentblocks} %}
                     </div>
                 {% endif %}
                 {% if page.pagetype == 'blog_filtered_list' %} 
@@ -65,7 +70,7 @@
 
         {% if page.extracontentblocks is not empty %}
             <div class="row contentFooter">
-                {% include 'BlogBundle:Contents:extracontentblocks.html.twig' %}
+                {% include 'BlogBundle:Contents:extracontentblocks.html.twig' with {contentblocks: page.extracontentblocks} %}
             </div>
         {% endif %}
     </div>
@@ -74,5 +79,5 @@
 {% block gAnalytics %}{% include 'PageBundle:Contents:ga.html.twig' %}{% endblock %}
 
 {% block modal %}
-    {% include 'BlogBundle:Contents:modalcontentblocks.html.twig' %}
+    {% include 'BlogBundle:Contents:modalcontentblocks.html.twig' with {contentblocks: page.modalcontentblocks} %}
 {% endblock %}
