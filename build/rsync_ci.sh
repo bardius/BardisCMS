@@ -56,13 +56,29 @@ echo sudo -t -H -u $4 bash -c "sudo chmod 0777 -R $3/app/cache"
 sudo -t -H -u $4 bash -c "sudo chmod 0777 -R $3/app/cache"
 
 echo -e "\n\n\e[0;34m********** Set permissions to cache folder files **********\e[0m"
-echo sudo -t -H -u $4 bash -c "sudo find $3/app/cache -type f -print0 | sudo xargs -0 chmod 0644"
-sudo -t -H -u $4 bash -c "sudo find $3/app/cache -type f -print0 | sudo xargs -0 chmod 0644"
+echo sudo -t -H -u $4 bash -c "sudo find $3/app/cache -type f -print0 | sudo xargs -0 chmod 0755"
+sudo -t -H -u $4 bash -c "sudo find $3/app/cache -type f -print0 | sudo xargs -0 chmod 0755"
+
+echo -e "\n\n\e[0;34m********** Set permissions to logs folder **********\e[0m"
+echo sudo -t -H -u $4 bash -c "sudo chmod 0777 -R $3/app/logs"
+sudo -t -H -u $4 bash -c "sudo chmod 0777 -R $3/app/logs"
+
+echo -e "\n\n\e[0;34m********** Set permissions to logs folder files **********\e[0m"
+echo sudo -t -H -u $4 bash -c "sudo find $3/app/logs -type f -print0 | sudo xargs -0 chmod 0755"
+sudo -t -H -u $4 bash -c "sudo find $3/app/logs -type f -print0 | sudo xargs -0 chmod 0755"
+
+echo -e "\n\n\e[0;34m********** Set permissions to uploads folder **********\e[0m"
+echo sudo -t -H -u $4 bash -c "sudo chmod 0777 -R $3/web/uploads"
+sudo -t -H -u $4 bash -c "sudo chmod 0777 -R $3/web/uploads"
+
+echo -e "\n\n\e[0;34m********** Set permissions to uploads folder files **********\e[0m"
+echo sudo -t -H -u $4 bash -c "sudo find $3/web/uploads -type f -print0 | sudo xargs -0 chmod 0755"
+sudo -t -H -u $4 bash -c "sudo find $3/web/uploads -type f -print0 | sudo xargs -0 chmod 0755"
 
 echo -e "\n\n\e[0;34m********** Generate optimized autoload **********\e[0m"
 echo sudo -t -H -u $4 bash -c "sudo php $3/composer.phar dumpautoload -o"
 sudo -t -H -u $4 bash -c "sudo php $3/composer.phar dumpautoload -o"
 
-echo -e "\n\n\e[0;34m********** Set folder owners and permissions **********\e[0m"
+echo -e "\n\n\e[0;34m********** Set folder owners **********\e[0m"
 echo sudo -t -H -u $4 bash -c "sudo chown -R www-data:www-data $3"
 sudo -t -H -u $4 bash -c "sudo chown -R www-data:www-data $3"

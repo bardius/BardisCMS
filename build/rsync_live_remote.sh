@@ -73,8 +73,24 @@ echo /usr/bin/ssh $5@$3 "sudo chmod 0777 -R $4/app/cache"
 sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo chmod 0777 -R $4/app/cache'"
 
 echo -e "\n\n\e[0;34m********** Set permissions to cache folder files **********\e[0m"
-echo /usr/bin/ssh $5@$3 "sudo find $4/app/cache -type f -print0 | sudo xargs -0 chmod 0644"
-sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo find $4/app/cache -type f -print0 | sudo xargs -0 chmod 0644'"
+echo /usr/bin/ssh $5@$3 "sudo find $4/app/cache -type f -print0 | sudo xargs -0 chmod 0755"
+sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo find $4/app/cache -type f -print0 | sudo xargs -0 chmod 0755'"
+
+echo -e "\n\n\e[0;34m********** Set permissions to logs folder **********\e[0m"
+echo /usr/bin/ssh $5@$3 "sudo chmod 0777 -R $4/app/logs"
+sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo chmod 0777 -R $4/app/logs'"
+
+echo -e "\n\n\e[0;34m********** Set permissions to logs folder files **********\e[0m"
+echo /usr/bin/ssh $5@$3 "sudo find $4/app/logs -type f -print0 | sudo xargs -0 chmod 0755"
+sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo find $4/app/logs -type f -print0 | sudo xargs -0 chmod 0755'"
+
+echo -e "\n\n\e[0;34m********** Set permissions to uploads folder **********\e[0m"
+echo /usr/bin/ssh $5@$3 "sudo chmod 0777 -R $4/app/uploads"
+sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo chmod 0777 -R $4/app/uploads'"
+
+echo -e "\n\n\e[0;34m********** Set permissions to uploads folder files **********\e[0m"
+echo /usr/bin/ssh $5@$3 "sudo find $4/app/uploads -type f -print0 | sudo xargs -0 chmod 0755"
+sudo -H -u $5 bash -c "/usr/bin/ssh $5@$3 'sudo find $4/app/uploads -type f -print0 | sudo xargs -0 chmod 0755'"
 
 echo -e "\n\n\e[0;34m********** Generate optimized autoload **********\e[0m"
 echo /usr/bin/ssh $5@$3 "sudo php $3/composer.phar dumpautoload -o"
