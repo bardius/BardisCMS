@@ -15,7 +15,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Application\Sonata\MediaBundle\Entity\Media;
 
-class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
+class MediaFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
     public function load(ObjectManager $manager) {
         $introImage1 = new Media();
@@ -29,6 +29,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $introImage1->setHeight(415);
         $introImage1->setContentType('image/jpeg');
         $introImage1->setSize(8043);
+        $introImage1->setCategory($manager->merge($this->getReference('category2')));
         $introImage1->setContext('intro');
         $introImage1->setCreatedAt(new \DateTime());
         $introImage1->setUpdatedAt(new \DateTime());
@@ -46,6 +47,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $introImage2->setHeight(415);
         $introImage2->setContentType('image/jpeg');
         $introImage2->setSize(8043);
+        $introImage2->setCategory($manager->merge($this->getReference('category2')));
         $introImage2->setContext('intro');
         $introImage2->setCreatedAt(new \DateTime());
         $introImage2->setUpdatedAt(new \DateTime());
@@ -63,6 +65,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $introImage3->setHeight(415);
         $introImage3->setContentType('image/jpeg');
         $introImage3->setSize(8043);
+        $introImage3->setCategory($manager->merge($this->getReference('category2')));
         $introImage3->setContext('intro');
         $introImage3->setCreatedAt(new \DateTime());
         $introImage3->setUpdatedAt(new \DateTime());
@@ -80,6 +83,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $introImage4->setHeight(415);
         $introImage4->setContentType('image/jpeg');
         $introImage4->setSize(8043);
+        $introImage4->setCategory($manager->merge($this->getReference('category2')));
         $introImage4->setContext('intro');
         $introImage4->setCreatedAt(new \DateTime());
         $introImage4->setUpdatedAt(new \DateTime());
@@ -97,6 +101,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $introImage5->setHeight(415);
         $introImage5->setContentType('image/jpeg');
         $introImage5->setSize(8043);
+        $introImage5->setCategory($manager->merge($this->getReference('category2')));
         $introImage5->setContext('intro');
         $introImage5->setCreatedAt(new \DateTime());
         $introImage5->setUpdatedAt(new \DateTime());
@@ -114,6 +119,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $introImage6->setHeight(415);
         $introImage6->setContentType('image/jpeg');
         $introImage6->setSize(8043);
+        $introImage6->setCategory($manager->merge($this->getReference('category2')));
         $introImage6->setContext('intro');
         $introImage6->setCreatedAt(new \DateTime());
         $introImage6->setUpdatedAt(new \DateTime());
@@ -131,6 +137,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $introImage7->setHeight(415);
         $introImage7->setContentType('image/jpeg');
         $introImage7->setSize(8043);
+        $introImage7->setCategory($manager->merge($this->getReference('category2')));
         $introImage7->setContext('intro');
         $introImage7->setCreatedAt(new \DateTime());
         $introImage7->setUpdatedAt(new \DateTime());
@@ -148,6 +155,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $introImage8->setHeight(415);
         $introImage8->setContentType('image/jpeg');
         $introImage8->setSize(8043);
+        $introImage8->setCategory($manager->merge($this->getReference('category2')));
         $introImage8->setContext('intro');
         $introImage8->setCreatedAt(new \DateTime());
         $introImage8->setUpdatedAt(new \DateTime());
@@ -165,6 +173,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $homeBanner1->setHeight(415);
         $homeBanner1->setContentType('image/jpeg');
         $homeBanner1->setSize(8043);
+        $homeBanner1->setCategory($manager->merge($this->getReference('category3')));
         $homeBanner1->setContext('bgimage');
         $homeBanner1->setCreatedAt(new \DateTime());
         $homeBanner1->setUpdatedAt(new \DateTime());
@@ -182,6 +191,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $homeBanner2->setHeight(415);
         $homeBanner2->setContentType('image/jpeg');
         $homeBanner2->setSize(8043);
+        $homeBanner2->setCategory($manager->merge($this->getReference('category3')));
         $homeBanner2->setContext('bgimage');
         $homeBanner2->setCreatedAt(new \DateTime());
         $homeBanner2->setUpdatedAt(new \DateTime());
@@ -202,7 +212,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
     }
 
     public function getOrder() {
-        return 3;
+        return 6;
     }
 
 }

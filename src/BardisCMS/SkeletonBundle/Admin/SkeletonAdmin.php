@@ -13,14 +13,14 @@ namespace BardisCMS\SkeletonBundle\Admin;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 
 class SkeletonAdmin extends Admin {
 
     protected function configureFormFields(FormMapper $formMapper) {
-        
+
         // Getting the container parameters set in the config file that exist
         $skeletonSettings = $this->getConfigurationPool()->getContainer()->getParameter('skeleton_settings');
 
@@ -138,7 +138,7 @@ class SkeletonAdmin extends Admin {
 
     // Using sonata admin to generate the page listing grid filters
     protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
-        
+
         // Getting the container parameters set in the config file that exist
         $skeletonSettings = $this->getConfigurationPool()->getContainer()->getParameter('skeleton_settings');
 

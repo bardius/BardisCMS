@@ -13,7 +13,7 @@ namespace BardisCMS\PageBundle\Admin;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 
@@ -161,7 +161,7 @@ class PageAdmin extends Admin {
                 case 'category_page':
                 case 'page_tag_list':
                 case 'sitemap':
-                case 'user_profile':                  
+                case 'user_profile':
                 case 'homepage':
                     $formMapper
                             ->tab('Page Contents')

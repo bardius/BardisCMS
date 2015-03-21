@@ -12,7 +12,7 @@ namespace BardisCMS\PageBundle\Block\Service;
 
 use Symfony\Component\HttpFoundation\Response;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\AdminBundle\Validator\ErrorElement;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\BlockBundle\Model\BlockInterface;
 use Sonata\BlockBundle\Block\BaseBlockService;
 use Sonata\BlockBundle\Block\BlockContextInterface;
@@ -41,14 +41,14 @@ class ClearCacheService extends BaseBlockService {
      * {@inheritdoc}
      */
     public function validateBlock(ErrorElement $errorElement, BlockInterface $block) {
-        
+
     }
 
     /**
      * {@inheritdoc}
      */
     public function buildEditForm(FormMapper $formMapper, BlockInterface $block) {
-        
+
     }
 
     /**
