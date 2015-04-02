@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4305c6252c78e576af6a99b59eb34929",
+    "hash": "4974683cc7cfc3c5666cf2f499ecd47d",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2213,7 +2213,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "KnpLabs",
+                    "name": "Knplabs",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -2269,7 +2269,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "KnpLabs",
+                    "name": "Knplabs",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -2889,32 +2889,32 @@
         },
         {
             "name": "sensio/generator-bundle",
-            "version": "dev-master",
+            "version": "2.5.x-dev",
             "target-dir": "Sensio/Bundle/GeneratorBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "8c24b21dd1f9d1d420f096da704a45f2165b665e"
+                "reference": "e50108c2133ee5c9c484555faed50c17a61221d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/8c24b21dd1f9d1d420f096da704a45f2165b665e",
-                "reference": "8c24b21dd1f9d1d420f096da704a45f2165b665e",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/e50108c2133ee5c9c484555faed50c17a61221d3",
+                "reference": "e50108c2133ee5c9c484555faed50c17a61221d3",
                 "shasum": ""
             },
             "require": {
-                "symfony/console": "~2.6",
-                "symfony/framework-bundle": "~2.6"
+                "symfony/console": "~2.5",
+                "symfony/framework-bundle": "~2.2"
             },
             "require-dev": {
                 "doctrine/orm": "~2.2,>=2.2.3",
                 "symfony/doctrine-bridge": "~2.2",
-                "twig/twig": "~1.18"
+                "twig/twig": "~1.11"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.0.x-dev"
+                    "dev-master": "2.5.x-dev"
                 }
             },
             "autoload": {
@@ -2933,7 +2933,7 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2015-03-23 07:24:16"
+            "time": "2015-03-17 06:36:52"
         },
         {
             "name": "sensiolabs/security-checker",
@@ -2986,12 +2986,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "07fb610f69ed0d053120f976dca1597a2528e88e"
+                "reference": "96c490bbf29c78aa832266439ac23110ab0de6fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/07fb610f69ed0d053120f976dca1597a2528e88e",
-                "reference": "07fb610f69ed0d053120f976dca1597a2528e88e",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/96c490bbf29c78aa832266439ac23110ab0de6fa",
+                "reference": "96c490bbf29c78aa832266439ac23110ab0de6fa",
                 "shasum": ""
             },
             "require": {
@@ -3062,7 +3062,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2015-04-01 13:20:08"
+            "time": "2015-04-02 13:17:49"
         },
         {
             "name": "sonata-project/block-bundle",
@@ -4751,7 +4751,6 @@
         "symfony/swiftmailer-bundle": 20,
         "symfony/monolog-bundle": 20,
         "sensio/distribution-bundle": 20,
-        "sensio/generator-bundle": 20,
         "jms/security-extra-bundle": 20,
         "jms/di-extra-bundle": 20,
         "jms/serializer-bundle": 20,

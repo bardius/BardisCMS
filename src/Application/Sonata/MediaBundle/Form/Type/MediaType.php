@@ -13,11 +13,13 @@ namespace Sonata\MediaBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 use Sonata\MediaBundle\Provider\Pool;
 use Sonata\MediaBundle\Form\DataTransformer\ProviderDataTransformer;
 
@@ -57,7 +59,7 @@ class MediaType extends AbstractType {
         $builder->add('unlink', 'checkbox', array(
             'mapped' => false,
             'data' => false,
-            'label' => 'ddddd',
+            'label' => 'Remove media/file',
             'required' => false
         ));
     }

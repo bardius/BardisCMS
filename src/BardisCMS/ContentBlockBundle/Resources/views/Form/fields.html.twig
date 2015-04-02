@@ -4,6 +4,7 @@ This file is part of the BardisCMS.
 #}
 
 {# Overrides for the sonata media form type in sonata admin #}
+{#
 {% block sonata_media_type_widget %}
     {% if value is not empty and value.providerReference %}
         {% if value.providerName == 'sonata.media.provider.image' %}
@@ -54,6 +55,36 @@ This file is part of the BardisCMS.
         </div>
     {% endif %}
 {% endblock sonata_media_type_widget %}
+#}
+{% block sonata_media_type_widget %}
+    <div class="span3 pull-left">
+        {% if value is not empty and value.providerReference %}
+            <div class="pull-left" style="margin-right: 5px">
+                {% thumbnail value, 'admin' with {'class': 'img-polaroid media-object'} %}
+            </div>
+
+            {% if sonata_admin_enabled is defined and sonata_admin_enabled %}
+                <a href="{{ url('admin_sonata_media_media_edit', {id: value.id}) }}"><strong>{{ value.name }}</strong></a>
+            {% else %}
+                <strong>{{ value.name }}</strong>
+            {% endif %}
+             <br />
+            <span type="label">{{ value.providerName|trans({}, 'SonataMediaBundle') }}</span> ~ {{ value.context }}
+        {% else %}
+            <div class="pull-left" style="margin-right: 5px">
+                <img src="{{ asset('bundles/sonatamedia/grey.png') }}" class="img-polaroid media-object" style="width: 85px; height: 85px"/>
+            </div>
+            <strong>{{ 'no_linked_media'|trans({}, 'SonataMediaBundle') }}</strong> <br />
+            <span type="label">{{ form.vars['provider']|trans({}, 'SonataMediaBundle') }} ~ {{ form.vars['context']|trans({}, 'SonataMediaBundle') }}</span>
+        {% endif %}
+    </div>
+
+    <div class="span3 pull-left">
+        {{ 'link_media'|trans({}, 'SonataMediaBundle') }}
+        {{ block('form_widget') }}
+    </div>
+{% endblock sonata_media_type_widget %}
+
 
 {% block contentblockcollection_widget_row %}
     {% spaceless %}
