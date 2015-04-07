@@ -4,87 +4,67 @@ This file is part of the BardisCMS.
 #}
 
 {# Overrides for the sonata media form type in sonata admin #}
-{#
 {% block sonata_media_type_widget %}
     {% if value is not empty and value.providerReference %}
         {% if value.providerName == 'sonata.media.provider.image' %}
             <div class="mediaPreviewHolder">
-                <h4>Existing Image</h4>
-                <p class="imagePreview">
-                    Preview image: <a class="imageLink" href="{% path value.id, 'big' %}" target="_blank">{% thumbnail value.id, 'adminthumb' %}</a>
-                </p>
+                <div class="imagePreview control-group form-group">
+                    <label class="col-sm-3 control-label">Preview Uploaded image:</label>
+                    <div class="col-sm-9 controls">
+                        <a class="imageLink" href="{% path value.id, 'big' %}" target="_blank">
+                            {% thumbnail value.id, 'admin' with {'width': 70 , 'height': 70} %}
+                        </a>                        
+                    </div>
+                </div>
                 {{ block('form_widget') }}
-                <p>Remove image/media</p>
             </div>
         {% endif %}
         {% if value.providerName == 'sonata.media.provider.youtube' %}
             <div class="mediaPreviewHolder">
-                <h4>Existing Video</h4>
-                <p class="videoPreview">
-                    Preview video: {% media value.id, 'medium' %}</a>
-                </p>
+                <div class="imagePreview control-group form-group">
+                    <label class="col-sm-3 control-label">Preview YouTube Video:</label>
+                    <div class="col-sm-9 controls videoPreview">
+                        {% media value.id, 'medium' %}                 
+                    </div>
+                </div>
                 {{ block('form_widget') }}
-                <p>Remove video</p>
             </div>
         {% endif %}
         {% if value.providerName == 'sonata.media.provider.vimeo' %}
             <div class="mediaPreviewHolder">
-                <h4>Existing Video</h4>
-                <p class="videoPreview">
-                    Preview video: {% media value.id, 'medium' %}</a>
-                </p>
+                <div class="imagePreview control-group form-group">
+                    <label class="col-sm-3 control-label">Preview Vimeo Video:</label>
+                    <div class="col-sm-9 controls videoPreview">
+                        {% media value.id, 'medium' %}                 
+                    </div>
+                </div>
                 {{ block('form_widget') }}
-                <p>Remove video</p>
             </div>
         {% endif %}
         {% if value.providerName == 'sonata.media.provider.file' %}
             <div class="mediaPreviewHolder">
-                <h4>Existing Attachment File</h4>
-                <p class="filePreview">
-                    Preview file: <a class="fileLink" href="{{ path('sonata_media_download', {'id': value.id}) }}" target="_blank">{{ value.name }}</a>
-                </p>
+                <div class="imagePreview control-group form-group">
+                    <label class="col-sm-3 control-label">Preview Attached File:</label>
+                    <div class="col-sm-9 controls filePreview">
+                        <a class="fileLink" href="{{ path('sonata_media_download', {'id': value.id}) }}" target="_blank">
+                            {{ value.name }}
+                        </a>                
+                    </div>
+                </div>
                 {{ block('form_widget') }}
-                <p>Remove attachment file</p>
             </div>
         {% endif %}
     {% else %}
         <div class="mediaPreviewHolder">
-            <h4>No media selected</h4>    
+            <div class="imagePreview control-group form-group">
+                <label class="col-sm-3 control-label">New Media</label>
+                <div class="col-sm-9 controls filePreview">               
+                </div>
+            </div>
             {{ block('form_widget') }}
-            <p>Remove media/file</p>
         </div>
     {% endif %}
 {% endblock sonata_media_type_widget %}
-#}
-{% block sonata_media_type_widget %}
-    <div class="span3 pull-left">
-        {% if value is not empty and value.providerReference %}
-            <div class="pull-left" style="margin-right: 5px">
-                {% thumbnail value, 'admin' with {'class': 'img-polaroid media-object'} %}
-            </div>
-
-            {% if sonata_admin_enabled is defined and sonata_admin_enabled %}
-                <a href="{{ url('admin_sonata_media_media_edit', {id: value.id}) }}"><strong>{{ value.name }}</strong></a>
-            {% else %}
-                <strong>{{ value.name }}</strong>
-            {% endif %}
-             <br />
-            <span type="label">{{ value.providerName|trans({}, 'SonataMediaBundle') }}</span> ~ {{ value.context }}
-        {% else %}
-            <div class="pull-left" style="margin-right: 5px">
-                <img src="{{ asset('bundles/sonatamedia/grey.png') }}" class="img-polaroid media-object" style="width: 85px; height: 85px"/>
-            </div>
-            <strong>{{ 'no_linked_media'|trans({}, 'SonataMediaBundle') }}</strong> <br />
-            <span type="label">{{ form.vars['provider']|trans({}, 'SonataMediaBundle') }} ~ {{ form.vars['context']|trans({}, 'SonataMediaBundle') }}</span>
-        {% endif %}
-    </div>
-
-    <div class="span3 pull-left">
-        {{ 'link_media'|trans({}, 'SonataMediaBundle') }}
-        {{ block('form_widget') }}
-    </div>
-{% endblock sonata_media_type_widget %}
-
 
 {% block contentblockcollection_widget_row %}
     {% spaceless %}

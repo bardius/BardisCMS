@@ -372,6 +372,9 @@ module.exports = function (grunt) {
             sonata_media_sync_icon: {
                 cmd: 'sonata:media:sync sonata.media.provider.image icon'
             },
+            sonata_media_sync_admin: {
+                cmd: 'sonata:media:sync sonata.media.provider.image admin'
+            },
             assetic_dump_dev: {
                 cmd: 'assetic:dump',
                 args: {
@@ -523,6 +526,7 @@ module.exports = function (grunt) {
         'sf2-console:sonata_media_sync_intro',
         'sf2-console:sonata_media_sync_bgimage',
         'sf2-console:sonata_media_sync_icon',
+        'sf2-console:sonata_media_sync_admin',
         //'bower:install',
         'uglify',
         'sass:production',
@@ -563,6 +567,7 @@ module.exports = function (grunt) {
         'sf2-console:sonata_media_sync_intro',
         'sf2-console:sonata_media_sync_bgimage',
         'sf2-console:sonata_media_sync_icon',
+        'sf2-console:sonata_media_sync_admin',
         //'bower:install',
         'uglify',
         'sass:release',

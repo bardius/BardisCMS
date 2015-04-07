@@ -36,6 +36,8 @@ php app/console sonata:media:sync sonata.media.provider.image bgimage
 
 php app/console sonata:media:sync sonata.media.provider.image icon
 
+php app/console sonata:media:sync sonata.media.provider.image admin
+
 echo "Generating Assets With Grunt"
 
 grunt deploy

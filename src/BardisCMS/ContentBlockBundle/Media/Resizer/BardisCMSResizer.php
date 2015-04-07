@@ -36,10 +36,6 @@ class BardisCMSResizer implements ResizerInterface {
      */
     public function resize(MediaInterface $media, File $in, File $out, $format, array $settings) {
 
-        if (!isset($settings['width'])) {
-            throw new \RuntimeException(sprintf('Width parameter is missing in context "%s" for provider "%s"', $media->getContext(), $media->getProviderName()));
-        }
-
         $image = $this->adapter->load($in->getContent());
         $size = $image->getSize();
         $originalRatio = $size->getWidth() / $size->getHeight();
@@ -47,6 +43,10 @@ class BardisCMSResizer implements ResizerInterface {
         if ($settings['width'] === null && $settings['height'] === null) {
             $settings['width'] = $size->getWidth();
             $settings['height'] = $size->getHeight();
+        }
+
+        if (!$settings['width']) {
+            $settings['width'] = $size->getWidth();
         }
 
         if (!$settings['height']) {

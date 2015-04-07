@@ -36,12 +36,6 @@
     cursor: pointer!important;
 }
 
-.filefield label, 
-.imagefield label,
-.videofield label{
-    display: none!important;
-}
-
 .filefield .controls, 
 .imagefield .controls, 
 .videofield .controls{
@@ -100,10 +94,6 @@
 .sonata-ba-field-standard-natural textarea,
 .sonata-ba-field-standard-natural .mce-panel{
     max-width:740px!important;
-}
-
-.sonata-bc .form-horizontal .ui-sortable .controls .controls {
-    width: 450px !important;
 }
 
 .ui-sortable fieldset.sonata-ba-collapsed-fields-close:hover,
@@ -186,9 +176,23 @@ label{
 	cursor: pointer;
 }
 
+.ui-dialog{
+    z-index: 9999;
+}
 
+.form-horizontal .control-label{
+    padding-top: 0!important;
+}
 
+.videoPreview iframe {
+    max-width: 100%;
+}
 
+.mediaPreviewHolder .imagefield .form-group:first-child,
+.mediaPreviewHolder .videofield .form-group:first-child,
+.mediaPreviewHolder .filefield .form-group:first-child {
+    display: none;
+}
 
 
 /******************************************************************/

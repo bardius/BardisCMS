@@ -14,12 +14,11 @@ sonata_media:
                 - sonata.media.provider.file
 
             formats:
-                adminthumb:     { width: 70 , height: 70 , quality: 80 }
                 admin:          { width: 90 , height: 90 , quality: 80 }
-                small:		{ width: 188 , height: 263 , quality: 80 }
-                medium:		{ width: 394 , height: 263 , quality: 80 }
-                big:		{ width: 840 , height: 320 , quality: 80 }
-                original:	{ quality: 80 }
+                small:          { width: 188 , height: 263 , quality: 80 }
+                medium:         { width: 394 , height: 263 , quality: 80 }
+                big:            { width: 840 , height: 320 , quality: 80 }
+                original:       { quality: 80 }
 
         intro:
             providers:
@@ -27,20 +26,18 @@ sonata_media:
                 - sonata.media.provider.image
 
             formats:
-                adminthumb:     { width: 70 , height: 70 , quality: 80 }
                 admin:          { width: 90 , height: 90 , quality: 80 }
-                small:		{ width: 188 , height: 263 , quality: 80 }
-                blog:		{ width: 227 , height: 205 , quality: 80 }
-                medium:		{ width: 394 , height: 263 , quality: 80 }
-                big:		{ width: 601 , height: 263 , quality: 80 }
-                original:	{ quality: 80 }
+                small:          { width: 188 , height: 263 , quality: 80 }
+                blog:           { width: 227 , height: 205 , quality: 80 }
+                medium:         { width: 394 , height: 263 , quality: 80 }
+                big:            { width: 601 , height: 263 , quality: 80 }
+                original:       { quality: 80 }
 
         bgimage:
             providers:
                 - sonata.media.provider.image
 
             formats:
-                adminthumb:     { width: 70 , height: 70 , quality: 80 }
                 admin:          { width: 90 , height: 90 , quality: 80 }
                 small:          { width: 224 , height: 206 , quality: 80 }
                 mobile:         { width: 768 , height: 300 , quality: 80 }
@@ -54,11 +51,10 @@ sonata_media:
                 - sonata.media.provider.image
 
             formats:
-                adminthumb:     { width: 46 , height: 46 , quality: 80 }
                 admin:          { width: 90 , height: 90 , quality: 80 }
-                small:          { width: 46 , height: 46 , quality: 80}
-                medium:         { width: 66 , height: 66 , quality: 80}
-                big:            { width: 86 , height: 86 , quality: 80}
+                small:          { width: 46 , height: 46 , quality: 80 }
+                medium:         { width: 66 , height: 66 , quality: 80 }
+                big:            { width: 86 , height: 86 , quality: 80 }
                 original:       { quality: 80 }
 
         sonata_collection:
@@ -66,16 +62,16 @@ sonata_media:
               - sonata.media.provider.image
 
             formats:
-                preview: { width: 100, quality: 100}
-                wide:    { width: 820, quality: 100}
+                admin:   { width: 90 , height: 90 , quality: 80 }
+                wide:    { width: 820, quality: 80 }
 
         sonata_category:
             providers:
               - sonata.media.provider.image
 
             formats:
-                preview: { width: 100, quality: 100}
-                wide:    { width: 820, quality: 100}
+                admin:   { width: 90 , height: 90 , quality: 80 }
+                wide:    { width: 820, quality: 80 }
 
     cdn:
         server:

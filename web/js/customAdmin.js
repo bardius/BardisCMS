@@ -76,11 +76,12 @@ jQuery(document).ready(function ($) {
 
     // Collapse/expand content blocks on click of the legend
     $('.sonata-ba-field-standard-natural').on('click', function (e) {
-        e.preventDefault();
 
         var target = $(e.target);
         
-        if (target.hasClass("sonata-ba-collapsed")) {        
+        if (target.hasClass("sonata-ba-collapsed")) {
+            e.preventDefault();   
+            
             var $collapse = target.closest('.sonata-ba-fielset-collapsed').find('.sonata-ba-collapsed-fields');
             $collapse.collapse('toggle');
         }
