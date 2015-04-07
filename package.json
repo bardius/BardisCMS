@@ -29,7 +29,7 @@
         "grunt-csso": "~0.7.0",
         "load-grunt-tasks": "~3.1.0",
         "grunt-jscs": "~1.6.0",
-        "grunt-autoprefixer": "~2.2.0",
+        "grunt-autoprefixer": "~3.0.0",
         "grunt-composer": "~0.4.1",
         "grunt-bower-task": "~0.4.0",
         "grunt-csssplit": "~0.4.0",
