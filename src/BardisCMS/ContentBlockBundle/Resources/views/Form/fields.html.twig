@@ -24,7 +24,10 @@ This file is part of the BardisCMS.
                 <div class="imagePreview control-group form-group">
                     <label class="col-sm-3 control-label">Preview YouTube Video:</label>
                     <div class="col-sm-9 controls videoPreview">
-                        {% media value.id, 'medium' %}                 
+                        {% media value.id, 'medium' %}   
+                        <p>Video Source:<br>
+                            <a href="https://www.youtube.com/watch?v={{ value.providerReference }}" target="_blank">https://www.youtube.com/watch?v={{ value.providerReference }}</a>
+                        </p>              
                     </div>
                 </div>
                 {{ block('form_widget') }}
@@ -35,7 +38,10 @@ This file is part of the BardisCMS.
                 <div class="imagePreview control-group form-group">
                     <label class="col-sm-3 control-label">Preview Vimeo Video:</label>
                     <div class="col-sm-9 controls videoPreview">
-                        {% media value.id, 'medium' %}                 
+                        {% media value.id, 'medium' %}      
+                        <p>Video Source:<br>
+                            <a href="https://vimeo.com/{{ value.providerReference }}" target="_blank">https://vimeo.com/{{ value.providerReference }}</a>
+                        </p>           
                     </div>
                 </div>
                 {{ block('form_widget') }}
@@ -56,7 +62,7 @@ This file is part of the BardisCMS.
         {% endif %}
     {% else %}
         <div class="mediaPreviewHolder">
-            <div class="imagePreview control-group form-group">
+            <div class="imagePreview newMediaPreview control-group form-group">
                 <label class="col-sm-3 control-label">New Media</label>
                 <div class="col-sm-9 controls filePreview">               
                 </div>

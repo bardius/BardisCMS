@@ -194,6 +194,11 @@ label{
     display: none;
 }
 
+.mediaPreviewHolder .newMediaPreview + .videofield .form-group:first-child,
+.mediaPreviewHolder .newMediaPreview + .filefield .form-group:first-child {
+    display: block;
+}
+
 
 /******************************************************************/
 
