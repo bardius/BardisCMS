@@ -22,7 +22,7 @@ class ContentImageType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $formBuilder, array $options) {
         $formBuilder
-                ->add('imageOrder', 'text', array('attr' => array('class' => 'imageOrderField'), 'label' => 'Image Ordering', 'required' => true))
+                ->add('imageOrder', 'integer', array('attr' => array('class' => 'imageOrderField'), 'label' => 'Image Ordering', 'required' => true))
                 ->add('imageFile', 'sonata_media_type', array('provider' => 'sonata.media.provider.image', 'context' => 'default', 'attr' => array('class' => 'imagefield'), 'label' => 'Image File', 'required' => true))
         ;
     }
