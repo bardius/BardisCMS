@@ -56,7 +56,10 @@ jQuery(document).ready(function ($) {
     // Datepicker
     if ($('.datepicker').length > 0)
     {
-        $('.datepicker').datepicker({dateFormat: 'dd-mm-yy'});
+        $('.datepicker').datetimepicker({
+            locale: 'en',
+            format: 'DD-MM-YYYY'
+        });
     }
 
     // Autogenerate alias form title
