@@ -14,7 +14,7 @@
 Symfony2 (v2.6.6) distribution with integrated Zurb Foundation 5 (v5.5)
 ============================================================================
 
-BardisCMS is a Symfony2 (v2.6.6) distribution with integrated Zurb Foundation 5 Framewok.
+BardisCMS is a Symfony2 (v2.6.6) distribution with integrated Zurb Foundation 5 Framework.
 
 Travis CI, Bower and Grunt with custom builds are included for better workflow on front end.
 
