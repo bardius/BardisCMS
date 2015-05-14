@@ -57,13 +57,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   var jasmineInterface = jasmineRequire.interface(jasmine, env);
 
   /**
-   * Add all of the Jasmine global/public interface to the proper global, so a project can use the public interface directly. For example, calling `describe` in specs instead of `jasmine.getEnv().describe`.
+   * Add all of the Jasmine global/public interface to the global scope, so a project can use the public interface directly. For example, calling `describe` in specs instead of `jasmine.getEnv().describe`.
    */
-  if (typeof window == "undefined" && typeof exports == "object") {
-    extend(exports, jasmineInterface);
-  } else {
-    extend(window, jasmineInterface);
-  }
+  extend(window, jasmineInterface);
 
   /**
    * ## Runner Parameters
@@ -78,6 +74,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   var catchingExceptions = queryString.getParam("catch");
   env.catchExceptions(typeof catchingExceptions === "undefined" ? true : catchingExceptions);
 
+  var throwingExpectationFailures = queryString.getParam("throwFailures");
+  env.throwOnExpectationFailure(throwingExpectationFailures);
+
   /**
    * ## Reporters
    * The `HtmlReporter` builds all of the HTML UI for the runner page. This reporter paints the dots, stars, and x's for specs, as well as all spec names and all failures (if any).
@@ -85,6 +84,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   var htmlReporter = new jasmine.HtmlReporter({
     env: env,
     onRaiseExceptionsClick: function() { queryString.navigateWithNewParam("catch", !env.catchingExceptions()); },
+    onThrowExpectationsClick: function() { queryString.navigateWithNewParam("throwFailures", !env.throwingExpectationFailures()); },
     addToExistingQueryString: function(key, value) { return queryString.fullStringWithNewParam(key, value); },
     getContainer: function() { return document.body; },
     createElement: function() { return document.createElement.apply(document, arguments); },
