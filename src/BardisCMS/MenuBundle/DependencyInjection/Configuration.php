@@ -10,13 +10,12 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  */
-class Configuration implements ConfigurationInterface
-{
+class Configuration implements ConfigurationInterface {
+
     /**
      * {@inheritDoc}
      */
-    public function getConfigTreeBuilder()
-    {
+    public function getConfigTreeBuilder() {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('menu');
 
@@ -24,43 +23,40 @@ class Configuration implements ConfigurationInterface
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
         $rootNode
-            ->children()
+                ->children()
                 ->arrayNode('actions')
-                    ->isRequired()
-                    ->requiresAtLeastOneElement()
-                    ->useAttributeAsKey('name')
-                        ->prototype('scalar')->defaultValue(null)->end()
-                    ->end() 
-                
+                ->isRequired()
+                ->requiresAtLeastOneElement()
+                ->useAttributeAsKey('name')
+                ->prototype('scalar')->defaultValue(null)->end()
+                ->end()
                 ->arrayNode('menutypes')
-                    ->isRequired()
-                    ->requiresAtLeastOneElement()
-                    ->useAttributeAsKey('name')
-                        ->prototype('scalar')->defaultValue(null)->end()
-                    ->end()
-                
+                ->isRequired()
+                ->requiresAtLeastOneElement()
+                ->useAttributeAsKey('name')
+                ->prototype('scalar')->defaultValue(null)->end()
+                ->end()
                 ->arrayNode('menugroups')
-                    ->isRequired()
-                    ->requiresAtLeastOneElement()
-                    ->useAttributeAsKey('name')
-                        ->prototype('scalar')->defaultValue(null)->end()
-                    ->end()
-                
+                ->isRequired()
+                ->requiresAtLeastOneElement()
+                ->useAttributeAsKey('name')
+                ->prototype('scalar')->defaultValue(null)->end()
+                ->end()
                 ->arrayNode('accessLevel')
-                    ->isRequired()
-                    ->requiresAtLeastOneElement()
-                    ->useAttributeAsKey('name')
-                        ->prototype('scalar')->defaultValue(null)->end()
-                    ->end()
-                
+                ->isRequired()
+                ->requiresAtLeastOneElement()
+                ->useAttributeAsKey('name')
+                ->prototype('scalar')->defaultValue(null)->end()
+                ->end()
                 ->arrayNode('publishState')
-                    ->isRequired()
-                    ->requiresAtLeastOneElement()
-                    ->useAttributeAsKey('name')
-                        ->prototype('scalar')->defaultValue(null)->end()
-                    ->end()
-            ->end();
+                ->isRequired()
+                ->requiresAtLeastOneElement()
+                ->useAttributeAsKey('name')
+                ->prototype('scalar')->defaultValue(null)->end()
+                ->end()
+                ->end();
 
         return $treeBuilder;
     }
+
 }

@@ -1,17 +1,23 @@
 <?php
 
+/*
+ * Skeleton Bundle
+ * This file is part of the BardisCMS.
+ *
+ * (c) George Bardis <george@bardis.info>
+ *
+ */
+
 namespace BardisCMS\SkeletonBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Application\Sonata\MediaBundle\Entity\Media;
-use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use BardisCMS\ContentBlockBundle\Entity\ContentBlock;
 use BardisCMS\CategoryBundle\Entity\Category;
 use BardisCMS\TagBundle\Entity\Tag;
-
+use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 
 /**
  * BardisCMS\SkeletonBundle\Entity\Skeleton
@@ -20,8 +26,8 @@ use BardisCMS\TagBundle\Entity\Tag;
  * @DoctrineAssert\UniqueEntity(fields="alias", message="Alias must be unique")
  * @ORM\Entity(repositoryClass="BardisCMS\SkeletonBundle\Repository\SkeletonRepository")
  */
-class Skeleton
-{
+class Skeleton {
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -31,38 +37,38 @@ class Skeleton
 
     /**
      * @ORM\Column(type="date")
-     */ 
+     */
     protected $date;
 
     /**
      * @ORM\Column(type="string", length=255)
-     */ 
+     */
     protected $title;
 
     /**
      * @ORM\ManyToOne(targetEntity="Application\Sonata\UserBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="author", onDelete="SET NULL")
-     */ 
+     */
     protected $author;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true, unique = true)
-     */  
+     */
     protected $alias = null;
 
     /**
      * @ORM\Column(type="integer")
-     */ 
+     */
     protected $pageOrder = 99;
 
     /**
      * @ORM\Column(type="integer")
-     */ 
+     */
     protected $showPageTitle;
 
     /**
      * @ORM\Column(type="integer")
-     */   
+     */
     protected $publishState;
 
     /**
@@ -72,7 +78,7 @@ class Skeleton
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     */ 
+     */
     protected $description = null;
 
     /**
@@ -82,13 +88,13 @@ class Skeleton
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     */ 
+     */
     protected $introtext = null;
 
     /**
      * @ORM\OneToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"persist"})
      * @ORM\JoinColumn(name="introimage", onDelete="SET NULL")
-     */ 
+     */
     protected $introimage;
 
     /**
@@ -108,49 +114,51 @@ class Skeleton
     protected $introclass = null;
 
     /**
-    * @ORM\ManyToMany(targetEntity="BardisCMS\CategoryBundle\Entity\Category", inversedBy="skeletons", cascade={"persist"})
-    * @ORM\JoinTable(name="skeletons_categories")
-    */
+     * @ORM\ManyToMany(targetEntity="BardisCMS\CategoryBundle\Entity\Category", inversedBy="skeletons", cascade={"persist"})
+     * @ORM\JoinTable(name="skeletons_categories")
+     */
     protected $categories;
 
     /**
-    * @ORM\ManyToMany(targetEntity="BardisCMS\TagBundle\Entity\Tag", inversedBy="skeletons", cascade={"persist"})
-    * @ORM\JoinTable(name="skeletons_tags")
-    */
+     * @ORM\ManyToMany(targetEntity="BardisCMS\TagBundle\Entity\Tag", inversedBy="skeletons", cascade={"persist"})
+     * @ORM\JoinTable(name="skeletons_tags")
+     */
     protected $tags;
-    
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $pagetype = null;
 
-   
     /**
      * @ORM\ManyToMany(targetEntity="BardisCMS\ContentBlockBundle\Entity\ContentBlock", inversedBy="skeleton_maincontents", cascade={"persist"})
      * @ORM\JoinTable(name="skeleton_maincontent_blocks")
-     **/
+     * */
     protected $maincontentblocks;
 
-   
     /**
      * @ORM\ManyToMany(targetEntity="BardisCMS\ContentBlockBundle\Entity\ContentBlock", inversedBy="skeleton_bannercontents", cascade={"persist"})
      * @ORM\JoinTable(name="skeleton_bannercontent_blocks")
-     **/
+     * */
     protected $bannercontentblocks;
-
 
     /**
      * @ORM\ManyToMany(targetEntity="BardisCMS\ContentBlockBundle\Entity\ContentBlock", inversedBy="skeleton_modalcontents", cascade={"persist"})
      * @ORM\JoinTable(name="skeleton_modalcontent_blocks")
-     **/
+     * */
     protected $modalcontentblocks;
-    
+
+    /**
+     * @ORM\Column(name="date_last_modified", type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $dateLastModified;
 
     public function __construct() {
-        $this->modalcontentblocks 		= new \Doctrine\Common\Collections\ArrayCollection();
-        $this->maincontentblocks 		= new \Doctrine\Common\Collections\ArrayCollection();
-        $this->bannercontentblocks 		= new \Doctrine\Common\Collections\ArrayCollection();
-	$this->date                             = new \DateTime();
+        $this->modalcontentblocks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->maincontentblocks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->bannercontentblocks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->date = new \DateTime();
     }
 
     /**
@@ -158,8 +166,7 @@ class Skeleton
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -169,10 +176,9 @@ class Skeleton
      * @param \DateTime $date
      * @return Skeleton
      */
-    public function setDate($date)
-    {
+    public function setDate($date) {
         $this->date = $date;
-    
+
         return $this;
     }
 
@@ -181,8 +187,7 @@ class Skeleton
      *
      * @return \DateTime 
      */
-    public function getDate()
-    {
+    public function getDate() {
         return $this->date;
     }
 
@@ -192,10 +197,9 @@ class Skeleton
      * @param string $title
      * @return Skeleton
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
-    
+
         return $this;
     }
 
@@ -204,8 +208,7 @@ class Skeleton
      *
      * @return string 
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -215,10 +218,9 @@ class Skeleton
      * @param string $alias
      * @return Skeleton
      */
-    public function setAlias($alias)
-    {
+    public function setAlias($alias) {
         $this->alias = $alias;
-    
+
         return $this;
     }
 
@@ -227,8 +229,7 @@ class Skeleton
      *
      * @return string 
      */
-    public function getAlias()
-    {
+    public function getAlias() {
         return $this->alias;
     }
 
@@ -238,10 +239,9 @@ class Skeleton
      * @param integer $pageOrder
      * @return Skeleton
      */
-    public function setPageOrder($pageOrder)
-    {
+    public function setPageOrder($pageOrder) {
         $this->pageOrder = $pageOrder;
-    
+
         return $this;
     }
 
@@ -250,8 +250,7 @@ class Skeleton
      *
      * @return integer 
      */
-    public function getPageOrder()
-    {
+    public function getPageOrder() {
         return $this->pageOrder;
     }
 
@@ -261,10 +260,9 @@ class Skeleton
      * @param integer $showPageTitle
      * @return Skeleton
      */
-    public function setShowPageTitle($showPageTitle)
-    {
+    public function setShowPageTitle($showPageTitle) {
         $this->showPageTitle = $showPageTitle;
-    
+
         return $this;
     }
 
@@ -273,8 +271,7 @@ class Skeleton
      *
      * @return integer 
      */
-    public function getShowPageTitle()
-    {
+    public function getShowPageTitle() {
         return $this->showPageTitle;
     }
 
@@ -284,10 +281,9 @@ class Skeleton
      * @param integer $publishState
      * @return Skeleton
      */
-    public function setPublishState($publishState)
-    {
+    public function setPublishState($publishState) {
         $this->publishState = $publishState;
-    
+
         return $this;
     }
 
@@ -296,8 +292,7 @@ class Skeleton
      *
      * @return integer 
      */
-    public function getPublishState()
-    {
+    public function getPublishState() {
         return $this->publishState;
     }
 
@@ -307,10 +302,9 @@ class Skeleton
      * @param string $pageclass
      * @return Skeleton
      */
-    public function setPageclass($pageclass)
-    {
+    public function setPageclass($pageclass) {
         $this->pageclass = $pageclass;
-    
+
         return $this;
     }
 
@@ -319,8 +313,7 @@ class Skeleton
      *
      * @return string 
      */
-    public function getPageclass()
-    {
+    public function getPageclass() {
         return $this->pageclass;
     }
 
@@ -330,10 +323,9 @@ class Skeleton
      * @param string $description
      * @return Skeleton
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
-    
+
         return $this;
     }
 
@@ -342,8 +334,7 @@ class Skeleton
      *
      * @return string 
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -353,10 +344,9 @@ class Skeleton
      * @param string $keywords
      * @return Skeleton
      */
-    public function setKeywords($keywords)
-    {
+    public function setKeywords($keywords) {
         $this->keywords = $keywords;
-    
+
         return $this;
     }
 
@@ -365,8 +355,7 @@ class Skeleton
      *
      * @return string 
      */
-    public function getKeywords()
-    {
+    public function getKeywords() {
         return $this->keywords;
     }
 
@@ -376,10 +365,9 @@ class Skeleton
      * @param string $introtext
      * @return Skeleton
      */
-    public function setIntrotext($introtext)
-    {
+    public function setIntrotext($introtext) {
         $this->introtext = $introtext;
-    
+
         return $this;
     }
 
@@ -388,8 +376,7 @@ class Skeleton
      *
      * @return string 
      */
-    public function getIntrotext()
-    {
+    public function getIntrotext() {
         return $this->introtext;
     }
 
@@ -399,10 +386,9 @@ class Skeleton
      * @param string $intromediasize
      * @return Skeleton
      */
-    public function setIntromediasize($intromediasize)
-    {
+    public function setIntromediasize($intromediasize) {
         $this->intromediasize = $intromediasize;
-    
+
         return $this;
     }
 
@@ -411,8 +397,7 @@ class Skeleton
      *
      * @return string 
      */
-    public function getIntromediasize()
-    {
+    public function getIntromediasize() {
         return $this->intromediasize;
     }
 
@@ -422,10 +407,9 @@ class Skeleton
      * @param string $introclass
      * @return Skeleton
      */
-    public function setIntroclass($introclass)
-    {
+    public function setIntroclass($introclass) {
         $this->introclass = $introclass;
-    
+
         return $this;
     }
 
@@ -434,8 +418,7 @@ class Skeleton
      *
      * @return string 
      */
-    public function getIntroclass()
-    {
+    public function getIntroclass() {
         return $this->introclass;
     }
 
@@ -445,10 +428,9 @@ class Skeleton
      * @param string $pagetype
      * @return Skeleton
      */
-    public function setPagetype($pagetype)
-    {
+    public function setPagetype($pagetype) {
         $this->pagetype = $pagetype;
-    
+
         return $this;
     }
 
@@ -457,8 +439,7 @@ class Skeleton
      *
      * @return string 
      */
-    public function getPagetype()
-    {
+    public function getPagetype() {
         return $this->pagetype;
     }
 
@@ -468,10 +449,9 @@ class Skeleton
      * @param \Application\Sonata\UserBundle\Entity\User $author
      * @return Skeleton
      */
-    public function setAuthor(\Application\Sonata\UserBundle\Entity\User $author = null)
-    {
+    public function setAuthor(\Application\Sonata\UserBundle\Entity\User $author = null) {
         $this->author = $author;
-    
+
         return $this;
     }
 
@@ -480,8 +460,7 @@ class Skeleton
      *
      * @return \Application\Sonata\UserBundle\Entity\User 
      */
-    public function getAuthor()
-    {
+    public function getAuthor() {
         return $this->author;
     }
 
@@ -491,10 +470,9 @@ class Skeleton
      * @param \Application\Sonata\MediaBundle\Entity\Media $introimage
      * @return Skeleton
      */
-    public function setIntroimage(\Application\Sonata\MediaBundle\Entity\Media $introimage = null)
-    {
+    public function setIntroimage(\Application\Sonata\MediaBundle\Entity\Media $introimage = null) {
         $this->introimage = $introimage;
-    
+
         return $this;
     }
 
@@ -503,8 +481,7 @@ class Skeleton
      *
      * @return \Application\Sonata\MediaBundle\Entity\Media 
      */
-    public function getIntroimage()
-    {
+    public function getIntroimage() {
         return $this->introimage;
     }
 
@@ -514,10 +491,9 @@ class Skeleton
      * @param \Application\Sonata\MediaBundle\Entity\Media $introvideo
      * @return Skeleton
      */
-    public function setIntrovideo(\Application\Sonata\MediaBundle\Entity\Media $introvideo = null)
-    {
+    public function setIntrovideo(\Application\Sonata\MediaBundle\Entity\Media $introvideo = null) {
         $this->introvideo = $introvideo;
-    
+
         return $this;
     }
 
@@ -526,8 +502,7 @@ class Skeleton
      *
      * @return \Application\Sonata\MediaBundle\Entity\Media 
      */
-    public function getIntrovideo()
-    {
+    public function getIntrovideo() {
         return $this->introvideo;
     }
 
@@ -537,10 +512,9 @@ class Skeleton
      * @param \BardisCMS\CategoryBundle\Entity\Category $categories
      * @return Skeleton
      */
-    public function addCategory(\BardisCMS\CategoryBundle\Entity\Category $categories)
-    {
+    public function addCategory(\BardisCMS\CategoryBundle\Entity\Category $categories) {
         $this->categories[] = $categories;
-    
+
         return $this;
     }
 
@@ -549,8 +523,7 @@ class Skeleton
      *
      * @param \BardisCMS\CategoryBundle\Entity\Category $categories
      */
-    public function removeCategory(\BardisCMS\CategoryBundle\Entity\Category $categories)
-    {
+    public function removeCategory(\BardisCMS\CategoryBundle\Entity\Category $categories) {
         $this->categories->removeElement($categories);
     }
 
@@ -559,8 +532,7 @@ class Skeleton
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getCategories()
-    {
+    public function getCategories() {
         return $this->categories;
     }
 
@@ -570,10 +542,9 @@ class Skeleton
      * @param \BardisCMS\TagBundle\Entity\Tag $tags
      * @return Skeleton
      */
-    public function addTag(\BardisCMS\TagBundle\Entity\Tag $tags)
-    {
+    public function addTag(\BardisCMS\TagBundle\Entity\Tag $tags) {
         $this->tags[] = $tags;
-    
+
         return $this;
     }
 
@@ -582,8 +553,7 @@ class Skeleton
      *
      * @param \BardisCMS\TagBundle\Entity\Tag $tags
      */
-    public function removeTag(\BardisCMS\TagBundle\Entity\Tag $tags)
-    {
+    public function removeTag(\BardisCMS\TagBundle\Entity\Tag $tags) {
         $this->tags->removeElement($tags);
     }
 
@@ -592,8 +562,7 @@ class Skeleton
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getTags()
-    {
+    public function getTags() {
         return $this->tags;
     }
 
@@ -603,10 +572,9 @@ class Skeleton
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks
      * @return Skeleton
      */
-    public function addMaincontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks)
-    {
+    public function addMaincontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks) {
         $this->maincontentblocks[] = $maincontentblocks;
-    
+
         return $this;
     }
 
@@ -615,8 +583,7 @@ class Skeleton
      *
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks
      */
-    public function removeMaincontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks)
-    {
+    public function removeMaincontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks) {
         $this->maincontentblocks->removeElement($maincontentblocks);
     }
 
@@ -625,8 +592,7 @@ class Skeleton
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getMaincontentblocks()
-    {
+    public function getMaincontentblocks() {
         return $this->maincontentblocks;
     }
 
@@ -636,10 +602,9 @@ class Skeleton
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks
      * @return Skeleton
      */
-    public function addBannercontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks)
-    {
+    public function addBannercontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks) {
         $this->bannercontentblocks[] = $bannercontentblocks;
-    
+
         return $this;
     }
 
@@ -648,8 +613,7 @@ class Skeleton
      *
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks
      */
-    public function removeBannercontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks)
-    {
+    public function removeBannercontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks) {
         $this->bannercontentblocks->removeElement($bannercontentblocks);
     }
 
@@ -658,8 +622,7 @@ class Skeleton
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getBannercontentblocks()
-    {
+    public function getBannercontentblocks() {
         return $this->bannercontentblocks;
     }
 
@@ -669,10 +632,9 @@ class Skeleton
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks
      * @return Skeleton
      */
-    public function addModalcontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks)
-    {
+    public function addModalcontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks) {
         $this->modalcontentblocks[] = $modalcontentblocks;
-    
+
         return $this;
     }
 
@@ -681,8 +643,7 @@ class Skeleton
      *
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks
      */
-    public function removeModalcontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks)
-    {
+    public function removeModalcontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks) {
         $this->modalcontentblocks->removeElement($modalcontentblocks);
     }
 
@@ -691,51 +652,69 @@ class Skeleton
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getModalcontentblocks()
-    {
+    public function getModalcontentblocks() {
         return $this->modalcontentblocks;
     }
-	
+
+    /**
+     * Get dateLastModified
+     *
+     * @return integer 
+     */
+    public function getDateLastModified() {
+        return $this->dateLastModified;
+    }
+
+    /**
+     * Set dateLastModified
+     *
+     * @param integer $dateLastModified
+     * @return Page
+     */
+    public function setDateLastModified($dateLastModified) {
+        $this->dateLastModified = $dateLastModified;
+        
+        return $this;
+    }
+
     /**
      * toString Title
      *
      * @return string 
      */
-    public function __toString()
-    {
-		if($this->getTitle()){
-			return (string)$this->getTitle();			
-		}
-		else{
-			return (string)'New Skeleton Item';
-		}
+    public function __toString() {
+        if ($this->getTitle()) {
+            return (string) $this->getTitle();
+        } else {
+            return (string) 'New Skeleton Item';
+        }
     }
-    
+
     /**
-    * toString PublishState
-    *
-    * @return string 
-    */
-    public function getPublishStateAsString()
-    {
-        switch($this->getPublishState()){
+     * toString PublishState
+     *
+     * @return string 
+     */
+    public function getPublishStateAsString() {
+        // Defining the string values of the publish states
+        switch ($this->getPublishState()) {
             case(0): return "Unpublished";
             case(1): return "Published";
             case(2): return "Preview";
         }
     }
-    
+
     /**
-    * toString Pagetype
-    *
-    * @return string 
-    */
-    public function getPagetypeAsString()
-    {
-        switch($this->getPagetype()){
-            case('skeleton_article'):           return "Skeleton Article";
-            case('skeleton_filtered_list'):     return "Skeleton Filtered Results";
-            case('skeleton_home'):              return "Skeleton Homepage";
+     * toString Pagetype
+     *
+     * @return string 
+     */
+    public function getPagetypeAsString() {
+        // Defining the string values of the page types
+        switch ($this->getPagetype()) {
+            case('skeleton_article'): return "Skeleton Article";
+            case('skeleton_filtered_list'): return "Skeleton Filtered Results";
+            case('skeleton_home'): return "Skeleton Homepage";
         }
     }
 }

@@ -1,25 +1,35 @@
 {% if totalPages is defined %}
     {% if totalPages > 1 %}
-        <div class="twelve columns pagination">
-            <ul class="menu link-list">
-                <li>
-                    <a class="firstPageLink" href="{{ app.request.getBaseURL() }}/Skeleton/articles/0" title="First Page">First Page</a>
-                </li>
-                {% if (currentpage - 1) >= 0 %}
-                    <li><a class="prevPageLink" href="{{ app.request.getBaseURL() }}/Skeleton/articles/{{ currentpage - 1 }}" title="Previous Page">Previous Page</a></li>
-                {% endif %}
-                {% for i in 0..(totalPages - 1) %}
-                    {% if i != currentpage %}
-                        <li><a class="pageNumber" href="{{ app.request.getBaseURL() }}/Skeleton/articles/{{ i }}" title="Page {{ i }}">{{ i }}</a></li>
-                    {% else %}
-                        <li><span class="pageNumber">{{ i }}</span></li>
-                    {% endif %}
-                {% endfor %}
-                {% if (currentpage + 1) < totalPages %}
-                    <li><a class="nextPageLink" href="{{ app.request.getBaseURL() }}/Skeleton/articles/{{ currentpage + 1 }}" title="Next Page">Next Page</a></li>
-                {% endif %} 
-                <li><a class="lastPageLink" href="{{ app.request.getBaseURL() }}/Skeleton/articles/{{ totalPages - 1 }}" title="Last Page">Last Page</a></li>
-            </ul>
+        <div class="large-12 small-12 columns paginationHolder">
+            <div class="row">
+                <div class="small-12 large-12 columns">
+                    <ul class="pagination">
+                        <li class="arrow">
+                            <a class="firstPageLink" href="{{ app.request.getBaseURL() }}/Skeleton/articles/0/{% if totalpageitems %}{{ totalpageitems }}{% else %}0{% endif %}{% if linkUrlParams %}/{{ linkUrlParams|url_encode() }}{% endif %}" title="First Page">First Page</a>
+                        </li>
+                        {% if (currentpage - 1) >= 0 %}
+                            <li class="arrow">
+                                <a class="prevPageLink" href="{{ app.request.getBaseURL() }}/Skeleton/articles/{{ currentpage - 1 }}/{% if totalpageitems %}{{ totalpageitems }}{% else %}0{% endif %}{% if linkUrlParams %}/{{ linkUrlParams|url_encode() }}{% endif %}" title="Previous Page">Previous Page</a>
+                            </li>
+                        {% endif %}
+                        {% for i in 0..(totalPages - 1) %}
+                            {% if i != currentpage %}
+                                <li><a class="pageNumber" href="{{ app.request.getBaseURL() }}/Skeleton/articles/{{ i }}/{% if totalpageitems %}{{ totalpageitems }}{% else %}0{% endif %}{% if linkUrlParams %}/{{ linkUrlParams|url_encode() }}{% endif %}" title="Page {{ i }}">{{ i }}</a></li>
+                                {% else %}
+                                <li class="current"><a class="pageNumber" href="#" title="Page {{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if (currentpage + 1) < totalPages %}
+                            <li class="arrow">
+                                <a class="nextPageLink" href="{{ app.request.getBaseURL() }}/Skeleton/articles/{{ currentpage + 1 }}/{% if totalpageitems %}{{ totalpageitems }}{% else %}0{% endif %}{% if linkUrlParams %}/{{ linkUrlParams|url_encode() }}{% endif %}" title="Next Page">Next Page</a>
+                            </li>
+                        {% endif %}
+                        <li class="arrow">
+                            <a class="lastPageLink" href="{{ app.request.getBaseURL() }}/Skeleton/articles/{{ totalPages - 1 }}/{% if totalpageitems %}{{ totalpageitems }}{% else %}0{% endif %}{% if linkUrlParams %}/{{ linkUrlParams|url_encode() }}{% endif %}" title="Last Page">Last Page</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     {% endif %}
 {% endif %}

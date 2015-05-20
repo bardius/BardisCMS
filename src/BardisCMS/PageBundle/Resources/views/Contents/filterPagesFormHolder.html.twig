@@ -1,19 +1,19 @@
-                    <div id="filterResultsFormHolder" class="columns small-12 large-12 panel">
-                        <form name="filterResultsForm" id="filterResultsForm" action="/filterPages/" method="post" {{ form_enctype(filterForm) }} class="filterForm">
-                            <div class="columns small-12 large-6">  
-                                {{ form_row(filterForm.tags, { 'attr': {'class': 'customCheckBox'} }) }}
-                            </div>
-                            <div class="columns small-12 large-6">  
-                                {{ form_row(filterForm.categories, { 'attr': {'class': 'customCheckBox'} }) }}
-                            </div>
-                            <div class="columns small-12 large-12 filterResultsFormBtns">  
-                                {{ form_rest(filterForm) }}
-								<div class="columns small-12 large-12 customCheckBox">  
-									<input class="resetFiltersBtn" type="checkbox" id="resetFilters" name="resetFilters" value="1" />
-									<label for="resetFilters">Reset Filters</label>
-								</div>
-                                <input type="submit" id="filterResultsBtn" class="button round" value="Search" />
-                                {{ form_errors(filterForm) }}
-                            </div>
-                        </form>
-                     </div>
+<div id="filterResultsFormHolder" class="columns small-12 large-12 panel">
+    <form name="filterResultsForm" id="filterResultsForm" action="{{ path('PageBundle_filtered') }}" method="post" {{ form_enctype(filterForm) }} class="filterForm">
+        <div class="columns small-12 large-6">  
+            {{ form_row(filterForm.tags, { 'attr': {'class': 'customCheckBox'} }) }}
+        </div>
+        <div class="columns small-12 large-6">  
+            {{ form_row(filterForm.categories, { 'attr': {'class': 'customCheckBox'} }) }}
+        </div>
+        <div class="columns small-12 large-12 filterResultsFormBtns">  
+            {{ form_rest(filterForm) }}
+            <div class="columns small-12 large-12 customCheckBox">  
+                <input class="resetFiltersBtn" type="checkbox" id="resetFilters" name="resetFilters" value="1" />
+                <label for="resetFilters">Reset Filters</label>
+            </div>
+            <input type="submit" id="filterResultsBtn" class="button round" value="Search" />
+            {{ form_errors(filterForm) }}
+        </div>
+    </form>
+</div>

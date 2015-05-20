@@ -1,4 +1,5 @@
 <?php
+
 /*
  * ContentBlock Bundle
  * This file is part of the BardisCMS.
@@ -11,7 +12,6 @@ namespace BardisCMS\ContentBlockBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class ContentBlockBundle extends Bundle
-{
+class ContentBlockBundle extends Bundle {
     
 }

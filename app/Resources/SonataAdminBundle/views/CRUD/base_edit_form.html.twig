@@ -8,11 +8,13 @@
             {{ "form_not_available"|trans({}, "SonataAdminBundle") }}
         </div>
     {% else %}
-        <form class="form-horizontal"
-              action="{{ admin.generateUrl(url, {'id': admin.id(object), 'uniqid': admin.uniqid, 'subclass': app.request.get('subclass')}) }}" {{ form_enctype(form) }}
-              method="POST"
-              {% if not admin_pool.getOption('html5_validate') %}novalidate="novalidate"{% endif %}
-              >
+        <form
+            {% if admin_pool.getOption('form_type') == 'horizontal' %}class="form-horizontal"{% endif %}
+            role="form"
+            action="{{ admin.generateUrl(url, {'id': admin.id(object), 'uniqid': admin.uniqid, 'subclass': app.request.get('subclass')}) }}" {{ form_enctype(form) }}
+            method="POST"
+            {% if not admin_pool.getOption('html5_validate') %}novalidate="novalidate"{% endif %}
+            >
             {% if form.vars.errors|length > 0 %}
                 <div class="sonata-ba-form-error">
                     {{ form_errors(form) }}
@@ -21,51 +23,42 @@
 
             {% block sonata_pre_fieldsets %}
                 <div class="row">
-            {% endblock %}
+                {% endblock %}
 
-            {% block sonata_tab_content %}
-				<div class="col-md-12">
-					<!-- Nav tabs -->
-					<ul class="nav nav-tabs">
-						{% for name, form_group in admin.formgroups %}
-						<li class="{% if loop.first %}active{% endif %}">
-							<a href="#{{ admin.uniqid }}_{{ loop.index }}" data-toggle="tab">{{ admin.trans(name, {}, form_group.translation_domain) }}</a>
-						</li>  
-						{% endfor %}
-					</ul>
-					<!-- Tab panels -->
-					<div class="tab-content">
-						{% for name, form_group in admin.formgroups %}
-						<div class="tab-pane{% if loop.first %} active{% endif %}" id="{{ admin.uniqid }}_{{ loop.index }}">
-							<div class="{{ form_group.class|default('') }}">
-								<div class="box box-success">
-									<div class="box-header">
-										<h4 class="box-title">
-											{{ admin.trans(name, {}, form_group.translation_domain) }}
-										</h4>
-									</div>
-									<div class="box-body">
-										<div class="sonata-ba-collapsed-fields">
-											{% if form_group.description != false %}
-												<p>{{ form_group.description|raw }}</p>
-											{% endif %}
+                {% block sonata_tab_content %}
+                    {% set has_tab = ((admin.formtabs|length == 1 and admin.formtabs|keys[0] != 'default') or admin.formtabs|length > 1 ) %}
 
-											{% for field_name in form_group.fields %}
-												{% if admin.formfielddescriptions[field_name] is defined %}
-													{{ form_row(form[field_name])}}
-												{% endif %}
-											{% endfor %}
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						{% endfor %}
-					</div>
-				</div>
-            {% endblock %}
+                    <div class="col-md-12">
+                        {% if has_tab %}
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs" role="tablist">
+                                    {% for name, form_tab in admin.formtabs %}
+                                        <li{% if loop.index == 1 %} class="active"{% endif %}><a href="#tab_{{ loop.index }}" data-toggle="tab"><span class="glyphicon glyphicon-exclamation-sign has-errors hide"></span> {{ admin.trans(name, {}, form_tab.translation_domain) }}</a></li>
+                                        {% endfor %}
+                                </ul>
+                                <div class="tab-content">
+                                    {% for code, form_tab in admin.formtabs %}
+                                        <div class="tab-pane fade{% if loop.first %} in active{% endif %}" id="tab_{{ loop.index }}">
+                                            <div class="box-body">
+                                                <div class="sonata-ba-collapsed-fields">
+                                                    {% if form_tab.description != false %}
+                                                        <p>{{ form_tab.description|raw }}</p>
+                                                    {% endif %}
 
-            {% block sonata_post_fieldsets %}
+                                                    {{ form_helper.render_groups(admin, form, form_tab['groups'], has_tab) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% else %}
+                            {{ form_helper.render_groups(admin, form, admin.formtabs['default'].groups, has_tab) }}
+                        {% endif %}
+                    </div>
+                {% endblock %}
+
+                {% block sonata_post_fieldsets %}
                 </div>
             {% endblock %}
 
@@ -89,7 +82,7 @@
                         {% if admin.id(object) is not null %}
                             <button type="submit" class="btn btn-success" name="btn_update_and_edit"><i class="fa fa-save"></i> {{ 'btn_update_and_edit_again'|trans({}, 'SonataAdminBundle') }}</button>
 
-                            {% if admin.hasroute('list') %}
+                            {% if admin.hasroute('list') and admin.isGranted('LIST') %}
                                 <button type="submit" class="btn btn-success" name="btn_update_and_list"><i class="fa fa-save"></i> <i class="fa fa-list"></i> {{ 'btn_update_and_return_to_list'|trans({}, 'SonataAdminBundle') }}</button>
                             {% endif %}
 
@@ -102,10 +95,10 @@
                                 <a class="btn btn-info" href="{{ admin.generateObjectUrl('acl', object) }}"><i class="fa fa-users"></i> {{ 'link_edit_acl'|trans({}, 'SonataAdminBundle') }}</a>
                             {% endif %}
                         {% else %}
-                            {% if admin.hasroute('edit') %}
+                            {% if admin.hasroute('edit') and admin.isGranted('EDIT') %}
                                 <button class="btn btn-success" type="submit" name="btn_create_and_edit"><i class="fa fa-save"></i> {{ 'btn_create_and_edit_again'|trans({}, 'SonataAdminBundle') }}</button>
                             {% endif %}
-                            {% if admin.hasroute('list') %}
+                            {% if admin.hasroute('list') and admin.isGranted('LIST') %}
                                 <button type="submit" class="btn btn-success" name="btn_create_and_list"><i class="fa fa-save"></i> <i class="fa fa-list"></i> {{ 'btn_create_and_return_to_list'|trans({}, 'SonataAdminBundle') }}</button>
                             {% endif %}
                             <button class="btn btn-success" type="submit" name="btn_create_and_create"><i class="fa fa-plus-circle"></i> {{ 'btn_create_and_create_a_new_one'|trans({}, 'SonataAdminBundle') }}</button>

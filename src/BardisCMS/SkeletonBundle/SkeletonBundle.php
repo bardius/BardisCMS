@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Skeleton Bundle
  * This file is part of the BardisCMS.
@@ -11,7 +12,6 @@ namespace BardisCMS\SkeletonBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class SkeletonBundle extends Bundle
-{
+class SkeletonBundle extends Bundle {
     
 }

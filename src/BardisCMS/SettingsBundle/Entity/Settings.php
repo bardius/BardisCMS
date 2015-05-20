@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Settings Bundle
  * This file is part of the BardisCMS.
@@ -6,10 +7,10 @@
  * (c) George Bardis <george@bardis.info>
  *
  */
+
 namespace BardisCMS\SettingsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 
 /**
  * BardisCMS\SettingsBundle\Entity\Settings
@@ -17,15 +18,15 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="settings")
  * @ORM\Entity(repositoryClass="BardisCMS\SettingsBundle\Repository\SettingsRepository")
  */
-class Settings
-{
+class Settings {
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-    
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -33,79 +34,80 @@ class Settings
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     */ 
+     */
     protected $metaKeywords = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     */ 
+     */
     protected $fromTitle = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     */ 
+     */
     protected $websiteTitle = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     */ 
+     */
+    protected $websiteTwitter = null;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     protected $websiteAuthor = null;
 
     /**
      * @ORM\Column(type="boolean")
-     */ 
+     */
     protected $useWebsiteAuthor = true;
 
     /**
      * @ORM\Column(type="boolean")
-     */ 
+     */
     protected $enableGoogleAnalytics = false;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     */ 
+     */
     protected $googleAnalyticsId = null;
-    
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     */ 
+     */
     protected $emailSender = null;
-    
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     */ 
+     */
     protected $emailRecepient = null;
-    
+
     /**
      * @ORM\Column(type="integer", length=8)
-     */ 
+     */
     protected $itemsPerPage = 10;
-    
+
     /**
      * @ORM\Column(type="integer", length=8)
-     */ 
+     */
     protected $blogItemsPerPage = 10;
 
     /**
      * @ORM\Column(type="boolean")
-     */ 
+     */
     protected $activateHttpCache = false;
 
     /**
      * @ORM\Column(type="boolean")
-     */ 
+     */
     protected $activateSettings = true;
-
-    
-    
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -115,20 +117,18 @@ class Settings
      * @param string $metaDescription
      * @return Settings
      */
-    public function setMetaDescription($metaDescription)
-    {
+    public function setMetaDescription($metaDescription) {
         $this->metaDescription = $metaDescription;
-    
+
         return $this;
     }
 
     /**
      * Get metaDescription
      *
-     * @return string 
+     * @return string
      */
-    public function getMetaDescription()
-    {
+    public function getMetaDescription() {
         return $this->metaDescription;
     }
 
@@ -138,20 +138,18 @@ class Settings
      * @param string $metaKeywords
      * @return Settings
      */
-    public function setMetaKeywords($metaKeywords)
-    {
+    public function setMetaKeywords($metaKeywords) {
         $this->metaKeywords = $metaKeywords;
-    
+
         return $this;
     }
 
     /**
      * Get metaKeywords
      *
-     * @return string 
+     * @return string
      */
-    public function getMetaKeywords()
-    {
+    public function getMetaKeywords() {
         return $this->metaKeywords;
     }
 
@@ -161,20 +159,18 @@ class Settings
      * @param string $fromTitle
      * @return Settings
      */
-    public function setFromTitle($fromTitle)
-    {
+    public function setFromTitle($fromTitle) {
         $this->fromTitle = $fromTitle;
-    
+
         return $this;
     }
 
     /**
      * Get fromTitle
      *
-     * @return string 
+     * @return string
      */
-    public function getFromTitle()
-    {
+    public function getFromTitle() {
         return $this->fromTitle;
     }
 
@@ -184,21 +180,40 @@ class Settings
      * @param string $websiteTitle
      * @return Settings
      */
-    public function setWebsiteTitle($websiteTitle)
-    {
+    public function setWebsiteTitle($websiteTitle) {
         $this->websiteTitle = $websiteTitle;
-    
+
         return $this;
     }
 
     /**
      * Get websiteTitle
      *
-     * @return string 
+     * @return string
      */
-    public function getWebsiteTitle()
-    {
+    public function getWebsiteTitle() {
         return $this->websiteTitle;
+    }
+
+    /**
+     * Set websiteTwitter
+     *
+     * @param string $websiteTwitter
+     * @return Settings
+     */
+    public function setWebsiteTwitter($websiteTwitter) {
+        $this->websiteTwitter = $websiteTwitter;
+
+        return $this;
+    }
+
+    /**
+     * Get websiteTwitter
+     *
+     * @return string
+     */
+    public function getWebsiteTwitter() {
+        return $this->websiteTwitter;
     }
 
     /**
@@ -207,20 +222,18 @@ class Settings
      * @param string $websiteAuthor
      * @return Settings
      */
-    public function setWebsiteAuthor($websiteAuthor)
-    {
+    public function setWebsiteAuthor($websiteAuthor) {
         $this->websiteAuthor = $websiteAuthor;
-    
+
         return $this;
     }
 
     /**
      * Get websiteAuthor
      *
-     * @return string 
+     * @return string
      */
-    public function getWebsiteAuthor()
-    {
+    public function getWebsiteAuthor() {
         return $this->websiteAuthor;
     }
 
@@ -230,20 +243,18 @@ class Settings
      * @param boolean $useWebsiteAuthor
      * @return Settings
      */
-    public function setUseWebsiteAuthor($useWebsiteAuthor)
-    {
+    public function setUseWebsiteAuthor($useWebsiteAuthor) {
         $this->useWebsiteAuthor = $useWebsiteAuthor;
-    
+
         return $this;
     }
 
     /**
      * Get useWebsiteAuthor
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getUseWebsiteAuthor()
-    {
+    public function getUseWebsiteAuthor() {
         return $this->useWebsiteAuthor;
     }
 
@@ -253,20 +264,18 @@ class Settings
      * @param boolean $enableGoogleAnalytics
      * @return Settings
      */
-    public function setEnableGoogleAnalytics($enableGoogleAnalytics)
-    {
+    public function setEnableGoogleAnalytics($enableGoogleAnalytics) {
         $this->enableGoogleAnalytics = $enableGoogleAnalytics;
-    
+
         return $this;
     }
 
     /**
      * Get enableGoogleAnalytics
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getEnableGoogleAnalytics()
-    {
+    public function getEnableGoogleAnalytics() {
         return $this->enableGoogleAnalytics;
     }
 
@@ -276,20 +285,18 @@ class Settings
      * @param string $googleAnalyticsId
      * @return Settings
      */
-    public function setGoogleAnalyticsId($googleAnalyticsId)
-    {
+    public function setGoogleAnalyticsId($googleAnalyticsId) {
         $this->googleAnalyticsId = $googleAnalyticsId;
-    
+
         return $this;
     }
 
     /**
      * Get googleAnalyticsId
      *
-     * @return string 
+     * @return string
      */
-    public function getGoogleAnalyticsId()
-    {
+    public function getGoogleAnalyticsId() {
         return $this->googleAnalyticsId;
     }
 
@@ -299,20 +306,18 @@ class Settings
      * @param string $emailSender
      * @return Settings
      */
-    public function setEmailSender($emailSender)
-    {
+    public function setEmailSender($emailSender) {
         $this->emailSender = $emailSender;
-    
+
         return $this;
     }
 
     /**
      * Get emailSender
      *
-     * @return string 
+     * @return string
      */
-    public function getEmailSender()
-    {
+    public function getEmailSender() {
         return $this->emailSender;
     }
 
@@ -322,66 +327,60 @@ class Settings
      * @param string $emailRecepient
      * @return Settings
      */
-    public function setEmailRecepient($emailRecepient)
-    {
+    public function setEmailRecepient($emailRecepient) {
         $this->emailRecepient = $emailRecepient;
-    
+
         return $this;
     }
 
     /**
      * Get emailRecepient
      *
-     * @return string 
+     * @return string
      */
-    public function getEmailRecepient()
-    {
+    public function getEmailRecepient() {
         return $this->emailRecepient;
     }
-    
+
     /**
      * Set itemsPerPage
      *
      * @param string $itemsPerPage
      * @return Settings
      */
-    public function setItemsPerPage($itemsPerPage)
-    {
+    public function setItemsPerPage($itemsPerPage) {
         $this->itemsPerPage = $itemsPerPage;
-    
+
         return $this;
     }
 
     /**
      * Get itemsPerPage
      *
-     * @return string 
+     * @return string
      */
-    public function getItemsPerPage()
-    {
+    public function getItemsPerPage() {
         return $this->itemsPerPage;
     }
-    
+
     /**
      * Set blogItemsPerPage
      *
      * @param string $blogItemsPerPage
      * @return Settings
      */
-    public function setBlogItemsPerPage($blogItemsPerPage)
-    {
+    public function setBlogItemsPerPage($blogItemsPerPage) {
         $this->blogItemsPerPage = $blogItemsPerPage;
-    
+
         return $this;
     }
 
     /**
      * Get blogItemsPerPage
      *
-     * @return string 
+     * @return string
      */
-    public function getBlogItemsPerPage()
-    {
+    public function getBlogItemsPerPage() {
         return $this->blogItemsPerPage;
     }
 
@@ -391,22 +390,20 @@ class Settings
      * @param boolean $activateSettings
      * @return Settings
      */
-    public function setActivateSettings($activateSettings)
-    {
+    public function setActivateSettings($activateSettings) {
         $this->activateSettings = $activateSettings;
-    
+
         return $this;
     }
 
     /**
      * Get activateSettings
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getActivateSettings()
-    {
+    public function getActivateSettings() {
         return $this->activateSettings;
-    } 
+    }
 
     /**
      * Set activateHttpCache
@@ -414,25 +411,23 @@ class Settings
      * @param boolean $activateHttpCache
      * @return Settings
      */
-    public function setActivateHttpCache($activateHttpCache)
-    {
+    public function setActivateHttpCache($activateHttpCache) {
         $this->activateHttpCache = $activateHttpCache;
-    
+
         return $this;
     }
 
     /**
      * Get activateSettings
      *
-     * @return boolean 
+     * @return boolean
      */
-    public function getActivateHttpCache()
-    {
+    public function getActivateHttpCache() {
         return $this->activateHttpCache;
-    }	
-    
-    public function __toString()
-    {
-        return (string)"Website Settings";
     }
+
+    public function __toString() {
+        return (string) "Website Settings";
+    }
+
 }

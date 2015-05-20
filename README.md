@@ -1,17 +1,20 @@
 [![Build Status](https://travis-ci.org/bardius/BardisCMS.svg?branch=master)](https://travis-ci.org/bardius/BardisCMS)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/493afa2c-bd25-4c8a-ae92-a3a596dfb042/mini.png)](https://insight.sensiolabs.com/projects/493afa2c-bd25-4c8a-ae92-a3a596dfb042)
 [![Dependency Status](https://www.versioneye.com/user/projects/535c8e24fe0d073b48000126/badge.png)](https://www.versioneye.com/user/projects/535c8e24fe0d073b48000126)
 [![Dependency Status](https://www.versioneye.com/user/projects/535c8e18fe0d073b4800011c/badge.png)](https://www.versioneye.com/user/projects/535c8e18fe0d073b4800011c)
-[![Latest Stable Version](https://poser.pugx.org/bardis/cms-symfony2/v/stable.png)](https://packagist.org/packages/bardis/cms-symfony2) 
-[![Total Downloads](https://poser.pugx.org/bardis/cms-symfony2/downloads.png)](https://packagist.org/packages/bardis/cms-symfony2) 
+[![Code Climate](https://codeclimate.com/github/bardius/BardisCMS/badges/gpa.svg)](https://codeclimate.com/github/bardius/BardisCMS)
+[![Latest Stable Version](https://poser.pugx.org/bardis/cms-symfony2/v/stable.png)](https://packagist.org/packages/bardis/cms-symfony2)
+[![Total Downloads](https://poser.pugx.org/bardis/cms-symfony2/downloads.png)](https://packagist.org/packages/bardis/cms-symfony2)
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+[![Gitter chat](https://badges.gitter.im/bardius/BardisCMS.png)](https://gitter.im/bardius/BardisCMS)
 [![License](https://poser.pugx.org/bardis/cms-symfony2/license.png)](https://packagist.org/packages/bardis/cms-symfony2)
 
 ![](http://www.bardis.info/bardisCMS.png)
 
-Symfony2 (v.2.4.4) distribution with integrated Zurb Foundation 5 
+Symfony2 (v2.6.7) distribution with integrated Zurb Foundation 5 (v5.5)
 ============================================================================
 
-BardisCMS is a Symfony2 (v.2.4.4) distribution with integrated Zurb Foundation 5 Framework.
+BardisCMS is a Symfony2 (v2.6.7) distribution with integrated Zurb Foundation 5 Framework.
 
 Travis CI, Bower and Grunt with custom builds are included for better workflow on front end.
 
@@ -21,74 +24,78 @@ A Skeleton Bundle is provided as part of the CMS so new content types/functional
 
 You can browse the Git repository, that I update with big releases every couple of months or so, and use freely for your projects.
 
-You can find the requirements for Symfony2 here http://symfony.com/doc/current/reference/requirements.html  
-You can find the documentation for Symfony2 here http://symfony.com/doc/current/book/index.html  
+You can find the requirements for Symfony2 here http://symfony.com/doc/current/reference/requirements.html
+You can find the documentation for Symfony2 here http://symfony.com/doc/current/book/index.html
 You can find the documentation for Zurb Foundation 5 here http://foundation.zurb.com/docs/
 
 Requirements
 
-* [PHP](http://www.php.net) 5.3 or later
+* [PHP](http://www.php.net) 5.4 or later
 * Installation via [Composer](http://getcomposer.org/)
 
-  
-The CMS requires the existence of 3 pages to work. These are the homepage, the 404 page and the tagged page.  
-  
-SkeletonBundle is a fully structured bundle with simple functionalities (similar to normal pages) so it can be cloned to create new bundles for new content types.  
-  
+
+The CMS requires the existence of 3 pages to work. These are the homepage, the 404 page and the tagged page.
+
+SkeletonBundle is a fully structured bundle with simple functionalities (similar to normal pages) so it can be cloned to create new bundles for new content types.
+
 
 Quick Start
 ------------------------------------------------------
 
-The fastest way to get everything running is:
+The fastest way to get everything running is (must have nodejs, ruby and sass gem installed):
 
-	
+
 	1. git clone https://github.com/bardius/BardisCMS.git
 	2. cd BardisCMS
-	3. composer install
-	4. create a database
-	5. alter your app/config/parameters.yml with your db details
-	6. setup your vhost 
-	7. npm install -g bower grunt-cli (if you have never installed them in past)
-	8. npm install
-	9. grunt first_deployment
-	10. login to the admin (/admin username:admin, pass: admin)
-  
+	3. create a database
+	4. copy app/config/parameters.yml.dist to app/config/parameters.yml
+	5. alter your app/config/parameters.yml with your db and environment details
+	6. composer.phar install -o
+	7. npm install -g bower (if you have never installed in past)
+	8. npm install grunt
+	9. npm install -g grunt-cli
+	10. npm install
+	11. bower install
+	12. grunt first_deployment
+	13. setup your vhost
+	14. login to the admin (/admin username:admin, pass: admin)
 
-Deployment / Local Installation
+
+Manual Deployment / Local Installation
 ------------------------------------------------------
 
-Please follow the steps below for a complete new install.  
+Please follow the steps below for a complete new install.
 
-1. You need to do a git clone of the git repo  
+1. You need to do a git clone of the git repo
 git clone
 
-2. Install composer  
+2. Install composer
 http://getcomposer.org/download/
 
-3. Install packagist (https://packagist.org)  
+3. Install packagist (https://packagist.org)
 curl -s http://getcomposer.org/installer | php
 
 4. Setup your virtual host (see details in relevant section below).
 
-5. Setup a database and provide the details to the app/config/parameters.yml file (see details in relevant section below).  
+5. Setup a database and provide the details to the app/config/parameters.yml file (see details in relevant section below).
 Tip: Additionally in the same file you have to set the paths for sass, compass and java for each environment.
 
 6. Change the memory limit in your php.ini to 128M or more if required
 
 7. Set the intl PHP extension as enabled if not already (Symfony2 requirement)
 
-8. Run a composer install to get the vendor libraries files (composer update to get latest version)  
+8. Run a composer install to get the vendor libraries files (composer update to get latest version)
 composer.phar install
 
-9. Run the CLI symphony2 commands  
+9. Run the CLI symphony2 commands
 
 	* php app/console cache:clear [--env=prod]
 	(to clear and warmup cache)
-	* php app/console assets:install  
+	* php app/console assets:install
 	(to generate the bundle assets)
-	* php app/console doctrine:schema:create  
+	* php app/console doctrine:schema:create
 	(to create the database schema)
-	* php app/console doctrine:fixtures:load  
+	* php app/console doctrine:fixtures:load
 	(to load required/sample data to database)
 	* php app/console sonata:media:sync-thumbnails sonata.media.provider.image intro
 	* php app/console sonata:media:sync-thumbnails sonata.media.provider.image bgimage
@@ -96,40 +103,39 @@ composer.phar install
 	* php app/console assetic:dump [--env=prod]
 	(to generate the assets for the front end)
 
- 
+
 ### Front end Framework Setup ###
 
-Due to the use of the Zurb Foundation Framework 5 (version 5.2.2) the need for the following steps is unavoidable unless you do not need the framework at all. 
-  
-We need to install NodeJs, Node Packaged Modules, Ruby, compass, sass, foundation gems and GIT and bower dependency manager if they are not already installed to the system. 
-  
-More information can be found below at their official web sites:  
-  
-	http://git-scm.com/downloads				(GIT)  
-	http://nodejs.org/					(NodeJs)  
-	https://npmjs.org/					(Node Packaged Modules)  
-	http://www.rubyinstaller.org/				(Ruby)  
-	https://github.com/bower/bower				(Bower)  
-	http://sass-lang.com/install				(Sass)  
-	http://compass-style.org/install/			(Compass)  
-	http://foundation.zurb.com/docs/sass.html		(Foundation 5 - Sass based)  
-  
-The command line steps are:  
-	
-	1. [sudo] npm install -g bower grunt-cli
-	2. gem update --system
-	3. gem install sass
-	4. gem install compass
-	5. gem install foundation
-	6. [sudo] npm install
-	7. bower install
-	8. grunt deploy [watch]
+Due to the use of the Zurb Foundation Framework 5 (version 5.2.2) the need for the following steps is unavoidable unless you do not need the framework at all.
+
+We need to install NodeJs, Node Packaged Modules, Ruby, compass, sass, foundation gems and GIT and bower dependency manager if they are not already installed to the system.
+
+More information can be found below at their official web sites:
+
+	http://git-scm.com/downloads				(GIT)
+	http://nodejs.org/					(NodeJs)
+	https://npmjs.org/					(Node Packaged Modules)
+	http://www.rubyinstaller.org/				(Ruby)
+	https://github.com/bower/bower				(Bower)
+	http://sass-lang.com/install				(Sass)
+	http://compass-style.org/install/			(Compass)
+	http://foundation.zurb.com/docs/sass.html		(Foundation 5 - Sass based)
+
+The command line steps are:
+
+	1. [sudo] npm install -g bower
+	2. [sudo] npm install -g grunt-cli
+	3. gem update --system
+	4. gem install sass
+	5. [sudo] npm install
+	6. bower install
+	7. grunt deploy [dev] [watch]
 
 Tip: In case you are behind a firewall and connection to git is refused force https for all git connections with running this in your bash git config --global url."https://".insteadOf git://
 
 	php app/console assetic:dump  [--env=prod]
-  
-Your project should work now and you can see your front end working.  
+
+Your project should work now and you can see your front end working.
 Please Login to /admin/dashboard and alter your website settings and you are finally set to go.
 
 
@@ -159,7 +165,7 @@ Here is a sample setup for your parameters file
 		compass.bin:       C:\Program Files\Ruby193\bin\compass #usr/bin/compass
 		sass.bin:          C:\Program Files\Ruby193\bin\sass    #usr/bin/sass
 
-		unix_socket:       ~ #for your db connection for mac users
+		unix_socket:       ~ #for your db connection if required
 
 
 
@@ -175,6 +181,9 @@ Here is a sample setup for your virtual host configuration
 		ServerAlias domainname.test
 		ServerAlias domainname.dev
 
+        ErrorLog "logs/domainname-error.log"
+        CustomLog "logs/domainname-access.log" common
+
 		# set some environment variables depending on host
 		# if you do not want to do that in .htaccess
 		# SetEnvIfNoCase Host domainname\.prod domainname_env=prod
@@ -185,7 +194,7 @@ Here is a sample setup for your virtual host configuration
 
 			RewriteEngine On
 
-			# use the environment variables above to select correct 
+			# use the environment variables above to select correct
 			# environment if you do not want to do that in .htaccess
 			# RewriteCond %{REQUEST_FILENAME} !-f
 			# RewriteCond %{ENV:domainname_env} test
@@ -289,13 +298,49 @@ Included Bundles List
 
 
 
+Apache benchmark testing (30000 req, 1000 concurent)
+----------------------------------------------
+The test was run for the home page in a small AWS instance with Ubuntu 14 and Varnish.
+
+    Concurrency Level:      1000
+    Time taken for tests:   5.102 seconds
+    Complete requests:      30000
+    Failed requests:        0
+    Keep-Alive requests:    30000
+    Total transferred:      110880000 bytes
+    HTML transferred:       97830000 bytes
+    Requests per second:    5880.56 [#/sec] (mean)
+    Time per request:       170.052 [ms] (mean)
+    Time per request:       0.170 [ms] (mean, across all concurrent requests)
+    Transfer rate:          21225.14 [Kbytes/sec] received
+
+Connection Times (ms)
+                    min  mean[+/-sd] median   max
+     Connect:        0    3  17.0      0     125
+     Processing:     6  156 809.7     11    4949
+     Waiting:        6  156 809.7     11    4949
+     Total:          6  160 824.9     11    5040
+
+Percentage of the requests served within a certain time (ms)
+
+    50%     11
+    66%     12
+    75%     12
+    80%     12
+    90%     13
+    95%     15
+    98%    4738
+    99%    4892
+    100%   5040 (longest request)
+
+
 
 Useful Links and Documentation
 ----------------------------------------------
 
 Symfony2 Documentation
 
-http://symfony.com/doc/current/index.html 
+http://symfony.com/doc/current/index.html
 
 Doctrine2 ORM Documentation
 

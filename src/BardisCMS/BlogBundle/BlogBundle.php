@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Blog Bundle
  * This file is part of the BardisCMS.
@@ -11,7 +12,6 @@ namespace BardisCMS\BlogBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class BlogBundle extends Bundle
-{
+class BlogBundle extends Bundle {
     
 }

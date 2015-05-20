@@ -1,14 +1,24 @@
 {
-  "name": "bardis-cms-symfony2",
-  "version": "1.0.0",
-  "homepage": "",
-  "authors": [
-    "George Bardis @bardius george@bardis.info"
-  ],
-  "description": "Foundation 5 front end framework for Symfony2 BardisCMS",
-  "license": "MIT",
-  "dependencies": {
-    "foundation": "zurb/bower-foundation",
-    "jquery-ias": "~2.1.0"
-  }
+    "name": "bardis-cms-symfony2",
+    "version": "2.6.7",
+    "homepage": "https://github.com/bardius/BardisCMS",
+    "authors": [
+        "George Bardis @bardius george@bardis.info"
+    ],
+    "description": "Foundation 5 front end framework for Symfony2 BardisCMS",
+    "license": "MIT",
+    "private": true,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "jquery-ias": "~2.2.1",
+        "modernizr": "~2.8.3",
+        "jasmine-jquery": "~2.1.0",
+        "foundation": "~5.5.2"
+    }
 }

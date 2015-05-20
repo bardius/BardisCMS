@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Comment Bundle
  * This file is part of the BardisCMS.
@@ -11,6 +12,6 @@ namespace BardisCMS\CommentBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class CommentBundle extends Bundle
-{
+class CommentBundle extends Bundle {
+    
 }

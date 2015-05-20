@@ -15,25 +15,24 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use BardisCMS\PageBundle\Entity\Page;
 
-class PageFixtures extends AbstractFixture implements OrderedFixtureInterface
-{
-    public function load(ObjectManager $manager)
-    {
+class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
+
+    public function load(ObjectManager $manager) {
         $pagehome = new Page();
         $pagehome->setDate(new \DateTime());
         $pagehome->setTitle('Home');
         $pagehome->setAuthor($manager->merge($this->getReference('admin')));
         $pagehome->setAlias('index');
         $pagehome->setShowPageTitle(1);
-        $pagehome->setPublishState(1);		
+        $pagehome->setPublishState(1);
         $pagehome->setIntrotext('Lorem ipsum dolor sit amet, consectetur adipiscing eletra electrify denim vel ports.');
         $pagehome->setPagetype('homepage');
         $pagehome->addCategory($manager->merge($this->getReference('categoryHome')));
         $pagehome->addMaincontentblock($manager->merge($this->getReference('contentSampleHome')));
         $pagehome->addBannercontentblock($manager->merge($this->getReference('contentHomeSlide1')));
         $pagehome->addBannercontentblock($manager->merge($this->getReference('contentHomeSlide2')));
-		$manager->persist($pagehome);
-		
+        $manager->persist($pagehome);
+
         $page404 = new Page();
         $page404->setDate(new \DateTime());
         $page404->setTitle('404 Error Page');
@@ -43,8 +42,8 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface
         $page404->setPublishState(1);
         $page404->setIntrotext('');
         $page404->setPagetype('404');
-		$manager->persist($page404);
-		
+        $manager->persist($page404);
+
         $pagesitemap = new Page();
         $pagesitemap->setDate(new \DateTime());
         $pagesitemap->setTitle('Sitemap');
@@ -54,8 +53,8 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface
         $pagesitemap->setPublishState(1);
         $pagesitemap->setIntrotext('');
         $pagesitemap->setPagetype('sitemap');
-		$manager->persist($pagesitemap);
-		
+        $manager->persist($pagesitemap);
+
         $pagefiltered = new Page();
         $pagefiltered->setDate(new \DateTime());
         $pagefiltered->setTitle('Page Filtered Listing');
@@ -67,8 +66,8 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface
         $pagefiltered->setPagetype('page_tag_list');
         $pagefiltered->addCategory($manager->merge($this->getReference('categorySample')));
         $pagefiltered->addTag($manager->merge($this->getReference('tagSample1')));
-		$manager->persist($pagefiltered);
-		
+        $manager->persist($pagefiltered);
+
         $pagecontact = new Page();
         $pagecontact->setDate(new \DateTime());
         $pagecontact->setTitle('Contact Page');
@@ -79,8 +78,19 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface
         $pagecontact->setIntrotext('');
         $pagecontact->setPagetype('contact');
         $pagecontact->addMaincontentblock($manager->merge($this->getReference('contentSampleContact')));
-		$manager->persist($pagecontact);
-		
+        $manager->persist($pagecontact);
+
+        $pageuser_profile = new Page();
+        $pageuser_profile->setDate(new \DateTime());
+        $pageuser_profile->setTitle('User Profile Page');
+        $pageuser_profile->setAuthor($manager->merge($this->getReference('admin')));
+        $pageuser_profile->setAlias('user-profile');
+        $pageuser_profile->setShowPageTitle(1);
+        $pageuser_profile->setPublishState(1);
+        $pageuser_profile->setIntrotext('');
+        $pageuser_profile->setPagetype('user_profile');
+        $manager->persist($pageuser_profile);
+
         $page1 = new Page();
         $page1->setDate(new \DateTime());
         $page1->setTitle('Test Page 1');
@@ -91,13 +101,13 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface
         $page1->setIntrotext('Lorem ipsum dolor sit amet, consectetur adipiscing eletra electrify denim vel ports.');
         $page1->setIntroimage($manager->merge($this->getReference('introImage1')));
         $page1->setPagetype('one_columned');
-		$page1->addCategory($manager->merge($this->getReference('categoryHome')));
+        $page1->addCategory($manager->merge($this->getReference('categoryHome')));
         $page1->addCategory($manager->merge($this->getReference('categorySample')));
         $page1->addTag($manager->merge($this->getReference('tagSample1')));
         $page1->addMaincontentblock($manager->merge($this->getReference('contentSample1')));
         $page1->addMaincontentblock($manager->merge($this->getReference('contentSample2')));
-		$manager->persist($page1);
-		
+        $manager->persist($page1);
+
         $page2 = new Page();
         $page2->setDate(new \DateTime());
         $page2->setTitle('Test Page 2');
@@ -111,8 +121,8 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface
         $page2->addCategory($manager->merge($this->getReference('categoryHome')));
         $page2->addCategory($manager->merge($this->getReference('categorySample')));
         $page2->addTag($manager->merge($this->getReference('tagSample1')));
-		$manager->persist($page2);
-		
+        $manager->persist($page2);
+
         $page3 = new Page();
         $page3->setDate(new \DateTime());
         $page3->setTitle('Test Page 3');
@@ -125,8 +135,8 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface
         $page3->setPagetype('three_columned');
         $page3->addCategory($manager->merge($this->getReference('categoryHome')));
         $page3->addTag($manager->merge($this->getReference('tagSample1')));
-		$manager->persist($page3);
-		
+        $manager->persist($page3);
+
         $page4 = new Page();
         $page4->setDate(new \DateTime());
         $page4->setTitle('Test Page 4');
@@ -139,24 +149,24 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface
         $page4->setPagetype('one_columned');
         $page4->addCategory($manager->merge($this->getReference('categoryHome')));
         $page4->addTag($manager->merge($this->getReference('tagSample1')));
-		$manager->persist($page4);
-		
+        $manager->persist($page4);
+
         $manager->flush();
-		
-		$this->addReference('homepage', $pagehome);
-		$this->addReference('404page', $page404);
-		$this->addReference('pagecontact', $pagecontact);
-		$this->addReference('pagesitemap', $pagesitemap);		
-		$this->addReference('pagefiltered', $pagefiltered);
-		$this->addReference('page1', $page1);
+
+        $this->addReference('homepage', $pagehome);
+        $this->addReference('404page', $page404);
+        $this->addReference('pagecontact', $pagecontact);
+        $this->addReference('pageuser_profile', $pageuser_profile);
+        $this->addReference('pagesitemap', $pagesitemap);
+        $this->addReference('pagefiltered', $pagefiltered);
+        $this->addReference('page1', $page1);
         $this->addReference('page2', $page2);
         $this->addReference('page3', $page3);
         $this->addReference('page4', $page4);
     }
-	
-	public function getOrder()
-    {
-        return 6;
+
+    public function getOrder() {
+        return 9;
     }
 
 }

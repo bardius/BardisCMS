@@ -15,7 +15,7 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
         SONATA:
             - ROLE_SONATA_PAGE_ADMIN_PAGE_EDIT  # if you are using acl then this line must be commented
-    
+
     # set access_strategy to unanimous, else you may have unexpected behaviors
     access_decision_manager:
         strategy: unanimous
@@ -24,8 +24,8 @@ security:
         in_memory:
             memory:
                 users:
-                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+                    user:  { password: %userpass%, roles: [ 'ROLE_USER' ] }
+                    admin: { password: %adminpass%, roles: [ 'ROLE_ADMIN' ] }
         fos_userbundle:
             id: fos_user.user_manager
 
@@ -42,14 +42,13 @@ security:
                 check_path:     /admin/login_check
                 failure_path:   null
                 use_referer:    true
-                default_target_path: /admin/dashboard 
-                always_use_default_target_path: true 
+                default_target_path: /admin/dashboard
+                always_use_default_target_path: true
             logout:
                 path:           /admin/logout
                 target:         /admin/login
                 # invalidate_session: false
-
-            anonymous:    true
+            anonymous:    ~
 
 
         # defaut login area for standard users
@@ -64,8 +63,8 @@ security:
                 check_path:     /login_check
                 failure_path:   null
             logout:             true
-            anonymous:          true        
-    
+            anonymous:          ~
+
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
@@ -81,11 +80,11 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         # URL of FOSUserBundle which need to be available to anonymous users
         - { path: ^/_wdt, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/_profiler, role: IS_AUTHENTICATED_ANONYMOUSLY }    
+        - { path: ^/_profiler, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
         # AsseticBundle paths used when using the controller for assets
         - { path: ^/js/, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/css/, role: IS_AUTHENTICATED_ANONYMOUSLY }       
+        - { path: ^/css/, role: IS_AUTHENTICATED_ANONYMOUSLY }
 
         # URL of FOSUserBundle which need to be available to anonymous users
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
@@ -102,6 +101,7 @@ security:
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin role for the admin part.
         # Change these rules to adapt them to your needs
+        # - { path: ^/admin, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] , requires_channel: https }
         - { path: ^/admin, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
         - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
-
+        

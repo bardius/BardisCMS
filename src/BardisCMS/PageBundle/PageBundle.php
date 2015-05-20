@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Page Bundle
  * This file is part of the BardisCMS.
@@ -11,7 +12,6 @@ namespace BardisCMS\PageBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class PageBundle extends Bundle
-{
+class PageBundle extends Bundle {
     
 }

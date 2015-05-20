@@ -15,12 +15,12 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class DefaultControllerTest extends WebTestCase {
 
     public function testAliasAction() {
-	
-		$client = static::createClient();
 
-		$crawler = $client->request('GET', '/index');
+        $client = static::createClient();
 
-		$this->assertTrue($crawler->filter('html:contains("Homepage")')->count() > 0);
+        $crawler = $client->request('GET', '/index');
+
+        $this->assertTrue($crawler->filter('html:contains("Homepage")')->count() > 0);
     }
 
 }

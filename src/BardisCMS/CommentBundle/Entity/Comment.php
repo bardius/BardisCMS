@@ -13,12 +13,10 @@ namespace BardisCMS\CommentBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use BardisCMS\BlogBundle\Entity\Blog;
-
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Constraints\Blank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-
 
 /**
  * BardisCMS\CommentBundle\Entity\Comment
@@ -27,8 +25,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="BardisCMS\CommentBundle\Repository\CommentRepository")
  */
-class Comment
-{
+class Comment {
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -38,23 +36,23 @@ class Comment
 
     /**
      * @ORM\Column(type="string", length=255)
-     */ 
+     */
     protected $title;
-	
-	/**
+
+    /**
      * @ORM\Column(type="string")
      */
     protected $username;
-	
-	/**
+
+    /**
      * @ORM\Column(type="text")
      */
     protected $comment;
-	
-	  /**
+
+    /**
      * @ORM\Column(type="boolean")
      */
-    protected $approved;	
+    protected $approved;
 
     /**
      * @ORM\Column(type="datetime")
@@ -63,42 +61,38 @@ class Comment
 
     /**
      * @ORM\Column(type="string", length=255)
-     */ 
+     */
     protected $commentType;
 
     /**
      * @ORM\Column(type="string", length=1, nullable=true)
-     */ 
+     */
     protected $bottrap = null;
-	
-	/**
+
+    /**
      * @ORM\ManyToOne(targetEntity="BardisCMS\BlogBundle\Entity\Blog", inversedBy="comments")
      * @ORM\JoinColumn(name="blog_id", referencedColumnName="id")
      */
     protected $blogPost;
-	
-	/**
+
+    /**
      * @ORM\Column(name="date_last_modified", type="datetime")
      * @Gedmo\Timestampable(on="update")
      */
     private $dateLastModified;
-	
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->setCreated(new \DateTime());
 
         $this->setApproved(true);
-	}
-
+    }
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -109,10 +103,9 @@ class Comment
      *
      * @return Comment
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
-    
+
         return $this;
     }
 
@@ -121,8 +114,7 @@ class Comment
      *
      * @return string 
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -133,10 +125,9 @@ class Comment
      *
      * @return Comment
      */
-    public function setUsername($username)
-    {
+    public function setUsername($username) {
         $this->username = $username;
-    
+
         return $this;
     }
 
@@ -145,8 +136,7 @@ class Comment
      *
      * @return string 
      */
-    public function getUsername()
-    {
+    public function getUsername() {
         return $this->username;
     }
 
@@ -157,10 +147,9 @@ class Comment
      *
      * @return Comment
      */
-    public function setComment($comment)
-    {
+    public function setComment($comment) {
         $this->comment = $comment;
-    
+
         return $this;
     }
 
@@ -169,8 +158,7 @@ class Comment
      *
      * @return string 
      */
-    public function getComment()
-    {
+    public function getComment() {
         return $this->comment;
     }
 
@@ -181,10 +169,9 @@ class Comment
      *
      * @return Comment
      */
-    public function setApproved($approved)
-    {
+    public function setApproved($approved) {
         $this->approved = $approved;
-    
+
         return $this;
     }
 
@@ -193,8 +180,7 @@ class Comment
      *
      * @return boolean 
      */
-    public function getApproved()
-    {
+    public function getApproved() {
         return $this->approved;
     }
 
@@ -205,10 +191,9 @@ class Comment
      *
      * @return Comment
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
-    
+
         return $this;
     }
 
@@ -217,8 +202,7 @@ class Comment
      *
      * @return \DateTime 
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -228,8 +212,7 @@ class Comment
      * @param string $title
      * @return Comment
      */
-    public function setCommentType($commentType)
-    {
+    public function setCommentType($commentType) {
         $this->commentType = $commentType;
         return $this;
     }
@@ -239,8 +222,7 @@ class Comment
      *
      * @return string 
      */
-    public function getCommentType()
-    {
+    public function getCommentType() {
         return $this->commentType;
     }
 
@@ -250,8 +232,7 @@ class Comment
      * @param string $title
      * @return Comment
      */
-    public function setBottrap($bottrap)
-    {
+    public function setBottrap($bottrap) {
         $this->bottrap = $bottrap;
         return $this;
     }
@@ -261,8 +242,7 @@ class Comment
      *
      * @return string 
      */
-    public function getBottrap()
-    {
+    public function getBottrap() {
         return $this->bottrap;
     }
 
@@ -273,10 +253,9 @@ class Comment
      *
      * @return Comment
      */
-    public function setBlogPost(\BardisCMS\BlogBundle\Entity\Blog $blogPost = null)
-    {
+    public function setBlogPost(\BardisCMS\BlogBundle\Entity\Blog $blogPost = null) {
         $this->blogPost = $blogPost;
-    
+
         return $this;
     }
 
@@ -285,96 +264,82 @@ class Comment
      *
      * @return \BardisCMS\BlogBundle\Entity\Blog 
      */
-    public function getBlogPost()
-    {
+    public function getBlogPost() {
         return $this->blogPost;
     }
-		
-	/**
-	 * Get dateLastModified
-	 *
-	 * @return integer 
-	 */
-    public function getDateLastModified()
-    {
+
+    /**
+     * Get dateLastModified
+     *
+     * @return integer 
+     */
+    public function getDateLastModified() {
         return $this->dateLastModified;
     }
-    
+
     /**
-    * toString
-    *
-    * @return string 
-    */	
-    public function __toString()
-    {
-		if($this->getTitle()){
-			return (string)$this->getTitle();			
-		}
-		else{
-			return (string)'New Comment';
-		}
-    }
-    
-    /**
-    * toString Approved
-    *
-    * @return string 
-    */
-    public function getApprovedAsString()
-    {
-        switch($this->getApproved()){
-            case('0'):  return "Unpublished";
-            case('1'):  return "Approved";
-            default:    return $this->getApproved(); 
+     * toString
+     *
+     * @return string 
+     */
+    public function __toString() {
+        if ($this->getTitle()) {
+            return (string) $this->getTitle();
+        } else {
+            return (string) 'New Comment';
         }
     }
-    
+
     /**
-    * toString commentType
-    *
-    * @return string 
-    */
-    public function getCommentTypeAsString()
-    {
-        switch($this->getCommentType()){
-            case('Blog'):       return "Blog Post";
-            default:            return $this->getCommentType(); 
+     * toString Approved
+     *
+     * @return string 
+     */
+    public function getApprovedAsString() {
+        switch ($this->getApproved()) {
+            case('0'): return "Unpublished";
+            case('1'): return "Approved";
+            default: return $this->getApproved();
         }
-    }	
-	
-	// Adding the validation restrictions
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
-    {
-        $metadata->addPropertyConstraint('title',
-			new NotBlank(array('message' => 'Title should not be blank.'))		
+    }
+
+    /**
+     * toString commentType
+     *
+     * @return string 
+     */
+    public function getCommentTypeAsString() {
+        switch ($this->getCommentType()) {
+            case('Blog'): return "Blog Post";
+            default: return $this->getCommentType();
+        }
+    }
+
+    // Adding the validation restrictions
+    public static function loadValidatorMetadata(ClassMetadata $metadata) {
+        $metadata->addPropertyConstraint('title', new NotBlank(array('message' => 'Title should not be blank.'))
         );
-		
-        $metadata->addPropertyConstraint('title',
-            new Length(array('min' => 2, 'max' => 150))			
+
+        $metadata->addPropertyConstraint('title', new Length(array('min' => 2, 'max' => 150))
         );
-		
-        $metadata->addPropertyConstraint('username',
-			new NotBlank(array('message' => 'Name should not be blank.'))
+
+        $metadata->addPropertyConstraint('username', new NotBlank(array('message' => 'Name should not be blank.'))
         );
-		
-        $metadata->addPropertyConstraint('username',
-            new Length(array('min' => 2, 'max' => 150))			
+
+        $metadata->addPropertyConstraint('username', new Length(array('min' => 2, 'max' => 150))
         );
-		
-        $metadata->addPropertyConstraint('comment',
-			new NotBlank(array('message' => 'Comment should not be blank.'))
+
+        $metadata->addPropertyConstraint('comment', new NotBlank(array('message' => 'Comment should not be blank.'))
         );
-		
-        $metadata->addPropertyConstraint('comment',
-			new Length(array('min' => 2, 'max' => 1000))
+
+        $metadata->addPropertyConstraint('comment', new Length(array('min' => 2, 'max' => 1000))
         );
-		
-        $metadata->addPropertyConstraint('bottrap',
-			new Blank(array('message' => 'Bot Trap should be blank.'))		
+
+        $metadata->addPropertyConstraint('bottrap', new Blank(array('message' => 'Bot Trap should be blank.'))
         );
-		
-        $metadata->addPropertyConstraint('bottrap',
-            new Length(array('max' => 1))			
+
+        $metadata->addPropertyConstraint('bottrap', new Length(array('max' => 1))
         );
     }
+
 }

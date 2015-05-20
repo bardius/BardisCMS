@@ -3,7 +3,7 @@ spy_timeline:
         orm:
             object_manager: doctrine.orm.entity_manager
             classes:
-                query_builder: ~ # Spy\TimelineBundle\Driver\ORM\QueryBuilder\QueryBuilder
+                query_builder:    Spy\TimelineBundle\Driver\ORM\QueryBuilder\QueryBuilder
                 timeline:         Application\Sonata\TimelineBundle\Entity\Timeline
                 action:           Application\Sonata\TimelineBundle\Entity\Action
                 component:        Application\Sonata\TimelineBundle\Entity\Component
@@ -18,4 +18,10 @@ spy_timeline:
                 - spy_timeline.filter.data_hydrator.locator.doctrine_orm
 
 sonata_timeline:
-    manager_type: orm
+    manager_type: orm    
+    class:
+        timeline:         %spy_timeline.class.timeline%
+        action:           %spy_timeline.class.action%
+        component:        %spy_timeline.class.component%
+        action_component: %spy_timeline.class.action_component%
+        

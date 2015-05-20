@@ -3,8 +3,6 @@
 namespace BardisCMS\BlogBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
-use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
-use Symfony\Component\Config\Definition\Builder\BooleanNodeDefinition;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
@@ -12,13 +10,12 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  */
-class Configuration implements ConfigurationInterface
-{
+class Configuration implements ConfigurationInterface {
+
     /**
      * {@inheritDoc}
      */
-    public function getConfigTreeBuilder()
-    {
+    public function getConfigTreeBuilder() {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('blog');
 
@@ -26,26 +23,24 @@ class Configuration implements ConfigurationInterface
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
         $rootNode
-            ->children()                                        
+                ->children()
                 ->booleanNode('loadservices')->defaultFalse()->end()
-				
                 ->booleanNode('comments')->defaultFalse()->end()
-                
                 ->arrayNode('pagetypes')
-                    ->isRequired()
-                    ->requiresAtLeastOneElement()
-                    ->useAttributeAsKey('name')
-                        ->prototype('scalar')->defaultValue(null)->end()
-                    ->end() 
-                
+                ->isRequired()
+                ->requiresAtLeastOneElement()
+                ->useAttributeAsKey('name')
+                ->prototype('scalar')->defaultValue(null)->end()
+                ->end()
                 ->arrayNode('mediasizes')
-                    ->isRequired()
-                    ->requiresAtLeastOneElement()
-                    ->useAttributeAsKey('name')
-                        ->prototype('scalar')->defaultValue(null)->end()
-                    ->end()
-            ->end();
+                ->isRequired()
+                ->requiresAtLeastOneElement()
+                ->useAttributeAsKey('name')
+                ->prototype('scalar')->defaultValue(null)->end()
+                ->end()
+                ->end();
 
         return $treeBuilder;
     }
+
 }

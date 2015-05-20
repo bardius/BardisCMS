@@ -11,7 +11,7 @@
     <entity
         name="Application\Sonata\MediaBundle\Entity\Gallery"
         table="media__gallery"
-        >
+    >
 
         <id name="id" type="integer" column="id">
             <generator strategy="AUTO"/>

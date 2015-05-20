@@ -1,20 +1,20 @@
 <div class="large-12 small-12 columns smoIcons">
     <h5 class="iconTitle">Share: </h5>
     <ul>
-       <li>
-		   <a class="smoIcon fbIcon" href="http://www.facebook.com/sharer.php?u={{ app.request.uri|url_encode() }}" title="Share This on Facebook" target="_blank">
-			   <span>Share This on Facebook</span>
-		   </a>
+        <li>
+            <a class="smoIcon fbIcon" href="http://www.facebook.com/sharer.php?u={{ app.request.uri|url_encode() }}" title="Share This on Facebook" target="_blank">
+                <span>Share This on Facebook</span>
+            </a>
         </li>
         <li>
             <a class="smoIcon tweetIcon" href="http://twitter.com/share?text={{ page.title|url_encode() }}%20by%20Web%20%26%20Site&amp;url={{ app.request.uri|url_encode() }}" title="Tweet This" target="_blank">
-				<span>Tweet This</span>
-			</a>
+                <span>Tweet This</span>
+            </a>
         </li>
         <li>
             <a class="smoIcon mailIcon" href="mailto:?Subject={{ page.title|url_encode(true) }}%20by%20Web%20%26%20Site&amp;Body=Check%20out%20this%20article%20for%20{{ page.title|url_encode(true) }}%20by%20Web%20%26%20Site%20at%20{{ app.request.uri|url_encode() }}" title="Mail This" target="_blank">
-				<span>Mail This</span>
-			</a>
-		</li>
+                <span>Mail This</span>
+            </a>
+        </li>
     </ul>
 </div>

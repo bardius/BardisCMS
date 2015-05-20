@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the <name> project.
  *
@@ -20,24 +21,20 @@ use Sonata\MediaBundle\Entity\BaseMedia as BaseMedia;
  *
  * @author <yourname> <youremail>
  */
-class Media extends BaseMedia
-{
+class Media extends BaseMedia {
 
     /**
      * @var integer $id
      */
     protected $id;
-    
-   
+
     /**
      * Get id
      *
      * @return integer $id
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
-    
-   
+
 }

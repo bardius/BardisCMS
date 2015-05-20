@@ -12,7 +12,7 @@ monolog:
         main:
             type:         fingers_crossed
             action_level: error
-            handler:      grouped        
+            handler:      grouped
         grouped:
             type:         group
             members:      [streamed] #[streamed, swift]

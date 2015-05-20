@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Menu Bundle
  * This file is part of the BardisCMS.
@@ -6,28 +7,24 @@
  * (c) George Bardis <george@bardis.info>
  *
  */
+
 namespace BardisCMS\MenuBundle\Controller;
 
-use BardisCMS\MenuBundle\Entity\Menu;
-
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
+class MenuAdminController extends Controller {
 
-class MenuAdminController extends Controller
-{
-    
-    public function duplicateAction($id = null)
-    {
+    public function duplicateAction($id = null) {
         // the key used to lookup the template
         $templateKey = 'edit';
-        
+
         $id = $this->get('request')->get($this->admin->getIdParameter());
 
         $clonedObject = $this->admin->getObject($id);
-        $clonedObject->setTitle($clonedObject->getTitle().' Clone');
-        
+        $clonedObject->setTitle($clonedObject->getTitle() . ' Clone');
+
         $object = $this->admin->getNewInstance();
 
         if (!$object) {
@@ -42,18 +39,18 @@ class MenuAdminController extends Controller
 
         $form = $this->admin->getForm();
         $form->setData($clonedObject);
-        
-        $page = $form->getData()->getPage();        
-        unset($page);     
-        
-        $externalUrl = $form->getData()->getExternalUrl();        
-        unset($externalUrl);      
-        
-        $menuUrlExtras = $form->getData()->getMenuUrlExtras();        
-        unset($menuUrlExtras);      
+
+        $page = $form->getData()->getPage();
+        unset($page);
+
+        $externalUrl = $form->getData()->getExternalUrl();
+        unset($externalUrl);
+
+        $menuUrlExtras = $form->getData()->getMenuUrlExtras();
+        unset($menuUrlExtras);
 
         if ($this->get('request')->getMethod() == 'POST') {
-            $form->bind($this->get('request'));
+            $form->handleRequest($this->get('request'));
 
             $isFormValid = $form->isValid();
 
@@ -63,12 +60,12 @@ class MenuAdminController extends Controller
 
                 if ($this->isXmlHttpRequest()) {
                     return $this->renderJson(array(
-                        'result' => 'ok',
-                        'objectId' => $this->admin->getNormalizedIdentifier($object)
+                                'result' => 'ok',
+                                'objectId' => $this->admin->getNormalizedIdentifier($object)
                     ));
                 }
 
-                $this->get('session')->setFlash('sonata_flash_success','flash_create_success');
+                $this->get('session')->setFlash('sonata_flash_success', 'flash_create_success');
                 // redirect to edit mode
                 return $this->redirectTo($object);
             }
@@ -88,9 +85,10 @@ class MenuAdminController extends Controller
         $this->get('twig')->getExtension('form')->renderer->setTheme($view, $this->admin->getFormTheme());
 
         return $this->render($this->admin->getTemplate($templateKey), array(
-            'action' => 'create',
-            'form'   => $view,
-            'object' => $object,
+                    'action' => 'create',
+                    'form' => $view,
+                    'object' => $object,
         ));
     }
+
 }

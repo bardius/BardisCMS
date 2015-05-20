@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Tag Bundle
  * This file is part of the BardisCMS.
@@ -11,7 +12,6 @@ namespace BardisCMS\TagBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerTest extends WebTestCase
-{
-	
+class DefaultControllerTest extends WebTestCase {
+    
 }

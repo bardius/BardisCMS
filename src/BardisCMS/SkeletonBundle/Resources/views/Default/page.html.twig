@@ -14,83 +14,118 @@
 {% block siteLogoDescription %}{{ page.title }} {{ page.description }}{% endblock %}
 
 
-{% block body_start %}{% endblock %}
-    
+{% block body_start %}
+    {#
+    {% if page.bannercontentblocks|length > 0 %}
+        <div class="pageTopBanner">
+            {% include 'PageBundle:Contents:bannercontentblocks.html.twig' with {contentblocks: page.bannercontentblocks %}
+        </div>
+    {% endif %}
+    #}
+{% endblock %}
+
 {% block content %}
+    {% if page.bannercontentblocks|length > 0 %}
+        {% include 'PageBundle:Contents:bannercontentblocks.html.twig' with {contentblocks: page.bannercontentblocks} %}
+    {% endif %}
     {% if page.pagetype == 'skeleton_article' %}
-        <div class="row">
-            <div class="twelve columns pageTopBanner">
-                {% include 'SkeletonBundle:Contents:bannercontentblocks.html.twig' %}
-            </div>
-            {% if page.showPageTitle == 1 %} 
-                <div class="twelve columns">  
-                    <h2>{{ page.title }}</h2>
+        <div class="large-12 small-12 columns skeletonPage {% if page.pageclass is not null %}{{ page.pageclass }}{% endif %}">
+            <div class="row">
+                {% if page.showPageTitle == 1 %}
+                    <div class="large-12 small-12 columns pageTitle">
+                        <h2>{{ page.title }}</h2>
+                    </div>
+                {% endif %}
+                <div class="large-12 small-12 columns pageText">
+                    <div class="row">
+                        {% include 'SkeletonBundle:Contents:maincontentblocks.html.twig' with {contentblocks: page.maincontentblocks} %}
+                    </div>
                 </div>
-            {% endif %}
-            <div class="twelve columns pageText">
-                {% include 'SkeletonBundle:Contents:maincontentblocks.html.twig' %}
             </div>
         </div>
     {% elseif page.pagetype == 'category_page' or page.pagetype == 'skeleton_filtered_list' or page.pagetype == 'skeleton_category_list' %} 
-        <div class="row {{ page.pagetype }}List">
-            {% if page.showPageTitle == 1 %} 
-                <div class="twelve columns">  
-                    <h2>{{ page.title }}</h2>
-                </div>
-            {% endif %}
-            {% if page.pagetype == 'skeleton_filtered_list' %} 
-                <div class="twelve columns"> 
-                    {% include 'SkeletonBundle:Contents:filterResultsFormHolder.html.twig' %}
-                </div>
-            {% endif %}
-            {% if page.maincontentblocks is not empty %}
-            <div class="twelve columns pageText">
-                {% include 'SkeletonBundle:Contents:maincontentblocks.html.twig' %}
-            </div>
-            {% endif %}
-            <div class="twelve columns categoryListing">
-                {% if pages %}
-                    {% for pageItem in pages %}
-                        <div class="columns categoryListingItem four mobile-four">
-                            {% include 'SkeletonBundle:Contents:page-list-item.html.twig' %}
+        <div class="large-12 small-12 columns categoryPage">
+            <div class="row">
+                {% if page.showPageTitle == 1 %}
+                    <div class="large-12 small-12 columns">
+                        <h2>{{ page.title }}</h2>
+                    </div>
+                {% endif %}
+                {% if page.pagetype == 'skeleton_filtered_list' %} 
+                    <div class="large-12 small-12 columns">
+                        <div class="row">
+                            {% include 'SkeletonBundle:Contents:filterResultsFormHolder.html.twig' %}
                         </div>
-                    {% endfor %}
+                    </div>
+                {% endif %}
+                {% if page.maincontentblocks is not empty %}
+                    <div class="large-12 small-12 columns pageText">
+                        <div class="row">
+                            {% include 'SkeletonBundle:Contents:maincontentblocks.html.twig' with {contentblocks: page.maincontentblocks} %}
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="large-12 small-12 columns {{ page.pagetype }}List">
+                    <div class="row">
+                        {% if page.pagetype == 'page_tag_list' %}
+                            {% include 'PageBundle:Contents:filterPagesFormHolder.html.twig' %}
+                        {% endif %}
+                        <div class="large-12 small-12 columns categoryListing">
+                            <div class="row">
+                                {% if pages %}
+                                    {% for pageItem in pages %}
+                                        <div class="large-6 small-12 columns categoryListingItem">
+                                            {% include 'SkeletonBundle:Contents:page-list-item.html.twig' %}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if page.pagetype == 'page_tag_list' %} 
+                    {% include 'SkeletonBundle:Contents:tags-pagination.html.twig' %}
+                {% else %} 
+                    {% include 'SkeletonBundle:Contents:pagination.html.twig' %}            
                 {% endif %} 
             </div>
         </div>
-        {% if page.pagetype == 'page_tag_list' %} 
-            {% include 'SkeletonBundle:Contents:tags-pagination.html.twig' %}
-        {% else %} 
-            {% include 'SkeletonBundle:Contents:pagination.html.twig' %}            
-        {% endif %} 
     {% elseif page.pagetype == 'skeleton_home'%} 
-        <div class="row {{ page.pagetype }}List">
-            {% if page.showPageTitle == 1 %} 
-                <div class="twelve columns">  
-                    <h2>{{ page.title }}</h2>
-                </div>
-            {% endif %}
-            {% if page.maincontentblocks is not empty %}
-            <div class="twelve columns pageText">
-                {% include 'SkeletonBundle:Contents:maincontentblocks.html.twig' %}
-            </div>
-            {% endif %}
-            <div class="twelve columns categoryListing">
-                {% if pages %}
-                    {% for pageItem in pages %}
-                        <div class="columns categoryListingItem four mobile-four">
-                            {% include 'SkeletonBundle:Contents:page-list-item.html.twig' %}
+        <div class="large-12 small-12 columns homePage">
+            <div class="row">
+                {% if page.showPageTitle == 1 %}
+                    <div class="large-12 small-12 columns pageTitle">
+                        <h2>{{ page.title }}</h2>
+                    </div>
+                {% endif %}
+                {% if page.maincontentblocks is not empty %}
+                    <div class="large-12 small-12 columns pageText">
+                        <div class="row collapse">
+                            {% include 'SkeletonBundle:Contents:maincontentblocks.html.twig' with {contentblocks: page.maincontentblocks} %}
                         </div>
-                    {% endfor %}
-                {% endif %} 
+                    </div>
+                {% endif %}
+                <div class="large-12 small-12 columns {{ page.pagetype }}List">
+                    <div class="row categoryListing">
+                        {% if pages %}
+                            {% for pageItem in pages %}
+                                <div class="large-6 small-12 columns categoryListingItem">
+                                    {% include 'SkeletonBundle:Contents:page-list-item.html.twig' %}
+                                </div>
+                            {% endfor %}
+                        {% endif %} 
+                    </div>
+                </div>
+                {% include 'SkeletonBundle:Contents:home_pagination.html.twig' %}
             </div>
         </div>
-        {% include 'SkeletonBundle:Contents:home_pagination.html.twig' %}
     {% endif %}
 {% endblock %}
 
-{% block gAnalytics %}{% include 'PageBundle:Contents:ga.html.twig' %}{% endblock %}
+{% block gAnalytics %}
+    {% include 'SkeletonBundle:Contents:ga.html.twig' %}
+{% endblock %}
 
 {% block modal %}
-    {% include 'SkeletonBundle:Contents:modalcontentblocks.html.twig' %}
+    {% include 'SkeletonBundle:Contents:modalcontentblocks.html.twig' with {contentblocks: page.modalcontentblocks} %}
 {% endblock %}

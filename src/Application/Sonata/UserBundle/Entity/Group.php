@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the <name> project.
  *
@@ -20,8 +21,7 @@ use Sonata\UserBundle\Entity\BaseGroup as BaseGroup;
  *
  * @author <yourname> <youremail>
  */
-class Group extends BaseGroup
-{
+class Group extends BaseGroup {
 
     /**
      * @var integer $id
@@ -33,8 +33,8 @@ class Group extends BaseGroup
      *
      * @return integer $id
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
 }

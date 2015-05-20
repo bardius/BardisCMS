@@ -15,10 +15,9 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Application\Sonata\UserBundle\Entity\User;
 
-class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
-{
-    public function load(ObjectManager $manager)
-    {
+class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
+
+    public function load(ObjectManager $manager) {
         $admin = new User();
         $admin->setCreatedAt(new \DateTime());
         $admin->setUpdatedAt(new \DateTime());
@@ -28,17 +27,16 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
         $admin->setEmailCanonical('admin@domain.com');
         $admin->setEnabled(1);
         $admin->setPlainPassword('admin');
-		$admin->setSuperAdmin(true);
-		//$admin->addRole(static::ROLE_SUPER_ADMIN);
-		$manager->persist($admin);
-		
+        $admin->setSuperAdmin(true);
+        //$admin->addRole(static::ROLE_SUPER_ADMIN);
+        $manager->persist($admin);
+
         $manager->flush();
-		
-		$this->addReference('admin', $admin);
+
+        $this->addReference('admin', $admin);
     }
-	
-	public function getOrder()
-    {
+
+    public function getOrder() {
         return 0;
     }
 

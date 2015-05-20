@@ -10,7 +10,7 @@ stfalcon_tinymce:
      # skin_variant : "silver"
       width: "500"
       height: "280"
-      plugins: 
+      plugins:
           - "pagebreak layer table save autosave insertdatetime anchor charmap hr image link code"
           - "preview media searchreplace print contextmenu paste directionality fullscreen noneditable visualchars nonbreaking"
       convert_urls : false
@@ -20,9 +20,9 @@ stfalcon_tinymce:
      #  toolbar2 : "bold italic underline strikethrough | justifyleft justifycenter justifyright justifyfull | formatselect fontsizeselect forecolor | blockquote | sub sup | bullist numlist"
      #  toolbar3 : "tablecontrols | charmap iespell advhr | link unlink anchor image media | cite abbr acronym attribs"
      #  image_advtab : true
-     
-     # Sample tinyMCE config 
-      
+
+     # Sample tinyMCE config
+
      # advanced:
      #   plugins:
      #     - "advlist autolink lists link image charmap print preview hr anchor pagebreak"
@@ -32,3 +32,4 @@ stfalcon_tinymce:
      #   toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
      #   toolbar2: "print preview media | forecolor backcolor emoticons | stfalcon | example"
      #   image_advtab: true
+     

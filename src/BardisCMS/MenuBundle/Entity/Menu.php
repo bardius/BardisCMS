@@ -13,8 +13,8 @@ use Application\Sonata\MediaBundle\Entity\Media;
  * @ORM\Table(name="menu_items")
  * @ORM\Entity
  */
-class Menu
-{
+class Menu {
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -24,20 +24,20 @@ class Menu
 
     /**
      * @ORM\Column(type="string", length=255)
-     */ 
+     */
     protected $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     */ 
+     */
     protected $menuType;
-	
+
     /**
      * @ORM\ManyToOne(targetEntity="BardisCMS\PageBundle\Entity\Page")
      * @ORM\JoinColumn(name="page", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $page;
-	
+
     /**
      * @ORM\ManyToOne(targetEntity="BardisCMS\BlogBundle\Entity\Blog")
      * @ORM\JoinColumn(name="blog", referencedColumnName="id", onDelete="SET NULL")
@@ -46,37 +46,37 @@ class Menu
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     */  
+     */
     protected $route = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     */  
+     */
     protected $externalUrl = null;
 
     /**
      * @ORM\Column(type="integer")
-     */  
+     */
     protected $accessLevel;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     */   
+     */
     protected $parent = null;
 
     /**
      * @ORM\Column(type="string")
-     */ 
+     */
     protected $menuGroup;
 
     /**
      * @ORM\Column(type="integer")
-     */   
+     */
     protected $publishState;
 
     /**
      * @ORM\Column(type="integer")
-     */   
+     */
     protected $ordering = 99;
 
     /**
@@ -84,21 +84,18 @@ class Menu
      * @ORM\JoinColumn(name="menuImage", onDelete="SET NULL")
      */
     protected $menuImage = null;
-	
+
     /**
      * @ORM\Column(type="string", nullable=true)
-     */ 
+     */
     protected $menuUrlExtras;
-    
-    
 
     /**
      * Get id
      *
      * @return integer 
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -108,8 +105,7 @@ class Menu
      * @param string $title
      * @return Menu
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
         return $this;
     }
@@ -119,8 +115,7 @@ class Menu
      *
      * @return string 
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -130,8 +125,7 @@ class Menu
      * @param string $title
      * @return Menu
      */
-    public function setMenuType($menuType)
-    {
+    public function setMenuType($menuType) {
         $this->menuType = $menuType;
         return $this;
     }
@@ -141,8 +135,7 @@ class Menu
      *
      * @return string 
      */
-    public function getMenuType()
-    {
+    public function getMenuType() {
         return $this->menuType;
     }
 
@@ -152,8 +145,7 @@ class Menu
      * @param string $route
      * @return Menu
      */
-    public function setRoute($route)
-    {
+    public function setRoute($route) {
         $this->route = $route;
         return $this;
     }
@@ -163,8 +155,7 @@ class Menu
      *
      * @return string 
      */
-    public function getRoute()
-    {
+    public function getRoute() {
         return $this->route;
     }
 
@@ -174,8 +165,7 @@ class Menu
      * @param string $externalUrl
      * @return Menu
      */
-    public function setExternalUrl($externalUrl)
-    {
+    public function setExternalUrl($externalUrl) {
         $this->externalUrl = $externalUrl;
         return $this;
     }
@@ -185,8 +175,7 @@ class Menu
      *
      * @return string 
      */
-    public function getExternalUrl()
-    {
+    public function getExternalUrl() {
         return $this->externalUrl;
     }
 
@@ -196,8 +185,7 @@ class Menu
      * @param integer $accessLevel
      * @return Menu
      */
-    public function setAccessLevel($accessLevel)
-    {
+    public function setAccessLevel($accessLevel) {
         $this->accessLevel = $accessLevel;
         return $this;
     }
@@ -207,8 +195,7 @@ class Menu
      *
      * @return integer 
      */
-    public function getAccessLevel()
-    {
+    public function getAccessLevel() {
         return $this->accessLevel;
     }
 
@@ -218,8 +205,7 @@ class Menu
      * @param string $parent
      * @return Menu
      */
-    public function setParent($parent)
-    {
+    public function setParent($parent) {
         $this->parent = $parent;
         return $this;
     }
@@ -229,8 +215,7 @@ class Menu
      *
      * @return string 
      */
-    public function getParent()
-    {
+    public function getParent() {
         return $this->parent;
     }
 
@@ -240,8 +225,7 @@ class Menu
      * @param string $menuGroup
      * @return Menu
      */
-    public function setMenuGroup($menuGroup)
-    {
+    public function setMenuGroup($menuGroup) {
         $this->menuGroup = $menuGroup;
         return $this;
     }
@@ -251,8 +235,7 @@ class Menu
      *
      * @return string 
      */
-    public function getMenuGroup()
-    {
+    public function getMenuGroup() {
         return $this->menuGroup;
     }
 
@@ -262,8 +245,7 @@ class Menu
      * @param integer $publishState
      * @return Menu
      */
-    public function setPublishState($publishState)
-    {
+    public function setPublishState($publishState) {
         $this->publishState = $publishState;
         return $this;
     }
@@ -273,8 +255,7 @@ class Menu
      *
      * @return integer 
      */
-    public function getPublishState()
-    {
+    public function getPublishState() {
         return $this->publishState;
     }
 
@@ -284,8 +265,7 @@ class Menu
      * @param integer $ordering
      * @return Menu
      */
-    public function setOrdering($ordering)
-    {
+    public function setOrdering($ordering) {
         $this->ordering = $ordering;
         return $this;
     }
@@ -295,8 +275,7 @@ class Menu
      *
      * @return integer 
      */
-    public function getOrdering()
-    {
+    public function getOrdering() {
         return $this->ordering;
     }
 
@@ -306,8 +285,7 @@ class Menu
      * @param BardisCMS\PageBundle\Entity\Page $page
      * @return Menu
      */
-    public function setPage(\BardisCMS\PageBundle\Entity\Page $page = null)
-    {
+    public function setPage(\BardisCMS\PageBundle\Entity\Page $page = null) {
         $this->page = $page;
         return $this;
     }
@@ -317,19 +295,17 @@ class Menu
      *
      * @return BardisCMS\PageBundle\Entity\Page 
      */
-    public function getPage()
-    {
+    public function getPage() {
         return $this->page;
     }
-    
+
     /**
      * Set blog
      *
      * @param BardisCMS\BlogBundle\Entity\Blog $blog
      * @return Menu
      */
-    public function setBlog(\BardisCMS\BlogBundle\Entity\Blog $blog = null)
-    {
+    public function setBlog(\BardisCMS\BlogBundle\Entity\Blog $blog = null) {
         $this->blog = $blog;
         return $this;
     }
@@ -339,8 +315,7 @@ class Menu
      *
      * @return BardisCMS\BlogBundle\Entity\Blog 
      */
-    public function getBlog()
-    {
+    public function getBlog() {
         return $this->blog;
     }
 
@@ -350,8 +325,7 @@ class Menu
      * @param Application\Sonata\MediaBundle\Entity\Media $menuImage
      * @return Menu
      */
-    public function setMenuImage(\Application\Sonata\MediaBundle\Entity\Media $menuImage = null)
-    {
+    public function setMenuImage(\Application\Sonata\MediaBundle\Entity\Media $menuImage = null) {
         $this->menuImage = $menuImage;
         return $this;
     }
@@ -361,19 +335,17 @@ class Menu
      *
      * @return Application\Sonata\MediaBundle\Entity\Media 
      */
-    public function getMenuImage()
-    {
+    public function getMenuImage() {
         return $this->menuImage;
     }
-    
+
     /**
      * Set menuUrlExtras
      *
      * @param string $menuUrlExtras
      * @return Menu
      */
-    public function setMenuUrlExtras($menuUrlExtras)
-    {
+    public function setMenuUrlExtras($menuUrlExtras) {
         $this->menuUrlExtras = $menuUrlExtras;
         return $this;
     }
@@ -383,67 +355,62 @@ class Menu
      *
      * @return string 
      */
-    public function getMenuUrlExtras()
-    {
+    public function getMenuUrlExtras() {
         return $this->menuUrlExtras;
-    } 
-    
-    /**
-    * toString
-    *
-    * @return string 
-    */	
-    public function __toString()
-    {
-		if($this->getTitle()){
-			return (string)$this->getTitle();			
-		}
-		else{
-			return (string)'New Menu Item';
-		}
     }
-    
+
     /**
-    * toString AccessLevel
-    *
-    * @return string 
-    */
-    public function getAccessLevelAsString()
-    {
-        switch($this->getAccessLevel()){
-            case('0'):  return "Public";
-            case('1'):  return "Authendicated";
-            case('2'):  return "Administrator";
+     * toString
+     *
+     * @return string 
+     */
+    public function __toString() {
+        if ($this->getTitle()) {
+            return (string) $this->getTitle();
+        } else {
+            return (string) 'New Menu Item';
         }
     }
-    
+
     /**
-    * toString PublishState
-    *
-    * @return string 
-    */
-    public function getPublishStateAsString()
-    {
-        switch($this->getPublishState()){
-            case('0'):  return "Unpublished";
-            case('1'):  return "Published";
+     * toString AccessLevel
+     *
+     * @return string 
+     */
+    public function getAccessLevelAsString() {
+        switch ($this->getAccessLevel()) {
+            case('0'): return "Public";
+            case('1'): return "Authendicated";
+            case('2'): return "Administrator";
         }
     }
-    
+
     /**
-    * toString menuType
-    *
-    * @return string 
-    */
-    public function getMenuTypeAsString()
-    {
-        switch($this->getMenuType()){
-            case('Page'):			return "Page";
-            case('Blog'):			return "Blog Page";
-            case('http'):			return "External URL";
-            case('url'):			return "Internal URL";
-            case('seperator'):		return "Seperator";
-            default:				return $this->getMenuType(); 
+     * toString PublishState
+     *
+     * @return string 
+     */
+    public function getPublishStateAsString() {
+        switch ($this->getPublishState()) {
+            case('0'): return "Unpublished";
+            case('1'): return "Published";
         }
     }
+
+    /**
+     * toString menuType
+     *
+     * @return string 
+     */
+    public function getMenuTypeAsString() {
+        switch ($this->getMenuType()) {
+            case('Page'): return "Page";
+            case('Blog'): return "Blog Page";
+            case('http'): return "External URL";
+            case('url'): return "Internal URL";
+            case('seperator'): return "Seperator";
+            default: return $this->getMenuType();
+        }
+    }
+
 }

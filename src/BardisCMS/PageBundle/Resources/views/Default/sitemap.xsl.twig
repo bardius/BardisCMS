@@ -1,101 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xna="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" exclude-result-prefixes="xna">
-<xsl:output indent="yes" method="html" omit-xml-declaration="yes"/>
-<xsl:template match="/">
-<html>
-<head>
-<title>Google Sitemap File</title>
-<style type="text/css">
-    <![CDATA[
-  	<!--
-  	h1 { 
-  		font-weight:bold;
-  		font-size:1.5em;
-  		margin-bottom:0;
-  		margin-top:1px; }
-  	
-  	h2 { 
-  		font-weight:bold;
-  		font-size:1.2em;
-  		margin-bottom:0; 
-  		color:#707070;
-  		margin-top:1px; }
-  	 	
-  	p.sml { 
-  		font-size:0.8em;
-  		margin-top:0; }
-  	
-  	.sortup {
-  		background-position: right center;
-  		background-image: url(http://www.google.com/webmasters/sitemaps/images/sortup.gif);
-  		background-repeat: no-repeat;
-  		font-style:italic;
-  		white-space:pre; }
-  		
-  	.sortdown {
-  		background-position: right center;
-  		background-image: url(http://www.google.com/webmasters/sitemaps/images/sortdown.gif);
-  		background-repeat: no-repeat;
-  		font-style:italic;
-  		white-space:pre; }
-  	
-  	table.copyright {
-  		width:100%;
-  		border-top:1px solid #ddad08;
-  		margin-top:1em;
-  		text-align:center;
-  		padding-top:1em;
-  		vertical-align:top; }
-	table.data {
-		font-size: 12px;
-		width: 100%;
-		border: 1px solid #000000;
-	}
-	table.data tr.header td{
-		background-color: #CCCCCC;
-		color: #FFFFFF;
-		font-weight: bold;
-		font-size: 14px;
-	}
-    div.imagelist {
-        border: 1px solid #ccc;
-        background-color: #eee;
-        padding: 5px;
-        width: auto;float:left;
-    }
-    span.images_count {
-        border: 1px solid #004080;
-        background-color: #0000FF;
-        color: #fff;
-        margin: 0 5px;
-        cursor: pointer;
-    }
-  	-->
-    ]]>
-</style>
-</head>
-<body onLoad="initXsl('table0','sitemap');">
-<h1 id="head1">Site Map</h1>
-<h2>Number of URLs in this Sitemap: <xsl:value-of select="count(xna:urlset/xna:url)"/></h2>
-<table id="table0" class="data">
-<tr class="header">
-  <td>Sitemap URL</td>
-    <td>Last modification date</td>
-    <td>Change freq.</td>
-    <td>Priority</td>
-  </tr>
-<xsl:for-each select="xna:urlset/xna:url">
-<tr>
-<td><xsl:variable name="sitemapURL"><xsl:value-of select="xna:loc"/></xsl:variable>
-    <a href="{$sitemapURL}" target="_blank" ref="nofollow"><xsl:value-of select="$sitemapURL"/></a>
-</td>
-<td><xsl:value-of select="xna:lastmod"/></td>
-<td><xsl:value-of select="xna:changefreq"/></td>
-<td><xsl:value-of select="xna:priority"/></td>
-</tr>
-</xsl:for-each>
-</table>
-</body>
-</html>
-</xsl:template>
+    <xsl:output indent="yes" method="html" omit-xml-declaration="yes"/>
+    <xsl:template match="/">
+        <html>
+            <head>
+                <title>Google Sitemap File</title>
+                <style type="text/css">
+                    <![CDATA[
+                    <!--
+                    h1 { 
+                        font-weight:bold;
+                        font-size:1.5em;
+                        margin-bottom:0;
+                        margin-top:1px; }
+
+                    h2 { 
+                        font-weight:bold;
+                        font-size:1.2em;
+                        margin-bottom:0; 
+                        color:#707070;
+                        margin-top:1px; }
+
+                    p.sml { 
+                        font-size:0.8em;
+                        margin-top:0; }
+
+                    .sortup {
+                        background-position: right center;
+                        background-image: url(http://www.google.com/webmasters/sitemaps/images/sortup.gif);
+                        background-repeat: no-repeat;
+                        font-style:italic;
+                        white-space:pre; }
+
+                    .sortdown {
+                        background-position: right center;
+                        background-image: url(http://www.google.com/webmasters/sitemaps/images/sortdown.gif);
+                        background-repeat: no-repeat;
+                        font-style:italic;
+                        white-space:pre; }
+
+                    table.copyright {
+                        width:100%;
+                        border-top:1px solid #ddad08;
+                        margin-top:1em;
+                        text-align:center;
+                        padding-top:1em;
+                        vertical-align:top; }
+                    table.data {
+                        font-size: 12px;
+                        width: 100%;
+                        border: 1px solid #000000;
+                    }
+                    table.data tr.header td{
+                        background-color: #CCCCCC;
+                        color: #FFFFFF;
+                        font-weight: bold;
+                        font-size: 14px;
+                    }
+                    div.imagelist {
+                        border: 1px solid #ccc;
+                        background-color: #eee;
+                        padding: 5px;
+                        width: auto;float:left;
+                    }
+                    span.images_count {
+                        border: 1px solid #004080;
+                        background-color: #0000FF;
+                        color: #fff;
+                        margin: 0 5px;
+                        cursor: pointer;
+                    }
+                    -->
+                    ]]>
+                </style>
+            </head>
+            <body onLoad="initXsl('table0', 'sitemap');">
+                <h1 id="head1">Site Map</h1>
+                <h2>Number of URLs in this Sitemap: <xsl:value-of select="count(xna:urlset/xna:url)"/></h2>
+                <table id="table0" class="data">
+                    <tr class="header">
+                        <td>Sitemap URL</td>
+                        <td>Last modification date</td>
+                        <td>Change freq.</td>
+                        <td>Priority</td>
+                    </tr>
+                    <xsl:for-each select="xna:urlset/xna:url">
+                        <tr>
+                            <td><xsl:variable name="sitemapURL"><xsl:value-of select="xna:loc"/></xsl:variable>
+                        <a href="{$sitemapURL}" target="_blank" ref="nofollow"><xsl:value-of select="$sitemapURL"/></a>
+                        </td>
+                        <td><xsl:value-of select="xna:lastmod"/></td>
+                        <td><xsl:value-of select="xna:changefreq"/></td>
+                        <td><xsl:value-of select="xna:priority"/></td>
+                        </tr>
+                    </xsl:for-each>
+                </table>
+            </body>
+        </html>
+    </xsl:template>
 </xsl:stylesheet>

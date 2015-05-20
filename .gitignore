@@ -26,26 +26,14 @@ Thumbs.db
 *.sublime-*
 nbproject/
 node_modules/
+npm-debug.log
 
 
 # Symfony2 #
 #############
-app/bootstrap.php.cache
-app/cache/*
-app/logs/*
-app/sessions/*
-build/
-composer.phar
-foundation/.sass-cache/
+/app/bootstrap.php.cache
+/app/cache/*
+/app/logs/*
+/app/sessions/*
 parameters.yml
-/web/.sass-cache/
-/web/foundation/.sass-cache/vendor/
-/web/foundation/sass/.sass-cache/
-vendor/
-/web/bower_components/*
-web/uploads/
-/web/npm-debug.log
-
-
-
-
+/vendor/

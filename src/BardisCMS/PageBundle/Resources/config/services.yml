@@ -1,4 +1,7 @@
 parameters:
-#    page.example.class: BardisCMS\PageBundle\Example
+    page.services.helpers_class: BardisCMS\PageBundle\Services\Helpers
 
 services:
+    bardiscms_page.services.helpers:
+        class: %page.services.helpers_class%
+        arguments: ["@doctrine.orm.entity_manager"]

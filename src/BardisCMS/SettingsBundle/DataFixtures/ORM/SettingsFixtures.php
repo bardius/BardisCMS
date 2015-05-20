@@ -15,10 +15,9 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use BardisCMS\SettingsBundle\Entity\Settings;
 
-class SettingsFixtures extends AbstractFixture implements OrderedFixtureInterface
-{
-    public function load(ObjectManager $manager)
-    {
+class SettingsFixtures extends AbstractFixture implements OrderedFixtureInterface {
+
+    public function load(ObjectManager $manager) {
         $settings = new Settings();
         $settings->setMetaDescription('Default Meta Description');
         $settings->setMetaKeywords('Default Meta Keywords');
@@ -33,15 +32,14 @@ class SettingsFixtures extends AbstractFixture implements OrderedFixtureInterfac
         $settings->setItemsPerPage(2);
         $settings->setBlogItemsPerPage(2);
         $settings->setActivateSettings(1);
-		$manager->persist($settings);
-		
+        $manager->persist($settings);
+
         $manager->flush();
-		
-		$this->addReference('settings', $settings);
+
+        $this->addReference('settings', $settings);
     }
-	
-	public function getOrder()
-    {
+
+    public function getOrder() {
         return 1;
     }
 
