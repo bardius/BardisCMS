@@ -32,18 +32,6 @@ echo -e "\n\n\e[0;34m********** Set permissions to files **********\e[0m"
 echo sudo -t -H -u $4 bash -c "sudo find $3 -type f -print0 | sudo xargs -0 chmod 0644"
 sudo -t -H -u $4 bash -c "sudo find $3 -type f -print0 | sudo xargs -0 chmod 0644"
 
-echo -e "\n\n\e[0;34m********** Set permissions to uploads folder **********\e[0m"
-echo sudo -t -H -u $4 bash -c "sudo chmod 0777 -R $3/web/uploads"
-sudo -t -H -u $4 bash -c "sudo chmod 0777 -R $3/web/uploads"
-
-echo -e "\n\n\e[0;34m********** Set permissions to cache folder **********\e[0m"
-echo sudo -t -H -u $4 bash -c "sudo chmod 0777 -R $3/app/cache"
-sudo -t -H -u $4 bash -c "sudo chmod 0777 -R $3/app/cache"
-
-echo -e "\n\n\e[0;34m********** Set permissions to logs folder **********\e[0m"
-echo sudo -t -H -u $4 bash -c "sudo chmod 0777 -R $3/app/logs"
-sudo -t -H -u $4 bash -c "sudo chmod 0777 -R $3/app/logs"
-
 echo -e "\n\n\e[0;34m********** Clear Cache **********\e[0m"
 echo sudo -t -H -u $4 bash -c "sudo php $3/app/console cache:clear --no-debug"
 sudo -t -H -u $4 bash -c "sudo php $3/app/console cache:clear --no-debug"
