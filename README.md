@@ -11,10 +11,10 @@
 
 ![](http://www.bardis.info/bardisCMS.png)
 
-Symfony2 (v2.7.2) distribution with integrated Zurb Foundation 5 (v5.5)
+Symfony2 (v2.7.3) distribution with integrated Zurb Foundation 5 (v5.5)
 ============================================================================
 
-BardisCMS is a Symfony2 (v2.7.2) distribution with integrated Zurb Foundation 5 Framework.
+BardisCMS is a Symfony2 (v2.7.3) distribution with integrated Zurb Foundation 5 Framework.
 
 Travis CI, Bower and Grunt with custom builds are included for better workflow on front end.
 
@@ -113,13 +113,13 @@ We need to install NodeJs, Node Packaged Modules, Ruby, compass, sass, foundatio
 More information can be found below at their official web sites:
 
 	http://git-scm.com/downloads				(GIT)
-	http://nodejs.org/					(NodeJs)
-	https://npmjs.org/					(Node Packaged Modules)
+	http://nodejs.org/                          (NodeJs)
+	https://npmjs.org/                          (Node Packaged Modules)
 	http://www.rubyinstaller.org/				(Ruby)
 	https://github.com/bower/bower				(Bower)
 	http://sass-lang.com/install				(Sass)
 	http://compass-style.org/install/			(Compass)
-	http://foundation.zurb.com/docs/sass.html		(Foundation 5 - Sass based)
+	http://foundation.zurb.com/docs/sass.html	(Foundation 5 - Sass based)
 
 The command line steps are:
 
@@ -315,6 +315,7 @@ The test was run for the home page in a small AWS instance with Ubuntu 14 and Va
     Transfer rate:          21225.14 [Kbytes/sec] received
 
 Connection Times (ms)
+
                     min  mean[+/-sd] median   max
      Connect:        0    3  17.0      0     125
      Processing:     6  156 809.7     11    4949

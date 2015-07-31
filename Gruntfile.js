@@ -30,13 +30,13 @@ module.exports = function (grunt) {
                 modernizrReleaseFile: 'modernizr.min.js',
                 // <%=config.js.scriptFileList%>
                 scriptFileList: [
-                    'web/bower_components/jquery/jquery.min.js',
+                    'web/bower_components/jquery/jquery.js',
                     // Include only used Foundation 5 scripts if needed instead of the minified full framework ones
                     //'web/bower_components/foundation/js/foundation.js',
                     //'web/bower_components/foundation/js/foundation/*.js',
 
                     // Include all Foundation 5 scripts
-                    'web/bower_components/foundation/js/foundation.min.js',
+                    'web/bower_components/foundation/js/foundation.js',
                     'web/js/helpers/environment.js',
                     'web/js/helpers/supports.js',
                     'web/js/helpers/console.js',
@@ -271,7 +271,7 @@ module.exports = function (grunt) {
         jasmine: {
             test: {
               src: '<%=config.js.releaseDir%>/*.js',
-                options: {                    
+                options: {
                     vendor: [
                       'web/bower_components/jquery/jquery.min.js',
                       'web/bower_components/jasmine-jquery/lib/jasmine-jquery.js'
@@ -540,7 +540,7 @@ module.exports = function (grunt) {
 
 
     /**
-     * GRUNT JASMINE 
+     * GRUNT JASMINE
      * A task for testing
      * run jshint, jasmine
      */
@@ -548,7 +548,7 @@ module.exports = function (grunt) {
         //'jshint',
         'jasmine'
     ]);
-    
+
 
     /**
      * GRUNT TRAVIS
