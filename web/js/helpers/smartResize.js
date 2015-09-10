@@ -1,4 +1,5 @@
 // smartresize
+
 (function ($, sr) {
 
     // debouncing function from John Hann
@@ -9,16 +10,18 @@
         return function debounced() {
             var obj = this, args = arguments;
             function delayed() {
-                if (!execAsap)
+                if (!execAsap){
                     func.apply(obj, args);
+                }
                 timeout = null;
             }
-            ;
 
-            if (timeout)
+            if (timeout){
                 clearTimeout(timeout);
-            else if (execAsap)
+            }
+            else if (execAsap) {
                 func.apply(obj, args);
+            }
 
             timeout = setTimeout(delayed, threshold || 100);
         };

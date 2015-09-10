@@ -4,7 +4,6 @@
  */
 
 // Create a closure to maintain scope of the '$' and CMS
-;
 (function (CMS, $, window, document, undefined) {
 
     'use strict';

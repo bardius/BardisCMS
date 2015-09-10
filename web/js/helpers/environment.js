@@ -1,6 +1,5 @@
 /*	Author:  */
 
-;
 (function (CMS) {
 
     CMS.environment = {
