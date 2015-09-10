@@ -5,6 +5,7 @@
 // -----------------------------
 
 module.exports = {
+    'sf2-console': {
         options: {
             bin: 'app/console'
         },
@@ -95,4 +96,5 @@ module.exports = {
             args: {
             }
         }
+    }
 };

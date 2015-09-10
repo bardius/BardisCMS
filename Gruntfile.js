@@ -129,7 +129,7 @@ module.exports = function (grunt) {
     grunt.registerTask('jsdev', [
         'jshint',
         'uglify:release',
-        'symfony2:assetic_dump_dev'
+        'symfony2:sf2-console:assetic_dump_dev'
     ]);
 
 
@@ -143,7 +143,7 @@ module.exports = function (grunt) {
         'sass:release',
         'postcss:release',
         'csssplit:release',
-        'symfony2:assetic_dump_dev'
+        'symfony2:sf2-console:assetic_dump_dev'
     ]);
 
 
@@ -169,8 +169,8 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('deploy', [
         'compileprod',
-        'symfony2:assetic_dump_dev',
-        'symfony2:assetic_dump_prod'
+        'symfony2:sf2-console:assetic_dump_dev',
+        'symfony2:sf2-console:assetic_dump_prod'
     ]);
 
 
@@ -180,10 +180,10 @@ module.exports = function (grunt) {
      * run sass, postcss, combine_mq, csssplit, csso, uglify, symfony2
      */
     grunt.registerTask('deployment_prod', [
-        'symfony2:cache_clear_prod',
-        'symfony2:cache_warmup_prod',
+        'symfony2:sf2-console:cache_clear_prod',
+        'symfony2:sf2-console:cache_warmup_prod',
         'compileprod',
-        'symfony2:assetic_dump_prod'
+        'symfony2:sf2-console:assetic_dump_prod'
     ]);
 
 
@@ -204,21 +204,21 @@ module.exports = function (grunt) {
      * run bower install, sass, postcss, combine_mq, csssplit, csso, uglify, symfony2
      */
     grunt.registerTask('first_deployment', [
-        'symfony2:cache_clear_dev',
-        'symfony2:cache_clear_prod',
-        'symfony2:cache_warmup_dev',
-        'symfony2:cache_warmup_prod',
-        'symfony2:doctrine_schema_drop',
-        'symfony2:doctrine_schema_create',
-        'symfony2:doctrine_fixtures_load',
-        'symfony2:sonata_media_sync_default',
-        'symfony2:sonata_media_sync_intro',
-        'symfony2:sonata_media_sync_bgimage',
-        'symfony2:sonata_media_sync_icon',
-        'symfony2:sonata_media_sync_admin',
+        'symfony2:sf2-console:cache_clear_dev',
+        'symfony2:sf2-console:cache_clear_prod',
+        'symfony2:sf2-console:cache_warmup_dev',
+        'symfony2:sf2-console:cache_warmup_prod',
+        'symfony2:sf2-console:doctrine_schema_drop',
+        'symfony2:sf2-console:doctrine_schema_create',
+        'symfony2:sf2-console:doctrine_fixtures_load',
+        'symfony2:sf2-console:sonata_media_sync_default',
+        'symfony2:sf2-console:sonata_media_sync_intro',
+        'symfony2:sf2-console:sonata_media_sync_bgimage',
+        'symfony2:sf2-console:sonata_media_sync_icon',
+        'symfony2:sf2-console:sonata_media_sync_admin',
         'compileprod',
-        'symfony2:assetic_dump_dev',
-        'symfony2:assetic_dump_prod'
+        'symfony2:sf2-console:assetic_dump_dev',
+        'symfony2:sf2-console:assetic_dump_prod'
     ]);
 
 
