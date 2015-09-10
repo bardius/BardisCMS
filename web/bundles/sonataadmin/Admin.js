@@ -48,6 +48,7 @@ var Admin = {
         Admin.setup_inline_form_errors(subject);
         Admin.setup_tree_view(subject);
         Admin.setup_collection_counter(subject);
+        Admin.setup_sticky_elements(subject);
 
 //        Admin.setup_list_modal(subject);
     },
@@ -528,5 +529,113 @@ var Admin = {
             }
             subject.remove();
         });
+    },
+
+    setup_sticky_elements: function(subject) {
+        if (window.SONATA_CONFIG && window.SONATA_CONFIG.USE_STICKYFORMS) {
+            Admin.log('[core|setup_sticky_elements] setup sticky elements on', subject);
+
+            var wrapper = jQuery(subject).find('.content-wrapper');
+            var navbar  = jQuery(wrapper).find('nav.navbar');
+            var footer  = jQuery(wrapper).find('.sonata-ba-form-actions');
+
+            if (navbar.length) {
+                new Waypoint.Sticky({
+                    element: navbar[0],
+                    offset:  50,
+                    handler: function( direction ) {
+                        if (direction == 'up') {
+                            jQuery(navbar).width('auto');
+                        } else {
+                            jQuery(navbar).width(jQuery(wrapper).outerWidth());
+                        }
+                    }
+                });
+            }
+
+            if (footer.length) {
+                new Waypoint({
+                    element: wrapper[0],
+                    offset: 'bottom-in-view',
+                    handler: function(direction) {
+                        var position = jQuery('.sonata-ba-form form > .row').outerHeight() + jQuery(footer).outerHeight() - 2;
+
+                        if (position < jQuery(footer).offset().top) {
+                            jQuery(footer).removeClass('stuck');
+                        }
+
+                        if (direction == 'up') {
+                            jQuery(footer).addClass('stuck');
+                        }
+                    }
+                });
+            }
+
+            Admin.handleScroll(footer, navbar, wrapper);
+        }
+    },
+    handleScroll: function(footer, navbar, wrapper) {
+        if (footer.length && jQuery(window).scrollTop() + jQuery(window).height() != jQuery(document).height()) {
+            jQuery(footer).addClass('stuck');
+        }
+
+        jQuery(window).scroll(
+            Admin.debounce(function() {
+                if (footer.length && jQuery(window).scrollTop() + jQuery(window).height() == jQuery(document).height()) {
+                    jQuery(footer).removeClass('stuck');
+                }
+
+                if (navbar.length && jQuery(window).scrollTop() === 0) {
+                    jQuery(navbar).removeClass('stuck');
+                }
+            }, 250)
+        );
+
+        jQuery('body').on('expanded.pushMenu collapsed.pushMenu', function() {
+            Admin.handleResize(footer, navbar, wrapper);
+        });
+
+        jQuery(window).resize(
+            Admin.debounce(function() {
+                Admin.handleResize(footer, navbar, wrapper);
+            }, 250)
+        );
+    },
+    handleResize: function(footer, navbar, wrapper) {
+        setTimeout(function() {
+            if (navbar.length && jQuery(navbar).hasClass('stuck')) {
+                jQuery(navbar).width(jQuery(wrapper).outerWidth());
+            }
+
+            if (footer.length && jQuery(footer).hasClass('stuck')) {
+                jQuery(footer).width(jQuery(wrapper).outerWidth());
+            }
+        }, 350); // the animation take 0.3s to execute, so we have to take the width, just after the animation ended
+    },
+    // http://davidwalsh.name/javascript-debounce-function
+    debounce: function (func, wait, immediate) {
+        var timeout;
+
+        return function() {
+            var context = this,
+                args    = arguments;
+
+            var later = function() {
+                timeout = null;
+
+                if (!immediate) {
+                    func.apply(context, args);
+                }
+            };
+
+            var callNow = immediate && !timeout;
+
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+
+            if (callNow) {
+                func.apply(context, args);
+            }
+        };
     }
 };
