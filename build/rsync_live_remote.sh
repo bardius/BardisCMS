@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # This script will use rsync to
 # Enable maintenance mode
 # copy the files for the Jenkins job workspace to the provided target server:directory,
