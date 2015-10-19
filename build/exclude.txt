@@ -15,6 +15,7 @@ Thumbs.db
 
 *.sublime-*
 nbproject/
+.idea/
 node_modules/
 
 /conf
@@ -42,6 +43,8 @@ node_modules/
 /app/logs/*
 /app/sessions/*
 /app/cache/*
+
+/grunt
 
 /app/config/parameters.yml
 /app/config/parameters.yml.dist
