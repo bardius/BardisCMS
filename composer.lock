@@ -3854,12 +3854,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataMediaBundle.git",
-                "reference": "0736a93cf2f59e961888756b56d22e567b630c3b"
+                "reference": "770af0147d69109d2aad00312226e2e78565c64e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataMediaBundle/zipball/0736a93cf2f59e961888756b56d22e567b630c3b",
-                "reference": "0736a93cf2f59e961888756b56d22e567b630c3b",
+                "url": "https://api.github.com/repos/sonata-project/SonataMediaBundle/zipball/770af0147d69109d2aad00312226e2e78565c64e",
+                "reference": "770af0147d69109d2aad00312226e2e78565c64e",
                 "shasum": ""
             },
             "require": {
@@ -3938,7 +3938,7 @@
                 "vimeo",
                 "youtube"
             ],
-            "time": "2015-10-19 07:44:53"
+            "time": "2015-10-19 13:33:48"
         },
         {
             "name": "sonata-project/notification-bundle",
