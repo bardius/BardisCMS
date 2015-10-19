@@ -18,8 +18,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller {
 
+    private $pageRequest;
+
     // Get the blog page id based on alias from route
-    public function aliasAction($alias, $extraParams = null, $currentpage = 0, $totalpageitems = 0) {
+    public function aliasAction($alias, $extraParams = null, $currentpage = 0, $totalpageitems = 0, Request $request) {
+
+        $this->pageRequest = $request;
 
         $page = $this->getDoctrine()->getRepository('BlogBundle:Blog')->findOneByAlias($alias);
 
@@ -68,9 +72,9 @@ class DefaultController extends Controller {
             // Set response as public. Otherwise it will be private by default.
             $response->setPublic();
 
-            //var_dump($response->isNotModified($this->getRequest()));
+            //var_dump($response->isNotModified($this->pageRequest));
             //var_dump($response->getStatusCode());
-            if (!$response->isNotModified($this->getRequest())) {
+            if (!$response->isNotModified($this->pageRequest)) {
                 // Marks the Response stale
                 $response->expire();
             } else {
@@ -83,7 +87,7 @@ class DefaultController extends Controller {
         // Set the website settings and metatags
         $page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($page);
 
-        // Set the pagination variables        
+        // Set the pagination variables
         if (!$totalpageitems) {
             if (is_object($settings)) {
                 $totalpageitems = $settings->getBlogItemsPerPage();
@@ -170,7 +174,7 @@ class DefaultController extends Controller {
 
     // Get the required data to display to the correct view depending on pagetype
     protected function renderPage($page, $id, $publishStates, $extraParams, $currentpage, $totalpageitems, $linkUrlParams) {
-        // Check if mobile content should be served		
+        // Check if mobile content should be served
         $serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
         $settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
 
@@ -270,7 +274,7 @@ class DefaultController extends Controller {
         return $response;
     }
 
-    // Get and format the filtering arguments to use with the actions 
+    // Get and format the filtering arguments to use with the actions
     public function filterBlogPostsAction(Request $request) {
 
         $filterTags = 'all';

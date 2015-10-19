@@ -1,8 +1,7 @@
 misd_guzzle:
 
-  log:
-    format: debug # default/debug/short or custom MessageFormatter string
+    log:
+        format: debug # default/debug/short or custom MessageFormatter string
 
-  filesystem_cache:
-    path: "%kernel.cache_dir%/weatherapi/"
-    
+    filesystem_cache:
+        path: "%kernel.cache_dir%/weatherapi/"

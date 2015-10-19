@@ -13,7 +13,7 @@ namespace BardisCMS\ContentBlockBundle\Twig;
 class SortByAttribute extends \Twig_Extension {
 
     public function __construct() {
-        
+
     }
 
     /**
@@ -23,7 +23,7 @@ class SortByAttribute extends \Twig_Extension {
      */
     public function getFilters() {
         return array(
-            'sort_by_attribute' => new \Twig_Filter_Method($this, 'twigSortByAttributeFilter')
+            new \Twig_SimpleFilter('sort_by_attribute', array($this, 'twigSortByAttributeFilter'))
         );
     }
 
@@ -41,13 +41,15 @@ class SortByAttribute extends \Twig_Extension {
      * Allows to sort an array of objects by a specified object property.
      * Allows to sort an array of arrays by a specified index/key.
      * Allows to sort hybrid arrays of objects, string, numbers
-     * 
+     *
      * $options accepted values:
      * 	'caseSensitive': true|false(default)
-     * 
+     *
      * @param array $array The array to be sorted
      * @param string $attribute An object property or an array index/key
      * @param array $options An array of options
+     *
+     * @return array
      */
     function twigSortByAttributeFilter($array, $attribute = null, $options = array('caseSensitive' => false)) {
         // returns the original array if $attribute is not specified
@@ -64,9 +66,9 @@ class SortByAttribute extends \Twig_Extension {
 
         /*
          * builds $arrItemsToSort, a temp array to be sorted
-         * 
+         *
          * $arrItemsToSort keys		= $array keys
-         * $arrItemsToSort values           = values of each object's attribute of $array or values of $array at specified index/key
+         * $arrItemsToSort values   = values of each object's attribute of $array or values of $array at specified index/key
          */
         $arrItemsToSort = array();
 

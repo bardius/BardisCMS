@@ -4,7 +4,7 @@ function getInputField(containerId, contentId, fieldbox) {
     return inputField;
 }
 
-function trim(string) {
+function trimTitle(string) {
     string = string.toLowerCase();
     string = string.replace(/[^a-zA-Z0-9]+/g, "-");
 
@@ -66,7 +66,7 @@ jQuery(document).ready(function ($) {
     if ($(".pageTitleField").length > 0) {
         $(".pageTitleField").blur(function () {
             titleVal = $(this).val();
-            titleVal = trim(titleVal);
+            titleVal = trimTitle(titleVal);
             aliasVal = $(".pageAliasField").val();
             if (aliasVal.length) {
                 return false;
@@ -81,17 +81,23 @@ jQuery(document).ready(function ($) {
     $('.sonata-ba-field-standard-natural').on('click', function (e) {
 
         var target = $(e.target);
-        
+
         if (target.hasClass("sonata-ba-collapsed")) {
-            e.preventDefault();   
-            
+            e.preventDefault();
+
             var $collapse = target.closest('.sonata-ba-fielset-collapsed').find('.sonata-ba-collapsed-fields');
             $collapse.collapse('toggle');
         }
     });
 
     // Reorder content blocks by dragging them.
-    availableContentSlots = new Array('bannercontentblocks', 'maincontentblocks', 'secondarycontentblocks', 'extracontentblocks', 'modalcontentblocks');
+    var availableContentSlots = [
+        'bannercontentblocks',
+        'maincontentblocks',
+        'secondarycontentblocks',
+        'extracontentblocks',
+        'modalcontentblocks'
+    ];
 
     if (availableContentSlots.length > 0) {
         for (var availableContentSlot in availableContentSlots) {
@@ -105,7 +111,7 @@ jQuery(document).ready(function ($) {
                     var orderedItems = $(this).sortable("toArray");
                     for (var orderedPosition in orderedItems)
                     {
-                        orderInputField = getInputField($(this).attr('id'), orderedItems[orderedPosition], 'orderField');
+                        var orderInputField = getInputField($(this).attr('id'), orderedItems[orderedPosition], 'orderField');
                         $(orderInputField).val(orderedPosition);
                     }
                 });

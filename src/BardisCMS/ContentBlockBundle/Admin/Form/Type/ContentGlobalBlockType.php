@@ -13,7 +13,7 @@ namespace BardisCMS\ContentBlockBundle\Admin\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Options;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityManager;
 
 class ContentGlobalBlockType extends AbstractType {
@@ -33,7 +33,7 @@ class ContentGlobalBlockType extends AbstractType {
                     'auto_initialize' => false,
                     'class' => 'BardisCMS\ContentBlockBundle\Entity\ContentBlock',
                     'query_builder' => $this->getGlobalBlocksQueryBuilder(),
-                    'property' => 'title',
+                    'choice_label' => 'title',
                     'expanded' => false,
                     'multiple' => false,
                     'attr' => array(
@@ -72,23 +72,22 @@ class ContentGlobalBlockType extends AbstractType {
     /**
      * {@inheritDoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+    public function configureOptions(OptionsResolver $resolver) {
         $optionsNormalizer = function (Options $options, $value) {
             $value = 'BardisCMS\ContentBlockBundle\Entity\ContentGlobalBlock';
 
             return $value;
         };
 
-        $resolver->setNormalizers(array(
-            'data_class' => $optionsNormalizer,
-        ));
+        $resolver->setNormalizer('data_class', $optionsNormalizer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getName() {
+        return $this->getBlockPrefix();
+    }
+
+    // Define the name of the form to call it for rendering
+    public function getBlockPrefix() {
         return 'contentglobalblock';
     }
-
 }

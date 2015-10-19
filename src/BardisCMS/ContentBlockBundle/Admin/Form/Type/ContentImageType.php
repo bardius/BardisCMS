@@ -13,7 +13,7 @@ namespace BardisCMS\ContentBlockBundle\Admin\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Options;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContentImageType extends AbstractType {
 
@@ -30,23 +30,22 @@ class ContentImageType extends AbstractType {
     /**
      * {@inheritDoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+    public function configureOptions(OptionsResolver $resolver) {
         $optionsNormalizer = function (Options $options, $value) {
             $value = 'BardisCMS\ContentBlockBundle\Entity\ContentImage';
 
             return $value;
         };
 
-        $resolver->setNormalizers(array(
-            'data_class' => $optionsNormalizer,
-        ));
+        $resolver->setNormalizer('data_class', $optionsNormalizer);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function getName() {
+        return $this->getBlockPrefix();
+    }
+
+    // Define the name of the form to call it for rendering
+    public function getBlockPrefix() {
         return 'contentimage';
     }
-
 }

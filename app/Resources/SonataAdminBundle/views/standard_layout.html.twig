@@ -47,7 +47,8 @@ file that was distributed with this source code.
                 window.SONATA_CONFIG = {
                     CONFIRM_EXIT: {% if admin_pool is defined and admin_pool.getOption('confirm_exit') %}true{% else %}false{% endif %},
                     USE_SELECT2: {% if admin_pool is defined and admin_pool.getOption('use_select2') %}true{% else %}false{% endif %},
-                    USE_ICHECK: {% if admin_pool is defined and admin_pool.getOption('use_icheck') %}true{% else %}false{% endif %}
+                    USE_ICHECK: {% if admin_pool is defined and admin_pool.getOption('use_icheck') %}true{% else %}false{% endif %},
+                    USE_STICKYFORMS: {% if admin_pool is defined and admin_pool.getOption('use_stickyforms') %}true{% else %}false{% endif %}
                 };
                 window.SONATA_TRANSLATIONS = {
                     CONFIRM_EXIT:  '{{ 'confirm_exit'|trans({}, 'SonataAdminBundle')|escape('js') }}'
@@ -229,7 +230,11 @@ file that was distributed with this source code.
                                 {% endif %}
                             {% endblock side_bar_nav %}
                             {% block side_bar_after_nav %}
-                                <p class="text-center small" style="border-top: 1px solid #444444; padding-top: 10px"><a href="https://sonata-project.org" rel="noreferrer" target="_blank">sonata project</a></p>
+                                <p class="text-center small" style="border-top: 1px solid #444444; padding-top: 10px">
+                                    {% block side_bar_after_nav_content %}
+                                        <a href="https://sonata-project.org" rel="noreferrer" target="_blank">sonata project</a>
+                                    {% endblock %}
+                                </p>
                             {% endblock %}
                         {% endblock sonata_side_nav %}
                         </section>
@@ -268,20 +273,22 @@ file that was distributed with this source code.
                                                     </div>
                                                 {% endif %}
 
-                                                {% if _actions|replace({ '<li>': '', '</li>': '' })|trim is not empty %}
-                                                    <ul class="nav navbar-nav navbar-right">
-                                                    {% if _actions|split('<li>')|length > 2 %}
-                                                        <li class="dropdown sonata-actions">
-                                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'link_actions'|trans({}, 'SonataAdminBundle') }} <b class="caret"></b></a>
-                                                            <ul class="dropdown-menu" role="menu">
+                                                {% block sonata_admin_content_actions_wrappers %}
+                                                    {% if _actions|replace({ '<li>': '', '</li>': '' })|trim is not empty %}
+                                                        <ul class="nav navbar-nav navbar-right">
+                                                            {% if _actions|split('<li>')|length > 2 %}
+                                                                <li class="dropdown sonata-actions">
+                                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ 'link_actions'|trans({}, 'SonataAdminBundle') }} <b class="caret"></b></a>
+                                                                    <ul class="dropdown-menu" role="menu">
+                                                                        {{ _actions|raw }}
+                                                                    </ul>
+                                                                </li>
+                                                            {% else %}
                                                                 {{ _actions|raw }}
-                                                            </ul>
-                                                        </li>
-                                                    {% else %}
-                                                        {{ _actions|raw }}
+                                                            {% endif %}
+                                                        </ul>
                                                     {% endif %}
-                                                    </ul>
-                                                {% endif %}
+                                                {% endblock sonata_admin_content_actions_wrappers %}
 
                                                 {% if _list_filters_actions is not empty %}
                                                     {{ _list_filters_actions|raw }}
@@ -333,21 +340,20 @@ file that was distributed with this source code.
                         </section>
                     {% endblock sonata_page_content %}
                 </aside>
-
             </div>
 
             {% block footer %}
-                <footer>
-                    <p class="text-right"><a href="http://sonata-project.org" rel="noreferrer">Powered by the Sonata Project</a> setup by <a href="http://www.bardis.info" rel="noreferrer" style="text-decoration: none; color: black">George Bardis</a></p>
-                </footer>
+            <footer>
+                <p class="text-right"><a href="http://sonata-project.org" rel="noreferrer">Powered by the Sonata Project</a> setup by <a href="http://www.bardis.info" rel="noreferrer" style="text-decoration: none; color: black">George Bardis</a></p>
+            </footer>
             {% endblock footer %}
 
-        <div id="dialogPreview" title="Image Preview" style="display: none;">
-            <img id="imagePreview" src=""/>
-        </div>
+            <div id="dialogPreview" title="Image Preview" style="display: none;">
+                <img id="imagePreview" src=""/>
+            </div>
         {% endblock sonata_wrapper %}
-
     </div>
+
     {% if admin_pool is defined and admin_pool.getOption('use_bootlint') %}
         {% block bootlint %}
             {# Bootlint - https://github.com/twbs/bootlint#in-the-browser #}
@@ -356,5 +362,6 @@ file that was distributed with this source code.
             </script>
         {% endblock %}
     {% endif %}
+
     </body>
 </html>

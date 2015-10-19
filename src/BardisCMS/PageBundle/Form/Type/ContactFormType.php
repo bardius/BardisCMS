@@ -12,7 +12,7 @@ namespace BardisCMS\PageBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use BardisCMS\PageBundle\Form\EventListener\SanitizeFieldSubscriber;
 
@@ -72,12 +72,12 @@ class ContactFormType extends AbstractType {
             ))
         );
 
-        // Sanitize data to avoid XSS attacks 
+        // Sanitize data to avoid XSS attacks
         $builder->addEventSubscriber(new SanitizeFieldSubscriber());
     }
 
     // Adding field validation constraints
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+    public function configureOptions(OptionsResolver $resolver) {
         $collectionConstraint = new Assert\Collection(array(
             'firstname' => array(
                 new Assert\NotBlank(array('message' => 'First Name should not be blank.')),
@@ -110,9 +110,11 @@ class ContactFormType extends AbstractType {
     }
 
     public function getName() {
-
-        // Define the name of the form to call it for rendering
-        return 'contactform';
+        return $this->getBlockPrefix();
     }
 
+    // Define the name of the form to call it for rendering
+    public function getBlockPrefix() {
+        return 'contactform';
+    }
 }

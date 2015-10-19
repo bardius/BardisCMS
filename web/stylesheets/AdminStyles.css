@@ -36,26 +36,26 @@
     cursor: pointer!important;
 }
 
-.filefield .controls, 
-.imagefield .controls, 
+.filefield .controls,
+.imagefield .controls,
 .videofield .controls{
-    margin: 0!important;    
+    margin: 0!important;
 }
 
 .sonata-ba-field-standard-natural select,
 .sonata-ba-field-standard-natural ul,
-.sonata-ba-field-standard-natural input[type="text"], 
-.sonata-ba-field-standard-natural input[type="number"], 
+.sonata-ba-field-standard-natural input[type="text"],
+.sonata-ba-field-standard-natural input[type="number"],
 .sonata-ba-field-standard-natural .ui-combobox input,
 .ui-autocomplete-input,
 .mediaPreviewHolder {
     width: 294px!important;
-    border: 1px solid #999;	
+    border: 1px solid #999;
     padding: 0 10px;
     border-radius: 3px;
 }
 
-.sonata-ba-field-standard-natural input[type="text"], 
+.sonata-ba-field-standard-natural input[type="text"],
 .sonata-ba-field-standard-natural input[type="number"],
 .sonata-ba-field-standard-natural select,
 .sonata-ba-field-standard-natural .ui-combobox input,
@@ -63,10 +63,14 @@
 .select2-choice{
     line-height: 20px;
     height: 30px!important;
-	
+
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing:border-box;
+}
+
+.mediaContentRow {
+
 }
 
 .mediaPreviewHolder{
@@ -77,7 +81,7 @@
     margin: 10px 0;
     padding: 10px;
     width: auto!important;
-	
+
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -127,7 +131,7 @@
 .sonata-ba-field-standard-natural input,
 .sonata-ba-field-standard-natural textarea,
 .sonata-ba-field-standard-natural select{
-    float:left!important;  
+    float:left!important;
 }
 */
 .sonata-bc .form-horizontal .controls .imagefield .controls,

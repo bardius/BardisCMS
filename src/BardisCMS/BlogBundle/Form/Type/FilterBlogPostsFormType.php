@@ -26,24 +26,24 @@ class FilterBlogPostsFormType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
         $builder->add('tags', 'entity', array(
-            'class' => 'BardisCMS\TagBundle\Entity\Tag',
-            'property' => 'title',
-            'expanded' => true,
-            'multiple' => true,
-            'label' => 'Tags',
-            'required' => false,
-                )
+                'class' => 'BardisCMS\TagBundle\Entity\Tag',
+                'choice_label' => 'title',
+                'expanded' => true,
+                'multiple' => true,
+                'label' => 'Tags',
+                'required' => false,
+            )
         );
 
         $builder->add('categories', 'entity', array(
-            'class' => 'BardisCMS\CategoryBundle\Entity\Category',
-            'query_builder' => $this->getFilters('Homepage'),
-            'property' => 'title',
-            'expanded' => true,
-            'multiple' => true,
-            'label' => 'Categories',
-            'required' => false,
-                )
+                'class' => 'BardisCMS\CategoryBundle\Entity\Category',
+                'query_builder' => $this->getFilters('Homepage'),
+                'choice_label' => 'title',
+                'expanded' => true,
+                'multiple' => true,
+                'label' => 'Categories',
+                'required' => false,
+            )
         );
     }
 
@@ -54,7 +54,7 @@ class FilterBlogPostsFormType extends AbstractType {
         $qb->select('DISTINCT c')
                 ->from('CategoryBundle:Category', 'c')
                 ->where($qb->expr()->andX(
-                                $qb->expr()->neq('c.title', ':title')
+                    $qb->expr()->neq('c.title', ':title')
                 ))
                 ->orderBy('c.title', 'DESC')
                 ->setParameter('title', $title)
@@ -64,8 +64,11 @@ class FilterBlogPostsFormType extends AbstractType {
     }
 
     public function getName() {
-        // Define the name of the form to call it for rendering
-        return 'filterblogpostsform';
+        return $this->getBlockPrefix();
     }
 
+    // Define the name of the form to call it for rendering
+    public function getBlockPrefix() {
+        return 'filterblogpostsform';
+    }
 }

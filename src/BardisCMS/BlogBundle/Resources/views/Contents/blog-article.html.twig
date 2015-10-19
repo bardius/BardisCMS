@@ -2,18 +2,18 @@
     <div class="large-12 small-12 columns pageSummary">
         <h2>{{ page.title }}</h2>
         <small class="date">
-            Date Posted:  
+            Date Posted:
             <span class="day">{{ page.date|date("d") }}</span>
             <span class="month">{{ page.date|date("M") }}</span>
             <span class="year">{{ page.date|date("Y") }}</span>
         </small>
         <p class="tagList">
-            Tags: 
+            Tags:
             {% for title in page.tags %}
                 <a class="tag" href="{{ app.request.getBaseURL() }}/blog/tagged/{{ title|url_encode() }}" title="{{ title }}">
-                    {{ title }} 
-                </a> 
-            {% endfor %} 
+                    {{ title }}
+                </a>
+            {% endfor %}
         </p>
     </div>
 {% endif %}
@@ -24,9 +24,11 @@
 </div>
 {% include 'BlogBundle:Contents:smo_share.html.twig' %}
 {% if form is defined %}
-    <section class="comments large-12 small-12 panel columns" id="comments">	
+    <section class="comments large-12 small-12 panel columns" id="comments">
         <div class="row">
-            <h3>Comments</h3>
+            <div class="large-12 small-12 comments-form columns">
+                <h3>Comments</h3>
+            </div>
             <div class="large-12 small-12 comments-form columns">
                 {% include 'CommentBundle:BlogType:commentForm.html.twig' %}
             </div>

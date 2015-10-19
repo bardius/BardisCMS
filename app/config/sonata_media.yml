@@ -4,6 +4,9 @@ sonata_media:
     default_context: default
     db_driver: doctrine_orm # or doctrine_mongodb
 
+    buzz:
+        connector:  sonata.media.buzz.connector.curl # sonata.media.buzz.connector.file_get_contents
+
     contexts:
 
         default:  # the default context is mandatory
@@ -107,7 +110,7 @@ sonata_media:
             cdn:        sonata.media.cdn.server
             generator:  sonata.media.generator.default
             thumbnail:  sonata.media.thumbnail.format
-            html5:	true
+            html5:	    true
 
         vimeo:
             service:    sonata.media.provider.vimeo

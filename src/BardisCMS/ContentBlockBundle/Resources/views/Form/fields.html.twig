@@ -5,71 +5,74 @@ This file is part of the BardisCMS.
 
 {# Overrides for the sonata media form type in sonata admin #}
 {% block sonata_media_type_widget %}
-    {% if value is not empty and value.providerReference %}
-        {% if value.providerName == 'sonata.media.provider.image' %}
-            <div class="mediaPreviewHolder">
-                <div class="imagePreview control-group form-group">
-                    <label class="col-sm-3 control-label">Preview Uploaded image:</label>
-                    <div class="col-sm-9 controls">
-                        <a class="imageLink" href="{% path value.id, 'big' %}" target="_blank">
-                            {% thumbnail value.id, 'admin' with {'width': 70 , 'height': 70} %}
-                        </a>                        
+    <div class="row mediaContentRow">
+        <div class="mediaPreviewHolder col-md-12 pull-left">
+        {% if value is not empty and value.providerReference %}
+            {% if value.providerName == 'sonata.media.provider.image' %}
+                    <div class="imagePreview control-group form-group col-md-12 pull-left">
+                        <label class="col-sm-3 control-label">Preview Uploaded image:</label>
+                        <div class="col-sm-9 controls">
+                            <a class="imageLink" href="{% path value.id, 'big' %}" target="_blank">
+                                {% thumbnail value.id, 'admin' with {'width': 70 , 'height': 70} %}
+                            </a>
+                        </div>
                     </div>
-                </div>
-                {{ block('form_widget') }}
-            </div>
-        {% endif %}
-        {% if value.providerName == 'sonata.media.provider.youtube' %}
-            <div class="mediaPreviewHolder">
-                <div class="imagePreview control-group form-group">
-                    <label class="col-sm-3 control-label">Preview YouTube Video:</label>
-                    <div class="col-sm-9 controls videoPreview">
-                        {% media value.id, 'medium' %}   
-                        <p>Video Source:<br>
-                            <a href="https://www.youtube.com/watch?v={{ value.providerReference }}" target="_blank">https://www.youtube.com/watch?v={{ value.providerReference }}</a>
-                        </p>              
+            {% endif %}
+            {% if value.providerName == 'sonata.media.provider.youtube' %}
+                    <div class="imagePreview control-group form-group col-md-12 pull-left">
+                        <label class="col-sm-3 control-label">Preview YouTube Video:</label>
+                        <div class="col-sm-9 controls videoPreview">
+                            {% media value.id, 'medium' %}
+                            <p>Video Source:<br>
+                                <a href="https://www.youtube.com/watch?v={{ value.providerReference }}" target="_blank">https://www.youtube.com/watch?v={{ value.providerReference }}</a>
+                            </p>
+                        </div>
                     </div>
-                </div>
-                {{ block('form_widget') }}
-            </div>
-        {% endif %}
-        {% if value.providerName == 'sonata.media.provider.vimeo' %}
-            <div class="mediaPreviewHolder">
-                <div class="imagePreview control-group form-group">
-                    <label class="col-sm-3 control-label">Preview Vimeo Video:</label>
-                    <div class="col-sm-9 controls videoPreview">
-                        {% media value.id, 'medium' %}      
-                        <p>Video Source:<br>
-                            <a href="https://vimeo.com/{{ value.providerReference }}" target="_blank">https://vimeo.com/{{ value.providerReference }}</a>
-                        </p>           
+            {% endif %}
+            {% if value.providerName == 'sonata.media.provider.vimeo' %}
+                    <div class="imagePreview control-group form-group col-md-12 pull-left">
+                        <label class="col-sm-3 control-label">Preview Vimeo Video:</label>
+                        <div class="col-sm-9 controls videoPreview">
+                            {% media value.id, 'medium' %}
+                            <p>Video Source:<br>
+                                <a href="https://vimeo.com/{{ value.providerReference }}" target="_blank">https://vimeo.com/{{ value.providerReference }}</a>
+                            </p>
+                        </div>
                     </div>
-                </div>
-                {{ block('form_widget') }}
-            </div>
-        {% endif %}
-        {% if value.providerName == 'sonata.media.provider.file' %}
-            <div class="mediaPreviewHolder">
-                <div class="imagePreview control-group form-group">
-                    <label class="col-sm-3 control-label">Preview Attached File:</label>
+            {% endif %}
+            {% if value.providerName == 'sonata.media.provider.file' %}
+                    <div class="imagePreview control-group form-group col-md-12 pull-left">
+                        <label class="col-sm-3 control-label">Preview Attached File:</label>
+                        <div class="col-sm-9 controls filePreview">
+                            <a class="fileLink" href="{{ path('sonata_media_download', {'id': value.id}) }}" target="_blank">
+                                {{ value.name }}
+                            </a>
+                        </div>
+                    </div>
+            {% endif %}
+        {% else %}
+                <div class="imagePreview newMediaPreview control-group form-group col-md-12 pull-left">
+                    <label class="col-sm-3 control-label">New Media</label>
                     <div class="col-sm-9 controls filePreview">
-                        <a class="fileLink" href="{{ path('sonata_media_download', {'id': value.id}) }}" target="_blank">
-                            {{ value.name }}
-                        </a>                
                     </div>
                 </div>
-                {{ block('form_widget') }}
-            </div>
         {% endif %}
-    {% else %}
-        <div class="mediaPreviewHolder">
-            <div class="imagePreview newMediaPreview control-group form-group">
-                <label class="col-sm-3 control-label">New Media</label>
-                <div class="col-sm-9 controls filePreview">               
+                <div class="col-md-12 pull-left">
+                    {% if value is not empty and value.providerReference %}
+                        <strong>{{ 'widget_label_type'|trans({}, 'SonataMediaBundle') }}:</strong> <span type="label">{{ value.providerName|trans({}, 'SonataMediaBundle') }}</span>
+                        <br />
+                        <strong>{{ 'widget_label_context'|trans({}, 'SonataMediaBundle') }}:</strong> <span type="label">{{ value.context|trans({}, 'SonataMediaBundle') }}</span>
+                    {% else %}
+                        <strong>{{ 'widget_label_type'|trans({}, 'SonataMediaBundle') }}:</strong> <span type="label">{{ form.vars['provider']|trans({}, 'SonataMediaBundle') }}</span>
+                        <br />
+                        <strong>{{ 'widget_label_context'|trans({}, 'SonataMediaBundle') }}:</strong> <span type="label">{{ form.vars['context']|trans({}, 'SonataMediaBundle') }}</span>
+                    {% endif %}
                 </div>
-            </div>
+        </div>
+        <div class="col-md-12 pull-left">
             {{ block('form_widget') }}
         </div>
-    {% endif %}
+    </div>
 {% endblock sonata_media_type_widget %}
 
 {% block contentblockcollection_widget_row %}
@@ -84,11 +87,11 @@ This file is part of the BardisCMS.
                 <span style="display: none;">{{ form_label(child) }}</span>
                 {% if allow_delete %}
                     <span class="btn btn-danger sonata-action-element" style="float: left;display: block; clear: both;">
-                        <a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-delete"><i class="fa fa-minus-circle"></i> Delete This Content Block</a>    
+                        <a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-delete"><i class="fa fa-minus-circle"></i> Delete This Content Block</a>
                     </span>
                 {% endif %}
                 {{ form_errors(child, { 'attr': {'style': 'float:left;width:100%;padding:10px 0;width:100%;'} }) }}
-                {{ form_widget(child, { 'attr': {'style': 'float:left;width:100%;padding:10px 0;width:100%;' ,'class': 'sonata-ba-collapsed-fields'} }) }}     
+                {{ form_widget(child, { 'attr': {'style': 'float:left;width:100%;padding:10px 0;width:100%;' ,'class': 'sonata-ba-collapsed-fields'} }) }}
             </div>
         </fieldset>
     {% endspaceless %}
@@ -102,14 +105,14 @@ This file is part of the BardisCMS.
             {% set attr = attr|merge({'data-prototype': block('contentblockcollection_widget_row') }) %}
         {% endif %}
         <div style="float:left;" {{ block('widget_container_attributes') }}>
-            {{ form_errors(form) }}	
+            {{ form_errors(form) }}
             {% for child in form.children|sort_by_attribute('form.ordering')  %}
                 {{ block('contentblockcollection_widget_row') }}
             {% endfor %}
             {{ form_rest(form) }}
             {% if allow_add %}
                 <span class="btn btn-default sonata-action-element" style="float: left;display: block; clear: both;">
-                    <a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-add"><i class="fa fa-plus-square fa-fw"></i> Add New Content Block</a> 
+                    <a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-add"><i class="fa fa-plus-square fa-fw"></i> Add New Content Block</a>
                 </span>
             {% endif %}
         </div>
@@ -133,7 +136,7 @@ This file is part of the BardisCMS.
                     </span>
                 {% endif %}
                 {{ form_errors(child, { 'attr': {'style': 'float:left;width:100%;padding:10px 0;width:100%;'} }) }}
-                {{ form_widget(child, { 'attr': {'style': 'float:left;width:100%;padding:10px 0;width:100%;' ,'class': 'sonata-ba-collapsed-fields'} }) }}     
+                {{ form_widget(child, { 'attr': {'style': 'float:left;width:100%;padding:10px 0;width:100%;' ,'class': 'sonata-ba-collapsed-fields'} }) }}
             </div>
         </fieldset>
     {% endspaceless %}
@@ -147,14 +150,14 @@ This file is part of the BardisCMS.
             {% set attr = attr|merge({'data-prototype': block('contentimagecollection_widget_row') }) %}
         {% endif %}
         <div style="float:left;" {{ block('widget_container_attributes') }}>
-            {{ form_errors(form) }}	
+            {{ form_errors(form) }}
             {% for child in form.children|sort_by_attribute('form.imageOrder')  %}
                 {{ block('contentimagecollection_widget_row') }}
             {% endfor %}
             {{ form_rest(form) }}
             {% if allow_add %}
                 <span class="btn btn-default sonata-action-element" style="float: left;display: block; clear: both;">
-                    <a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-add"><i class="fa fa-plus-square fa-fw"></i> Add New Image File</a> 
+                    <a href="#" style="float: left;display: block;width: auto;text-align: center;line-height: 28px;background-position: 0 50%;padding-left: 20px;" class="sonata-collection-add"><i class="fa fa-plus-square fa-fw"></i> Add New Image File</a>
                 </span>
             {% endif %}
         </div>

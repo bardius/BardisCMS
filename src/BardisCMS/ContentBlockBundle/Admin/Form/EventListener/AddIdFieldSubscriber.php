@@ -42,7 +42,7 @@ class AddIdFieldSubscriber implements EventSubscriberInterface {
             return;
         }
 
-        // check if the content block object is "new" and if it is add the id as field to save so it can be refferenced and unique
+        // check if the content block object is "new" and if it is add the id as field to save so it can be referenced and unique
         if (!$data->getId()) {
             $contentId = uniqid('content_', true);
             $form->add($this->factory->createNamed('id', 'hidden', null, array('auto_initialize' => false, 'required' => true, 'data' => $contentId)));

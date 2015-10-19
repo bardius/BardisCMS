@@ -1,27 +1,28 @@
 <div id="contactFormHolder" class="small-12 large-12">
-    <form id="contactform" method="post" {{ form_enctype(form) }} class="contactForm">
+    <form id="contactform" method="post" class="contactForm">
+        {{ form_start(form) }}
         <div class="row">
             <div class="large-12 small-12 columns">
                 <legend>MESSAGE TO THE WEBSITE</legend>
             </div>
             <div class="large-6 small-12 columns">
-                {{ form_row(form.firstname) }}										
+                {{ form_row(form.firstname) }}
             </div>
             <div class="large-6 small-12 columns">
-                {{ form_row(form.surname) }}								
+                {{ form_row(form.surname) }}
             </div>
             <div class="large-12 small-12 columns">
-                {{ form_row(form.email) }}								
+                {{ form_row(form.email) }}
             </div>
             <div class="large-12 small-12 columns">
-                {{ form_row(form.comment) }}								
+                {{ form_row(form.comment) }}
             </div>
             <div class="large-12 small-12 columns hidden">
-                {{ form_row(form.bottrap) }}								
+                {{ form_row(form.bottrap) }}
             </div>
             {#
             <div class="large-12 small-12 columns formFieldContainer">
-                    {{ form_errors(form) }}								
+                    {{ form_errors(form) }}
             </div>
             #}
             <div class="large-12 small-12 columns">
@@ -35,5 +36,6 @@
                 {% endif %}
             </div>
         </div>
+        {{ form_end(form) }}
     </form>
 </div>

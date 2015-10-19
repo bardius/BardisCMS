@@ -20,6 +20,7 @@ class DefaultController extends Controller {
 
     // Adding variables required for the rendering of pages
     protected $container;
+    private $pageRequest;
     private $alias;
     private $id;
     private $extraParams;
@@ -68,8 +69,9 @@ class DefaultController extends Controller {
     }
 
     // Get the Skeleton page id based on alias from route
-    public function aliasAction($alias, $extraParams = null, $currentpage = 0, $totalpageitems = 0) {
+    public function aliasAction($alias, $extraParams = null, $currentpage = 0, $totalpageitems = 0, Request $request) {
 
+        $this->pageRequest = $request;
         $this->alias = $alias;
         $this->extraParams = $extraParams;
         $this->linkUrlParams = $extraParams;
@@ -105,7 +107,7 @@ class DefaultController extends Controller {
 
             $response = $this->setResponceCacheHeaders(new Response());
 
-            if (!$response->isNotModified($this->getRequest())) {
+            if (!$response->isNotModified($this->pageRequest)) {
                 // Marks the Response stale
                 $response->expire();
             } else {
@@ -249,7 +251,7 @@ class DefaultController extends Controller {
 
         $pages = $pageList['pages'];
         $totalPages = $pageList['totalPages'];
-        
+
         $response = $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $this->page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $this->extraParams, 'currentpage' => $this->currentpage, 'linkUrlParams' => $this->linkUrlParams, 'totalpageitems' => $this->totalpageitems, 'filterForm' => $filterForm->createView(), 'mobile' => $this->serveMobile));
 
         return $response;

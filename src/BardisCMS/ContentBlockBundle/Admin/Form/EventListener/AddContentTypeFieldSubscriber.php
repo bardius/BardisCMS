@@ -47,7 +47,7 @@ class AddContentTypeFieldSubscriber implements EventSubscriberInterface {
         reset($mediaSizeChoices);
         $prefMediaSizeChoice = key($mediaSizeChoices);
 
-        // check the content block object type and presend the required field to ender contents
+        // check the content block object type and present the required field to enter contents
         switch ($data->getContenttype()) {
             case 'html':
                 $form->add($this->factory->createNamed('htmlText', 'textarea', null, array('auto_initialize' => false, 'attr' => array('class' => 'tinymce', 'data-theme' => 'advanced'), 'label' => 'Text - HTML Contents', 'required' => false)));

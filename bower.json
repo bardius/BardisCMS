@@ -19,6 +19,6 @@
         "jquery-ias": "~2.2.1",
         "modernizr": "~2.8.3",
         "jasmine-jquery": "~2.1.0",
-        "foundation": "~5.5.2"
+        "foundation": "~5.5.3"
     }
 }

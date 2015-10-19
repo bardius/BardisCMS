@@ -14,11 +14,16 @@ use BardisCMS\CommentBundle\Entity\Comment;
 use BardisCMS\CommentBundle\Form\Type\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller {
 
+    private $pageRequest;
+
     // Add a new comment
-    public function addCommentAction($commentType, $page_id = null) {
+    public function addCommentAction($commentType, $page_id = null, Request $request) {
+
+        $this->pageRequest = $request;
 
         if ($commentType == 'Blog') {
             $blog_post = $this->getBlog($page_id);
@@ -47,15 +52,14 @@ class DefaultController extends Controller {
         }
 
         // get the request and check if it was ajax based
-        $request = $this->getRequest();
-        $ajaxForm = $request->get('isAjax');
+        $ajaxForm = $this->pageRequest->get('isAjax');
         if (!isset($ajaxForm) || !$ajaxForm) {
             $ajaxForm = false;
         }
 
         // Bind the request to the comment form
         $form = $this->createForm(new CommentType(), $comment);
-        $form->handleRequest($request);
+        $form->handleRequest($this->pageRequest);
 
         //Prepare the responce data
         $errorList = array();
@@ -200,7 +204,7 @@ class DefaultController extends Controller {
         if ($form->count()) {
             foreach ($form as $child) {
                 if (!$child->isValid()) {
-                    $errors[$child->getName()] = $this->getFormErrorMessages($child);
+                    $errors[$child->getBlockPrefix()] = $this->getFormErrorMessages($child);
                 }
             }
         }

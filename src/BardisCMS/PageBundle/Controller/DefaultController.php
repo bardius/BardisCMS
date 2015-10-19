@@ -22,6 +22,7 @@ class DefaultController extends Controller {
 
     // Adding variables required for the rendering of pages
     protected $container;
+    private $pageRequest;
     private $alias;
     private $id;
     private $extraParams;
@@ -36,7 +37,7 @@ class DefaultController extends Controller {
     private $userRole;
     private $enableHTTPCache;
 
-    // Override the ContainerAware setcontainer to accomodate the extra variables
+    // Override the ContainerAware setcontainer to accommodate the extra variables
     public function setContainer(ContainerInterface $container = null) {
         $this->container = $container;
 
@@ -57,10 +58,10 @@ class DefaultController extends Controller {
         // Check if mobile content should be served
         $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 
-        // Set the flag for allowing HHTP cache
+        // Set the flag for allowing HTTP cache
         $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
 
-        // Set the publish status that is avaliable for the user
+        // Set the publish status that is available for the user
         // Very basic ACL permission check
         if ($this->userRole == "") {
             $this->publishStates = array(1);
@@ -70,8 +71,9 @@ class DefaultController extends Controller {
     }
 
     // Get the page id based on alias from route
-    public function aliasAction($alias = '/', $extraParams = null, $currentpage = 0, $totalpageitems = 0) {
+    public function aliasAction($alias = '/', $extraParams = null, $currentpage = 0, $totalpageitems = 0, Request $request) {
 
+        $this->pageRequest = $request;
         $this->alias = $alias;
         $this->extraParams = $extraParams;
         $this->linkUrlParams = $extraParams;
@@ -91,8 +93,9 @@ class DefaultController extends Controller {
     }
 
     // Get the page id based on alias from route and user details from username
-    public function userProfileAction($alias, $userName = null, $currentpage = 0, $totalpageitems = 0) {
+    public function userProfileAction($alias, $userName = null, $currentpage = 0, $totalpageitems = 0, Request $request) {
 
+        $this->pageRequest = $request;
         $this->alias = $alias;
         $this->currentpage = $currentpage;
         $this->totalpageitems = $totalpageitems;
@@ -130,7 +133,7 @@ class DefaultController extends Controller {
 
             $response = $this->setResponceCacheHeaders(new Response());
 
-            if (!$response->isNotModified($this->getRequest())) {
+            if (!$response->isNotModified($this->pageRequest)) {
                 // Marks the Response stale
                 $response->expire();
             } else {
@@ -178,7 +181,7 @@ class DefaultController extends Controller {
 
             case 'contact':
                 // Render contact page type
-                $response = $this->processContactForm($this->getRequest());
+                $response = $this->processContactForm($this->pageRequest);
                 break;
 
             default:
@@ -329,7 +332,7 @@ class DefaultController extends Controller {
 
     // Render tag list page type
     protected function renderTagListPage() {
-        
+
         $filterForm = $this->createForm(new FilterPagesFormType());
         $filterData = $this->get('bardiscms_page.services.helpers')->getRequestedFilters($this->extraParams);
         $tagIds = $this->get('bardiscms_page.services.helpers')->getTagFilterIds($filterData['tags']->toArray());
@@ -388,7 +391,7 @@ class DefaultController extends Controller {
         // Create the form
         $form = $this->createForm(new ContactFormType());
 
-        // If the page has been submited
+        // If the page has been submitted
         if ($request->getMethod() == 'POST') {
 
             //Bind the posted form field values

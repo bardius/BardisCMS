@@ -20,7 +20,7 @@ class FilterResultsFormType extends AbstractType {
 
         $builder->add('tags', 'entity', array(
             'class' => 'BardisCMS\TagBundle\Entity\Tag',
-            'property' => 'title',
+            'choice_label' => 'title',
             'expanded' => true,
             'multiple' => true,
             'label' => 'Tags',
@@ -30,7 +30,7 @@ class FilterResultsFormType extends AbstractType {
 
         $builder->add('categories', 'entity', array(
             'class' => 'BardisCMS\CategoryBundle\Entity\Category',
-            'property' => 'title',
+            'choice_label' => 'title',
             'expanded' => true,
             'multiple' => true,
             'label' => 'Categories',
@@ -40,7 +40,11 @@ class FilterResultsFormType extends AbstractType {
     }
 
     public function getName() {
-        // Define the name of the form to call it for rendering
+        return $this->getBlockPrefix();
+    }
+
+    // Define the name of the form to call it for rendering
+    public function getBlockPrefix() {
         return 'filterresultsform';
     }
 }

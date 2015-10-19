@@ -14,7 +14,6 @@
 language: php
 
 php:
-  - 5.4
   - 5.5
   - 5.6
   - hhvm
@@ -42,7 +41,7 @@ before_script:
  # - php app/console cache:clear --env=prod --no-debug --no-warmup
  # - php app/console cache:warmup --env=prod --no-debug
  # - php app/console doctrine:schema:drop --force
- # - php app/console doctrine:schema:create 
+ # - php app/console doctrine:schema:create
  # - php app/console doctrine:fixtures:load --append
  # - php app/console sonata:media:sync sonata.media.provider.image default
  # - php app/console sonata:media:sync sonata.media.provider.image intro

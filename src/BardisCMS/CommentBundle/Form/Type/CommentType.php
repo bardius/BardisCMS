@@ -12,7 +12,7 @@ namespace BardisCMS\CommentBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use BardisCMS\CommentBundle\Form\EventListener\SanitizeFieldSubscriber;
 
 class CommentType extends AbstractType {
@@ -64,23 +64,24 @@ class CommentType extends AbstractType {
             ))
         );
 
-        // Sanitize data to avoid XSS attacks 
+        // Sanitize data to avoid XSS attacks
         $builder->addEventSubscriber(new SanitizeFieldSubscriber());
     }
 
     // Adding field validation constraints
-    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+    public function configureOptions(OptionsResolver $resolver) {
         $resolver->setDefaults(array(
             'intention' => 'comment_form',
             'data_class' => 'BardisCMS\CommentBundle\Entity\Comment'
         ));
     }
 
-    /**
-     * @return string
-     */
     public function getName() {
-        return 'add_comment_form';
+        return $this->getBlockPrefix();
     }
 
+    // Define the name of the form to call it for rendering
+    public function getBlockPrefix() {
+        return 'add_comment_form';
+    }
 }

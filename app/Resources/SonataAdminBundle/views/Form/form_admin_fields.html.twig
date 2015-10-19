@@ -12,59 +12,58 @@ file that was distributed with this source code.
 
 {# Labels #}
 {% block form_label %}
-    {% spaceless %}
-        {% if label is not sameas(false) and sonata_admin.options['form_type'] == 'horizontal' %}
-            {% set label_class = 'col-sm-3' %}
+{% spaceless %}
+    {% if label is not same as(false) and sonata_admin.options['form_type'] == 'horizontal' %}
+        {% set label_class = 'col-sm-3' %}
+    {% endif %}
+
+    {% set label_class = label_class|default('') ~ ' control-label' %}
+
+    {#{{ sonata_admin.admin.getConfigurationPool().getOption('form_type') }}#}
+    {% if label is not same as(false) %}
+        {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ label_class }) %}
+
+        {% if not compound %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {% endif %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
         {% endif %}
 
-        {% set label_class = label_class|default('') ~ ' control-label' %}
-
-        {#{{ sonata_admin.admin.getConfigurationPool().getOption('form_type') }}#}
-        {% if label is not sameas(false) %}
-            {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ label_class }) %}
-
-            {% if not compound %}
-                {% set label_attr = label_attr|merge({'for': id}) %}
-            {% endif %}
-            {% if required %}
-                {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
-            {% endif %}
-
-            {% if label is empty %}
+        {% if label is empty %}
+            {%- if label_format is defined and label_format is not empty -%}
+                {% set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+                }) %}
+            {%- else -%}
                 {% set label = name|humanize %}
-            {% endif %}
+            {%- endif -%}
+        {% endif %}
 
-            {% if in_list_checkbox is defined and in_list_checkbox and widget is defined %}
-                <label{% for attrname,attrvalue in attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
-                    {{ widget|raw }}
-                    <span>
-                        {% if not sonata_admin.admin %}
-                            {{- label|trans({}, translation_domain) -}}
-                        {% else %}
-                            {{- label|trans({}, sonata_admin.field_description.translationDomain) -}}
-                        {% endif%}
-                    </span>
-                </label>
-            {% else %}
-                <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-                    {% if not sonata_admin.admin%}
+        {% if in_list_checkbox is defined and in_list_checkbox and widget is defined %}
+            <label{% for attrname,attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                {{ widget|raw }}
+                <span>
+                    {% if not sonata_admin.admin %}
                         {{- label|trans({}, translation_domain) -}}
                     {% else %}
-                        {{ sonata_admin.admin.trans(label, {}, sonata_admin.field_description.translationDomain) }}
+                        {{- label|trans({}, sonata_admin.field_description.translationDomain) -}}
                     {% endif %}
-                </label>
-            {% endif %}
+                </span>
+            </label>
+        {% else %}
+            <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                {% if not sonata_admin.admin %}
+                    {{- label|trans({}, translation_domain) -}}
+                {% else %}
+                    {{ sonata_admin.admin.trans(label, {}, sonata_admin.field_description.translationDomain) }}
+                {% endif %}
+            </label>
         {% endif %}
-    {% endspaceless %}
+    {% endif %}
+{% endspaceless %}
 {% endblock form_label %}
-
-{% block widget_container_attributes_choice_widget %}
-    {% spaceless %}
-        id="{{ id }}"
-        {% for attrname,attrvalue in attr %}{{attrname}}="{% if attrname == 'class' %}list-unstyled {% endif%}{{attrvalue}}" {% endfor %}
-        {% if "class" not in attr %}class="list-unstyled"{%endif %}
-    {% endspaceless %}
-{% endblock %}
 
 {% block choice_widget_expanded %}
     {% spaceless %}
@@ -73,7 +72,7 @@ file that was distributed with this source code.
             {% for child in form %}
                 <li>
                     {% set form_widget_content %}
-                        {{ form_widget(child, {'horizontal': false, 'horizontal_input_wrapper_class': ''}) }} {# {'horizontal': false, 'horizontal_input_wrapper_class': ''} needed to avoid MopaBootstrapBundle messing with the DOM #}
+                    {{ form_widget(child, {'horizontal': false, 'horizontal_input_wrapper_class': ''}) }} {# {'horizontal': false, 'horizontal_input_wrapper_class': ''} needed to avoid MopaBootstrapBundle messing with the DOM #}
                     {% endset %}
                     {{ form_label(child, child.vars.label|default(null), { 'in_list_checkbox' : true, 'widget' : form_widget_content } ) }}
                 </li>
@@ -88,7 +87,7 @@ file that was distributed with this source code.
             {% set required = false %}
         {% endif %}
         {% set attr = attr|merge({'class': attr.class|default('') ~ ' form-control'}) %}
-        {% if sortable and multiple %}
+        {% if (sortable is defined) and sortable and multiple %}
             {{ block('sonata_type_choice_multiple_sortable') }}
         {% else %}
             <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %} >
@@ -117,16 +116,18 @@ file that was distributed with this source code.
 
 {% block form_row %}
     <div class="control-group form-group{% if errors|length > 0 %} has-error{% endif %}" id="sonata-ba-field-container-{{ id }}">
-        {% set label = sonata_admin.field_description.options.name|default(label)  %}
+        {% if sonata_admin.field_description.options is defined %}
+            {% set label = sonata_admin.field_description.options.name|default(label)  %}
+        {% endif %}
 
         {% set div_class = 'sonata-ba-field' %}
 
-        {% if label is sameas(false) %}
+        {% if label is same as(false) %}
             {% set div_class = div_class ~ ' sonata-collection-row-without-label' %}
         {% endif %}
 
         {% if sonata_admin.options['form_type'] == 'horizontal' %}
-            {% if label is sameas(false) %}
+            {% if label is same as(false) %}
                 {% if 'collection' in form.parent.vars.block_prefixes %}
                     {% set div_class = div_class ~ ' col-sm-12' %}
                 {% else %}
@@ -168,7 +169,6 @@ file that was distributed with this source code.
         </div>
     </div>
 {% endblock form_row %}
-
 
 {% block sonata_type_immutable_array_widget %}
     {% spaceless %}

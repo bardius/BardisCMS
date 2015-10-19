@@ -1,5 +1,6 @@
 <div id="subscribeFormHolder">
-    <form id="subscribeForm" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+    <form id="subscribeForm" action="{{ path('fos_user_registration_register') }}" method="POST" class="fos_user_registration_register">
+        {{ form_start(form) }}
         <span class="noticeMsg">* Mandatory fields</span>
         {{ form_errors(form) }}
         <div class="row formSeperator">
@@ -32,6 +33,7 @@
             {{ form_row(form.campaign) }}
         </div>
         {{ form_rest(form) }}
-        <input type="submit" id="subscribeFormBtn" value="Submit" />        
+        <input type="submit" id="subscribeFormBtn" value="Submit" />
+        {{ form_end(form) }}
     </form>
 </div>

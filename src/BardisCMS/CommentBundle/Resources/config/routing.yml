@@ -1,6 +1,6 @@
 CommentBundle_blog_comment_add_no_slash:
-    pattern:  /create_comment/blog/{page_id}
+    path:  /create_comment/blog/{page_id}
     defaults: { _controller: CommentBundle:Default:addComment, commentType: Blog}
+    methods: [ POST ]
     requirements:
-        _method: POST
         page_id: \d+
