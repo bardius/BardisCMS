@@ -32,7 +32,6 @@ npm-debug.log
 
 # Symfony2 #
 #############
-/app/bootstrap.php.cache
 /app/cache/*
 /app/logs/*
 /app/sessions/*
