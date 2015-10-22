@@ -20,7 +20,7 @@
 
     #### Sample Redirects
     #### Redirect 301 http://www.domain.com/home http://www.domain.com/
-	
+
     #### Prevent hotlinking ####
     # RewriteCond %{HTTP_REFERER} !^$
     # RewriteCond %{HTTP_REFERER} !^http://(www.)?domain.com/.*$ [NC]
@@ -123,16 +123,16 @@ AddType application/octet-stream .zip
 #### Cache-Control Headers ####
 <ifModule mod_headers.c>
     <filesMatch "\.(ico|jpe?g|png|gif|swf)$">
-        Header set Cache-Control "public"
+        Header always set Cache-Control "public"
     </filesMatch>
     <filesMatch "\.(css)$">
-        Header set Cache-Control "public"
+        Header always set Cache-Control "public"
     </filesMatch>
     <filesMatch "\.(js)$">
-        Header set Cache-Control "private"
+        Header always set Cache-Control "private"
     </filesMatch>
     <filesMatch "\.(x?html?|php)$">
-        #Header set Cache-Control "private, must-revalidate"
+        #Header always set Cache-Control "private, must-revalidate"
     </filesMatch>
 </ifModule>
 
@@ -143,7 +143,7 @@ AddType application/octet-stream .zip
 <IfModule mod_expires.c>
 
     <FilesMatch "\.(appcache|crx|css|eot|gif|htc|ico|jpe?g|js|m4a|m4v|manifest|mp4|oex|oga|ogg|ogv|otf|pdf|png|safariextz|svg|svgz|ttf|vcf|webm|webp|woff|xml|xpi)$">
-      Header unset X-UA-Compatible
+      Header always unset X-UA-Compatible
     </FilesMatch>
 
     ExpiresActive On
@@ -164,52 +164,53 @@ AddType application/octet-stream .zip
 #### Set headers
 <ifModule mod_headers.c>
     #### IE
-    Header set X-UA-Compatible "IE=Edge,chrome=1"
+    Header always set X-UA-Compatible "IE=Edge,chrome=1"
 
     #### P3P Header of IE issues with 3rd party coockies
-    Header set P3P: "cp=BardisCMS"
+    Header always set P3P: "cp=BardisCMS"
 
     #### Security Hardening
     # Vivid Matter - Bulletproof Header Security
     # Don't allow pages to be framed externally - Defends against CSRF
-    Header set X-FRAME-OPTIONS "SAMEORIGIN"
+    # Prevent Clickjacking
+    Header always set X-FRAME-OPTIONS "SAMEORIGIN"
 
     # Tell the browser to attempt the HTTPS version first
-    #Header add Strict-Transport-Security "max-age=157680000"
+    #Header always set Strict-Transport-Security "max-age=157680000"
 
     # Turn on IE8-IE9 XSS prevention tools
-    #Header set X-XSS-Protection "1; mode=block"
+    Header always set X-XSS-Protection "1; mode=block"
 
     # Only allow JavaScript from the same domain to be run.
     # Don't allow inline JavaScript to run.
     #Header set X-Content-Security-Policy "allow 'self';"
 
     # Prevent mime based attacks
-    Header add X-Content-Type-Options "nosniff"
+    Header always set X-Content-Type-Options "nosniff"
 
-    Header unset link
-    Header unset Server
-    Header unset X-Pingback
+    Header always unset link
+    Header always unset Server
+    Header always unset X-Pingback
 
     # Disable server signature
-    Header set ServerSignature "Off"
-    Header set ServerTokens "Prod"
+    Header always set ServerSignature "Off"
+    Header always set ServerTokens "Prod"
 
     # Control Cross-Domain Policies
     #Header set X-Permitted-Cross-Domain-Policies "master-only"
-	
+
     #### Set the content language header
-    Header set Content-Language en
+    Header always set Content-Language en
 
     #### Set the Creator
-    Header set Created-By "George Bardis - george@bardis.info"
-    Header set Version "1.0.0"
+    Header always set Created-By "George Bardis - george@bardis.info"
+    Header always set Version "1.0.0"
 </ifModule>
 
 # By default allow cross-origin access to web fonts.
 <IfModule mod_headers.c>
     <FilesMatch "\.(eot|otf|tt[cf]|woff2?)$">
-        Header set Access-Control-Allow-Origin "*"
+        Header always set Access-Control-Allow-Origin "*"
     </FilesMatch>
 </IfModule>
 
@@ -218,7 +219,7 @@ AddType application/octet-stream .zip
     <IfModule mod_headers.c>
         <FilesMatch "\.(cur|gif|ico|jpe?g|png|svgz?|webp)$">
             SetEnvIf Origin ":" IS_CORS
-            Header set Access-Control-Allow-Origin "*" env=IS_CORS
+            Header always set Access-Control-Allow-Origin "*" env=IS_CORS
         </FilesMatch>
     </IfModule>
 </IfModule>
