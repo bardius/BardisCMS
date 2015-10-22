@@ -1,7 +1,13 @@
 parameters:
     page.services.helpers_class: BardisCMS\PageBundle\Services\Helpers
+    page.listener.responce_listener_class: BardisCMS\PageBundle\Listener\ResponceListener
 
 services:
     bardiscms_page.services.helpers:
         class: %page.services.helpers_class%
         arguments: ["@doctrine.orm.entity_manager"]
+
+        kernel.listener.response_listener:
+            class: %page.listener.responce_listener_class%
+            tags:
+               - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
