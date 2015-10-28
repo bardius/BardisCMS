@@ -97,23 +97,23 @@ module.exports = function (grunt) {
     /* ==========================================================================================
      Available tasks:
 
-     * grunt :                      run sass, postcss, csssplit, jshint, uglify, symfony2
-     * grunt watch :                run sass, postcss, csssplit, jshint, uglify, symfony2
+     * grunt :                      run sass, autoprefixer, csssplit, jshint, uglify, symfony2
+     * grunt watch :                run sass, autoprefixer, csssplit, jshint, uglify, symfony2
      * grunt jsdev :                run jshint, uglify, symfony2
-     * grunt dev :                  run sass, postcss, csssplit, jshint, uglify, symfony2
-     * grunt compileprod :          run sass, postcss, combine_mq, csssplit, csso, uglify
-     * grunt deploy :               run sass, postcss, combine_mq, csssplit, csso, uglify, symfony2
-     * grunt deployment_prod :      run sass, postcss, combine_mq, csssplit, csso, uglify, symfony2
-     * grunt setup :                run bower install, sass, postcss, csssplit, jshint, uglify, symfony2
-     * grunt first_deployment :     run bower install, sass, postcss, combine_mq, csssplit, csso, uglify, symfony2
+     * grunt dev :                  run sass, autoprefixer, csssplit, jshint, uglify, symfony2
+     * grunt compileprod :          run sass, autoprefixer, combine_mq, csssplit, csso, uglify
+     * grunt deploy :               run sass, autoprefixer, combine_mq, csssplit, csso, uglify, symfony2
+     * grunt deployment_prod :      run sass, autoprefixer, combine_mq, csssplit, csso, uglify, symfony2
+     * grunt setup :                run bower install, sass, autoprefixer, csssplit, jshint, uglify, symfony2
+     * grunt first_deployment :     run bower install, sass, autoprefixer, combine_mq, csssplit, csso, uglify, symfony2
      * grunt runtests :             run jasmine
-     * grunt travis :               run bower install, sass, postcss, combine_mq, csssplit, csso, uglify, symfony2
+     * grunt travis :               run bower install, sass, autoprefixer, combine_mq, csssplit, csso, uglify, symfony2
      ============================================================================================ */
 
     /**
      * GRUNT
      * Default task
-     * run sass, postcss, csssplit, jshint, uglify, symfony2
+     * run sass, autoprefixer, csssplit, jshint, uglify, symfony2
      */
     // Default task
     grunt.registerTask('default', [
@@ -136,12 +136,12 @@ module.exports = function (grunt) {
     /**
      * GRUNT DEV
      * A task for development
-     * run sass, postcss, csssplit, jshint, uglify, symfony2
+     * run sass, autoprefixer, csssplit, jshint, uglify, symfony2
      */
     grunt.registerTask('dev', [
         'jsdev',
         'sass:release',
-        'postcss:release',
+        'autoprefixer:release',
         'csssplit:release',
         'sf2-console:assetic_dump_dev'
     ]);
@@ -150,12 +150,12 @@ module.exports = function (grunt) {
     /**
      * GRUNT COMPILEPROD
      * A task for your production environment
-     * run sass, postcss, combine_mq, csssplit, csso, uglify
+     * run sass, autoprefixer, combine_mq, csssplit, csso, uglify
      */
     grunt.registerTask('compileprod', [
         'uglify:production',
         'sass:production',
-        'postcss:release',
+        'autoprefixer:release',
         'combine_mq:release',
         'csssplit:release',
         'csso:release'
@@ -165,7 +165,7 @@ module.exports = function (grunt) {
     /**
      * GRUNT DEPLOY
      * A task for your production environment
-     * run sass, postcss, combine_mq, csssplit, csso, uglify, symfony2
+     * run sass, autoprefixer, combine_mq, csssplit, csso, uglify, symfony2
      */
     grunt.registerTask('deploy', [
         'compileprod',
@@ -177,7 +177,7 @@ module.exports = function (grunt) {
     /**
      * GRUNT DEPLOYMENT_PROD
      * A task for your production environment
-     * run sass, postcss, combine_mq, csssplit, csso, uglify, symfony2
+     * run sass, autoprefixer, combine_mq, csssplit, csso, uglify, symfony2
      */
     grunt.registerTask('deployment_prod', [
         'sf2-console:cache_clear_prod',
@@ -190,7 +190,7 @@ module.exports = function (grunt) {
     /**
      * GRUNT SETUP
      * A task for downloading dependencies and initial build run
-     * run bower install, sass, postcss, csssplit, jshint, uglify, symfony2
+     * run bower install, sass, autoprefixer, csssplit, jshint, uglify, symfony2
      */
     grunt.registerTask('setup', [
         'bower:install',
@@ -201,7 +201,7 @@ module.exports = function (grunt) {
     /**
      * GRUNT FIRST_DEPLOYMENT
      * A task for the initial setup
-     * run bower install, sass, postcss, combine_mq, csssplit, csso, uglify, symfony2
+     * run bower install, sass, autoprefixer, combine_mq, csssplit, csso, uglify, symfony2
      */
     grunt.registerTask('first_deployment', [
         'sf2-console:cache_clear_dev',
@@ -235,7 +235,7 @@ module.exports = function (grunt) {
     /**
      * GRUNT TRAVIS
      * A task for Travis CI to test build
-     * run bower install, sass, postcss, combine_mq, csssplit, csso, uglify, symfony2
+     * run bower install, sass, autoprefixer, combine_mq, csssplit, csso, uglify, symfony2
      */
     grunt.registerTask('travis', [
         'first_deployment'
