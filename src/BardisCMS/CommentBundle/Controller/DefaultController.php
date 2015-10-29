@@ -204,7 +204,7 @@ class DefaultController extends Controller {
         if ($form->count()) {
             foreach ($form as $child) {
                 if (!$child->isValid()) {
-                    $errors[$child->getBlockPrefix()] = $this->getFormErrorMessages($child);
+                    $errors[$child->getName()] = $this->getFormErrorMessages($child);
                 }
             }
         }
