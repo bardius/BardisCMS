@@ -40,7 +40,7 @@ class BardisCMSResizer implements ResizerInterface {
         $size = $image->getSize();
         $originalRatio = $size->getWidth() / $size->getHeight();
 
-        if ($settings['width'] === null && $settings['height'] === null) {
+        if (($settings['width'] === null && $settings['height'] === null) || ($settings['width'] === false && $settings['height'] === false)) {
             $settings['width'] = $size->getWidth();
             $settings['height'] = $size->getHeight();
         }
@@ -114,7 +114,7 @@ class BardisCMSResizer implements ResizerInterface {
             if ($crop > 0) {
                 $point = new Point($crop, 0);
                 $image->crop($point, new Box($newWidth, $lower));
-            } else {
+            } else if($crop < 0) {
                 $cropLower = -($crop / $thRatio);
                 $point = new Point(0, $cropLower);
                 $image->crop($point, new Box($higher, $newHeight));
@@ -135,17 +135,17 @@ class BardisCMSResizer implements ResizerInterface {
     public function getBox(MediaInterface $media, array $settings) {
         $size = $media->getBox();
 
-        if ($settings['width'] === null && $settings['height'] === null) {
+        if (($settings['width'] === null && $settings['height'] === null) || ($settings['width'] === false && $settings['height'] === false)) {
             $settings['width'] = $size->getWidth();
             $settings['height'] = $size->getHeight();
         }
 
-        if ($settings['height'] === null) {
-            $settings['height'] = (int) ($settings['width'] * $size->getHeight() / $size->getWidth());
+        if (!$settings['width']) {
+            $settings['width'] = (int) ($settings['height'] * $size->getWidth() / $size->getHeight());
         }
 
-        if ($settings['width'] === null) {
-            $settings['width'] = (int) ($settings['height'] * $size->getWidth() / $size->getHeight());
+        if (!$settings['height']) {
+            $settings['height'] = (int) ($settings['width'] * $size->getHeight() / $size->getWidth());
         }
 
         return new Box($settings['width'], $settings['height']);
