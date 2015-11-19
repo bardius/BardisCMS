@@ -241,16 +241,3 @@ module.exports = function (grunt) {
         'first_deployment'
     ]);
 };
-
-window.onload = function() {
-
-    var brightcoveScriptSrc = "BW.Video.template = function (videoID, width, height, autoplay) {" +
-        "var brightcoveEmbed = '<div style=\"display:none\"></div><object id=\"myExperience' + videoID + '\" class=\"BrightcoveExperience\" ><param name=\"bgcolor\" value=\"#000000\" /><param name=\"width\" value=\"' + width + '\" /><param name=\"height\" value=\"' + height + '\" /><param name=\"secureConnections\" value=\"true\" /><param name=\"secureHTMLConnections\" value=\"true\" /><param name=\"playerID\" value=\"' + BW.config.Video.BrightcoveCredentials.playerID + '\" /><param name=\"playerKey\" value=\"' + BW.config.Video.BrightcoveCredentials.playerKey + '\" /><param name=\"isVid\" value=\"true\" /><param name=\"isUI\" value=\"true\" /><param name=\"wmode\" value=\"transparent\" /><param name=\"dynamicStreaming\" value=\"true\" /><param name=\"@videoPlayer\" value=\"' + videoID + '\" /><param name=\"templateLoadHandler\" value=\"BCL.onTemplateLoaded\"/><param name=\"autoStart\" value=\"' + autoplay + '\" /><param name=\"htmlFallback\" value=\"true\" /><param name=\"includeAPI\" value=\"true\" /><param name=\"templateLoadHandler\" value=\"bwTemplateLoaded\" /></object>';" +
-    "return brightcoveEmbed;" +
-    "};";
-    var brightcoveScript = document.createElement("script");
-    brightcoveScript.type = "text/javascript";
-    brightcoveScript.innerHTML = brightcoveScriptSrc;
-
-    document.body.appendChild(brightcoveScript);
-};
