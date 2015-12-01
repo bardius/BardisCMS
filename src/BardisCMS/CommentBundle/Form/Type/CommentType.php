@@ -15,6 +15,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use BardisCMS\CommentBundle\Form\EventListener\SanitizeFieldSubscriber;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
 class CommentType extends AbstractType {
 
     /**
@@ -23,7 +26,7 @@ class CommentType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
-        $builder->add('title', 'text', array(
+        $builder->add('title', TextType::class, array(
             'label' => 'Comment Title',
             'required' => true,
             'attr' => array(
@@ -33,7 +36,7 @@ class CommentType extends AbstractType {
             ))
         );
 
-        $builder->add('username', 'text', array(
+        $builder->add('username', TextType::class, array(
             'label' => 'Your Name',
             'required' => true,
             'attr' => array(
@@ -43,7 +46,7 @@ class CommentType extends AbstractType {
             ))
         );
 
-        $builder->add('comment', 'textarea', array(
+        $builder->add('comment', TextareaType::class, array(
             'label' => 'Comment',
             'required' => true,
             'attr' => array(
@@ -55,7 +58,7 @@ class CommentType extends AbstractType {
             ))
         );
 
-        $builder->add('bottrap', 'text', array(
+        $builder->add('bottrap', TextType::class, array(
             'label' => 'Bot trap',
             'required' => false,
             'attr' => array(

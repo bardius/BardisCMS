@@ -4,7 +4,6 @@
     "description": "BardisCMS is a Symfony2 CMS distribution with integrated Zurb Foundation 5 (Bower and Grunt with custom builds included for better workflow) for front end and all the major bundles pre-configured (Sonata Admin, User, Media, FOSUser, KnpMenu, Guzzle) combined with extra bundles to provide a fully functional out of the box responsive CMS for websites",
     "keywords": ["symfony2", "zurb foundation", "cms", "responsive", "doctrine", "content management", "guzzle", "rest"],
     "license": "MIT",
-    "type": "symfony-distribution",
     "homepage": "https://github.com/bardius/BardisCMS",
     "authors": [
         {
@@ -17,16 +16,15 @@
         "issues": "https://github.com/bardius/BardisCMS/issues"
     },
     "autoload": {
-        "psr-0": {
-            "": "src/"
-        }
+        "psr-4": { "": "src/" },
+        "files": [ "app/AppKernel.php" ]
     },
     "require": {
         "php": ">=5.5.0",
-        "symfony/symfony": "v2.7.7"
+        "symfony/symfony": "v2.8.0"
     },
     "require-dev": {
-        "doctrine/orm": "~2.4.7",
+        "doctrine/orm": "~2.4.8",
         "doctrine/doctrine-bundle": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "doctrine/data-fixtures": "dev-master",
@@ -34,9 +32,9 @@
         "symfony/assetic-bundle": "dev-master",
         "symfony/swiftmailer-bundle": "dev-master",
         "symfony/monolog-bundle": "dev-master",
-        "sensio/distribution-bundle": "dev-master",
+        "sensio/distribution-bundle": "~5.0",
         "sensio/framework-extra-bundle": ">=3.0.9",
-        "sensio/generator-bundle": ">=2.4",
+        "sensio/generator-bundle": "~3.0",
         "jms/security-extra-bundle": "dev-master",
         "jms/di-extra-bundle": "dev-master",
         "jms/serializer-bundle": ">=0.13.0",
@@ -56,22 +54,28 @@
         "sonata-project/intl-bundle": "dev-master",
         "toopay/assetic-minifier": "dev-master",
         "stof/doctrine-extensions-bundle": "~1.2.1",
-        "misd/guzzle-bundle": "dev-master"
+        "misd/guzzle-bundle": "dev-master",
+        "incenteev/composer-parameter-handler": "~2.0",
+        "symfony/phpunit-bridge": "~2.7"
     },
     "scripts": {
         "pre-install-cmd": [
         ],
         "post-install-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
         "post-update-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ]
     },
     "config": {
@@ -80,10 +84,13 @@
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "2.7.x-dev"
+            "dev-master": "2.8-dev"
         },
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
-        "symfony-assets-install": "web"
+        "symfony-assets-install": "web",
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml"
+        }
     }
 }

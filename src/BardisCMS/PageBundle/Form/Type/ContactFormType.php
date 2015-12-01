@@ -16,12 +16,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use BardisCMS\PageBundle\Form\EventListener\SanitizeFieldSubscriber;
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
+
 class ContactFormType extends AbstractType {
 
     // Creating the contact form and the fields
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
-        $builder->add('firstname', 'text', array(
+        $builder->add('firstname', TextType::class, array(
             'label' => 'First Name',
             'required' => true,
             'attr' => array(
@@ -31,7 +36,7 @@ class ContactFormType extends AbstractType {
             ))
         );
 
-        $builder->add('surname', 'text', array(
+        $builder->add('surname', TextType::class, array(
             'label' => 'Surname',
             'required' => true,
             'attr' => array(
@@ -41,7 +46,7 @@ class ContactFormType extends AbstractType {
             ))
         );
 
-        $builder->add('email', 'email', array(
+        $builder->add('email', EmailType::class, array(
             'label' => 'Email',
             'required' => true,
             'attr' => array(
@@ -51,7 +56,7 @@ class ContactFormType extends AbstractType {
             ))
         );
 
-        $builder->add('comment', 'textarea', array(
+        $builder->add('comment', TextareaType::class, array(
             'label' => 'Comment / Question',
             'required' => true,
             'attr' => array(
@@ -63,7 +68,7 @@ class ContactFormType extends AbstractType {
             ))
         );
 
-        $builder->add('bottrap', 'text', array(
+        $builder->add('bottrap', TextType::class, array(
             'label' => 'Bot trap',
             'required' => false,
             'attr' => array(
