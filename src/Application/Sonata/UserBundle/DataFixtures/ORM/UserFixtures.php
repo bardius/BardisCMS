@@ -30,6 +30,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $admin->setEnabled(1);
         $admin->setPlainPassword('admin');
         $admin->setConfirmed(true);
+        $admin->setTermsAccepted(true);
         $admin->setSuperAdmin(true);
         //$admin->addRole(static::ROLE_SUPER_ADMIN);
         $manager->persist($admin);
