@@ -4,7 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="sonata_user_profile_edit" pattern="/user-profile/edit-details">
+    <route id="sonata_user_profile_edit" pattern="/edit-profile">
         <default key="_controller">SonataUserBundle:Profile:edit</default>
     </route>
 

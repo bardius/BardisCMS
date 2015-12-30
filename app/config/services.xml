@@ -92,23 +92,12 @@
             <argument>sonata.block.clearcache</argument>
             <argument type="service" id="templating" />
         </service>
-        <service id="guzzle_client_storage_adapter" class="Csa\Bundle\GuzzleBundle\GuzzleHttp\Cache\DoctrineAdapter">
-            <argument type="service" id="guzzle_client_cache_service" />
+        <service id="guzzle.client.adapter" class="Csa\Bundle\GuzzleBundle\GuzzleHttp\Cache\DoctrineAdapter">
+            <argument type="service" id="guzzle.client.cache.service" />
         </service>
-        <service id="guzzle_client_cache_service" class="Doctrine\Common\Cache\FilesystemCache">
-            <argument>"%kernel.cache_dir%/guzzle_api_cache/"</argument>
+        <service id="guzzle.client.cache.service" class="Doctrine\Common\Cache\FilesystemCache">
+            <argument>"%kernel.root_dir%/cache/data/guzzle_cache"</argument>
+            <argument>7200</argument>
         </service>
-        <!--
-        <service id="github.middleware" class="Closure">
-            <factory class="My\Middleware" method="my_middleware" />
-            <tag name="csa_guzzle.middleware" alias="my_middleware" priority="100" />
-        </service>
-        -->
-        <!--
-        <service id="github.client" class="GuzzleHttp\Client">
-            <tag name="csa_guzzle.client" />
-            <argument>https://api.github.com</argument>
-        </service>
-        -->
     </services>
 </container>

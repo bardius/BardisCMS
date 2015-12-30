@@ -11,7 +11,7 @@ csa_guzzle:
 
     cache:
         enabled:        true
-        adapter:        guzzle_client_storage_adapter
+        adapter:        guzzle.client.adapter
 
     mock:
         enabled:        false
@@ -27,4 +27,4 @@ csa_guzzle:
                 base_uri:       https://api.github.com
                 headers:
                     Accept:     application/vnd.github.v3+json
-            middleware:         [debug, guzzle_client_storage_adapter]
+            middleware:         [debug, guzzle.client.adapter]

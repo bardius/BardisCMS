@@ -493,28 +493,57 @@ class DefaultController extends Controller {
             $sampleGuzzleAPIClient = $this->get('guzzle.client.github');
 
             // Sample API endpoint URL
-            $sampleAPIClientURL = "/repos/bardius/BardisCMS/issues";
+            $sampleAPIClientURL = "/repos/bardius/BardisCMS/commits";
 
             // Sample GET request
-            $request = $sampleGuzzleAPIClient->get($sampleAPIClientURL);
-
-            $request->getParams()->set('cache.override_ttl', 7200);
-            $response = $request->send();
-
-            $data = $response->json();
-            $statusCode = $response->getStatusCode();
-            dump($response);
-            dump($data);
-            dump($statusCode);
-
-            // Sample POST request
-            $response = $sampleGuzzleAPIClient->post($sampleAPIClientURL, [
-                'headers' => ['Send-By' => 'BardisCMS'],
-                'body' => ['username' => 'bardius'],
-                'timeout' => 10
+            $response = $sampleGuzzleAPIClient->request('GET', $sampleAPIClientURL, [
+                'headers' => [
+                //    'Accept' => 'application/json',
+                    'Content-Type' => 'application/json',
+                //    'Sample-Header' => 'BardisCMS'
+                ],
+                //'proxy' => [
+                //      'http'  => 'tcp://localhost:8125', // Use this proxy with "http"
+                //      'https' => 'tcp://localhost:9124', // Use this proxy with "https",
+                //      'no' => ['.mit.edu', 'foo.com']    // Don't use a proxy with these
+                //],
+                //'allow_redirects' => false,
+                //'auth' => ['bardius', 'kemp1313'],
+                'query' => [
+                    'author' => 'bardius'
+                ],
+                'http_errors' => false,
+                'connect_timeout' => 30,
+                'timeout' => 30
             ]);
 
-            $data = $response->json();
+            // Sample POST request with form parameters or json as body
+            //$response = $sampleGuzzleAPIClient->request('POST', $sampleAPIClientURL, [
+                //'headers' => [
+                //  'Accept' => 'application/json',
+                //  'Content-Type' => 'application/json',
+                //  'Sample-Header' => 'BardisCMS'
+                //],
+                //'proxy' => [
+                //    'http'  => 'tcp://localhost:8125', // Use this proxy with "http"
+                //    'https' => 'tcp://localhost:9124', // Use this proxy with "https",
+                //    'no' => ['.mit.edu', 'foo.com']    // Don't use a proxy with these
+                //],
+                //'json' => [
+                //    'username' => 'bardius',
+                //    'project' => 'BardisCMS'
+                //],
+                //'auth' => ['username', 'password'],
+                //'form_params' => [
+                //    'username' => 'bardius',
+                //    'project' => 'BardisCMS'
+                //],
+                //'http_errors' => false,
+                //'connect_timeout' => 30,
+                //'timeout' => 30
+           // ]);
+
+            $data = json_decode($response->getBody());
             $statusCode = $response->getStatusCode();
             dump($response);
             dump($data);
