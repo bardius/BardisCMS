@@ -54,7 +54,7 @@
         "sonata-project/intl-bundle": "dev-master",
         "toopay/assetic-minifier": "dev-master",
         "stof/doctrine-extensions-bundle": "~1.2.1",
-        "misd/guzzle-bundle": "dev-master",
+        "csa/guzzle-bundle": "dev-master",
         "incenteev/composer-parameter-handler": "~2.0",
         "symfony/phpunit-bridge": "~2.7"
     },

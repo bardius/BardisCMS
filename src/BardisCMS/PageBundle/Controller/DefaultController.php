@@ -51,10 +51,15 @@ class DefaultController extends Controller {
         $this->page = null;
         $this->userName = null;
 
+        // Sample Guzzle call
+        //$this->sampleGuzzleCall();
+
         // Get the settings from setting bundle
         $this->settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
+
         // Get the highest user role security permission
         $this->userRole = $this->get('sonata_user.services.helpers')->getLoggedUserHighestRole();
+
         // Check if mobile content should be served
         $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 
@@ -478,5 +483,69 @@ class DefaultController extends Controller {
             return 0;
         }
         return ($introItemA->getPageOrder() < $introItemB->getPageOrder()) ? -1 : 1;
+    }
+
+    // Sample Guzzle Call
+    protected function sampleGuzzleCall(){
+        // Sample Guzzle Client Service
+        // http://docs.guzzlephp.org/en/latest/
+        try {
+            $sampleGuzzleAPIClient = $this->get('guzzle.client.github');
+
+            // Sample API endpoint URL
+            $sampleAPIClientURL = "/repos/bardius/BardisCMS/issues";
+
+            // Sample GET request
+            $request = $sampleGuzzleAPIClient->get($sampleAPIClientURL);
+
+            $request->getParams()->set('cache.override_ttl', 7200);
+            $response = $request->send();
+
+            $data = $response->json();
+            $statusCode = $response->getStatusCode();
+            dump($response);
+            dump($data);
+            dump($statusCode);
+
+            // Sample POST request
+            $response = $sampleGuzzleAPIClient->post($sampleAPIClientURL, [
+                'headers' => ['Send-By' => 'BardisCMS'],
+                'body' => ['username' => 'bardius'],
+                'timeout' => 10
+            ]);
+
+            $data = $response->json();
+            $statusCode = $response->getStatusCode();
+            dump($response);
+            dump($data);
+            dump($statusCode);
+        }
+        catch (\GuzzleHttp\Exception\ConnectException $e) {
+            $req = $e->getRequest();
+            $resp = $e->getResponse();
+            dump($req);
+            dump($resp);
+        }
+        catch (\GuzzleHttp\Exception\ClientErrorResponseException $e) {
+            $req = $e->getRequest();
+            $resp = $e->getResponse();
+            dump($req);
+            dump($resp);
+        }
+        catch (\GuzzleHttp\Exception\ServerErrorResponseException $e) {
+            $req = $e->getRequest();
+            $resp = $e->getResponse();
+            dump($req);
+            dump($resp);
+        }
+        catch (\GuzzleHttp\Exception\BadResponseException $e) {
+            $req = $e->getRequest();
+            $resp = $e->getResponse();
+            dump($req);
+            dump($resp);
+        }
+        catch(\Exception $e){
+            dump($e);
+        }
     }
 }

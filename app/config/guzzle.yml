@@ -1,7 +1,30 @@
-misd_guzzle:
+csa_guzzle:
+    profiler:
+        enabled:        %kernel.debug%
+        max_body_size:  65536 # The maximum size of the body which should be stored in the profiler (in bytes)
 
-    log:
-        format: debug # default/debug/short or custom MessageFormatter string
+    logger:
+        enabled:        false
+        service:        ~ # my_logger_service
+        format:         '{hostname} {req_header_User-Agent} - [{date_common_log}] "{method} {target} HTTP/{version}" {code} {res_header_Content-Length}'
+        level:          debug #[clf, debug, short]
 
-    filesystem_cache:
-        path: "%kernel.cache_dir%/weatherapi/"
+    cache:
+        enabled:        true
+        adapter:        guzzle_client_storage_adapter
+
+    mock:
+        enabled:        false
+        storage_path:   ~ # "%kernel.root_dir%/../features/fixtures/guzzle" # Required
+        mode:           replay #[record, replay]
+
+    clients:
+        # GitHub API : Sample implementation in thee default controller of the page bundle
+        github_api:
+            alias:              guzzle.client.github
+            class:              GuzzleHttp\Client
+            config:
+                base_uri:       https://api.github.com
+                headers:
+                    Accept:     application/vnd.github.v3+json
+            middleware:         [debug, guzzle_client_storage_adapter]

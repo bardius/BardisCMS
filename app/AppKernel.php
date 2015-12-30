@@ -49,7 +49,7 @@ class AppKernel extends Kernel {
             new BardisCMS\ContentBlockBundle\ContentBlockBundle(),
             new BardisCMS\MobileDetectBundle\MobileDetectBundle(),
             new BardisCMS\CommentBundle\CommentBundle(),
-            new Misd\GuzzleBundle\MisdGuzzleBundle(),
+            new Csa\Bundle\GuzzleBundle\CsaGuzzleBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Minifier\MinifierBundle(),
         );
