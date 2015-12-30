@@ -1,7 +1,12 @@
-{% extends "SonataUserBundle::layout.html.twig" %}
+{% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-    <div class="contentBlock firstBlock large-12 columns">
-        <h3>Thank you for joining</h3>
-    </div>  
+    <div class="contentBlock firstBlock twelve columns">
+        <div class="twelve column">
+            <h3>Thank you for joining our newsletter</h3>
+        </div>
+    </div>
+    <div class="twelve columns">
+        <p>Did you know you can also join us on <a href="https://www.facebook.com/wantmybet" target="_blank" title="Facebook">Facebook</a>.</p>
+    </div>     
 {% endblock fos_user_content %}

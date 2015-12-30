@@ -9,12 +9,22 @@
         <id name="id" column="id" type="integer">
             <generator strategy="AUTO" />
         </id>
-        
-        <field name="bakeFrequency" type="string" column="bakeFrequency" length="255" nullable="true" />
-        <field name="sex" type="string" column="sex" length="255" nullable="true" />
-        <field name="bakeChoises" type="array" column="bakeChoises" nullable="true" />
-        <field name="age" type="string" column="age" length="255" nullable="true" />
-        <field name="children" type="string" column="children" length="255" nullable="true" />
+
+        <field name="confirmed" column="confirmed" type="boolean" nullable="false" />
+        <field name="title" type="string" column="title" length="8" nullable="true" />
+        <field name="language" type="string" column="language" length="2" nullable="true" />
+        <field name="secretQuestion" type="string" column="secret_question" length="180" nullable="true" />
+        <field name="secretQuestionResponse" type="string" column="secret_question_response" length="180" nullable="true" />
+        <field name="addressLine1" type="string" column="addressLine1" length="180" nullable="true" />
+        <field name="addressLine2" type="string" column="addressLine2" length="180" nullable="true" />
+        <field name="addressLine3" type="string" column="addressLine3" length="180" nullable="true" />
+        <field name="city" type="string" column="city" length="60" nullable="true" />
+        <field name="county" type="string" column="county" length="60" nullable="true" />
+        <field name="postcode" type="string" column="postcode" length="60" nullable="true" />
+        <field name="countryCode" type="string" column="country_code" length="2" nullable="true" />
+        <field name="currencyCode" type="string" column="currency_code" length="3" nullable="true" />
+        <field name="mobile" type="string" column="mobile" length="15" nullable="true" />
+        <field name="termsAccepted" type="boolean" column="terms_accepted" nullable="false" />
         <field name="campaign" type="string" column="campaign" length="255" nullable="true" />
 
     </entity>

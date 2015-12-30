@@ -1,0 +1,13 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    <div class="contentBlock firstBlock twelve columns">
+        <div class="twelve column">
+            <h3>Enter your details below</h3>
+        </div>
+    </div>
+    <div class="twelve columns">
+        {% include "FOSUserBundle:Registration:register_content.html.twig" %}
+    </div>     
+{% endblock fos_user_content %}
+

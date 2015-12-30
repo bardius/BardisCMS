@@ -25,23 +25,6 @@ PageBundle_filtered:
     path:  /filterPages
     defaults: { _controller: PageBundle:Default:filterPages }
 
-PageBundle_userprofile_noslash:
-    path:  /user-profile/{userName}/{currentpage}/{totalpageitems}
-    defaults:  { _controller: PageBundle:Default:userProfile, alias: user-profile, userName: username, currentpage: 0, totalpageitems: 0}
-    requirements:
-        currentpage: \d+
-        totalpageitems: \d+
-
-PageBundle_userprofile_onlypage:
-    path:  /user-profile/{userName}/{currentpage}
-    defaults:  { _controller: PageBundle:Default:userProfile, alias: user-profile, userName: username, currentpage: 0, totalpageitems: 0}
-    requirements:
-        currentpage: \d+
-
-PageBundle_userprofile_onlytag:
-    path:  /user-profile/{userName}
-    defaults:  { _controller: PageBundle:Default:userProfile, alias: user-profile, userName: username, currentpage: 0, totalpageitems: 0}
-
 PageBundle_sitemap:
     path:  /sitemap.{_format}
     defaults: { _controller: PageBundle:Default:sitemap, _format: xml}

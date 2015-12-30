@@ -9,11 +9,11 @@ parameters:
     pdo_service_dsn:    "mysql:dbhost=%database_host%;dbname=%database_name%"
 
     mailer_transport:	smtp
-    mailer_host:	localhost
-    mailer_user:	~
+    mailer_host:	    localhost
+    mailer_user:	    ~
     mailer_password:	~
     mailer_encryption:	~
-    mailer_port:	~
+    mailer_port:	    ~
 
     locale:             en
     secret:             2WYgMKzMLqEVFNU245fLqEVFNvprjmRy0I4Q

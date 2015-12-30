@@ -1,0 +1,11 @@
+{% extends "::base.html.twig" %}
+
+{% block content %}
+<div class="small-12 large-6 columns large-centered">
+    <p style="display:inline-block;">{{ 'registration.confirmed'|trans({'%username%': user.username}, 'FOSUserBundle') }}</p>
+    {% if app.session is not empty %}
+        {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
+        {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans({}, 'FOSUserBundle') }}</a></p>{% endif %}
+    {% endif %}
+</div>
+{% endblock content %}

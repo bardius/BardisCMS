@@ -1,10 +1,21 @@
-{% extends "SonataUserBundle::layout.html.twig" %}
+{% extends "::base.html.twig" %}
 
-{% block fos_user_content %}
-    <div class="contentBlock firstBlock large-12 columns">
-        <h3>Enter your details below</h3>
-    </div>
-    <div class="large-12 columns">
-        {% include "SonataUserBundle:Registration:register_content.html.twig" %}
-    </div>     
-{% endblock fos_user_content %}
+{% block bodyattributes %}id="registration-page"{% endblock %}
+
+{% block content %}
+	<div class="small-12 large-6 columns large-centered">
+		<ul class="tabs">
+			<li class="tab-title"><a href="{{ url('fos_user_security_login') }}">Sign in</a></li>
+			<li class="tab-title active"><a>Register</a></li>
+		</ul>
+		<div class="tabs-content">
+			<div class="content active row" id="register">
+				{% include "FOSUserBundle:Registration:register_content.html.twig" %}
+
+				<div class="small-12 large-6 columns large-centered">
+					<a href="{{ url('fos_user_security_login') }}">I already have an account</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

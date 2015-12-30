@@ -1,0 +1,19 @@
+{% extends "::base.html.twig" %}
+
+{% block content %}
+    <div class="small-12 large-6 columns large-centered">
+        <ul class="tabs">
+            <li class="tab-title active"><a>Sign in</a></li>
+            <li class="tab-title"><a href="{{ url('fos_user_registration_register') }}">Register</a></li>
+        </ul>
+        <div class="tabs-content">
+            <div class="content active row" id="register">
+                {% include "FOSUserBundle:Security:login_content.html.twig" %}
+
+                <div class="small-12 large-6 columns large-centered">
+                    <a href="{{ url('fos_user_registration_register') }}">Create an account</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

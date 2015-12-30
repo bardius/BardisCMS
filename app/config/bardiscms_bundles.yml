@@ -6,6 +6,7 @@ page:
         two_columned:       Two Column Page
         three_columned:     Three Column Page
         contact:            Contact Form Page
+        register:           Registration Form Page
         category_page:      Category Page
         page_tag_list:      Filtered Results
         homepage:           Homepage

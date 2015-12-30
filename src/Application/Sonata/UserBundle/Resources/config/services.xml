@@ -6,10 +6,90 @@
 
     <services>
 
+        <!-- Registration Form -->
         <service id="sonata_user.form.type.registration" class="Application\Sonata\UserBundle\Form\Type\RegistrationFormType">
             <tag name="form.type" />
             <argument>%fos_user.model.user.class%</argument>
             <argument type="service" id="request_stack" />
+        </service>
+
+        <service id="sonata_user.registration.form.handler.confirmation" class="Application\FOS\UserBundle\Form\Handler\RegistrationFormHandler" scope="request" public="false">
+            <argument type="service" id="fos_user.registration.form"/>
+            <argument type="service" id="request"/>
+            <argument type="service" id="fos_user.user_manager"/>
+            <argument type="service" id="fos_user.mailer"/>
+            <argument type="service" id="fos_user.util.token_generator"/>
+            <argument type="service" id="service_container"/>
+        </service>
+
+
+        <!-- Contact Details Form -->
+        <service id="sonata_user.contact_details.form" factory-method="createNamed" factory-service="form.factory" class="Symfony\Component\Form\Form">
+            <argument>sonata_user_contact_details_form</argument>
+            <argument>sonata_user_contact_details</argument>
+            <argument>null</argument>
+            <argument type="collection">
+                <argument key="validation_groups"></argument>
+            </argument>
+        </service>
+
+        <service id="sonata_user.contact_details.form.type" class="Application\Sonata\UserBundle\Form\Type\ContactDetailsFormType">
+            <tag name="form.type" alias="sonata_user_contact_details" />
+            <argument>Application\Sonata\UserBundle\Entity\User</argument>
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="service_container"/>
+        </service>
+
+        <service id="sonata_user.contact_details.form.handler" class="Application\Sonata\UserBundle\Form\Handler\ContactDetailsFormHandler" scope="request">
+            <argument type="service" id="sonata_user.contact_details.form" />
+            <argument type="service" id="request" />
+            <argument type="service" id="fos_user.user_manager" />
+        </service>
+
+        <!-- Generic Details Form -->
+        <service id="sonata_user.generic_details.form" factory-method="createNamed" factory-service="form.factory" class="Symfony\Component\Form\Form">
+            <argument>sonata_user_generic_details_form</argument>
+            <argument>sonata_user_generic_details</argument>
+            <argument>null</argument>
+            <argument type="collection">
+                <argument key="validation_groups"></argument>
+            </argument>
+        </service>
+
+        <service id="sonata_user.generic_details.form.type" class="Application\Sonata\UserBundle\Form\Type\GenericDetailsFormType">
+            <tag name="form.type" alias="sonata_user_generic_details" />
+            <argument>Application\Sonata\UserBundle\Entity\User</argument>
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="service_container"/>
+        </service>
+
+        <service id="sonata_user.generic_details.form.handler" class="Application\Sonata\UserBundle\Form\Handler\GenericDetailsFormHandler" scope="request">
+            <argument type="service" id="sonata_user.generic_details.form" />
+            <argument type="service" id="request" />
+            <argument type="service" id="fos_user.user_manager" />
+        </service>
+
+        <!-- Account Preferences Form -->
+        <service id="sonata_user.account_preferences.form" factory-method="createNamed" factory-service="form.factory" class="Symfony\Component\Form\Form">
+            <argument>sonata_user_account_preferences_form</argument>
+            <argument>sonata_user_account_preferences</argument>
+            <argument>null</argument>
+            <argument type="collection">
+                <argument key="validation_groups"></argument>
+            </argument>
+        </service>
+
+        <service id="sonata_user.account_preferences.form.type" class="Application\Sonata\UserBundle\Form\Type\AccountPreferencesFormType">
+            <tag name="form.type" alias="sonata_user_account_preferences" />
+            <argument>Application\Sonata\UserBundle\Entity\User</argument>
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="service_container"/>
+        </service>
+
+        <service id="sonata_user.account_preferences.form.handler" class="Application\Sonata\UserBundle\Form\Handler\AccountPreferencesFormHandler" scope="request">
+            <argument type="service" id="sonata_user.account_preferences.form" />
+            <argument type="service" id="request" />
+            <argument type="service" id="fos_user.user_manager" />
         </service>
 
     </services>

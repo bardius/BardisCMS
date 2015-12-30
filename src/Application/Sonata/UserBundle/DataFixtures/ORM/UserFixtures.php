@@ -4,6 +4,8 @@
  * User Bundle
  * This file is part of the BardisCMS.
  *
+ * Sample fixtures to load with and admin/admin user with role ROLE_SUPER_ADMIN
+ *
  * (c) George Bardis <george@bardis.info>
  *
  */

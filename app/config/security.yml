@@ -62,7 +62,10 @@ security:
                 use_forward:    false
                 check_path:     /login_check
                 failure_path:   null
-            logout:             true
+            # logout:             true
+            logout:
+                path:           /logout
+                target:         /login
             anonymous:          ~
 
         dev:
@@ -104,4 +107,3 @@ security:
         # - { path: ^/admin, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] , requires_channel: https }
         - { path: ^/admin, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
         - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        

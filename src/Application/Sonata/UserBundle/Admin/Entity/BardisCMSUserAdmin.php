@@ -1,8 +1,9 @@
 <?php
 
 /*
- * Blog Bundle
+ * Sonata User Bundle
  * This file is part of the BardisCMS.
+ * Manage the extended the Sonata User entity with extra information for the users
  *
  * (c) George Bardis <george@bardis.info>
  *
@@ -16,6 +17,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use FOS\UserBundle\Model\UserManagerInterface;
+use Sonata\UserBundle\Model\UserInterface;
 
 class BardisCMSUserAdmin extends BaseUserAdmin {
 
@@ -61,26 +63,43 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
      */
     public function configureShowFields(ShowMapper $showMapper) {
         $showMapper
-                ->with('General')
-                ->add('username')
-                ->add('email')
-                ->end()
-                ->with('Profile')
-                ->add('firstname')
-                ->add('lastname')
-                ->add('sex')
-                ->add('bakeFrequency')
-                ->add('bakeChoises')
-                ->add('children')
-                ->add('campaign')
-                ->end()
-                ->with('Groups')
-                ->add('groups')
-                ->end()
-                ->with('Security')
+            ->with('General')
+                ->add('username', null, array('label' => 'Username'))
+                ->add('email', null, array('label' => 'eMail'))
+            ->end()
+            ->with('Profile')
+                ->add('title', null, array('label' => 'Title'))
+                ->add('firstname', null, array('label' => 'First Name'))
+                ->add('lastname', null, array('label' => 'Last Name'))
+                ->add('gender', null, array('label' => 'Gender'))
+                ->add('dateOfBirth', null, array('label' => 'Date Of Birth'))
+            ->end()
+            ->with('Contact Details')
+                ->add('addressLine1', null, array('label' => 'Address Line 1'))
+                ->add('addressLine2', null, array('label' => 'Address Line 2'))
+                ->add('addressLine3', null, array('label' => 'Address Line 3'))
+                ->add('city', null, array('label' => 'City'))
+                ->add('county', null, array('label' => 'County'))
+                ->add('countryCode', null, array('label' => 'Country'))
+                ->add('postCode', null, array('label' => 'Postcode'))
+                ->add('phone', null, array('label' => 'Phone'))
+                ->add('mobile', null, array('label' => 'Mobile'))
+                ->add('campaign', null, array('label' => 'Onboarding Campaign Name'))
+            ->end()
+            ->with('Account Preferences')
+                ->add('language', null, array('label' => 'Language'))
+                ->add('currencyCode', null, array('label' => 'Currency'))
+                ->add('termsAccepted', null, array('label' => 'Accepted T&Cs'))
+            ->end()
+            ->with('Security')
+                ->add('secretQuestion',null, array('label' => 'Secret Question'))
+                ->add('secretQuestionResponse',null, array('label' => 'Secret Question Response'))
                 ->add('token')
                 ->add('twoStepVerificationCode')
-                ->end()
+            ->end()
+            ->with('Groups')
+                ->add('groups')
+            ->end()
         ;
     }
 
@@ -89,54 +108,105 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
      */
     public function configureFormFields(FormMapper $formMapper) {
         $formMapper
-                ->tab('General')
+            ->tab('General')
                 ->with('General', array('collapsed' => false))
-                ->add('username')
-                ->add('email')
-                ->add('plainPassword', 'text', array('required' => false))
+                    ->add('username', null, array('label' => 'Username', 'required' => true))
+                    ->add('email', null, array('label' => 'email', 'required' => true))
+                    ->add('plainPassword', 'text', array('required' => false))
                 ->end()
-                ->end()
-                ->tab('Profile')
+            ->end()
+            ->tab('Profile')
                 ->with('Profile', array('collapsed' => true))
-                ->add('firstname', null, array('label' => 'First Name', 'required' => false))
-                ->add('lastname', null, array('label' => 'Surname', 'required' => false))
-                ->add('sex', 'choice', array('choices' => array('male' => 'Male', 'female' => 'Female'), 'label' => 'Sex', 'required' => false, 'expanded' => true, 'multiple' => false))
-                ->add('bakeFrequency', 'choice', array('choices' => array('year' => 'Once a year', 'month' => 'Once a year', 'week' => 'Every Week'), 'label' => 'How often do you bake?', 'required' => false))
-                ->add('bakeChoises', 'choice', array('choices' => array('biscuits' => 'biscuits', 'breads' => 'breads', 'brownies' => 'brownies', 'cakes' => 'cakes', 'cupcakes' => 'cupcakes', 'desserts' => 'desserts', 'muffins' => 'muffins', 'pancakes' => 'pancakes', 'pies' => 'pies'), 'label' => 'Which of the following do you bake?', 'required' => false, 'expanded' => true, 'multiple' => true))
-                ->add('children', 'choice', array('choices' => array('no' => 'No', 'yes' => 'Yes'), 'label' => 'Do you have children?', 'required' => false, 'expanded' => true, 'multiple' => false))
-                ->add('campaign', null, array('label' => 'Campaign Name', 'required' => false))
+                    ->add('title', 'choice', array('choices' => array(
+                        'mr' => 'Mr',
+                        'ms' => 'Ms',
+                        'mrs' => 'Mrs',
+                        'miss' => 'Miss',
+                        'dr' => 'Dr',
+                        'prof' => 'Prof'
+                    ), 'label' => 'Title', 'required' => true, 'expanded' => true, 'multiple' => false))
+                    ->add('firstname', null, array('label' => 'First Name', 'required' => true))
+                    ->add('lastname', null, array('label' => 'Surname', 'required' => true))
+                    ->add('gender', 'choice', array('choices' => array(
+                        UserInterface::GENDER_UNKNOWN => 'gender_unknown',
+                        UserInterface::GENDER_FEMALE  => 'gender_female',
+                        UserInterface::GENDER_MALE    => 'gender_male',
+                    ), 'label' => 'Gender', 'required' => true, 'expanded' => true, 'multiple' => false))
+                    ->add('dateOfBirth', 'birthday', array('format' => 'yyyy-MM-dd', 'widget' => 'single_text', 'label' => 'Date Of Birth', 'required' => true))
                 ->end()
+            ->end()
+            ->tab('Contact Details')
+                ->with('Contact Details', array('collapsed' => true))
+                    ->add('addressLine1', 'text', array('label' => 'Address Line 1', 'required' => true))
+                    ->add('addressLine2', 'text', array('label' => 'Address Line 2', 'required' => true))
+                    ->add('addressLine3', 'text', array('label' => 'Address Line 3', 'required' => false))
+                    ->add('city', 'text', array('label' => 'City', 'required' => true))
+                    ->add('county', 'text', array('label' => 'County', 'required' => false))
+                    ->add('postCode', 'text', array('label' => 'Postcode', 'required' => true))
+                    ->add('countryCode', 'country', array('preferred_choices' => array(
+                        'GB' => 'UK',
+                        'US' => 'USA'
+                    ), 'label' => 'Country', 'required' => true))
+                    ->add('phone', 'text', array('label' => 'Phone', 'required' => true))
+                    ->add('mobile', 'text', array('label' => 'Mobile', 'required' => true))
                 ->end()
+            ->end()
+            ->tab('Account Preferences')
+                ->with('Account Preferences', array('collapsed' => true))
+                    ->add('language', 'language', array('preferred_choices' => array(
+                        'en' => 'English'
+                    ),'label' => 'Language', 'required' => true, 'expanded' => false, 'multiple' => false))
+                    ->add('currencyCode', 'choice', array('choices' => array(
+                        'GBP' => '£' ,
+                        'USD' => '$',
+                        'EUR' => '€'
+                    ), 'label' => 'Currency', 'required' => true))
+                    ->add('termsAccepted', null, array('label' => 'Accepted T&Cs', 'required' => false))
+                ->end()
+            ->end()
         ;
-
-        if (!$this->getSubject()->hasRole('ROLE_SUPER_ADMIN')) {
-            $formMapper->with('Management', array('collapsed' => true))
-                    ->add('roles', 'sonata_security_roles', array(
-                        'expanded' => true,
-                        'multiple' => true,
-                        'required' => false
-                    ))
-                    ->add('locked', null, array('required' => false))
-                    ->add('expired', null, array('required' => false))
-                    ->add('enabled', null, array('required' => false))
-                    ->add('credentialsExpired', null, array('required' => false))
-                    ->end()
-            ;
-        }
 
         $formMapper
-                ->tab('Security')
+            ->tab('Security')
                 ->with('Security', array('collapsed' => true))
-                ->add('token', null, array('required' => false))
-                ->add('twoStepVerificationCode', null, array('required' => false))
+                    ->add('secretQuestion','choice', array('choices' => array(
+                        'Spouse’s middle name' => 'Spouse’s middle name',
+                        'Mother’s Maiden Name' => 'Mother’s Maiden Name',
+                        'My favourite player' => 'My favourite player',
+                        'My first car' => 'My first car',
+                        'My first pet’s name' => 'My first pet’s name',
+                        'My first school' => 'My first school'
+                    ),'label' => 'Challenge','required' => true))
+                    ->add('secretQuestionResponse','text', array('label' => 'Response','required' => true))
+                    ->add('token', null, array('required' => false))
+                    ->add('twoStepVerificationCode', null, array('required' => false))
                 ->end()
-                ->end()
-                ->tab('Groups')
+            ->end()
+            ->tab('Groups')
                 ->with('Groups', array('collapsed' => true))
-                ->add('groups', 'sonata_type_model', array('required' => false, 'expanded' => true, 'multiple' => true))
+                    ->add('groups', 'sonata_type_model', array('required' => false, 'expanded' => true, 'multiple' => true))
                 ->end()
-                ->end()
+            ->end()
         ;
+
+
+        if (!$this->getSubject()->hasRole('ROLE_SUPER_ADMIN')) {
+            $formMapper
+                ->tab('User Management')
+                    ->with('User Management', array('collapsed' => true))
+                        ->add('roles', 'sonata_security_roles', array(
+                            'expanded' => true,
+                            'multiple' => true,
+                            'required' => false
+                        ))
+                        ->add('locked', null, array('required' => false))
+                        ->add('expired', null, array('required' => false))
+                        ->add('enabled', null, array('required' => false))
+                        ->add('credentialsExpired', null, array('required' => false))
+                    ->end()
+                ->end()
+            ;
+        }
     }
 
     /**

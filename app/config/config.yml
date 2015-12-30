@@ -43,10 +43,10 @@ framework:
 
     # router configuration
     router:
-        resource:	"%kernel.root_dir%/config/routing.yml"
-       # type:          ~
-       # http_port:     80
-       # https_port:    443
+        resource:	    "%kernel.root_dir%/config/routing.yml"
+        # type:          ~
+        # http_port:     80
+        # https_port:    443
 
     # translator configuration
     translator:
@@ -117,7 +117,7 @@ framework:
         # save_path:            %kernel.cache_dir%/sessions
         handler_id:             session.handler.pdo
         # time in seconds
-        cookie_lifetime:	43200
+        cookie_lifetime:	    43200
 
 # Doctrine Configuration
 doctrine:
@@ -233,6 +233,7 @@ assetic:
       - BlogBundle
       - CommentBundle
       - FOSUserBundle
+      # - SkeletonBundle
 
     filters:
 
@@ -255,6 +256,7 @@ swiftmailer:
     host:       %mailer_host%
     username:   %mailer_user%
     password:   %mailer_password%
+    logging:    true
     spool:      { type: memory }
 
 # ACL and User management configuration
@@ -277,9 +279,16 @@ fos_user:
     registration:
         form:
             type:       registration
+            validation_groups: [Registration]
+            handler:    sonata_user.registration.form.handler.confirmation
         confirmation:
             enabled:    true
             template:   FOSUserBundle:Registration:confirm_email.txt.twig
+
+    profile:
+        form:
+            type: profile
+            validation_groups: [Profile]
 
 sonata_user:
 

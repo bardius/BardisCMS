@@ -32,9 +32,9 @@ fos_user_security:
 #    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
 #    prefix: /profile
 
-#fos_user_register_campaign:
-#    pattern: /register/track/{campaign}
-#    defaults:  { _controller: FOSUserBundle:Registration:register }
+fos_user_register_campaign:
+    pattern: /register/track-campaign/{campaign}
+    defaults:  { _controller: FOSUserBundle:Registration:register }
 
 fos_user_register:
     resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
@@ -60,6 +60,14 @@ media:
     resource: '@SonataMediaBundle/Resources/config/routing/media.xml'
     prefix: /media
 
+sonata_user_profile:
+    resource: "@SonataUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+sonata_user_account:
+    resource: "@SonataUserBundle/Resources/config/routing/account.xml"
+    prefix: /
+
 
 # Internal routing configuration to handle ESI
 #_internal:
@@ -77,4 +85,3 @@ BlogBundle:
 PageBundle:
     resource: "@PageBundle/Resources/config/routing.yml"
     prefix:   /
-    

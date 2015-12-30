@@ -1,0 +1,72 @@
+<div>
+	<h5>Profile &amp; account settings</h5>
+	<p>Edit your profile and account settings</p>
+	<div data-magellan-expedition="fixed">
+		<dl class="sub-nav">
+			<dd data-magellan-arrival="aboutyou"><a href="#aboutyou">About you</a></dd>
+			<dd data-magellan-arrival="password"><a href="#password">Change password</a></dd>
+			<dd data-magellan-arrival="preferences"><a href="#preferences">Account preferences</a></dd>
+			<dd data-magellan-arrival="contact"><a href="#contact">Contact details</a></dd>
+		</dl>
+	</div>
+</div>
+
+<div class="panel panel-info" id="aboutyou">
+	<div class="panel-head">
+		About you
+	</div>
+	<hr>
+	<div class="panel-body">
+		<form action="{{ path('sonata_user_profile_edit') }}" {{ form_enctype(aboutYouForm) }} method="POST">
+		    {{ form_widget(aboutYouForm) }}
+		    <div>
+		        <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" />
+		    </div>
+		</form>
+	</div>
+</div>
+
+<div class="panel panel-info" id="password">
+	<div class="panel-head">
+		Change password
+	</div>
+	<hr>
+	<div class="panel-body">
+		<form action="{{ path('sonata_user_profile_edit') }}" {{ form_enctype(passwordForm) }} method="POST">
+		    {{ form_widget(passwordForm) }}
+		    <div>
+		        <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" />
+		    </div>
+		</form>
+	</div>
+</div>
+
+<div class="panel panel-info" id="preferences">
+	<div class="panel-head">
+		Account preferences
+	</div>
+	<hr>
+	<div class="panel-body">
+		<form action="{{ path('sonata_user_profile_edit') }}" {{ form_enctype(accountPreferencesForm) }} method="POST">
+		    {{ form_widget(accountPreferencesForm) }}
+		    <div>
+		        <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" />
+		    </div>
+		</form>
+	</div>
+</div>
+
+<div class="panel panel-info" id="contact">
+	<div class="panel-head">
+		Contact details
+	</div>
+	<hr>
+	<div class="panel-body">
+		<form action="{{ path('sonata_user_profile_edit') }}" {{ form_enctype(contactDetailsForm) }} method="POST">
+		    {{ form_widget(contactDetailsForm) }}
+		    <div>
+		        <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" />
+		    </div>
+		</form>
+	</div>
+</div>
