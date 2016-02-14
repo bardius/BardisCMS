@@ -178,7 +178,7 @@ class Page {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId() {
         return $this->id;
@@ -192,14 +192,14 @@ class Page {
      */
     public function setDate($date) {
         $this->date = $date;
-        
+
         return $this;
     }
 
     /**
      * Get date
      *
-     * @return date 
+     * @return date
      */
     public function getDate() {
         return $this->date;
@@ -213,14 +213,14 @@ class Page {
      */
     public function setTitle($title) {
         $this->title = $title;
-        
+
         return $this;
     }
 
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle() {
         return $this->title;
@@ -234,14 +234,14 @@ class Page {
      */
     public function setAuthor($author) {
         $this->author = $author;
-        
+
         return $this;
     }
 
     /**
      * Get author
      *
-     * @return string 
+     * @return string
      */
     public function getAuthor() {
         return $this->author;
@@ -255,14 +255,14 @@ class Page {
      */
     public function setPageclass($pageclass) {
         $this->pageclass = $pageclass;
-        
+
         return $this;
     }
 
     /**
      * Get pageclass
      *
-     * @return string 
+     * @return string
      */
     public function getPageclass() {
         return $this->pageclass;
@@ -282,7 +282,7 @@ class Page {
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription() {
         return $this->description;
@@ -302,7 +302,7 @@ class Page {
     /**
      * Get keywords
      *
-     * @return string 
+     * @return string
      */
     public function getKeywords() {
         return $this->keywords;
@@ -322,7 +322,7 @@ class Page {
     /**
      * Get introtext
      *
-     * @return text 
+     * @return text
      */
     public function getIntrotext() {
         return $this->introtext;
@@ -342,7 +342,7 @@ class Page {
     /**
      * Get introimage
      *
-     * @return Application\Sonata\MediaBundle\Entity\Media 
+     * @return Application\Sonata\MediaBundle\Entity\Media
      */
     public function getIntroimage() {
         return $this->introimage;
@@ -383,7 +383,7 @@ class Page {
     /**
      * Get bgimage
      *
-     * @return \Application\Sonata\MediaBundle\Entity\Media 
+     * @return \Application\Sonata\MediaBundle\Entity\Media
      */
     public function getBgimage() {
         return $this->bgimage;
@@ -397,14 +397,14 @@ class Page {
      */
     public function setIntroclass($introclass) {
         $this->introclass = $introclass;
-        
+
         return $this;
     }
 
     /**
      * Get introclass
      *
-     * @return string 
+     * @return string
      */
     public function getIntroclass() {
         return $this->introclass;
@@ -418,14 +418,14 @@ class Page {
      */
     public function setPagetype($pagetype) {
         $this->pagetype = $pagetype;
-        
+
         return $this;
     }
 
     /**
      * Get pagetype
      *
-     * @return string 
+     * @return string
      */
     public function getPagetype() {
         return $this->pagetype;
@@ -439,7 +439,7 @@ class Page {
      */
     public function addMaincontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks) {
         $this->maincontentblocks[] = $maincontentblocks;
-        
+
         return $this;
     }
 
@@ -455,7 +455,7 @@ class Page {
     /**
      * Get maincontentblocks
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getMaincontentblocks() {
         return $this->maincontentblocks;
@@ -469,7 +469,7 @@ class Page {
      */
     public function addSecondarycontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $secondarycontentblocks) {
         $this->secondarycontentblocks[] = $secondarycontentblocks;
-        
+
         return $this;
     }
 
@@ -485,7 +485,7 @@ class Page {
     /**
      * Get secondarycontentblocks
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getSecondarycontentblocks() {
         return $this->secondarycontentblocks;
@@ -499,7 +499,7 @@ class Page {
      */
     public function addExtracontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $extracontentblocks) {
         $this->extracontentblocks[] = $extracontentblocks;
-        
+
         return $this;
     }
 
@@ -515,7 +515,7 @@ class Page {
     /**
      * Get extracontentblocks
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getExtracontentblocks() {
         return $this->extracontentblocks;
@@ -529,7 +529,7 @@ class Page {
      */
     public function addModalcontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks) {
         $this->modalcontentblocks[] = $modalcontentblocks;
-        
+
         return $this;
     }
 
@@ -545,7 +545,7 @@ class Page {
     /**
      * Get modalcontentblocks
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getModalcontentblocks() {
         return $this->modalcontentblocks;
@@ -559,7 +559,7 @@ class Page {
      */
     public function addCategory(\BardisCMS\CategoryBundle\Entity\Category $categories) {
         $this->categories[] = $categories;
-        
+
         return $this;
     }
 
@@ -575,7 +575,7 @@ class Page {
     /**
      * Get categories
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getCategories() {
         return $this->categories;
@@ -589,7 +589,7 @@ class Page {
      */
     public function addTag(\BardisCMS\TagBundle\Entity\Tag $tags) {
         $this->tags[] = $tags;
-        
+
         return $this;
     }
 
@@ -605,7 +605,7 @@ class Page {
     /**
      * Get tags
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getTags() {
         return $this->tags;
@@ -619,7 +619,7 @@ class Page {
      */
     public function addCategories(\BardisCMS\CategoryBundle\Entity\Category $categories) {
         $this->categories[] = $categories;
-        
+
         return $this;
     }
 
@@ -640,14 +640,14 @@ class Page {
      */
     public function setIntromediasize($intromediasize) {
         $this->intromediasize = $intromediasize;
-        
+
         return $this;
     }
 
     /**
      * Get intromediasize
      *
-     * @return string 
+     * @return string
      */
     public function getIntromediasize() {
         return $this->intromediasize;
@@ -661,14 +661,14 @@ class Page {
      */
     public function setAlias($alias) {
         $this->alias = $alias;
-        
+
         return $this;
     }
 
     /**
      * Get alias
      *
-     * @return string 
+     * @return string
      */
     public function getAlias() {
         return $this->alias;
@@ -689,7 +689,7 @@ class Page {
     /**
      * Get showPageTitle
      *
-     * @return integer 
+     * @return integer
      */
     public function getShowPageTitle() {
         return $this->showPageTitle;
@@ -719,7 +719,7 @@ class Page {
     /**
      * Get bannercontentblocks
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getBannercontentblocks() {
         return $this->bannercontentblocks;
@@ -740,7 +740,7 @@ class Page {
     /**
      * Get pageOrder
      *
-     * @return integer 
+     * @return integer
      */
     public function getPageOrder() {
         return $this->pageOrder;
@@ -760,7 +760,7 @@ class Page {
     /**
      * Get publishState
      *
-     * @return integer 
+     * @return integer
      */
     public function getPublishState() {
         return $this->publishState;
@@ -769,7 +769,7 @@ class Page {
     /**
      * Get dateLastModified
      *
-     * @return integer 
+     * @return integer
      */
     public function getDateLastModified() {
         return $this->dateLastModified;
@@ -783,14 +783,14 @@ class Page {
      */
     public function setDateLastModified($dateLastModified) {
         $this->dateLastModified = $dateLastModified;
-        
+
         return $this;
     }
 
     /**
      * toString Title
      *
-     * @return string 
+     * @return string
      */
     public function __toString() {
         if ($this->getTitle()) {
@@ -803,7 +803,7 @@ class Page {
     /**
      * toString PublishState
      *
-     * @return string 
+     * @return string
      */
     public function getPublishStateAsString() {
         // Defining the string values of the publish states
@@ -817,7 +817,7 @@ class Page {
     /**
      * toString Pagetype
      *
-     * @return string 
+     * @return string
      */
     public function getPagetypeAsString() {
         // Defining the string values of the page types
@@ -828,6 +828,7 @@ class Page {
             case('category_page'): return "Category Page";
             case('page_tag_list'): return "Tagged Page List";
             case('user_profile'): return "User Profile Page";
+            case('user_login'): return "User Login Page";
             case('homepage'): return "Homepage";
             default: return $this->getPagetype();
         }

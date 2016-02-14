@@ -11,32 +11,116 @@
 
 namespace Application\Sonata\UserBundle\Controller;
 
+use Sonata\UserBundle\Model\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Symfony\Component\Security\Core\SecurityContext;
 
 class SecurityController extends Controller
 {
+    // Adding variables required for the rendering of pages
+    protected $container;
+    private $alias;
+    private $id;
+    private $extraParams;
+    private $currentpage;
+    private $totalpageitems;
+    private $linkUrlParams;
     private $page;
+    private $publishStates;
+    private $userName;
+    private $settings;
+    private $serveMobile;
+    private $userRole;
     private $enableHTTPCache;
+    private $logged_username;
+
+    // Override the ContainerAware setcontainer to accommodate the extra variables
+    public function setContainer(ContainerInterface $container = null) {
+        $this->container = $container;
+
+        // Setting the scoped variables required for the rendering of the page
+        $this->alias = null;
+        $this->id = null;
+        $this->extraParams = null;
+        $this->currentpage = null;
+        $this->totalpageitems = null;
+        $this->linkUrlParams = null;
+        $this->page = null;
+        $this->userName = null;
+        $this->logged_username = null;
+
+        // Get the settings from setting bundle
+        $this->settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
+
+        // Get the highest user role security permission
+        $this->userRole = $this->get('sonata_user.services.helpers')->getLoggedUserHighestRole();
+
+        // Check if mobile content should be served
+        $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
+
+        // Set the flag for allowing HTTP cache
+        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+
+        // Set the publish status that is available for the user
+        // Very basic ACL permission check
+        if ($this->userRole == "") {
+            $this->publishStates = array(1);
+        } else {
+            $this->publishStates = array(1, 2);
+        }
+
+        // Get the logged user if any
+        $logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
+        if (is_object($logged_user) && $logged_user instanceof UserInterface) {
+            $this->logged_username = $logged_user->getUsername();
+        }
+    }
 
     public function loginAction()
     {
-        // TODO: Create the fixtures for the Page Bundle login page
-        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("login");
+        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("login");
 
-        if (!$this->page) {
+        if (!$page) {
             return $this->render404Page();
         }
+
+        $this->page = $page;
+        $this->id = $this->page->getId();
+
+        // Simple publishing ACL based on publish state and user role
+        if ($this->page->getPublishState() == 0) {
+            return $this->render404Page();
+        }
+
+        if ($this->page->getPublishState() == 2 && $this->userRole == "") {
+            return $this->render404Page();
+        }
+
+        // Return cached page if enabled
+        // TODO: check if the login page should never be cached or not before allowing cache here
+        /*
+        if ($this->enableHTTPCache) {
+
+            $response = $this->setResponseCacheHeaders(new Response());
+
+            if (!$response->isNotModified($this->pageRequest)) {
+                // Marks the Response stale
+                $response->expire();
+            } else {
+                // return the 304 Response immediately
+                return $response;
+            }
+        }
+        */
 
         $this->page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($this->page);
 
         $request = $this->container->get('request');
-        /* @var $request \Symfony\Component\HttpFoundation\Request */
         $session = $request->getSession();
-        /* @var $session \Symfony\Component\HttpFoundation\Session\Session */
 
-        // get the error if any (works with forward and redirect -- see below)
+        // Get the login error if any
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
         } elseif (null !== $session && $session->has(SecurityContext::AUTHENTICATION_ERROR)) {
@@ -46,20 +130,23 @@ class SecurityController extends Controller
             $error = '';
         }
 
+        // TODO: this is a potential security risk (see http://trac.symfony-project.org/ticket/9523)
         if ($error) {
-            // TODO: this is a potential security risk (see http://trac.symfony-project.org/ticket/9523)
             $error = $error->getMessage();
         }
-        // last username entered by the user
+
+        // Get last username entered by the user
         $lastUsername = (null === $session) ? '' : $session->get(SecurityContext::LAST_USERNAME);
 
         $csrfToken = $this->container->has('form.csrf_provider') ? $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate') : null;
 
         return $this->renderLogin(array(
             'last_username' => $lastUsername,
-            'error'         => $error,
+            'error' => $error,
             'csrf_token' => $csrfToken,
-            'page' => $this->page
+            'page' => $this->page,
+            'mobile' => $this->serveMobile,
+            'logged_username' => $this->logged_username
         ));
     }
 
@@ -67,15 +154,26 @@ class SecurityController extends Controller
      * Renders the login template with the given parameters. Overwrite this function in
      * an extended controller to provide additional data for the login template.
      *
-     * @param array $data
+     * @param array $pageData
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function renderLogin(array $data)
+    protected function renderLogin(array $pageData)
     {
-        $template = sprintf('FOSUserBundle:Security:login.html.%s', $this->container->getParameter('fos_user.template.engine'));
+        //$template = sprintf('FOSUserBundle:Security:login.html.%s', $this->container->getParameter('fos_user.template.engine'));
+        //$response = $this->container->get('templating')->renderResponse($template, $pageData);
 
-        return $this->container->get('templating')->renderResponse($template, $data);
+        // Render login page
+        $response = $this->render('FOSUserBundle:Security:login.html.twig', $pageData);
+
+        // TODO: check if the login page should never be cached or not before allowing cache here
+        /*
+        if ($this->enableHTTPCache) {
+            $response = $this->setResponseCacheHeaders($response);
+        }
+        */
+
+        return $response;
     }
 
     public function checkAction()
@@ -108,8 +206,20 @@ class SecurityController extends Controller
         $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
 
         if ($this->enableHTTPCache) {
-            $response = $this->setResponceCacheHeaders($response);
+            $response = $this->setResponseCacheHeaders($response);
         }
+
+        return $response;
+    }
+
+    // set a custom Cache-Control directives
+    protected function setResponseCacheHeaders(Response $response) {
+
+        $response->setPublic();
+        $response->setLastModified($this->page->getDateLastModified());
+        $response->setVary(array('Accept-Encoding', 'User-Agent'));
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->setSharedMaxAge(3600);
 
         return $response;
     }

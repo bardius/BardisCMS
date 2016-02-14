@@ -11,6 +11,7 @@ page:
         page_tag_list:      Filtered Results
         homepage:           Homepage
         user_profile:       User Profile
+        user_login:         User Login Page
         sitemap:            Sitemap
 
     mediasizes:

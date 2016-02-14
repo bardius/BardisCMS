@@ -189,7 +189,7 @@ class ProfileController extends Controller
         $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
 
         if ($this->enableHTTPCache) {
-            $response = $this->setResponceCacheHeaders($response);
+            $response = $this->setResponseCacheHeaders($response);
         }
 
         return $response;

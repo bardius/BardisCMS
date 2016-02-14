@@ -105,7 +105,7 @@ class DefaultController extends Controller {
         // Return cached page if enabled
         if ($this->enableHTTPCache) {
 
-            $response = $this->setResponceCacheHeaders(new Response());
+            $response = $this->setResponseCacheHeaders(new Response());
 
             if (!$response->isNotModified($this->pageRequest)) {
                 // Marks the Response stale
@@ -155,7 +155,7 @@ class DefaultController extends Controller {
         }
 
         if ($this->enableHTTPCache) {
-            $response = $this->setResponceCacheHeaders($response);
+            $response = $this->setResponseCacheHeaders($response);
         }
 
         return $response;
@@ -214,7 +214,7 @@ class DefaultController extends Controller {
         $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page))->setStatusCode(404);
 
         if ($this->enableHTTPCache) {
-            $response = $this->setResponceCacheHeaders($response);
+            $response = $this->setResponseCacheHeaders($response);
         }
 
         return $response;
@@ -277,7 +277,7 @@ class DefaultController extends Controller {
     }
 
     // set a custom Cache-Control directives
-    protected function setResponceCacheHeaders(Response $response) {
+    protected function setResponseCacheHeaders(Response $response) {
 
         $response->setPublic();
         $response->setLastModified($this->page->getDateLastModified());

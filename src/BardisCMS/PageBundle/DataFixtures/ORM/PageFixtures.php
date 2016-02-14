@@ -91,6 +91,17 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $pageuser_profile->setPagetype('user_profile');
         $manager->persist($pageuser_profile);
 
+        $pageuser_login = new Page();
+        $pageuser_login->setDate(new \DateTime());
+        $pageuser_login->setTitle('User Login Page');
+        $pageuser_login->setAuthor($manager->merge($this->getReference('admin')));
+        $pageuser_login->setAlias('login');
+        $pageuser_login->setShowPageTitle(1);
+        $pageuser_login->setPublishState(1);
+        $pageuser_login->setIntrotext('');
+        $pageuser_login->setPagetype('user_login');
+        $manager->persist($pageuser_login);
+
         $page1 = new Page();
         $page1->setDate(new \DateTime());
         $page1->setTitle('Test Page 1');
@@ -163,6 +174,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $this->addReference('page2', $page2);
         $this->addReference('page3', $page3);
         $this->addReference('page4', $page4);
+        $this->addReference('pageuser_login', $pageuser_login);
     }
 
     public function getOrder() {

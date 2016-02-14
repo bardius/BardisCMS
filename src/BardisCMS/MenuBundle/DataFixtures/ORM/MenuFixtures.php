@@ -102,6 +102,18 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuContactPage->setOrdering(7);
         $manager->persist($menuContactPage);
 
+        $menuLoginPage = new Menu();
+        $menuLoginPage->setPage($manager->merge($this->getReference('pageuser_login')));
+        $menuLoginPage->setTitle('Login');
+        $menuLoginPage->setMenuType('Page');
+        $menuLoginPage->setRoute('showPage');
+        $menuLoginPage->setAccessLevel(0);
+        $menuLoginPage->setParent(0);
+        $menuLoginPage->setMenuGroup('Main Menu');
+        $menuLoginPage->setPublishState(1);
+        $menuLoginPage->setOrdering(8);
+        $manager->persist($menuLoginPage);
+
         $menuSitemapPage = new Menu();
         $menuSitemapPage->setPage($manager->merge($this->getReference('pagesitemap')));
         $menuSitemapPage->setTitle('Sitemap');
@@ -123,6 +135,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $this->addReference('menuNews', $menuNews);
         $this->addReference('menuEvents', $menuEvents);
         $this->addReference('menuContactPage', $menuContactPage);
+        $this->addReference('menuLoginPage', $menuLoginPage);
         $this->addReference('menuSitemapPage', $menuSitemapPage);
     }
 

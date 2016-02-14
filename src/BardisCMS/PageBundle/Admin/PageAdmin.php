@@ -162,6 +162,7 @@ class PageAdmin extends Admin {
                 case 'page_tag_list':
                 case 'sitemap':
                 case 'user_profile':
+                case 'user_login':
                 case 'homepage':
                     $formMapper
                             ->tab('Page Contents')
