@@ -36,7 +36,7 @@ class SecurityController extends Controller
     private $enableHTTPCache;
     private $logged_username;
 
-    // Override the ContainerAware setcontainer to accommodate the extra variables
+    // Override the ContainerAware setContainer to accommodate the extra variables
     public function setContainer(ContainerInterface $container = null) {
         $this->container = $container;
 
@@ -212,7 +212,7 @@ class SecurityController extends Controller
         return $response;
     }
 
-    // set a custom Cache-Control directives
+    // Set a custom Cache-Control directives
     protected function setResponseCacheHeaders(Response $response) {
 
         $response->setPublic();

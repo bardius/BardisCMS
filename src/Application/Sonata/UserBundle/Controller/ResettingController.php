@@ -12,6 +12,7 @@
 namespace Application\Sonata\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -20,33 +21,105 @@ use FOS\UserBundle\Model\UserInterface;
 
 /**
  * Controller managing the resetting of the password
- *
- * @author Thibault Duplessis <thibault.duplessis@gmail.com>
- * @author Christophe Coevoet <stof@notk.org>
  */
 class ResettingController extends Controller
 {
-    const SESSION_EMAIL = 'fos_user_send_resetting_email/email';
+    // Adding variables required for the rendering of pages
+    protected $container;
+    private $alias;
+    private $id;
+    private $extraParams;
+    private $currentpage;
+    private $totalpageitems;
+    private $linkUrlParams;
     private $page;
+    private $publishStates;
+    private $userName;
+    private $settings;
+    private $serveMobile;
+    private $userRole;
     private $enableHTTPCache;
+    private $logged_username;
+    const SESSION_EMAIL = 'fos_user_send_resetting_email/email';
+
+    // Override the ContainerAware setContainer to accommodate the extra variables
+    public function setContainer(ContainerInterface $container = null) {
+        $this->container = $container;
+
+        // Setting the scoped variables required for the rendering of the page
+        $this->alias = null;
+        $this->id = null;
+        $this->extraParams = null;
+        $this->currentpage = null;
+        $this->totalpageitems = null;
+        $this->linkUrlParams = null;
+        $this->page = null;
+        $this->userName = null;
+        $this->logged_username = null;
+
+        // Get the settings from setting bundle
+        $this->settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
+
+        // Get the highest user role security permission
+        $this->userRole = $this->get('sonata_user.services.helpers')->getLoggedUserHighestRole();
+
+        // Check if mobile content should be served
+        $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
+
+        // Set the flag for allowing HTTP cache
+        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+
+        // Set the publish status that is available for the user
+        // Very basic ACL permission check
+        if ($this->userRole == "") {
+            $this->publishStates = array(1);
+        } else {
+            $this->publishStates = array(1, 2);
+        }
+
+        // Get the logged user if any
+        $logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
+        if (is_object($logged_user) && $logged_user instanceof UserInterface) {
+            $this->logged_username = $logged_user->getUsername();
+        }
+    }
 
     /**
      * Request reset user password: show form
      */
     public function requestAction()
     {
-        // TODO: Create the fixtures for the Page Bundle resetting/request page
-        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("resetting/request");
+        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("resetting/request");
 
-        if (!$this->page) {
+        if (!$page) {
+            return $this->render404Page();
+        }
+
+        $this->page = $page;
+        $this->id = $this->page->getId();
+
+        // Simple publishing ACL based on publish state and user role
+        if ($this->page->getPublishState() == 0) {
+            return $this->render404Page();
+        }
+
+        if ($this->page->getPublishState() == 2 && $this->userRole == "") {
             return $this->render404Page();
         }
 
         $this->page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($this->page);
 
-        return $this->container->get('templating')->renderResponse('FOSUserBundle:Resetting:request.html.'.$this->getEngine(), array(
-            'page' => $this->page
-        ));
+        $pageData = array(
+            'page' => $this->page,
+            'mobile' => $this->serveMobile,
+            'logged_username' => $this->logged_username
+        );
+
+        // Render login page
+        $response = $this->render('FOSUserBundle:Resetting:request.html.twig', $pageData);
+        // $response = $this->container->get('templating')->renderResponse('FOSUserBundle:Resetting:request.html.'.$this->getEngine(), $pageData);
+
+        return $response;
     }
 
     /**
@@ -54,32 +127,60 @@ class ResettingController extends Controller
      */
     public function sendEmailAction()
     {
-        // TODO: Create the fixtures for the Page Bundle resetting/send-email page
-        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("resetting/send-email");
+        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("resetting/send-email");
 
-        if (!$this->page) {
+        if (!$page) {
+            return $this->render404Page();
+        }
+
+        $this->page = $page;
+        $this->id = $this->page->getId();
+
+        // Simple publishing ACL based on publish state and user role
+        if ($this->page->getPublishState() == 0) {
+            return $this->render404Page();
+        }
+
+        if ($this->page->getPublishState() == 2 && $this->userRole == "") {
             return $this->render404Page();
         }
 
         $this->page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($this->page);
-
         $username = $this->container->get('request')->request->get('username');
-
-        /** @var $user UserInterface */
         $user = $this->container->get('fos_user.user_manager')->findUserByUsernameOrEmail($username);
 
+        // If user does not exist
         if (null === $user) {
-            return $this->container->get('templating')->renderResponse('FOSUserBundle:Resetting:request.html.'.$this->getEngine(), array('invalid_username' => $username));
+            $pageData = array(
+                'invalid_username' => $username,
+                'page' => $this->page,
+                'mobile' => $this->serveMobile,
+                'logged_username' => $this->logged_username
+            );
+
+            // Render reset request page
+            $response = $this->render('FOSUserBundle:Resetting:request.html.twig', $pageData);
+            //$response = $this->container->get('templating')->renderResponse('FOSUserBundle:Resetting:request.html.'.$this->getEngine(), $pageData);
+
+            return $response;
         }
 
+        // If user password request token has not been expired
         if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
-            return $this->container->get('templating')->renderResponse('FOSUserBundle:Resetting:passwordAlreadyRequested.html.'.$this->getEngine(), array(
-                'page' => $this->page
-            ));
+            $pageData = array(
+                'page' => $this->page,
+                'mobile' => $this->serveMobile,
+                'logged_username' => $this->logged_username
+            );
+
+            // Render passwordAlreadyRequested page
+            $response = $this->render('FOSUserBundle:Resetting:passwordAlreadyRequested.html.twig', $pageData);
+            //$response = $this->container->get('templating')->renderResponse('FOSUserBundle:Resetting:passwordAlreadyRequested.html.'.$this->getEngine(), $pageData);
+
+            return $response;
         }
 
         if (null === $user->getConfirmationToken()) {
-            /** @var $tokenGenerator \FOS\UserBundle\Util\TokenGeneratorInterface */
             $tokenGenerator = $this->container->get('fos_user.util.token_generator');
             $user->setConfirmationToken($tokenGenerator->generateToken());
         }
@@ -97,10 +198,21 @@ class ResettingController extends Controller
      */
     public function checkEmailAction()
     {
-        // TODO: Create the fixtures for the Page Bundle resetting/check-email" page
-        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("resetting/check-email");
+        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("resetting/check-email");
 
-        if (!$this->page) {
+        if (!$page) {
+            return $this->render404Page();
+        }
+
+        $this->page = $page;
+        $this->id = $this->page->getId();
+
+        // Simple publishing ACL based on publish state and user role
+        if ($this->page->getPublishState() == 0) {
+            return $this->render404Page();
+        }
+
+        if ($this->page->getPublishState() == 2 && $this->userRole == "") {
             return $this->render404Page();
         }
 
@@ -110,15 +222,23 @@ class ResettingController extends Controller
         $email = $session->get(static::SESSION_EMAIL);
         $session->remove(static::SESSION_EMAIL);
 
+        // If the user does not come from the sendEmail action
         if (empty($email)) {
-            // the user does not come from the sendEmail action
             return new RedirectResponse($this->container->get('router')->generate('fos_user_resetting_request'));
         }
 
-        return $this->container->get('templating')->renderResponse('FOSUserBundle:Resetting:checkEmail.html.'.$this->getEngine(), array(
+        $pageData = array(
             'email' => $email,
-            'page' => $this->page
-        ));
+            'page' => $this->page,
+            'mobile' => $this->serveMobile,
+            'logged_username' => $this->logged_username
+        );
+
+        // Render login page
+        $response = $this->render('FOSUserBundle:Resetting:checkEmail.html.twig', $pageData);
+        // $response = $this->container->get('templating')->renderResponse('FOSUserBundle:Resetting:checkEmail.html.'.$this->getEngine(), $pageData);
+
+        return $response;
     }
 
     /**
@@ -126,10 +246,23 @@ class ResettingController extends Controller
      */
     public function resetAction($token)
     {
-        // TODO: Create the fixtures for the Page Bundle resetting/reset/%" page
-        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("resetting/reset/%");
+        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("resetting/reset");
+        //TODO: redirect to user profile page uppon success
+        $redirectToRouteNameOnSuccess = 'fos_user_security_login';
 
-        if (!$this->page) {
+        if (!$page) {
+            return $this->render404Page();
+        }
+
+        $this->page = $page;
+        $this->id = $this->page->getId();
+
+        // Simple publishing ACL based on publish state and user role
+        if ($this->page->getPublishState() == 0) {
+            return $this->render404Page();
+        }
+
+        if ($this->page->getPublishState() == 2 && $this->userRole == "") {
             return $this->render404Page();
         }
 
@@ -153,17 +286,25 @@ class ResettingController extends Controller
             $this->setFlash('fos_user_success', 'resetting.flash.success');
             // Original FOS User bundle response
             //$response = new RedirectResponse($this->getRedirectionUrl($user));
-            $response = new RedirectResponse($this->container->get('router')->generate('PageBundle_index'));
+            $response = new RedirectResponse($this->container->get('router')->generate($redirectToRouteNameOnSuccess));
             $this->authenticateUser($user, $response);
 
             return $response;
         }
 
-        return $this->container->get('templating')->renderResponse('FOSUserBundle:Resetting:reset.html.'.$this->getEngine(), array(
+        $pageData = array(
             'token' => $token,
             'form' => $form->createView(),
-            'page' => $this->page
-        ));
+            'page' => $this->page,
+            'mobile' => $this->serveMobile,
+            'logged_username' => $this->logged_username
+        );
+
+        // Render login page
+        $response = $this->render('FOSUserBundle:Resetting:reset.html.twig', $pageData);
+        // $response = $this->container->get('templating')->renderResponse('FOSUserBundle:Resetting:reset.html.'.$this->getEngine(), $pageData);
+
+        return $response;
     }
 
     /**
@@ -178,7 +319,8 @@ class ResettingController extends Controller
             $this->container->get('fos_user.security.login_manager')->loginUser(
                 $this->container->getParameter('fos_user.firewall_name'),
                 $user,
-                $response);
+                $response
+            );
         } catch (AccountStatusException $ex) {
             // We simply do not authenticate users which do not pass the user
             // checker (not enabled, expired, etc.).
@@ -252,6 +394,18 @@ class ResettingController extends Controller
         if ($this->enableHTTPCache) {
             $response = $this->setResponseCacheHeaders($response);
         }
+
+        return $response;
+    }
+
+    // Set a custom Cache-Control directives
+    protected function setResponseCacheHeaders(Response $response) {
+
+        $response->setPublic();
+        $response->setLastModified($this->page->getDateLastModified());
+        $response->setVary(array('Accept-Encoding', 'User-Agent'));
+        $response->headers->addCacheControlDirective('must-revalidate', true);
+        $response->setSharedMaxAge(3600);
 
         return $response;
     }

@@ -172,7 +172,7 @@ AddType application/octet-stream .zip
 
 #### Cache-Control Headers ####
 <ifModule mod_headers.c>
-    <filesMatch "\.(ico|jpe?g|png|gif|swf)$">
+    <filesMatch "\.(ico|jpe?g|png|gif|swf|eot|otf|tt[cf]|woff2?)$">
         Header always set Cache-Control "public"
     </filesMatch>
     <filesMatch "\.(css)$">
@@ -181,8 +181,12 @@ AddType application/octet-stream .zip
     <filesMatch "\.(js)$">
         Header always set Cache-Control "private"
     </filesMatch>
+    #### Disable Cache for pages with authedicated functionality ####
     <filesMatch "\.(x?html?|php)$">
-        #Header always set Cache-Control "private, must-revalidate"
+        # Header set Cache-Control "private, must-revalidate"
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
     </filesMatch>
 </ifModule>
 
@@ -192,8 +196,8 @@ AddType application/octet-stream .zip
 #### Expire Headers ####
 <IfModule mod_expires.c>
 
-    <FilesMatch "\.(appcache|crx|css|eot|gif|htc|ico|jpe?g|js|m4a|m4v|manifest|mp4|oex|oga|ogg|ogv|otf|pdf|png|safariextz|svg|svgz|ttf|vcf|webm|webp|woff|xml|xpi)$">
-      Header always unset X-UA-Compatible
+    <FilesMatch "\.(appcache|crx|css|eot|gif|htc|ico|jpe?g|js|m4a|m4v|manifest|mp4|oex|oga|ogg|ogv|otf|pdf|png|safariextz|svg|svgz|ttf|vcf|webm|webp|woff|woff2|xml|xpi)$">
+        Header always unset X-UA-Compatible
     </FilesMatch>
 
     ExpiresActive On

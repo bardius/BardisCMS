@@ -102,6 +102,50 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $pageuser_login->setPagetype('user_login');
         $manager->persist($pageuser_login);
 
+        $pagepass_reset = new Page();
+        $pagepass_reset->setDate(new \DateTime());
+        $pagepass_reset->setTitle('Password Reset Page');
+        $pagepass_reset->setAuthor($manager->merge($this->getReference('admin')));
+        $pagepass_reset->setAlias('resetting/request');
+        $pagepass_reset->setShowPageTitle(1);
+        $pagepass_reset->setPublishState(1);
+        $pagepass_reset->setIntrotext('');
+        $pagepass_reset->setPagetype('user_login');
+        $manager->persist($pagepass_reset);
+
+        $pageresetting_send = new Page();
+        $pageresetting_send->setDate(new \DateTime());
+        $pageresetting_send->setTitle('Password Reset Email Already Send Page');
+        $pageresetting_send->setAuthor($manager->merge($this->getReference('admin')));
+        $pageresetting_send->setAlias('resetting/send-email');
+        $pageresetting_send->setShowPageTitle(1);
+        $pageresetting_send->setPublishState(1);
+        $pageresetting_send->setIntrotext('');
+        $pageresetting_send->setPagetype('user_login');
+        $manager->persist($pageresetting_send);
+
+        $pageresetting_check = new Page();
+        $pageresetting_check->setDate(new \DateTime());
+        $pageresetting_check->setTitle('Password Reset Email Send Page');
+        $pageresetting_check->setAuthor($manager->merge($this->getReference('admin')));
+        $pageresetting_check->setAlias('resetting/check-email');
+        $pageresetting_check->setShowPageTitle(1);
+        $pageresetting_check->setPublishState(1);
+        $pageresetting_check->setIntrotext('');
+        $pageresetting_check->setPagetype('user_login');
+        $manager->persist($pageresetting_check);
+
+        $pageresetting_reset = new Page();
+        $pageresetting_reset->setDate(new \DateTime());
+        $pageresetting_reset->setTitle('Password has been Reset Page');
+        $pageresetting_reset->setAuthor($manager->merge($this->getReference('admin')));
+        $pageresetting_reset->setAlias('resetting/reset');
+        $pageresetting_reset->setShowPageTitle(1);
+        $pageresetting_reset->setPublishState(1);
+        $pageresetting_reset->setIntrotext('');
+        $pageresetting_reset->setPagetype('user_login');
+        $manager->persist($pageresetting_reset);
+
         $page1 = new Page();
         $page1->setDate(new \DateTime());
         $page1->setTitle('Test Page 1');
@@ -175,6 +219,10 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $this->addReference('page3', $page3);
         $this->addReference('page4', $page4);
         $this->addReference('pageuser_login', $pageuser_login);
+        $this->addReference('pagepass_reset', $pagepass_reset);
+        $this->addReference('pageresetting_send', $pageresetting_send);
+        $this->addReference('pageresetting_check', $pageresetting_check);
+        $this->addReference('pageresetting_reset', $pageresetting_reset);
     }
 
     public function getOrder() {
