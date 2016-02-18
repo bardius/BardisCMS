@@ -1,11 +1,23 @@
-{% extends "::base.html.twig" %}
+{% extends "SonataUserBundle::layout.html.twig" %}
 
-{% block content %}
-<div class="small-12 large-6 columns large-centered">
-    <p style="display:inline-block;">{{ 'registration.confirmed'|trans({'%username%': user.username}, 'FOSUserBundle') }}</p>
-    {% if app.session is not empty %}
-        {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
-        {% if targetUrl is not empty %}<p><a href="{{ targetUrl }}">{{ 'registration.back'|trans({}, 'FOSUserBundle') }}</a></p>{% endif %}
-    {% endif %}
+{% block fos_user_content %}
+<div class="panel">
+    <div class="row">
+        <div class="large-12 small-12 columns">
+            <p>
+                {{ 'registration.confirmed'|trans({'%username%': user.username}, 'FOSUserBundle') }}
+            </p>
+            {% if app.session is not empty %}
+                {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
+                {% if targetUrl is not empty %}
+                    <p>
+                        <a href="{{ targetUrl }}" title="{{ 'registration.back'|trans({}, 'FOSUserBundle') }}">
+                            {{ 'registration.back'|trans({}, 'FOSUserBundle') }}
+                        </a>
+                    </p>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
 </div>
-{% endblock content %}
+{% endblock fos_user_content %}

@@ -1,12 +1,12 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends "SonataUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-    <div class="contentBlock firstBlock twelve columns">
-        <div class="twelve column">
-            <h3>Thank you for joining our newsletter</h3>
+<div class="panel">
+    <div class="row">
+        <div class="large-12 small-12 columns">
+            <p>{{ 'registration.check_email'|trans({'%email%': user.email}, 'FOSUserBundle') }}</p>
+            <p>Thank you for joining</p>
         </div>
     </div>
-    <div class="twelve columns">
-        <p>Did you know you can also join us on <a href="https://www.facebook.com/wantmybet" target="_blank" title="Facebook">Facebook</a>.</p>
-    </div>     
+</div>
 {% endblock fos_user_content %}

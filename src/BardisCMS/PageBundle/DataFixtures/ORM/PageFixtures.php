@@ -146,6 +146,28 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $pageresetting_reset->setPagetype('user_login');
         $manager->persist($pageresetting_reset);
 
+        $page_register = new Page();
+        $page_register->setDate(new \DateTime());
+        $page_register->setTitle('User Registration Page');
+        $page_register->setAuthor($manager->merge($this->getReference('admin')));
+        $page_register->setAlias('register');
+        $page_register->setShowPageTitle(1);
+        $page_register->setPublishState(1);
+        $page_register->setIntrotext('');
+        $page_register->setPagetype('user_login');
+        $manager->persist($page_register);
+
+        $page_register_confirmed = new Page();
+        $page_register_confirmed->setDate(new \DateTime());
+        $page_register_confirmed->setTitle('Registration Complete Page');
+        $page_register_confirmed->setAuthor($manager->merge($this->getReference('admin')));
+        $page_register_confirmed->setAlias('register/confirmed');
+        $page_register_confirmed->setShowPageTitle(1);
+        $page_register_confirmed->setPublishState(1);
+        $page_register_confirmed->setIntrotext('');
+        $page_register_confirmed->setPagetype('user_login');
+        $manager->persist($page_register_confirmed);
+
         $page1 = new Page();
         $page1->setDate(new \DateTime());
         $page1->setTitle('Test Page 1');
@@ -223,6 +245,8 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $this->addReference('pageresetting_send', $pageresetting_send);
         $this->addReference('pageresetting_check', $pageresetting_check);
         $this->addReference('pageresetting_reset', $pageresetting_reset);
+        $this->addReference('page_register', $page_register);
+        $this->addReference('page_register_confirmed', $page_register_confirmed);
     }
 
     public function getOrder() {

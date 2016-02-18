@@ -3,6 +3,7 @@
         Welcome!
     {% endautoescape %}
 {% endblock %}
+
 {% block body_text %}
     {% autoescape false %}
     	Hi {{ user }}!
@@ -10,4 +11,6 @@
         Click <a href="{{ confirmationUrl }}">HERE</a> to confirm your account.
     {% endautoescape %}
 {% endblock %}
-{% block body_html %}{% endblock %}
+
+{% block body_html %}
+{% endblock %}

@@ -247,7 +247,7 @@ class ResettingController extends Controller
     public function resetAction($token)
     {
         $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("resetting/reset");
-        //TODO: redirect to user profile page uppon success
+        //TODO: redirect to user profile page upon success
         $redirectToRouteNameOnSuccess = 'fos_user_security_login';
 
         if (!$page) {
