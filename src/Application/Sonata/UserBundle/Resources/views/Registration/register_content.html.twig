@@ -1,4 +1,3 @@
-<div id="subscribeFormHolder" class="panel">
     <form id="subscribeForm" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
         {{ form_widget(form) }}
         {#
@@ -40,4 +39,3 @@
         #}
         <input type="submit" id="subscribeFormBtn" class="button" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
     </form>
-</div>

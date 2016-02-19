@@ -29,7 +29,7 @@ class UserHelpers {
 
     /**
      * Get the user role
-     * 
+     *
      * @return String
      */
     public function getLoggedUserHighestRole() {
@@ -47,7 +47,7 @@ class UserHelpers {
 
     /**
      * Get the logged user
-     * 
+     *
      * @return User
      */
     public function getLoggedUser() {
@@ -59,7 +59,7 @@ class UserHelpers {
 
     /**
      * Get the logged user username
-     * 
+     *
      * @return String
      */
     public function getLoggedUserUsername() {
@@ -71,9 +71,9 @@ class UserHelpers {
 
     /**
      * Find user by username
-     * 
+     *
      * @param string $userName
-     * 
+     *
      * @return User
      */
     public function getUserByUsername($userName) {
@@ -81,7 +81,7 @@ class UserHelpers {
 
         if (isset($userName)) {
 
-            // Getting user from database        
+            // Getting user from database
             $user = $this->em->getRepository('ApplicationSonataUserBundle:User')
                     ->findOneByUsername($userName);
         }
@@ -91,7 +91,7 @@ class UserHelpers {
 
     /**
      * Retrieving the security identity of the currently logged-in user
-     * 
+     *
      * @return UserSecurityIdentity
      */
     public function getLoggedUserSecurityIdentity() {

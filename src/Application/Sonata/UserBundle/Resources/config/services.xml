@@ -4,16 +4,30 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <parameters>
+        <parameter key="sonata_user.form.type.registration.class">Application\Sonata\UserBundle\Form\Type\RegistrationFormType</parameter>
+        <parameter key="sonata_user.registration.form.handler.confirmation.class">Application\FOS\UserBundle\Form\Handler\RegistrationFormHandler</parameter>
+        <parameter key="sonata_user.contact_details.form.class">Symfony\Component\Form\Form</parameter>
+        <parameter key="sonata_user.contact_details.form.type.class">Application\Sonata\UserBundle\Form\Type\ContactDetailsFormType</parameter>
+        <parameter key="sonata_user.contact_details.form.handler.class">Application\Sonata\UserBundle\Form\Type\ContactDetailsFormType</parameter>
+        <parameter key="sonata_user.generic_details.form.class">Symfony\Component\Form\Form</parameter>
+        <parameter key="sonata_user.generic_details.form.type.class">Application\Sonata\UserBundle\Form\Type\GenericDetailsFormType</parameter>
+        <parameter key="sonata_user.generic_details.form.handler.class">Application\Sonata\UserBundle\Form\Handler\GenericDetailsFormHandler</parameter>
+        <parameter key="sonata_user.account_preferences.form.class">Symfony\Component\Form\Form</parameter>
+        <parameter key="sonata_user.account_preferences.form.type.class">Application\Sonata\UserBundle\Form\Type\AccountPreferencesFormType</parameter>
+        <parameter key="sonata_user.account_preferences.form.handler.class">Application\Sonata\UserBundle\Form\Handler\AccountPreferencesFormHandler</parameter>
+    </parameters>
+
     <services>
 
         <!-- Registration Form -->
-        <service id="sonata_user.form.type.registration" class="Application\Sonata\UserBundle\Form\Type\RegistrationFormType">
+        <service id="sonata_user.form.type.registration" class="%sonata_user.form.type.registration.class%">
             <tag name="form.type" />
             <argument>%fos_user.model.user.class%</argument>
             <argument type="service" id="request_stack" />
         </service>
 
-        <service id="sonata_user.registration.form.handler.confirmation" class="Application\FOS\UserBundle\Form\Handler\RegistrationFormHandler" scope="request" public="false">
+        <service id="sonata_user.registration.form.handler.confirmation" class="%sonata_user.registration.form.handler.confirmation.class%" scope="request" public="false">
             <argument type="service" id="fos_user.registration.form"/>
             <argument type="service" id="request"/>
             <argument type="service" id="fos_user.user_manager"/>
@@ -24,7 +38,7 @@
 
 
         <!-- Contact Details Form -->
-        <service id="sonata_user.contact_details.form" factory-method="createNamed" factory-service="form.factory" class="Symfony\Component\Form\Form">
+        <service id="sonata_user.contact_details.form" factory-method="createNamed" factory-service="form.factory" class="%sonata_user.contact_details.form.class%">
             <argument>sonata_user_contact_details_form</argument>
             <argument>sonata_user_contact_details</argument>
             <argument>null</argument>
@@ -33,21 +47,21 @@
             </argument>
         </service>
 
-        <service id="sonata_user.contact_details.form.type" class="Application\Sonata\UserBundle\Form\Type\ContactDetailsFormType">
+        <service id="sonata_user.contact_details.form.type" class="%sonata_user.contact_details.form.type.class%">
             <tag name="form.type" alias="sonata_user_contact_details" />
             <argument>Application\Sonata\UserBundle\Entity\User</argument>
             <argument type="service" id="request_stack" />
             <argument type="service" id="service_container"/>
         </service>
 
-        <service id="sonata_user.contact_details.form.handler" class="Application\Sonata\UserBundle\Form\Handler\ContactDetailsFormHandler" scope="request">
+        <service id="sonata_user.contact_details.form.handler" class="%sonata_user.contact_details.form.handler.class%" scope="request">
             <argument type="service" id="sonata_user.contact_details.form" />
             <argument type="service" id="request" />
             <argument type="service" id="fos_user.user_manager" />
         </service>
 
         <!-- Generic Details Form -->
-        <service id="sonata_user.generic_details.form" factory-method="createNamed" factory-service="form.factory" class="Symfony\Component\Form\Form">
+        <service id="sonata_user.generic_details.form" factory-method="createNamed" factory-service="form.factory" class="%sonata_user.generic_details.form.class%">
             <argument>sonata_user_generic_details_form</argument>
             <argument>sonata_user_generic_details</argument>
             <argument>null</argument>
@@ -56,21 +70,21 @@
             </argument>
         </service>
 
-        <service id="sonata_user.generic_details.form.type" class="Application\Sonata\UserBundle\Form\Type\GenericDetailsFormType">
+        <service id="sonata_user.generic_details.form.type" class="%sonata_user.generic_details.form.type.class%">
             <tag name="form.type" alias="sonata_user_generic_details" />
             <argument>Application\Sonata\UserBundle\Entity\User</argument>
             <argument type="service" id="request_stack" />
             <argument type="service" id="service_container"/>
         </service>
 
-        <service id="sonata_user.generic_details.form.handler" class="Application\Sonata\UserBundle\Form\Handler\GenericDetailsFormHandler" scope="request">
+        <service id="sonata_user.generic_details.form.handler" class="%sonata_user.generic_details.form.handler.class%" scope="request">
             <argument type="service" id="sonata_user.generic_details.form" />
             <argument type="service" id="request" />
             <argument type="service" id="fos_user.user_manager" />
         </service>
 
         <!-- Account Preferences Form -->
-        <service id="sonata_user.account_preferences.form" factory-method="createNamed" factory-service="form.factory" class="Symfony\Component\Form\Form">
+        <service id="sonata_user.account_preferences.form" factory-method="createNamed" factory-service="form.factory" class="%sonata_user.account_preferences.form.class%">
             <argument>sonata_user_account_preferences_form</argument>
             <argument>sonata_user_account_preferences</argument>
             <argument>null</argument>
@@ -79,14 +93,14 @@
             </argument>
         </service>
 
-        <service id="sonata_user.account_preferences.form.type" class="Application\Sonata\UserBundle\Form\Type\AccountPreferencesFormType">
+        <service id="sonata_user.account_preferences.form.type" class="%sonata_user.account_preferences.form.type.class%">
             <tag name="form.type" alias="sonata_user_account_preferences" />
             <argument>Application\Sonata\UserBundle\Entity\User</argument>
             <argument type="service" id="request_stack" />
             <argument type="service" id="service_container"/>
         </service>
 
-        <service id="sonata_user.account_preferences.form.handler" class="Application\Sonata\UserBundle\Form\Handler\AccountPreferencesFormHandler" scope="request">
+        <service id="sonata_user.account_preferences.form.handler" class="%sonata_user.account_preferences.form.handler.class%" scope="request">
             <argument type="service" id="sonata_user.account_preferences.form" />
             <argument type="service" id="request" />
             <argument type="service" id="fos_user.user_manager" />

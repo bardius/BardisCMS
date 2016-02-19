@@ -1,12 +1,16 @@
 {% extends "SonataUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-    <div class="panel">
-        <div class="row">
-            <div class="small-12 large-6 columns large-centered">
-                <p>
-                    {{ 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle') }}
-                </p>
+    <div class="small-12 large-6 columns large-centered">
+        <div class="panel">
+            <div class="row">
+
+                <div class="large-12 small-12 columns">
+                    <p>
+                        {{ 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle') }}
+                    </p>
+                </div>
+
             </div>
         </div>
     </div>

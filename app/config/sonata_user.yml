@@ -1,0 +1,58 @@
+# ACL and User management configuration
+fos_user:
+
+    db_driver:          orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name:      main
+    user_class:         Application\Sonata\UserBundle\Entity\User
+
+    group:
+        group_class:    Application\Sonata\UserBundle\Entity\Group
+
+    from_email:
+        address:        info@domain.com
+        sender_name:    BardisCMS
+
+    service:
+        mailer:         fos_user.mailer.twig_swift
+
+    registration:
+        form:
+            type:       registration
+            validation_groups: [Registration]
+            handler:    sonata_user.registration.form.handler.confirmation
+        confirmation:
+            enabled:    true
+            template:   FOSUserBundle:Registration:confirm_email.txt.twig
+
+    profile:
+        # Authentication Form
+        form:
+            type:               sonata_user_profile
+            validation_groups: [Profile] #[Authentication] # Please note : this is not the default value
+
+sonata_user:
+
+    security_acl: true
+
+    impersonating_route:    sonata_user_impersonating
+
+    admin:
+        user:
+            class:  Application\Sonata\UserBundle\Admin\Entity\BardisCMSUserAdmin
+
+    profile:
+        default_avatar: 'bundles/sonatauser/default_avatar.png' # Default avatar displayed if user doesn't have one
+
+        register:
+            # This allows you to specify where you want your user redirected once he activated his account
+            confirm:
+                redirect:
+                    # Set it to false to disable redirection
+                    route:              'sonata_user_profile_show'
+                    route_parameters:   ~
+
+        # Customize user portal menu by setting links
+        menu:
+            - { route: 'sonata_user_profile_show', label: 'sonata_profile_title', domain: 'SonataUserBundle'}
+            - { route: 'sonata_user_profile_edit', label: 'link_edit_profile', domain: 'SonataUserBundle'}
+            - { route: 'sonata_user_profile_edit_authentication', label: 'link_edit_authentication', domain: 'SonataUserBundle'}

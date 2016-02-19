@@ -18,7 +18,7 @@ web_profiler:
 #        firephp:
 #            type:  firephp
 #            level: info
-#            
+#
 monolog:
     handlers:
         main:
@@ -35,5 +35,14 @@ assetic:
     use_controller: false
 
 swiftmailer:
+    spool:
+        type: file
+        path: %kernel.logs_dir%/emails-%kernel.environment%/
+    disable_delivery: false
     delivery_address: george@bardis.info
-    disable_delivery: true
+    delivery_whitelist:
+           # all email addresses matching these regexes will be delivered
+           # like normal, as well as being sent to delivery_address
+           - '/@bardis\.info/'
+           - '/^admin@bardis\.info/'
+

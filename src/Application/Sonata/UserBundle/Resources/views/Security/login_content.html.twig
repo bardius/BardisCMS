@@ -1,53 +1,42 @@
 {% block sonata_user_login %}
-    <div class="panel">
-
         <div class="row">
-
-            {% block sonata_user_login_error %}
-                {% if error %}
-                <div class="large-12 small-12 columns">
-                    <p class="alert alert-danger alert-error">{{ error|trans({}, 'FOSUserBundle') }}</p>
-                </div>
-                {% endif %}
-            {% endblock %}
 
             {% block sonata_user_login_form %}
                 <form action="{{ path("fos_user_security_check") }}" method="post" role="form">
 
                     <div class="large-12 small-12 columns">
                         <label for="username" class="required">
-                            {{ 'security.login.username'|trans({}, 'SonataUserBundle') }}
-                        </label>
-                        <div class="formFieldContainer">
+                            <span class="prefix">{{ 'security.login.username'|trans({}, 'SonataUserBundle') }}</span>
                             <input type="text" maxlength="50" id="username" name="_username" value="{{ last_username }}" placeholder="" required="required"  />
-                        </div>
-                    </div>
-
-                    <div class="large-12 small-12 columns">
-                        <label for="password" class="required">
-                            {{ 'security.login.password'|trans({}, 'SonataUserBundle') }}
                         </label>
-                        <div class="formFieldContainer">
+
+                        <label for="password" class="required">
+                            <span class="prefix">{{ 'security.login.password'|trans({}, 'SonataUserBundle') }}</span>
                             <input type="password" maxlength="50" id="password" name="_password" placeholder="" required="required"  />
-                        </div>
+                        </label>
+
+                        {% block sonata_user_login_error %}
+                            {% if error %}
+                                <small class="error">{{ error|trans({}, 'FOSUserBundle') }}</small>
+                            {% endif %}
+                        {% endblock %}
                     </div>
 
                     <div class="large-12 small-12 columns">
                         <label for="remember_me">
                             <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-                            {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+                            <span>{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</span>
                         </label>
                     </div>
 
                     <div class="large-12 small-12 columns">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
                         <p>
                             <a href="{{ path('fos_user_resetting_request') }}" title="{{ 'forgotten_password'|trans({}, 'SonataUserBundle') }}">
                                 {{ 'forgotten_password'|trans({}, 'SonataUserBundle') }}
                             </a>
                         </p>
-
                         <p>
-                            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
                             <input type="submit" id="_submit" name="_submit" class="button" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
                             <a class="button" href="{{ url('fos_user_registration_register') }}" title="Create an account">
                                 Create an account
@@ -57,5 +46,4 @@
                 </form>
             {% endblock %}
         </div>
-    </div>
 {% endblock %}

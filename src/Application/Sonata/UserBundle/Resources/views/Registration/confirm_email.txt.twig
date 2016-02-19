@@ -1,14 +1,17 @@
 {% block subject %}
     {% autoescape false %}
-        Welcome!
+        Welcome {{ user }}!
     {% endautoescape %}
 {% endblock %}
 
 {% block body_text %}
     {% autoescape false %}
     	Hi {{ user }}!
-
+        {% if user.username is not null %}
         Click <a href="{{ confirmationUrl }}">HERE</a> to confirm your account.
+        {% else %}
+        Your account has not been created
+        {% endif %}
     {% endautoescape %}
 {% endblock %}
 

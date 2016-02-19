@@ -3,10 +3,6 @@ MenuBundle:
     type:     annotation
     prefix:   /
 
-#UserBundle:
-#    resource: "@UserBundle/Resources/config/routing.yml"
-#    prefix:   /user
-
 # app/config/routing.yml
 sonata_page_cache:
     resource: '@SonataCacheBundle/Resources/config/routing/cache.xml'
@@ -27,10 +23,6 @@ sonata_user:
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
-
-#fos_user_profile:
-#    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
-#    prefix: /profile
 
 fos_user_register_campaign:
     pattern: /register/track-campaign/{campaign}

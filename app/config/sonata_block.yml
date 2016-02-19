@@ -29,4 +29,7 @@ sonata_block:
         sonata.admin.settings:
         sonata.admin.comments:
         sonata.block.service.clearcache:
-            
+
+        # Some specific blocks for the User Profile pages
+        sonata.user.block.menu:
+        sonata.user.block.account:

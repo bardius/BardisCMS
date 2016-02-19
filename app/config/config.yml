@@ -9,6 +9,7 @@ imports:
     - { resource: sonata_admin.yml }
     - { resource: sonata_media.yml }
     - { resource: sonata_classification.yml }
+    - { resource: sonata_user.yml }
     - { resource: bardiscms_bundles.yml }
     - { resource: tinymce.yml }
     - { resource: guzzle.yml }
@@ -258,50 +259,6 @@ swiftmailer:
     password:   %mailer_password%
     logging:    true
     spool:      { type: memory }
-
-# ACL and User management configuration
-fos_user:
-
-    db_driver:          orm # other valid values are 'mongodb', 'couchdb' and 'propel'
-    firewall_name:      main
-    user_class:         Application\Sonata\UserBundle\Entity\User
-
-    group:
-        group_class:    Application\Sonata\UserBundle\Entity\Group
-
-    from_email:
-        address:        info@domain.com
-        sender_name:    BardisCMS
-
-    service:
-        mailer:         fos_user.mailer.twig_swift
-
-    registration:
-        form:
-            type:       registration
-            validation_groups: [Registration]
-            handler:    sonata_user.registration.form.handler.confirmation
-        confirmation:
-            enabled:    true
-            template:   FOSUserBundle:Registration:confirm_email.txt.twig
-
-    profile:
-        form:
-            type: profile
-            validation_groups: [Profile]
-
-sonata_user:
-
-    security_acl:   true
-
-    #sonata_user_impersonating:
-    #    pattern: /
-    #    defaults: { _controller: SonataPageBundle:Page:catchAll }
-    impersonating_route:    sonata_user_impersonating
-
-    admin:
-        user:
-            class:  Application\Sonata\UserBundle\Admin\Entity\BardisCMSUserAdmin
 
 # Doctrine Extensions
 stof_doctrine_extensions:

@@ -1,7 +1,9 @@
-<div class="panel panel-info">
-	<div class="panel-head">
-	</div>
-	<div class="panel-body">
-	    {{ user_details_to_show.page_user.getFullName }}
-	</div>
-</div>
+{% if logged_username is null %}
+    {% include "SonataUserBundle:Profile:show_public_content.html.twig" %}
+{% else %}
+    {% if profile_owner %}
+        {% include "SonataUserBundle:Profile:show_owner_content.html.twig" %}
+    {% else %}
+        {% include "SonataUserBundle:Profile:show_private_content.html.twig" %}
+    {% endif %}
+{% endif %}

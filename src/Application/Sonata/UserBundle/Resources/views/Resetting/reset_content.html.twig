@@ -1,15 +1,16 @@
-<div class="panel">
     <div class="row">
         <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
+
             <div class="large-12 small-12 columns">
                 {{ form_widget(form) }}
             </div>
+
             <div class="large-12 small-12 columns">
                 <input type="submit" id="_submit" name="_submit" class="button" value="{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}" />
                 <a class="button" href="{{ url('fos_user_registration_register') }}" title="Create an account">
                     Create an account
                 </a>
             </div>
+
         </form>
     </div>
-</div>

@@ -2,21 +2,28 @@
 
 {% block fos_user_content %}
     <div class="small-12 large-6 columns large-centered">
-        {% if logged_username is null %}
-            {% include "FOSUserBundle:Security:login_content.html.twig" %}
-        {% else %}
-            <div class="panel">
-                <div class="row">
-                    <div class="large-12 small-12 columns">
+        <div class="panel">
+            <div class="row">
+
+                <div class="large-12 small-12 columns">
+                    {% if logged_username is null %}
+                        {% include "FOSUserBundle:Security:login_content.html.twig" %}
+                    {% else %}
                         <p>
                             Hello {{ logged_username }}, you are logged in.
                         </p>
                         <p>
-                            <a href="/logout" title="Logout" class="button">Logout</a>
+                            <a href="{{ path('sonata_user_profile_show') }}" title="User Profile" class="button">
+                                User Profile
+                            </a>
+                            <a href="{{ path('fos_user_security_logout') }}" title="{{ 'link_logout' | trans({}, "SonataUserBundle") }}" class="button">
+                                {{ 'link_logout' | trans({}, "SonataUserBundle") }}
+                            </a>
                         </p>
-                    </div>
+                    {% endif %}
                 </div>
+
             </div>
-        {% endif %}
+        </div>
     </div>
 {% endblock fos_user_content %}
