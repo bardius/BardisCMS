@@ -2,7 +2,7 @@
         <div class="row">
 
             {% block sonata_user_login_form %}
-                <form action="{{ path("fos_user_security_check") }}" method="post" role="form">
+                <form action="{{ path("fos_user_security_check") }}" method="post" role="form" novalidate>
 
                     <div class="large-12 small-12 columns">
                         <label for="username" class="required">

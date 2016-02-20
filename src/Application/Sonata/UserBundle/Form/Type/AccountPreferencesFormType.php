@@ -18,22 +18,17 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-use Symfony\Component\HttpFoundation\RequestStack;
-
 class AccountPreferencesFormType extends AbstractType {
 
 	private $class;
-	private $requestStack;
 	private $container;
 
 	/**
      * @param string $class The User class name
-     * @param RequestStack $requestStack
      * @param Container $container
 	 */
-	public function __construct($class, RequestStack $requestStack, $container) {
+	public function __construct($class, $container) {
 		$this->class = $class;
-		$this->requestStack = $requestStack;
 		$this->container = $container;
 	}
 

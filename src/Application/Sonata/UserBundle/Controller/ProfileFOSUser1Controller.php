@@ -187,7 +187,6 @@ class ProfileFOSUser1Controller extends Controller
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
-        // TODO: Create the fixtures for the Page Bundle profile/edit-details page
         $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("edit-profile");
 
         if (!$this->page) {
@@ -203,44 +202,47 @@ class ProfileFOSUser1Controller extends Controller
         $passwordForm = $this->container->get('fos_user.change_password.form');
         $passwordFormHandler = $this->container->get('fos_user.change_password.form.handler');
 
-        $passwordProcess = $passwordFormHandler->process($user);
-        if ($passwordProcess) {
-            $this->addFlash('fos_user_success', 'change_password.flash.success');
-
-            return new RedirectResponse($this->getRedirectionUrl($user));
-        }
-
         // Generic Details Form
         $genericDetailsForm = $this->container->get('sonata_user.generic_details.form');
         $genericDetailsFormHandler = $this->container->get('sonata_user.generic_details.form.handler');
-
-        $genericDetailsProcess = $genericDetailsFormHandler->process($user);
-        if ($genericDetailsProcess) {
-            $this->addFlash('fos_user_success', 'profile.flash.updated');
-
-            return new RedirectResponse($this->getRedirectionUrl($user));
-        }
 
         // Contact Details Form
         $contactDetailsForm = $this->container->get('sonata_user.contact_details.form');
         $contactDetailsFormHandler = $this->container->get('sonata_user.contact_details.form.handler');
 
-        $contactDetailsProcess = $contactDetailsFormHandler->process($user);
-        if ($contactDetailsProcess) {
-            $this->addFlash('fos_user_success', 'profile.flash.updated');
-
-            return new RedirectResponse($this->getRedirectionUrl($user));
-        }
-
         // Account Preferences Form
         $accountPreferencesForm = $this->container->get('sonata_user.account_preferences.form');
         $accountPreferencesFormHandler = $this->container->get('sonata_user.account_preferences.form.handler');
 
-        $accountPreferencesProcess = $accountPreferencesFormHandler->process($user);
-        if ($accountPreferencesProcess) {
-            $this->addFlash('fos_user_success', 'profile.flash.updated');
+        // Determine what form to process
+        $formSection = $this->container->get('request')->request->get('form_section');
 
-            return new RedirectResponse($this->getRedirectionUrl($user));
+        switch ($formSection) {
+            case "password":
+                $passwordProcess = $passwordFormHandler->process($user);
+                if ($passwordProcess) {
+                    $this->addFlash('fos_user_success', 'change_password.flash.success');
+                }
+                break;
+            case "contact":
+                $contactDetailsProcess = $contactDetailsFormHandler->process($user);
+                if ($contactDetailsProcess) {
+                    $this->addFlash('fos_user_success', 'profile.flash.updated');
+                }
+                break;
+            case "preferences":
+                $accountPreferencesProcess = $accountPreferencesFormHandler->process($user);
+                if ($accountPreferencesProcess) {
+                    $this->addFlash('fos_user_success', 'profile.flash.updated');
+                }
+                break;
+            case "generic_details":
+                $genericDetailsProcess = $genericDetailsFormHandler->process($user);
+                if ($genericDetailsProcess) {
+                    $this->addFlash('fos_user_success', 'profile.flash.updated');
+                }
+
+                break;
         }
 
         return $this->container->get('templating')->renderResponse('SonataUserBundle:Profile:edit.html.' . $this->container->getParameter('fos_user.template.engine'), array(

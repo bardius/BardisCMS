@@ -17,7 +17,7 @@ fos_user:
 
     registration:
         form:
-            type:       sonata_user_registration
+            type:       sonata_user_custom_user_registration
             validation_groups: [Registration]
             handler:    sonata_user.registration.form.handler.confirmation
         confirmation:
@@ -44,15 +44,6 @@ sonata_user:
         default_avatar: 'bundles/sonatauser/default_avatar.png' # Default avatar displayed if user doesn't have one
 
         register:
-            # You may customize the registration forms over here
-            form:
-                type:       sonata_user_registration
-                handler:    sonata_user.registration.form.handler.confirmation
-                name:       sonata_user_registration_form
-                validation_groups:
-                    # Defaults:
-                    - Registration
-                    - Default
             # This allows you to specify where you want your user redirected once he activated his account
             confirm:
                 redirect:
@@ -65,3 +56,4 @@ sonata_user:
             - { route: 'sonata_user_profile_show', label: 'sonata_profile_title', domain: 'SonataUserBundle'}
             - { route: 'sonata_user_profile_edit', label: 'link_edit_profile', domain: 'SonataUserBundle'}
             - { route: 'sonata_user_profile_edit_authentication', label: 'link_edit_authentication', domain: 'SonataUserBundle'}
+            - { route: 'fos_user_security_logout', label: 'link_logout', domain: 'SonataUserBundle'}

@@ -83,7 +83,7 @@ class RegistrationFormType extends AbstractType {
 
     // Define the name of the form to call it for rendering
     public function getBlockPrefix() {
-        return 'sonata_user_registration';
+        return 'sonata_user_custom_user_registration';
     }
 
     public function getExtendedType()

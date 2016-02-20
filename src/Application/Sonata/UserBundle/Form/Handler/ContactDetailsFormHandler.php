@@ -31,7 +31,7 @@ class ContactDetailsFormHandler
     }
 
     public function process(UserInterface $user)
-    {   
+    {
         $this->form->setData($user);
 
         if ('POST' === $this->request->getMethod() && $this->request->request->has('sonata_user_contact_details_form')) {

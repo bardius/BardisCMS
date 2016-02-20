@@ -22,24 +22,19 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 
-use Symfony\Component\HttpFoundation\RequestStack;
-
 use Sonata\UserBundle\Model\UserInterface;
 
 class GenericDetailsFormType extends AbstractType {
 
 	private $class;
-	private $requestStack;
 	private $container;
 
     /**
      * @param string $class The User class name
-     * @param RequestStack $requestStack
      * @param Container $container
      */
-	public function __construct($class, RequestStack $requestStack, $container) {
+	public function __construct($class, $container) {
 		$this->class = $class;
-		$this->requestStack = $requestStack;
 		$this->container = $container;
 	}
 
@@ -48,8 +43,8 @@ class GenericDetailsFormType extends AbstractType {
 		$user = $this->container->get('security.context')->getToken()->getUser();
 
 		$defaults = array(
-            'username' => $user->getUsername(),
             'email' => $user->getEmail(),
+            'username' => $user->getUsername(),
             'title' => $user->getTitle(),
             'firstname' => $user->getFirstname(),
             'lastname' => $user->getLastname(),
@@ -61,6 +56,7 @@ class GenericDetailsFormType extends AbstractType {
 		$builder
             ->add('email', EmailType::class, array('label' => 'Email*', 'data' => $defaults['email'], 'required' => true))
             ->add('username', TextType::class, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle', 'data' => $defaults['username'], 'required' => true, 'read_only' => true))
+            /*
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'options' => array('translation_domain' => 'SonataUserBundle'),
@@ -68,6 +64,7 @@ class GenericDetailsFormType extends AbstractType {
                 'second_options' => array('label' => 'form.password_confirmation'),
                 'invalid_message' => 'fos_user.password.mismatch'
             ))
+            */
 			->add('title', ChoiceType::class, array('choices' => array(
                 'mr' => 'Mr',
                 'ms' => 'Ms',
@@ -83,7 +80,7 @@ class GenericDetailsFormType extends AbstractType {
                 UserInterface::GENDER_FEMALE => 'gender_female',
                 UserInterface::GENDER_MALE   => 'gender_male'
             ), 'label' => 'Gender', 'data' => $defaults['gender'],'required' => true, 'expanded' => false, 'multiple' => false))
-            ->add('dateOfBirth', BirthdayType::class, array('format' => 'yyyy-MM-dd', 'widget' => 'single_text', 'label' => 'Date Of Birth', 'data' => $defaults['dateOfBirth'],'required' => false))
+            ->add('dateOfBirth', BirthdayType::class, array('format' => 'yyyy-MM-dd', 'widget' => 'single_text', 'label' => 'Date Of Birth', 'data' => $defaults['dateOfBirth'], 'required' => false))
 		;
 	}
 

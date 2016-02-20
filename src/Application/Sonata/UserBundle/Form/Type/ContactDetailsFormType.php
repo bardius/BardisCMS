@@ -18,22 +18,17 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 
-use Symfony\Component\HttpFoundation\RequestStack;
-
 class ContactDetailsFormType extends AbstractType {
 
 	private $class;
-	private $requestStack;
 	private $container;
 
     /**
      * @param string $class The User class name
-     * @param RequestStack $requestStack
      * @param Container $container
      */
-	public function __construct($class, RequestStack $requestStack, $container) {
+	public function __construct($class, $container) {
 		$this->class = $class;
-		$this->requestStack = $requestStack;
 		$this->container = $container;
 	}
 
@@ -65,7 +60,7 @@ class ContactDetailsFormType extends AbstractType {
                 'GB',
                 'US'
             ), 'label' => 'Country', 'data'=> $defaults['countryCode'], 'required' => true))
-            ->add('phone', TextType::class, array('label' => 'Mobile number*', 'data'=> $defaults['phone'], 'required' => false))
+            ->add('phone', TextType::class, array('label' => 'Phone number*', 'data'=> $defaults['phone'], 'required' => false))
             ->add('mobile', TextType::class, array('label' => 'Mobile number*', 'data'=> $defaults['mobile'], 'required' => false))
 		;
 	}
