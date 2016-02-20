@@ -1,39 +1,29 @@
-{#
+{% extends "SonataUserBundle::layout.html.twig" %}
 
-This file is part of the Sonata package.
+{% block fos_user_content %}
+    <div class="large-12 small-12 columns">
+        <div class="row">
 
-(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+            <div class="large-12 small-12 columns">
+                <h3>
+                    {% block sonata_profile_title %}
+                        {% trans from 'SonataUserBundle' %}sonata_profile_title{% endtrans %}
+                    {% endblock %}
+                </h3>
 
-For the full copyright and license information, please view the LICENSE
-file that was distributed with this source code.
+                {% block sonata_profile_menu %}
+                    {{ sonata_block_render({'type': 'sonata.user.block.menu'}, {'current_uri': app.request.requestUri}) }}
+                {% endblock %}
 
-#}
+                {% block sonata_profile_content '' %}
 
-{% sonata_template_box 'This is the user authentication edition template. Feel free to override it.' %}
-
-<div class="row">
-    <div class="span6 col-lg-6">
-        <div class="panel panel-warning">
-            <div class="panel-heading">
-                <h3 class="panel-title">{{ 'title_user_edit_authentication'|trans({}, 'SonataUserBundle') }}</h3>
+                {% include "SonataUserBundle:Profile:edit_authentication_content.html.twig" %}
             </div>
-            <div class="panel-body">
-                <form action="{{ path('sonata_user_profile_edit_authentication') }}" method="POST" class="form-horizontal">
-                    {{ form_widget(form) }}
 
-                    <button type="submit" name="submit" class="btn btn-primary pull-right">{{ 'sonata_user_submit'|trans({}, 'SonataUserBundle') }}</button>
-                </form>
+            <div class="large-12 small-12 columns">
+                {% include 'SonataCoreBundle:FlashMessage:render.html.twig' %}
             </div>
+
         </div>
     </div>
-    <div class="span6 col-lg-6">
-        <div class="panel panel-danger">
-            <div class="panel-heading">
-                <h3 class="panel-title">{{ 'sonata_change_password_link'|trans({}, 'SonataUserBundle') }}</h3>
-            </div>
-            <div class="panel-body">
-                {% render url("sonata_user_change_password") %}
-            </div>
-        </div>
-    </div>
-</div>
+{% endblock fos_user_content %}

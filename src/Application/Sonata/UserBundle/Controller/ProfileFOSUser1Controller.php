@@ -158,6 +158,14 @@ class ProfileFOSUser1Controller extends Controller
             throw $this->createAccessDeniedException('This user does not have access to this section.');
         }
 
+        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("edit-profile");
+
+        if (!$this->page) {
+            return $this->render404Page();
+        }
+
+        $this->page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($this->page);
+
         $form = $this->get('sonata.user.authentication.form');
         $formHandler = $this->get('sonata.user.authentication.form_handler');
 
@@ -168,9 +176,19 @@ class ProfileFOSUser1Controller extends Controller
             return $this->redirectToRoute('sonata_user_profile_show');
         }
 
-        return $this->render('SonataUserBundle:Profile:edit_authentication.html.twig', array(
+        $pageData = array(
             'form' => $form->createView(),
-        ));
+            'user' => $user,
+            'page' => $this->page,
+            'mobile' => $this->serveMobile,
+            'logged_username' => $this->logged_username
+        );
+
+        // Render register page
+        $response = $this->render('SonataUserBundle:Profile:edit_authentication.html.twig', $pageData);
+        // $response = $this->container->get('templating')->renderResponse('SonataUserBundle:Profile:edit_authentication.html.'.$this->getEngine(), $pageData);
+
+        return $response;
     }
 
     /**
@@ -194,9 +212,6 @@ class ProfileFOSUser1Controller extends Controller
         }
 
         $this->page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($this->page);
-
-        // Check if mobile content should be served
-        $serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 
         // Password Change Form
         $passwordForm = $this->container->get('fos_user.change_password.form');
@@ -245,15 +260,20 @@ class ProfileFOSUser1Controller extends Controller
                 break;
         }
 
-        return $this->container->get('templating')->renderResponse('SonataUserBundle:Profile:edit.html.' . $this->container->getParameter('fos_user.template.engine'), array(
-                'passwordForm' => $passwordForm->createView(),
-                'genericDetailsForm' => $genericDetailsForm->createView(),
-                'contactDetailsForm' => $contactDetailsForm->createView(),
-                'accountPreferencesForm' => $accountPreferencesForm->createView(),
-                'page' => $this->page,
-                'mobile' => $serveMobile
-            )
+        $pageData = array(
+            'passwordForm' => $passwordForm->createView(),
+            'genericDetailsForm' => $genericDetailsForm->createView(),
+            'contactDetailsForm' => $contactDetailsForm->createView(),
+            'accountPreferencesForm' => $accountPreferencesForm->createView(),
+            'page' => $this->page,
+            'mobile' => $this->serveMobile
         );
+
+        // Render register page
+        $response = $this->render('SonataUserBundle:Profile:edit.html.twig', $pageData);
+        // $response = $this->container->get('templating')->renderResponse('SonataUserBundle:Profile:edit.html.'.$this->container->getParameter('fos_user.template.engine'), $pageData);
+
+        return $response;
     }
 
     /**

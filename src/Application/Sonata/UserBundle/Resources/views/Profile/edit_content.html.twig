@@ -6,7 +6,7 @@
         <a href="#generic_details" role="tab" id="generic_details-heading" aria-controls="generic_details" title="Generic Details">
             Generic Details
         </a>
-        <div id="generic_details" class="content active" role="tabpanel" aria-labelledby="generic_details-heading">
+        <div id="generic_details" class="content" role="tabpanel" aria-labelledby="generic_details-heading">
             <form action="{{ path('sonata_user_profile_edit') }}" {{ form_enctype(genericDetailsForm) }} method="POST" novalidate>
                 {{ form_widget(genericDetailsForm) }}
                 <input type="hidden" name="form_section" value="generic_details" />

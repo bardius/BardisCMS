@@ -1,7 +1,29 @@
-{% extends "::base.html.twig" %}
+{% extends "SonataUserBundle::layout.html.twig" %}
 
-{% block content %}
-	<div class="small-12 large-6 columns large-centered">
-		{% include "SonataUserBundle:Profile:edit_content.html.twig" %}
-	</div>
-{% endblock content %}
+{% block fos_user_content %}
+    <div class="large-12 small-12 columns">
+        <div class="row">
+
+            <div class="large-12 small-12 columns">
+                <h3>
+                    {% block sonata_profile_title %}
+                        {% trans from 'SonataUserBundle' %}sonata_profile_title{% endtrans %}
+                    {% endblock %}
+                </h3>
+
+                {% block sonata_profile_menu %}
+                    {{ sonata_block_render({'type': 'sonata.user.block.menu'}, {'current_uri': app.request.requestUri}) }}
+                {% endblock %}
+
+                {% block sonata_profile_content '' %}
+
+                {% include "SonataUserBundle:Profile:edit_content.html.twig" %}
+            </div>
+
+            <div class="large-12 small-12 columns">
+                {% include 'SonataCoreBundle:FlashMessage:render.html.twig' %}
+            </div>
+
+        </div>
+    </div>
+{% endblock fos_user_content %}
