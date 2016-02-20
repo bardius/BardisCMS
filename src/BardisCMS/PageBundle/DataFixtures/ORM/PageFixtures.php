@@ -84,12 +84,34 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $pageuser_profile->setDate(new \DateTime());
         $pageuser_profile->setTitle('User Profile Page');
         $pageuser_profile->setAuthor($manager->merge($this->getReference('admin')));
-        $pageuser_profile->setAlias('user-profile');
+        $pageuser_profile->setAlias('profile');
         $pageuser_profile->setShowPageTitle(1);
         $pageuser_profile->setPublishState(1);
         $pageuser_profile->setIntrotext('');
         $pageuser_profile->setPagetype('user_profile');
         $manager->persist($pageuser_profile);
+
+        $pageuser_edit_profile = new Page();
+        $pageuser_edit_profile->setDate(new \DateTime());
+        $pageuser_edit_profile->setTitle('Edit User Profile Page');
+        $pageuser_edit_profile->setAuthor($manager->merge($this->getReference('admin')));
+        $pageuser_edit_profile->setAlias('edit-profile');
+        $pageuser_edit_profile->setShowPageTitle(1);
+        $pageuser_edit_profile->setPublishState(1);
+        $pageuser_edit_profile->setIntrotext('');
+        $pageuser_edit_profile->setPagetype('user_profile');
+        $manager->persist($pageuser_edit_profile);
+
+        $pageuser_edit_auth = new Page();
+        $pageuser_edit_auth->setDate(new \DateTime());
+        $pageuser_edit_auth->setTitle('Edit User Authentication Page');
+        $pageuser_edit_auth->setAuthor($manager->merge($this->getReference('admin')));
+        $pageuser_edit_auth->setAlias('edit-authentication');
+        $pageuser_edit_auth->setShowPageTitle(1);
+        $pageuser_edit_auth->setPublishState(1);
+        $pageuser_edit_auth->setIntrotext('');
+        $pageuser_edit_auth->setPagetype('user_profile');
+        $manager->persist($pageuser_edit_auth);
 
         $pageuser_login = new Page();
         $pageuser_login->setDate(new \DateTime());
@@ -99,7 +121,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $pageuser_login->setShowPageTitle(1);
         $pageuser_login->setPublishState(1);
         $pageuser_login->setIntrotext('');
-        $pageuser_login->setPagetype('user_login');
+        $pageuser_login->setPagetype('system_page');
         $manager->persist($pageuser_login);
 
         $pagepass_reset = new Page();
@@ -110,7 +132,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $pagepass_reset->setShowPageTitle(1);
         $pagepass_reset->setPublishState(1);
         $pagepass_reset->setIntrotext('');
-        $pagepass_reset->setPagetype('user_login');
+        $pagepass_reset->setPagetype('system_page');
         $manager->persist($pagepass_reset);
 
         $pageresetting_send = new Page();
@@ -121,7 +143,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $pageresetting_send->setShowPageTitle(1);
         $pageresetting_send->setPublishState(1);
         $pageresetting_send->setIntrotext('');
-        $pageresetting_send->setPagetype('user_login');
+        $pageresetting_send->setPagetype('system_page');
         $manager->persist($pageresetting_send);
 
         $pageresetting_check = new Page();
@@ -132,7 +154,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $pageresetting_check->setShowPageTitle(1);
         $pageresetting_check->setPublishState(1);
         $pageresetting_check->setIntrotext('');
-        $pageresetting_check->setPagetype('user_login');
+        $pageresetting_check->setPagetype('system_page');
         $manager->persist($pageresetting_check);
 
         $pageresetting_reset = new Page();
@@ -143,7 +165,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $pageresetting_reset->setShowPageTitle(1);
         $pageresetting_reset->setPublishState(1);
         $pageresetting_reset->setIntrotext('');
-        $pageresetting_reset->setPagetype('user_login');
+        $pageresetting_reset->setPagetype('system_page');
         $manager->persist($pageresetting_reset);
 
         $page_register = new Page();
@@ -154,7 +176,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $page_register->setShowPageTitle(1);
         $page_register->setPublishState(1);
         $page_register->setIntrotext('');
-        $page_register->setPagetype('user_login');
+        $page_register->setPagetype('system_page');
         $manager->persist($page_register);
 
         $page_register_confirmed = new Page();
@@ -165,8 +187,19 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $page_register_confirmed->setShowPageTitle(1);
         $page_register_confirmed->setPublishState(1);
         $page_register_confirmed->setIntrotext('');
-        $page_register_confirmed->setPagetype('user_login');
+        $page_register_confirmed->setPagetype('system_page');
         $manager->persist($page_register_confirmed);
+
+        $page_pass_change = new Page();
+        $page_pass_change->setDate(new \DateTime());
+        $page_pass_change->setTitle('User Password Change Page');
+        $page_pass_change->setAuthor($manager->merge($this->getReference('admin')));
+        $page_pass_change->setAlias('user/password-change');
+        $page_pass_change->setShowPageTitle(1);
+        $page_pass_change->setPublishState(1);
+        $page_pass_change->setIntrotext('');
+        $page_pass_change->setPagetype('system_page');
+        $manager->persist($page_pass_change);
 
         $page1 = new Page();
         $page1->setDate(new \DateTime());
@@ -247,6 +280,9 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $this->addReference('pageresetting_reset', $pageresetting_reset);
         $this->addReference('page_register', $page_register);
         $this->addReference('page_register_confirmed', $page_register_confirmed);
+        $this->addReference('page_pass_change', $page_pass_change);
+        $this->addReference('pageuser_edit_profile', $pageuser_edit_profile);
+        $this->addReference('pageuser_edit_auth', $pageuser_edit_auth);
     }
 
     public function getOrder() {

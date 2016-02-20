@@ -18,6 +18,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 
+use Symfony\Component\HttpFoundation\RequestStack;
+
 class ContactDetailsFormType extends AbstractType {
 
 	private $class;

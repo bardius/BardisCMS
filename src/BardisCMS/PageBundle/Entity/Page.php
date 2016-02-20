@@ -828,7 +828,7 @@ class Page {
             case('category_page'): return "Category Page";
             case('page_tag_list'): return "Tagged Page List";
             case('user_profile'): return "User Profile Page";
-            case('user_login'): return "User Login Page";
+            case('system_page'): return "System Page";
             case('homepage'): return "Homepage";
             default: return $this->getPagetype();
         }

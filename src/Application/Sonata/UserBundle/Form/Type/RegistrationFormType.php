@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -49,8 +50,8 @@ class RegistrationFormType extends AbstractType {
 
         // Adding custom extra user fields for Registration Form
         $builder
-            ->add('email', EmailType::class, array('label' => 'Email*'))
-            ->add('username', TextType::class, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle'))
+            ->add('email', EmailType::class, array('label' => 'form.email', 'translation_domain' => 'SonataUserBundle'))
+            ->add('username', TextType::class, array('label' => 'form.username', 'translation_domain' => 'SonataUserBundle'))
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'options' => array('translation_domain' => 'SonataUserBundle'),
@@ -60,8 +61,8 @@ class RegistrationFormType extends AbstractType {
             ))
             ->add('firstname', TextType::class, array('label' => 'First Name*', 'required' => true))
             ->add('lastname', TextType::class, array('label' => 'Surname*', 'required' => true))
-            ->add('campaign', TextType::class, array('label' => 'Campaign Name', 'data' => $this->campaignData, 'required' => false))
-            ->add('termsAccepted', CheckboxType::class, array('label' => 'I am over 18 & accept the T&Cs*'));
+            ->add('campaign', HiddenType::class, array('label' => 'Campaign Name', 'data' => $this->campaignData, 'required' => false))
+            ->add('termsAccepted', CheckboxType::class, array('label' => 'I accept the T&Cs*', 'required' => true));
             // Create user with no username and password (pre set email as both)
             //->remove('username')
             //->remove('plainPassword')
@@ -82,7 +83,7 @@ class RegistrationFormType extends AbstractType {
 
     // Define the name of the form to call it for rendering
     public function getBlockPrefix() {
-        return 'registration';
+        return 'sonata_user_registration';
     }
 
     public function getExtendedType()

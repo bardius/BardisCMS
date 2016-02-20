@@ -6,18 +6,18 @@
 
     <route id="sonata_user_profile_show" pattern="/{userName}">
         <default key="_controller">SonataUserBundle:ProfileFOSUser1:show</default>
-        <default key="alias">user-profile</default>
+        <default key="alias">profile</default>
         <default key="userName">username</default>
     </route>
 
     <route id="sonata_user_profile_show" pattern="/">
         <default key="_controller">SonataUserBundle:ProfileFOSUser1:show</default>
-        <default key="alias">user-profile</default>
+        <default key="alias">profile</default>
     </route>
 
     <route id="fos_user_profile_show" path="/" methods="GET">
         <default key="_controller">SonataUserBundle:ProfileFOSUser1:show</default>
-        <default key="alias">user-profile</default>
+        <default key="alias">profile</default>
     </route>
 
 </routes>

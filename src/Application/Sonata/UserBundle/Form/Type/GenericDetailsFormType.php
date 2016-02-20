@@ -22,6 +22,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 
+use Symfony\Component\HttpFoundation\RequestStack;
+
 use Sonata\UserBundle\Model\UserInterface;
 
 class GenericDetailsFormType extends AbstractType {

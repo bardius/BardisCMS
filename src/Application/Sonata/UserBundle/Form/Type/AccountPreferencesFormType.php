@@ -18,6 +18,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
+use Symfony\Component\HttpFoundation\RequestStack;
+
 class AccountPreferencesFormType extends AbstractType {
 
 	private $class;

@@ -21,6 +21,14 @@ use Sonata\UserBundle\Form\Handler\RegistrationFormHandler as BaseHandler;
 
 class RegistrationFormHandler extends BaseHandler
 {
+    private $container;
+
+    public function __construct(FormInterface $form, Request $request, UserManagerInterface $userManager, MailerInterface $mailer, TokenGeneratorInterface $tokenGenerator, Container $container)
+    {
+        parent::__construct($form, $request, $userManager, $mailer, $tokenGenerator);
+        $this->container = $container;
+    }
+
     /**
      * @param UserInterface $user
      * @param boolean $confirmation

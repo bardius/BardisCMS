@@ -5,6 +5,7 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
+        <parameter key="sonata_user.registration.form.class">Symfony\Component\Form\Form</parameter>
         <parameter key="sonata_user.form.type.registration.class">Application\Sonata\UserBundle\Form\Type\RegistrationFormType</parameter>
         <parameter key="sonata_user.registration.form.handler.confirmation.class">Application\FOS\UserBundle\Form\Handler\RegistrationFormHandler</parameter>
         <parameter key="sonata_user.contact_details.form.class">Symfony\Component\Form\Form</parameter>
@@ -21,8 +22,17 @@
     <services>
 
         <!-- Registration Form -->
-        <service id="sonata_user.form.type.registration" class="%sonata_user.form.type.registration.class%">
-            <tag name="form.type" />
+        <service id="sonata.user.registration.form" factory-method="createNamed" factory-service="form.factory" class="%sonata_user.registration.form.class%">
+            <argument>%sonata.user.registration.form.name%</argument>
+            <argument>%sonata.user.registration.form.type%</argument>
+            <argument>null</argument>
+            <argument type="collection">
+                <argument key="validation_groups">%sonata.user.registration.form.validation_groups%</argument>
+            </argument>
+        </service>
+
+        <service id="sonata.user.registration.form.type" class="%sonata_user.form.type.registration.class%">
+            <tag name="form.type" alias="%sonata.user.registration.form.type%" />
             <argument>%fos_user.model.user.class%</argument>
             <argument type="service" id="request_stack" />
         </service>
@@ -43,13 +53,13 @@
             <argument>sonata_user_contact_details</argument>
             <argument>null</argument>
             <argument type="collection">
-                <argument key="validation_groups"></argument>
+                <argument key="validation_groups">%sonata.user.registration.form.validation_groups%</argument>
             </argument>
         </service>
 
         <service id="sonata_user.contact_details.form.type" class="%sonata_user.contact_details.form.type.class%">
             <tag name="form.type" alias="sonata_user_contact_details" />
-            <argument>Application\Sonata\UserBundle\Entity\User</argument>
+            <argument>%fos_user.model.user.class%</argument>
             <argument type="service" id="request_stack" />
             <argument type="service" id="service_container"/>
         </service>
@@ -66,13 +76,13 @@
             <argument>sonata_user_generic_details</argument>
             <argument>null</argument>
             <argument type="collection">
-                <argument key="validation_groups"></argument>
+                <argument key="validation_groups">%sonata.user.registration.form.validation_groups%</argument>
             </argument>
         </service>
 
         <service id="sonata_user.generic_details.form.type" class="%sonata_user.generic_details.form.type.class%">
             <tag name="form.type" alias="sonata_user_generic_details" />
-            <argument>Application\Sonata\UserBundle\Entity\User</argument>
+            <argument>%fos_user.model.user.class%</argument>
             <argument type="service" id="request_stack" />
             <argument type="service" id="service_container"/>
         </service>
@@ -89,13 +99,13 @@
             <argument>sonata_user_account_preferences</argument>
             <argument>null</argument>
             <argument type="collection">
-                <argument key="validation_groups"></argument>
+                <argument key="validation_groups">%sonata.user.registration.form.validation_groups%</argument>
             </argument>
         </service>
 
         <service id="sonata_user.account_preferences.form.type" class="%sonata_user.account_preferences.form.type.class%">
             <tag name="form.type" alias="sonata_user_account_preferences" />
-            <argument>Application\Sonata\UserBundle\Entity\User</argument>
+            <argument>%fos_user.model.user.class%</argument>
             <argument type="service" id="request_stack" />
             <argument type="service" id="service_container"/>
         </service>

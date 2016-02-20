@@ -12,12 +12,12 @@
 namespace Application\Sonata\UserBundle\Controller;
 
 use FOS\UserBundle\Model\UserInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Controller managing the user profile
@@ -97,7 +97,7 @@ class ProfileFOSUser1Controller extends Controller
      *
      * @return Response response
      */
-    public function showAction($alias = 'user-profile', $userName = null)
+    public function showAction($alias = 'profile', $userName = null)
     {
         $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($alias);
 
@@ -187,7 +187,7 @@ class ProfileFOSUser1Controller extends Controller
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
-        // TODO: Create the fixtures for the Page Bundle user-profile/edit-details page
+        // TODO: Create the fixtures for the Page Bundle profile/edit-details page
         $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("edit-profile");
 
         if (!$this->page) {

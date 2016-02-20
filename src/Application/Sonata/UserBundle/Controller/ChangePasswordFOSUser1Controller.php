@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the FOSUserBundle package.
+ * This file is part of the Sonata project.
  *
- * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -11,15 +11,24 @@
 
 namespace Application\Sonata\UserBundle\Controller;
 
-use Sonata\UserBundle\Model\UserInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use FOS\UserBundle\Model\UserInterface;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Symfony\Component\Security\Core\SecurityContext;
-
-class SecurityController extends Controller
+/**
+ * Class ChangePasswordFOSUser1Controller.
+ *
+ * This class is inspired from the FOS Change Password Controller
+ *
+ *
+ * @author  Hugo Briand <briand@ekino.com>
+ */
+class ChangePasswordFOSUser1Controller extends Controller
 {
-    // Adding variables required for the rendering of pages
     protected $container;
     private $alias;
     private $id;
@@ -35,6 +44,7 @@ class SecurityController extends Controller
     private $userRole;
     private $enableHTTPCache;
     private $logged_username;
+    private $logged_user;
 
     // Override the ContainerAware setContainer to accommodate the extra variables
     public function setContainer(ContainerInterface $container = null) {
@@ -72,15 +82,25 @@ class SecurityController extends Controller
         }
 
         // Get the logged user if any
-        $logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
-        if (is_object($logged_user) && $logged_user instanceof UserInterface) {
-            $this->logged_username = $logged_user->getUsername();
+        $this->logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
+        if (is_object($this->logged_user) && $this->logged_user instanceof UserInterface) {
+            $this->logged_username = $this->logged_user->getUsername();
         }
     }
 
-    public function loginAction()
+    /**
+     * @return Response|RedirectResponse
+     *
+     * @throws AccessDeniedException
+     */
+    public function changePasswordAction()
     {
-        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("login");
+        $user = $this->get('security.context')->getToken()->getUser();
+        if (!is_object($user) || !$user instanceof UserInterface) {
+            $this->createAccessDeniedException('This user does not have access to this section.');
+        }
+
+        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("user/password-change");
 
         if (!$page) {
             return $this->render404Page();
@@ -98,92 +118,49 @@ class SecurityController extends Controller
             return $this->render404Page();
         }
 
-        // Return cached page if enabled
-        // TODO: check if the login page should never be cached or not before allowing cache here
-        /*
-        if ($this->enableHTTPCache) {
-
-            $response = $this->setResponseCacheHeaders(new Response());
-
-            if (!$response->isNotModified($this->pageRequest)) {
-                // Marks the Response stale
-                $response->expire();
-            } else {
-                // return the 304 Response immediately
-                return $response;
-            }
-        }
-        */
-
         $this->page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($this->page);
 
-        $request = $this->container->get('request');
-        $session = $request->getSession();
+        $form = $this->get('fos_user.change_password.form');
+        $formHandler = $this->get('fos_user.change_password.form.handler');
 
-        // Get the login error if any
-        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
-        } elseif (null !== $session && $session->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
-            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
-        } else {
-            $error = '';
+        $process = $formHandler->process($user);
+        if ($process) {
+            $this->setFlash('fos_user_success', 'change_password.flash.success');
+
+            return $this->redirect($this->getRedirectionUrl($user));
         }
 
-        // TODO: this is a potential security risk (see http://trac.symfony-project.org/ticket/9523)
-        if ($error) {
-            $error = $error->getMessage();
-        }
-
-        // Get last username entered by the user
-        $lastUsername = (null === $session) ? '' : $session->get(SecurityContext::LAST_USERNAME);
-
-        $csrfToken = $this->container->has('form.csrf_provider') ? $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate') : null;
-
-        return $this->renderLogin(array(
-            'last_username' => $lastUsername,
-            'error' => $error,
-            'csrf_token' => $csrfToken,
+        $pageData = array(
             'page' => $this->page,
             'mobile' => $this->serveMobile,
-            'logged_username' => $this->logged_username
-        ));
-    }
-
-    /**
-     * Renders the login template with the given parameters. Overwrite this function in
-     * an extended controller to provide additional data for the login template.
-     *
-     * @param array $pageData
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function renderLogin(array $pageData)
-    {
-        //$template = sprintf('FOSUserBundle:Security:login.html.%s', $this->container->getParameter('fos_user.template.engine'));
-        //$response = $this->container->get('templating')->renderResponse($template, $pageData);
+            'logged_username' => $this->logged_username,
+            'form' => $form->createView()
+        );
 
         // Render login page
-        $response = $this->render('FOSUserBundle:Security:login.html.twig', $pageData);
-
-        // TODO: check if the login page should never be cached or not before allowing cache here
-        /*
-        if ($this->enableHTTPCache) {
-            $response = $this->setResponseCacheHeaders($response);
-        }
-        */
+        $response = $this->render('SonataUserBundle:ChangePassword:changePassword.html.twig', $pageData);
+        // $response = $this->container->get('templating')->renderResponse('SonataUserBundle:ChangePassword:changePassword.html.$this->container->getParameter('fos_user.template.engine'), $pageData);
 
         return $response;
     }
 
-    public function checkAction()
+    /**
+     * @param UserInterface $user
+     *
+     * @return string
+     */
+    protected function getRedirectionUrl(UserInterface $user)
     {
-        throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
+        return $this->generateUrl('sonata_user_profile_show');
     }
 
-    public function logoutAction()
+    /**
+     * @param string $action
+     * @param string $value
+     */
+    protected function setFlash($action, $value)
     {
-        throw new \RuntimeException('You must activate the logout in your security firewall configuration.');
+        $this->get('session')->getFlashBag()->set($action, $value);
     }
 
     // Render the 404 error page

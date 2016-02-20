@@ -11,18 +11,19 @@
 
 namespace Application\Sonata\UserBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use FOS\UserBundle\Model\UserInterface;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 /**
  * Controller managing the resetting of the password
  */
-class ResettingController extends Controller
+class ResettingFOSUser1Controller extends Controller
 {
     // Adding variables required for the rendering of pages
     protected $container;
