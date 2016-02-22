@@ -25,19 +25,19 @@
             {% block sonata_user_reset_request_form %}
                 {% block sonata_user_reset_request_error %}
                     {% if invalid_username is defined %}
-                        <div class="alert alert-danger">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'FOSUserBundle') }}</div>
+                        <div class="alert alert-danger">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'SonataUserBundle') }}</div>
                     {% endif %}
                 {% endblock %}
-                <p class="login-box-msg">{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}</p>
+                <p class="login-box-msg">{{ 'resetting.request.submit'|trans({}, 'SonataUserBundle') }}</p>
                 <form action="{{ path('sonata_user_admin_resetting_send_email') }}" method="post" role="form">
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control" id="username"  name="username" required="required" placeholder="{{ 'resetting.request.username'|trans({}, 'FOSUserBundle')|replace({':': ''}) }}"/>
+                        <input type="text" class="form-control" id="username"  name="username" required="required" placeholder="{{ 'resetting.request.username'|trans({}, 'SonataUserBundle')|replace({':': ''}) }}"/>
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
 
                     <div class="row">
                         <div class="col-xs-12">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}</button>
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">{{ 'resetting.request.submit'|trans({}, 'SonataUserBundle') }}</button>
                         </div>
                     </div>
                 </form>

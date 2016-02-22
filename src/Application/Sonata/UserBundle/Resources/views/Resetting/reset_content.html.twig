@@ -1,16 +1,14 @@
     <div class="row">
-        <form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
-
+        {{ form_start(form, {'action': path('fos_user_resetting_reset', {'token': token}), 'method': 'POST', 'attr': {'novalidate': 'novalidate'} }) }}
             <div class="large-12 small-12 columns">
                 {{ form_widget(form) }}
             </div>
 
             <div class="large-12 small-12 columns">
-                <input type="submit" id="_submit" name="_submit" class="button" value="{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}" />
-                <a class="button" href="{{ url('fos_user_registration_register') }}" title="Create an account">
-                    Create an account
+                <input type="submit" id="_submit" name="_submit" class="button" value="{{ 'resetting.reset.submit'|trans({}, 'SonataUserBundle') }}" />
+                <a class="button" href="{{ url('fos_user_registration_register') }}" title="{{ 'layout.link.create_account'|trans({}, 'SonataUserBundle') }}">
+                    {{ 'layout.link.create_account'|trans({}, 'SonataUserBundle') }}
                 </a>
             </div>
-
-        </form>
+        {{ form_end(form) }}
     </div>

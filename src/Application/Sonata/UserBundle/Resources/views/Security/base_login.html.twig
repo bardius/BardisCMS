@@ -13,8 +13,8 @@
                             Hello {{ logged_username }}, you are logged in.
                         </p>
                         <p>
-                            <a href="{{ path('sonata_user_profile_show') }}" title="User Profile" class="button">
-                                User Profile
+                            <a href="{{ path('sonata_user_profile_show') }}" title="{{ 'link_profile' | trans({}, "SonataUserBundle") }}" class="button">
+                                {{ 'link_profile' | trans({}, "SonataUserBundle") }}
                             </a>
                             <a href="{{ path('fos_user_security_logout') }}" title="{{ 'link_logout' | trans({}, "SonataUserBundle") }}" class="button">
                                 {{ 'link_logout' | trans({}, "SonataUserBundle") }}

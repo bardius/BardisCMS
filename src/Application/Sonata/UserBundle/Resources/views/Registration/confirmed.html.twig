@@ -7,14 +7,14 @@
 
                 <div class="large-12 small-12 columns">
                     <p>
-                        {{ 'registration.confirmed'|trans({'%username%': user.username}, 'FOSUserBundle') }}
+                        {{ 'registration.confirmed'|trans({'%username%': user.username}, 'SonataUserBundle') }}
                     </p>
                     {% if app.session is not empty %}
                         {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
                         {% if targetUrl is not empty %}
                             <p>
-                                <a href="{{ targetUrl }}" title="{{ 'registration.back'|trans({}, 'FOSUserBundle') }}" class="button">
-                                    {{ 'registration.back'|trans({}, 'FOSUserBundle') }}
+                                <a href="{{ targetUrl }}" title="{{ 'registration.back'|trans({}, 'SonataUserBundle') }}" class="button">
+                                    {{ 'registration.back'|trans({}, 'SonataUserBundle') }}
                                 </a>
                             </p>
                         {% endif %}

@@ -53,6 +53,8 @@ framework:
     translator:
         enabled:            true
         fallback:           en
+        paths:
+            - '%kernel.root_dir%/../src/Application/Sonata/UserBundle/Resources/translations'
 
     # validation configuration
     validation:

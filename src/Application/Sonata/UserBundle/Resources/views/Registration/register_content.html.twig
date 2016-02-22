@@ -1,5 +1,5 @@
-    <form id="subscribeForm" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register" novalidate>
-        <small class="right">* Mandatory fields</small>
+    {{ form_start(form, {'action': path('fos_user_registration_register'), 'method': 'POST', 'attr': {'novalidate': 'novalidate'} }) }}
+        <small class="right">{{ 'form.mandatory_fields'|trans({}, 'SonataUserBundle') }}</small>
         {{ form_widget(form) }}
-        <input type="submit" id="subscribeFormBtn" class="button" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
-    </form>
+        <input type="submit" id="subscribeFormBtn" class="button" value="{{ 'registration.submit'|trans({}, 'SonataUserBundle') }}" />
+    {{ form_end(form) }}

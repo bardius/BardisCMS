@@ -43,7 +43,7 @@
             <argument>sonata_user_contact_details</argument>
             <argument>null</argument>
             <argument type="collection">
-                <argument key="validation_groups"></argument>
+                <argument key="validation_groups">Profile</argument>
             </argument>
         </service>
 
@@ -65,7 +65,7 @@
             <argument>sonata_user_generic_details</argument>
             <argument>null</argument>
             <argument type="collection">
-                <argument key="validation_groups"></argument>
+                <argument key="validation_groups">Profile</argument>
             </argument>
         </service>
 
@@ -87,7 +87,7 @@
             <argument>sonata_user_account_preferences</argument>
             <argument>null</argument>
             <argument type="collection">
-                <argument key="validation_groups"></argument>
+                <argument key="validation_groups">Profile</argument>
             </argument>
         </service>
 

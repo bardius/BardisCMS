@@ -7,11 +7,11 @@
             Generic Details
         </a>
         <div id="generic_details" class="content" role="tabpanel" aria-labelledby="generic_details-heading">
-            <form action="{{ path('sonata_user_profile_edit') }}" {{ form_enctype(genericDetailsForm) }} method="POST" novalidate>
+            {{ form_start(genericDetailsForm, {'action': path('sonata_user_profile_edit'), 'method': 'POST', 'attr': {'novalidate': 'novalidate'} }) }}
                 {{ form_widget(genericDetailsForm) }}
                 <input type="hidden" name="form_section" value="generic_details" />
-                <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" class="button" />
-            </form>
+                <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'SonataUserBundle') }}" class="button" />
+            {{ form_end(genericDetailsForm) }}
         </div>
     </li>
 
@@ -20,11 +20,11 @@
             Account preferences
         </a>
         <div id="preferences" class="content" role="tabpanel" aria-labelledby="preferences-heading">
-            <form action="{{ path('sonata_user_profile_edit') }}" {{ form_enctype(accountPreferencesForm) }} method="POST" novalidate>
+            {{ form_start(accountPreferencesForm, {'action': path('sonata_user_profile_edit'), 'method': 'POST', 'attr': {'novalidate': 'novalidate'} }) }}
                 {{ form_widget(accountPreferencesForm) }}
                 <input type="hidden" name="form_section" value="preferences" />
-                <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" class="button" />
-            </form>
+                <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'SonataUserBundle') }}" class="button" />
+            {{ form_end(accountPreferencesForm) }}
         </div>
     </li>
 
@@ -33,11 +33,11 @@
             Contact details
         </a>
         <div id="contact" class="content" role="tabpanel" aria-labelledby="contact-heading">
-            <form action="{{ path('sonata_user_profile_edit') }}" {{ form_enctype(contactDetailsForm) }} method="POST" novalidate>
+            {{ form_start(contactDetailsForm, {'action': path('sonata_user_profile_edit'), 'method': 'POST', 'attr': {'novalidate': 'novalidate'} }) }}
                 {{ form_widget(contactDetailsForm) }}
                 <input type="hidden" name="form_section" value="contact" />
-                <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" class="button" />
-            </form>
+                <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'SonataUserBundle') }}" class="button" />
+            {{ form_end(contactDetailsForm) }}
         </div>
     </li>
 
@@ -46,11 +46,11 @@
             Change password
         </a>
         <div id="password" class="content" role="tabpanel" aria-labelledby="password-heading">
-            <form action="{{ path('sonata_user_profile_edit') }}" {{ form_enctype(passwordForm) }} method="POST" novalidate>
+            {{ form_start(passwordForm, {'action': path('sonata_user_profile_edit'), 'method': 'POST', 'attr': {'novalidate': 'novalidate'} }) }}
                 {{ form_widget(passwordForm) }}
                 <input type="hidden" name="form_section" value="password" />
-                <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" class="button" />
-            </form>
+                <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'SonataUserBundle') }}" class="button" />
+            {{ form_end(passwordForm) }}
         </div>
     </li>
 </ul>

@@ -59,14 +59,14 @@ class RegistrationFormType extends AbstractType {
                 'second_options' => array('label' => 'form.password_confirmation'),
                 'invalid_message' => 'fos_user.password.mismatch',
             ))
-            ->add('firstname', TextType::class, array('label' => 'First Name*', 'required' => true))
-            ->add('lastname', TextType::class, array('label' => 'Surname*', 'required' => true))
-            ->add('campaign', HiddenType::class, array('label' => 'Campaign Name', 'data' => $this->campaignData, 'required' => false))
-            ->add('termsAccepted', CheckboxType::class, array('label' => 'I accept the T&Cs*', 'required' => true));
+            ->add('firstname', TextType::class, array('label' => 'form.firstname', 'translation_domain' => 'SonataUserBundle', 'required' => true))
+            ->add('lastname', TextType::class, array('label' => 'form.lastname', 'translation_domain' => 'SonataUserBundle', 'required' => true))
+            ->add('campaign', HiddenType::class, array('label' => 'form.campaignname', 'translation_domain' => 'SonataUserBundle', 'data' => $this->campaignData, 'required' => false))
+            ->add('termsAccepted', CheckboxType::class, array('label' => 'form.tnc', 'translation_domain' => 'SonataUserBundle', 'required' => true)
             // Create user with no username and password (pre set email as both)
             //->remove('username')
             //->remove('plainPassword')
-        ;
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver)

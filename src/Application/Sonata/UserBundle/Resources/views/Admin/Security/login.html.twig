@@ -25,7 +25,7 @@
             {% block sonata_user_login_form %}
                 {% block sonata_user_login_error %}
                     {% if error %}
-                        <div class="alert alert-danger">{{ error|trans({}, 'FOSUserBundle') }}</div>
+                        <div class="alert alert-danger">{{ error|trans({}, 'SonataUserBundle') }}</div>
                     {% endif %}
                 {% endblock %}
                 <p class="login-box-msg">{{ 'title_user_authentication'|trans({}, 'SonataUserBundle') }}</p>
@@ -47,12 +47,12 @@
                             <div class="checkbox icheck">
                                 <label>
                                     <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
-                                    {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+                                    {{ 'security.login.remember_me'|trans({}, 'SonataUserBundle') }}
                                 </label>
                             </div>
                         </div>
                         <div class="col-xs-4">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</button>
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">{{ 'security.login.submit'|trans({}, 'SonataUserBundle') }}</button>
                         </div>
                     </div>
                 </form>
