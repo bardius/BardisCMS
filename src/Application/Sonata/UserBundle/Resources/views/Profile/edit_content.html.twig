@@ -8,6 +8,7 @@
         </a>
         <div id="generic_details" class="content" role="tabpanel" aria-labelledby="generic_details-heading">
             {{ form_start(genericDetailsForm, {'action': path('sonata_user_profile_edit'), 'method': 'POST', 'attr': {'novalidate': 'novalidate'} }) }}
+                <small class="right">{{ 'form.mandatory_fields'|trans({}, 'SonataUserBundle') }}</small>
                 {{ form_widget(genericDetailsForm) }}
                 <input type="hidden" name="form_section" value="generic_details" />
                 <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'SonataUserBundle') }}" class="button" />
@@ -21,6 +22,7 @@
         </a>
         <div id="preferences" class="content" role="tabpanel" aria-labelledby="preferences-heading">
             {{ form_start(accountPreferencesForm, {'action': path('sonata_user_profile_edit'), 'method': 'POST', 'attr': {'novalidate': 'novalidate'} }) }}
+                <small class="right">{{ 'form.mandatory_fields'|trans({}, 'SonataUserBundle') }}</small>
                 {{ form_widget(accountPreferencesForm) }}
                 <input type="hidden" name="form_section" value="preferences" />
                 <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'SonataUserBundle') }}" class="button" />
@@ -34,6 +36,7 @@
         </a>
         <div id="contact" class="content" role="tabpanel" aria-labelledby="contact-heading">
             {{ form_start(contactDetailsForm, {'action': path('sonata_user_profile_edit'), 'method': 'POST', 'attr': {'novalidate': 'novalidate'} }) }}
+                <small class="right">{{ 'form.mandatory_fields'|trans({}, 'SonataUserBundle') }}</small>
                 {{ form_widget(contactDetailsForm) }}
                 <input type="hidden" name="form_section" value="contact" />
                 <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'SonataUserBundle') }}" class="button" />
@@ -47,6 +50,7 @@
         </a>
         <div id="password" class="content" role="tabpanel" aria-labelledby="password-heading">
             {{ form_start(passwordForm, {'action': path('sonata_user_profile_edit'), 'method': 'POST', 'attr': {'novalidate': 'novalidate'} }) }}
+                <small class="right">{{ 'form.mandatory_fields'|trans({}, 'SonataUserBundle') }}</small>
                 {{ form_widget(passwordForm) }}
                 <input type="hidden" name="form_section" value="password" />
                 <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'SonataUserBundle') }}" class="button" />

@@ -22,7 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 
-use Sonata\UserBundle\Model\UserInterface;
+use Application\Sonata\UserBundle\Entity\User;
 
 class GenericDetailsFormType extends AbstractType {
 
@@ -54,8 +54,19 @@ class GenericDetailsFormType extends AbstractType {
 
         // Adding custom extra user fields for Generic Details (with Profile Details included) Form
 		$builder
-            ->add('email', EmailType::class, array('label' => 'Email*', 'data' => $defaults['email'], 'required' => true))
-            ->add('username', TextType::class, array('label' => 'form.username', 'translation_domain' => 'FOSUserBundle', 'data' => $defaults['username'], 'required' => true, 'read_only' => true))
+            ->add('email', EmailType::class, array(
+                'label' => 'form.email',
+                'translation_domain' => 'SonataUserBundle',
+                'data' => $defaults['email'],
+                'required' => true
+            ))
+            ->add('username', TextType::class, array(
+                'label' => 'form.username',
+                'translation_domain' => 'SonataUserBundle',
+                'data' => $defaults['username'],
+                'required' => true,
+                'read_only' => true
+            ))
             /*
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
@@ -65,22 +76,55 @@ class GenericDetailsFormType extends AbstractType {
                 'invalid_message' => 'fos_user.password.mismatch'
             ))
             */
-			->add('title', ChoiceType::class, array('choices' => array(
-                'mr' => 'Mr',
-                'ms' => 'Ms',
-                'mrs' => 'Mrs',
-                'miss' => 'Miss',
-                'dr' => 'Dr',
-                'prof' => 'Prof'
-            ), 'label' => 'Title', 'data' => $defaults['title'],'required' => true, 'expanded' => false, 'multiple' => false))
-			->add('firstname', TextType::class, array('label' => 'First Name', 'data' => $defaults['firstname'],'required' => false))
-			->add('lastname', TextType::class, array('label' => 'Surname', 'data' => $defaults['lastname'],'required' => false))
-			->add('gender', ChoiceType::class, array('choices' => array(
-                UserInterface::GENDER_UNKNOWN   => 'gender_unspecified',
-                UserInterface::GENDER_FEMALE => 'gender_female',
-                UserInterface::GENDER_MALE   => 'gender_male'
-            ), 'label' => 'Gender', 'data' => $defaults['gender'],'required' => true, 'expanded' => false, 'multiple' => false))
-            ->add('dateOfBirth', BirthdayType::class, array('format' => 'yyyy-MM-dd', 'widget' => 'single_text', 'label' => 'Date Of Birth', 'data' => $defaults['dateOfBirth'], 'required' => false))
+			->add('title', ChoiceType::class, array(
+                'choices' => array(
+                    User::TITLE_MR      => 'mr',
+                    User::TITLE_MS      => 'ms',
+                    User::TITLE_MRS     => 'mrs',
+                    User::TITLE_MISS    => 'miss',
+                    User::TITLE_DR      => 'dr',
+                    User::TITLE_PROF    => 'prof',
+                ),
+                'label' => 'form.title',
+                'translation_domain' => 'SonataUserBundle',
+                'data' => $defaults['title'],
+                'required' => true,
+                'expanded' => false,
+                'multiple' => false
+            ))
+			->add('firstname', TextType::class, array(
+                'label' => 'form.firstname',
+                'translation_domain' => 'SonataUserBundle',
+                'data' => $defaults['firstname'],
+                'required' => false
+            ))
+			->add('lastname', TextType::class, array(
+                'label' => 'form.lastname',
+                'translation_domain' => 'SonataUserBundle',
+                'data' => $defaults['lastname'],
+                'required' => false
+            ))
+			->add('gender', ChoiceType::class, array(
+                'choices' => array(
+                    User::GENDER_UNKNOWN   => 'gender_unknown',
+                    User::GENDER_FEMALE    => 'gender_female',
+                    User::GENDER_MALE      => 'gender_male'
+                ),
+                'label' => 'form.gender',
+                'translation_domain' => 'SonataUserBundle',
+                'data' => $defaults['gender'],
+                'required' => true,
+                'expanded' => false,
+                'multiple' => false
+            ))
+            ->add('dateOfBirth', BirthdayType::class, array(
+                'format' => 'dd-MM-yyyy',
+                'widget' => 'single_text',
+                'label' => 'form.dateOfBirth',
+                'translation_domain' => 'SonataUserBundle',
+                'data' => $defaults['dateOfBirth'],
+                'required' => false
+            ))
 		;
 	}
 

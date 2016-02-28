@@ -50,23 +50,54 @@ class RegistrationFormType extends AbstractType {
 
         // Adding custom extra user fields for Registration Form
         $builder
-            ->add('email', EmailType::class, array('label' => 'form.email', 'translation_domain' => 'SonataUserBundle'))
-            ->add('username', TextType::class, array('label' => 'form.username', 'translation_domain' => 'SonataUserBundle'))
+            ->add('email', EmailType::class, array(
+                'label' => 'form.email',
+                'translation_domain' => 'SonataUserBundle',
+                'required' => true
+            ))
+            ->add('username', TextType::class, array(
+                'label' => 'form.username',
+                'translation_domain' => 'SonataUserBundle',
+                'required' => true
+            ))
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
-                'options' => array('translation_domain' => 'SonataUserBundle'),
-                'first_options' => array('label' => 'form.password'),
-                'second_options' => array('label' => 'form.password_confirmation'),
+                'options' => array(
+                    'translation_domain' => 'SonataUserBundle'
+                ),
+                'first_options' => array(
+                    'label' => 'form.password'
+                ),
+                'second_options' => array(
+                    'label' => 'form.password_confirmation'
+                ),
                 'invalid_message' => 'fos_user.password.mismatch',
             ))
-            ->add('firstname', TextType::class, array('label' => 'form.firstname', 'translation_domain' => 'SonataUserBundle', 'required' => true))
-            ->add('lastname', TextType::class, array('label' => 'form.lastname', 'translation_domain' => 'SonataUserBundle', 'required' => true))
-            ->add('campaign', HiddenType::class, array('label' => 'form.campaignname', 'translation_domain' => 'SonataUserBundle', 'data' => $this->campaignData, 'required' => false))
-            ->add('termsAccepted', CheckboxType::class, array('label' => 'form.tnc', 'translation_domain' => 'SonataUserBundle', 'required' => true)
+            ->add('firstname', TextType::class, array(
+                'label' => 'form.firstname',
+                'translation_domain' => 'SonataUserBundle',
+                'required' => true
+            ))
+            ->add('lastname', TextType::class, array(
+                'label' => 'form.lastname',
+                'translation_domain' => 'SonataUserBundle',
+                'required' => true
+            ))
+            ->add('campaign', HiddenType::class, array(
+                'label' => 'form.campaignname',
+                'translation_domain' => 'SonataUserBundle',
+                'data' => $this->campaignData,
+                'required' => false
+            ))
+            ->add('termsAccepted', CheckboxType::class, array(
+                'label' => 'form.tnc',
+                'translation_domain' => 'SonataUserBundle',
+                'required' => true
+            ))
             // Create user with no username and password (pre set email as both)
             //->remove('username')
             //->remove('plainPassword')
-        );
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

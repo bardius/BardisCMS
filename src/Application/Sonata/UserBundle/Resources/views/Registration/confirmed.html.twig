@@ -27,8 +27,8 @@
                     {% else %}
                         <p>
                             {% if user %}
-                                <a href="{{ path('sonata_user_profile_show') }}" title="User Profile" class="button">
-                                    User Profile
+                                <a href="{{ path('sonata_user_profile_show') }}" title="{{ 'layout.link.user_profile' | trans({}, "SonataUserBundle") }}" class="button">
+                                    {{ 'layout.link.user_profile' | trans({}, "SonataUserBundle") }}
                                 </a>
                                 <a href="{{ path('fos_user_security_logout') }}" title="{{ 'link_logout' | trans({}, "SonataUserBundle") }}" class="button">
                                     {{ 'link_logout' | trans({}, "SonataUserBundle") }}

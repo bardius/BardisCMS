@@ -10,7 +10,7 @@
                         {% include "FOSUserBundle:Security:login_content.html.twig" %}
                     {% else %}
                         <p>
-                            Hello {{ logged_username }}, you are logged in.
+                            {{ 'layout.login_greeting'|trans({'%username%': logged_username}, 'SonataUserBundle') }}
                         </p>
                         <p>
                             <a href="{{ path('sonata_user_profile_show') }}" title="{{ 'link_profile' | trans({}, "SonataUserBundle") }}" class="button">

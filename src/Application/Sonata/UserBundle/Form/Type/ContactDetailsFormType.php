@@ -50,19 +50,64 @@ class ContactDetailsFormType extends AbstractType {
 
         // Adding custom extra user fields for Contact Details Form
 		$builder
-			->add('addressLine1', TextType::class, array('label' => 'Address 1*', 'data'=> $defaults['addressLine1'], 'required' => true))
-			->add('addressLine2', TextType::class, array('label' => 'Address 2*', 'data'=> $defaults['addressLine2'], 'required' => true))
-			->add('addressLine3', TextType::class, array('label' => 'Address 3', 'data'=> $defaults['addressLine3'], 'required' => false))
-			->add('city', TextType::class, array('label' => 'City/Town*', 'data'=> $defaults['city'], 'required' => true))
-			->add('county', TextType::class, array('label' => 'County', 'data'=> $defaults['county'], 'required' => false))
-			->add('postcode', TextType::class, array('label' => 'Postcode*', 'data'=> $defaults['postcode'], 'required' => true))
-			->add('countryCode', CountryType::class, array('preferred_choices' => array(
-                'GB',
-                'US'
-            ), 'label' => 'Country', 'data'=> $defaults['countryCode'], 'required' => true))
-            ->add('phone', TextType::class, array('label' => 'Phone number*', 'data'=> $defaults['phone'], 'required' => false))
-            ->add('mobile', TextType::class, array('label' => 'Mobile number*', 'data'=> $defaults['mobile'], 'required' => false))
-		;
+            ->add('addressLine1', TextType::class, array(
+                'label' => 'form.addressLine1',
+                'translation_domain' => 'SonataUserBundle',
+                'data'=> $defaults['addressLine1'],
+                'required' => true
+            ))
+            ->add('addressLine2', TextType::class, array(
+                'label' => 'form.addressLine2',
+                'translation_domain' => 'SonataUserBundle',
+                'data'=> $defaults['addressLine2'],
+                'required' => true
+            ))
+            ->add('addressLine3', TextType::class, array(
+                'label' => 'form.addressLine3',
+                'translation_domain' => 'SonataUserBundle',
+                'data'=> $defaults['addressLine3'],
+                'required' => false
+            ))
+            ->add('city', TextType::class, array(
+                'label' => 'form.city',
+                'translation_domain' => 'SonataUserBundle',
+                'data'=> $defaults['city'],
+                'required' => true
+            ))
+            ->add('county', TextType::class, array(
+                'label' => 'form.county',
+                'translation_domain' => 'SonataUserBundle',
+                'data'=> $defaults['county'],
+                'required' => false
+            ))
+            ->add('postcode', TextType::class, array(
+                'label' => 'form.postcode',
+                'translation_domain' => 'SonataUserBundle',
+                'data'=> $defaults['postcode'],
+                'required' => false
+            ))
+            ->add('countryCode', CountryType::class, array(
+                'preferred_choices' => array(
+                    'GB'
+                ),
+                'label' => 'form.countryCode',
+                'translation_domain' => 'SonataUserBundle',
+                'data'=> $defaults['countryCode'],
+                'required' => true
+            ))
+            ->add('phone', TextType::class, array(
+                'label' => 'form.phone',
+                'translation_domain' => 'SonataUserBundle',
+                'data'=> $defaults['phone'],
+                'required' => false
+            ))
+            ->add('mobile', TextType::class, array(
+                'label' => 'form.mobile',
+                'translation_domain' => 'SonataUserBundle',
+                'data'=> $defaults['mobile'],
+                'required' => false
+            ))
+        ;
 	}
 
     public function configureOptions(OptionsResolver $resolver)

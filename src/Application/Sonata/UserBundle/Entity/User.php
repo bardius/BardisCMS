@@ -16,10 +16,28 @@ use Application\Sonata\UserBundle\Entity\BookieUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Sonata\UserBundle\Model\UserInterface;
 
 
 class User extends BaseUser
 {
+    const TITLE_MR = 'mr';
+    const TITLE_MS = 'ms';
+    const TITLE_MRS = 'mrs';
+    const TITLE_MISS = 'miss';
+    const TITLE_DR = 'dr';
+    const TITLE_PROF = 'prof';
+
+    const QUESTION_SPOUSE = 'spouse_name';
+    const QUESTION_MAIDEN_NAME = 'maiden_name';
+    const QUESTION_CAR = 'first_car';
+    const QUESTION_PET = 'first_pet';
+    const QUESTION_SCHOOL = 'first_school';
+
+    const CURRENCY_POUND = 'GBP';
+    const CURRENCY_EURO = 'EUR';
+    const CURRENCY_USD = 'USD';
+
     /**
      * @var integer
      *
@@ -439,6 +457,67 @@ class User extends BaseUser
     public function getFullname()
     {
         return $this->getFirstname() . " " . $this->getLastname();
+    }
+
+    /**
+     * Returns the gender list.
+     *
+     * @return array
+     */
+    public static function getGenderList()
+    {
+        return array(
+            UserInterface::GENDER_UNKNOWN => 'gender_unknown',
+            UserInterface::GENDER_FEMALE  => 'gender_female',
+            UserInterface::GENDER_MALE    => 'gender_male',
+        );
+    }
+
+    /**
+     * Returns the title list.
+     *
+     * @return array
+     */
+    public static function getTitleList()
+    {
+        return array(
+            User::TITLE_MR      => 'mr',
+            User::TITLE_MS      => 'ms',
+            User::TITLE_MRS     => 'mrs',
+            User::TITLE_MISS    => 'miss',
+            User::TITLE_DR      => 'dr',
+            User::TITLE_PROF    => 'prof',
+        );
+    }
+
+    /**
+     * Returns the secret question list.
+     *
+     * @return array
+     */
+    public static function getSecretQuestionList()
+    {
+        return array(
+            User::QUESTION_SPOUSE       => 'spouse_name',
+            User::QUESTION_MAIDEN_NAME  => 'maiden_name',
+            User::QUESTION_CAR          => 'first_car',
+            User::QUESTION_PET          => 'first_pet',
+            User::QUESTION_SCHOOL       => 'first_school',
+        );
+    }
+
+    /**
+     * Returns the secret question list.
+     *
+     * @return array
+     */
+    public static function getCurrencyCodeList()
+    {
+        return array(
+            User::CURRENCY_POUND    => 'GBP',
+            User::CURRENCY_EURO     => 'EUR',
+            User::CURRENCY_USD      => 'USD',
+        );
     }
 
     /**

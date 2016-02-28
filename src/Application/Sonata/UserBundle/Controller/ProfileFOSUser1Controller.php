@@ -214,8 +214,8 @@ class ProfileFOSUser1Controller extends Controller
         $this->page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($this->page);
 
         // Password Change Form
-        $passwordForm = $this->container->get('fos_user.change_password.form');
-        $passwordFormHandler = $this->container->get('fos_user.change_password.form.handler');
+        $passwordForm = $this->container->get('sonata_user.change_password.form');
+        $passwordFormHandler = $this->container->get('sonata_user.change_password.form.handler');
 
         // Generic Details Form
         $genericDetailsForm = $this->container->get('sonata_user.generic_details.form');

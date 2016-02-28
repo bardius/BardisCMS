@@ -86,22 +86,63 @@ layout:
     login: Login
     register: Register
     logged_in_as: Logged in as %username%
+    login_greeting: Hello %username%, you are logged in.
     link:
         have_account:   Already have an account?
         create_account: Create new account
+        user_profile:   User profile
 
 # Form field labels
 form:
     group_name:                     Group name
-    username:                       Username
-    email:                          Email
-    current_password:               Current password
-    password:                       Password
-    password_confirmation:          Repeat password
-    new_password:                   New password
-    new_password_confirmation:      Repeat new password
-    firstname:                      First name
-    lastname:                       Last name
+    username:                       Username *
+    email:                          Email *
+    current_password:               Current password *
+    password:                       Password *
+    password_confirmation:          Repeat password *
+    new_password:                   New password *
+    new_password_confirmation:      Repeat new password *
+    firstname:                      First name *
+    lastname:                       Last name *
     campaignname:                   Campaign name
-    tnc:                            I Agree with Terms & Conditions
+    tnc:                            I Agree with Terms & Conditions *
     mandatory_fields:               Mandatory Fields *
+    title:                          Title
+    dateOfBirth:                    Date of birth
+    gender:                         Gender
+    language:                       Language
+    currencyCode:                   Currency
+    secretQuestion:                 Secret question
+    secretQuestionResponse:         Secret question response
+    addressLine1:                   Address line 1 *
+    addressLine2:                   Address line 2 *
+    addressLine3:                   Address line 3
+    city:                           City *
+    county:                         County
+    postcode:                       Postcode
+    countryCode:                    Country *
+    phone:                          Phone number (landline)
+    mobile:                         Mobile number
+
+# Change Password
+password:
+    missmatch:  The entered passwords don't match
+
+# Form field constant values
+mr:                             Mr
+ms:                             Ms
+mrs:                            Mrs
+miss:                           Miss
+dr:                             Dr
+prof:                           Prof
+GBP:                            £ (GBP)
+EUR:                            € (EUR)
+USD:                            $ (USD)
+spouse_name:                    Spouse middle name
+maiden_name:                    Mother's maiden name
+first_car:                      First car model
+first_pet:                      First pet name
+first_school:                   First school name
+gender_unknown:                 Undefined
+gender_male:                    Male
+gender_female:                  Female

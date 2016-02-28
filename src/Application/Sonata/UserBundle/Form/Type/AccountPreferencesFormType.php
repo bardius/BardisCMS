@@ -18,6 +18,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
+use Application\Sonata\UserBundle\Entity\User;
+
 class AccountPreferencesFormType extends AbstractType {
 
 	private $class;
@@ -45,22 +47,44 @@ class AccountPreferencesFormType extends AbstractType {
 
         // Adding custom extra user fields for Account Preferences (including the Security) Form
 		$builder
-            ->add('language', LanguageType::class, array('label' => 'Language', 'data' => $defaults['language'],  'required' => true))
-			->add('currencyCode', ChoiceType::class, array('choices' => array(
-                'GBP' => '£' ,
-                'USD' => '$',
-                'EUR' => '€'
-            ), 'label' => 'Currency', 'data' => $defaults['currencyCode'],  'required' => true, 'expanded' => true, 'multiple' => false))
-            ->add('secretQuestion', ChoiceType::class, array('choices' => array(
-                'Spouse’s middle name' => 'Spouse’s middle name',
-                'Mother’s Maiden Name' => 'Mother’s Maiden Name',
-                'My favourite player' => 'My favourite player',
-                'My first car' => 'My first car',
-                'My first pet’s name' => 'My first pet’s name',
-                'My first school' => 'My first school',
-            ),'label' => 'Challenge', 'data' => $defaults['secretQuestion'], 'required' => true))
-            ->add('secretQuestionResponse', TextType::class, array('label' => 'Response', 'data' => $defaults['secretQuestionResponse'], 'required' => false))
-
+            ->add('language', LanguageType::class, array(
+                'label' => 'form.language',
+                'translation_domain' => 'SonataUserBundle',
+                'data' => $defaults['language'],
+                'required' => true
+            ))
+			->add('currencyCode', ChoiceType::class, array(
+                'choices' => array(
+                    User::CURRENCY_POUND    => 'GBP',
+                    User::CURRENCY_EURO     => 'EUR',
+                    User::CURRENCY_USD      => 'USD'
+                ),
+                'label' => 'form.currencyCode',
+                'translation_domain' => 'SonataUserBundle',
+                'data' => $defaults['currencyCode'],
+                'required' => true,
+                'expanded' => true,
+                'multiple' => false
+            ))
+            ->add('secretQuestion', ChoiceType::class, array(
+                'choices' => array(
+                    User::QUESTION_SPOUSE       => 'spouse_name',
+                    User::QUESTION_MAIDEN_NAME  => 'maiden_name',
+                    User::QUESTION_CAR          => 'first_car',
+                    User::QUESTION_PET          => 'first_pet',
+                    User::QUESTION_SCHOOL       => 'first_school'
+                ),
+                'label' => 'form.secretQuestion',
+                'translation_domain' => 'SonataUserBundle',
+                'data' => $defaults['secretQuestion'],
+                'required' => true
+            ))
+            ->add('secretQuestionResponse', TextType::class, array(
+                'label' => 'form.secretQuestionResponse',
+                'translation_domain' => 'SonataUserBundle',
+                'data' => $defaults['secretQuestionResponse'],
+                'required' => false
+            ))
         ;
 	}
 

@@ -43,6 +43,6 @@ sonata_user:
         long: "[-Inf,Inf]The last name is too long"
 
     termsAccepted:
-        blank: Please read and accept the terms & conditions
+        blank: Please read and accept the Terms & Conditions
 
 

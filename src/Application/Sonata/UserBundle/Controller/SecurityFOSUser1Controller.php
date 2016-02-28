@@ -163,7 +163,7 @@ class SecurityFOSUser1Controller extends Controller
         );
 
         // Render login page
-        $response = $this->render('FOSUserBundle:Security:login.html.twig', $pageData);
+        $response = $this->render('SonataUserBundle:Security:login.html.twig', $pageData);
         // $response = $this->container->get('templating')->renderResponse('FOSUserBundle:Security:login.html.'.$this->getEngine(), $pageData);
 
         // TODO: check if the login page should never be cached or not before allowing cache here

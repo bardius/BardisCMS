@@ -57,11 +57,14 @@ security:
             context:            user
             pattern:            .*
             form_login:
-                provider:       fos_userbundle
-                login_path:     /login
-                use_forward:    false
-                check_path:     /login_check
-                failure_path:   null
+                provider:                       fos_userbundle
+                login_path:                     /login
+                use_forward:                    false
+                check_path:                     /login_check
+                failure_path:                   null
+                use_referer:                    true
+                default_target_path:            /login
+                always_use_default_target_path: true
             # logout:             true
             logout:
                 path:           /logout
