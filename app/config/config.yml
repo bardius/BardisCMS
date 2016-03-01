@@ -82,6 +82,8 @@ framework:
                 # BardisCMS:
                 - ContentBlockBundle:Form:fields.html.twig
                 - PageBundle:Form:fields.html.twig
+                # UserBundle Overrides:
+                - UserBundle:Form:fields.html.twig
 
         assets_base_urls:
             http:               []

@@ -1,13 +1,19 @@
 parameters:
     page.services.helpers_class: BardisCMS\PageBundle\Services\Helpers
-    page.listener.responce_listener_class: BardisCMS\PageBundle\Listener\ResponceListener
+    page.listener.response_listener_class: BardisCMS\PageBundle\Listener\ResponseListener
+    page.services.ajax_detection_class: BardisCMS\PageBundle\Services\AjaxDetection
 
 services:
     bardiscms_page.services.helpers:
         class: %page.services.helpers_class%
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
         kernel.listener.response_listener:
-            class: %page.listener.responce_listener_class%
+            class: %page.listener.response_listener_class%
             tags:
                - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    bardiscms_page.services.ajax_detection:
+        class: %page.services.ajax_detection_class%
+        scope: request
+        arguments: ["@request_stack"]

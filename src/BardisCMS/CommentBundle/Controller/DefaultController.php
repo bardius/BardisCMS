@@ -61,7 +61,7 @@ class DefaultController extends Controller {
         $form = $this->createForm(new CommentType(), $comment);
         $form->handleRequest($this->pageRequest);
 
-        //Prepare the responce data
+        //Prepare the response data
         $errorList = array();
         $successMsg = '';
         $formhasErrors = true;
@@ -73,7 +73,7 @@ class DefaultController extends Controller {
             $em->persist($comment);
             $em->flush();
 
-            // The responce for the user upon successful submission
+            // The response for the user upon successful submission
             $successMsg = 'Thank you submitting your comment.';
             $formMessage = $successMsg;
             $formhasErrors = false;
@@ -83,7 +83,7 @@ class DefaultController extends Controller {
             $formMessage = 'There was an error submitting your comment. Please try again.';
         }
 
-        // Return the responce to the user
+        // Return the response to the user
         if ($ajaxForm) {
 
             $ajaxFormData = array(
@@ -92,11 +92,11 @@ class DefaultController extends Controller {
                 'hasErrors' => $formhasErrors
             );
 
-            // Return the responce in json format
-            $ajaxFormResponce = new Response(json_encode($ajaxFormData));
-            $ajaxFormResponce->headers->set('Content-Type', 'application/json');
+            // Return the response in json format
+            $ajaxFormResponse = new Response(json_encode($ajaxFormData));
+            $ajaxFormResponse->headers->set('Content-Type', 'application/json');
 
-            return $ajaxFormResponce;
+            return $ajaxFormResponse;
         } else {
             if ($commentType == 'Blog') {
 
@@ -112,7 +112,7 @@ class DefaultController extends Controller {
                 $settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
                 $page = $this->setBlogSettings($settings, $associated_object);
 
-                // Return the responce as the blog post with form data
+                // Return the response as the blog post with form data
                 return $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'form' => $form->createView(), 'comments' => $postComments, 'comment' => $comment, 'ajaxform' => $ajaxForm, 'formMessage' => $formMessage));
             } else {
                 throw $this->createNotFoundException('Commenting is not available.');

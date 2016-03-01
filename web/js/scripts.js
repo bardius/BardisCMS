@@ -74,10 +74,13 @@
         init: function () {
 
             // Start the AJAX based forms
-            CMS.Forms.ajaxSubmittedForm('#contactform', '#contactFormBtn');
-            CMS.Forms.ajaxSubmittedForm('#add_comment_form', '#submitCommentBtn');
+            CMS.Forms.ajaxSubmittedForm('#contactform', '#contactFormBtn', true);
+            CMS.Forms.ajaxSubmittedForm('#add_comment_form', '#submitCommentBtn', true);
 
-            // Setup the filters
+            // Start the Ajax based sonata user forms
+            CMS.Forms.ajaxSubmittedForm('#fos_user_registration_form', '#userRegisterFormBtn', false);
+
+            // Setup the filters for the filter search page
             CMS.Forms.setupFilters();
         }
     };
@@ -89,7 +92,7 @@
                 checkboxes.removeAttr('checked');
             });
         },
-        ajaxSubmittedForm: function (formId, formSubmitBtnId) {
+        ajaxSubmittedForm: function (formId, formSubmitBtnId, overrideSuccess) {
 
             var formElement = $(formId);
             var btnElement = $(formSubmitBtnId);
@@ -104,28 +107,43 @@
 
                     var formAction = formElement.attr("action");
 
-                    $.post(formAction, formData, function (responce) {
+                    $.post(formAction, formData, function (response) {
 
                         $(".formError").remove();
                         $("label.error").removeClass('error');
 
-                        if (responce.hasErrors === false) {
-                            formElement.trigger("reset");
-                            formElement.html('<p>' + responce.formMessage + '</p>');
+                        if (response.hasErrors === false) {
+                            if(overrideSuccess){
+                                formElement.trigger("reset");
+                                formElement.html('<p>' + response.formMessage + '</p>');
+                            }
+                            else if(response.redirectURL){
+                                window.location.href = response.redirectURL;
+                            }
                         }
                         else {
-                            if (responce.errors !== null) {
+                            if (response.errors !== null) {
 
-                                var errorArray = responce.errors;
+                                var errorArray = response.errors;
 
-                                // find type of input, return validation
+                                // Find type of input, return validation
                                 $.each(errorArray, function (key, val) {
-                                    $(formId + '_' + key).addClass('error');
-                                    $(formId + '_' + key).after($('<small class="formError error">' + val[0] + '</small>').hide());
+                                    if(val.hasOwnProperty("first")){
+                                        $(formId + '_' + key + '_first').addClass('error');
+                                        $(formId + '_' + key + '_first').after($('<small class="formError error">' + val.first[0] + '</small>').hide());
+                                    }
+                                    else if(val.hasOwnProperty("second")){
+                                        $(formId + '_' + key + '_second').addClass('error');
+                                        $(formId + '_' + key + '_second').after($('<small class="formError error">' + val.second[0] + '</small>').hide());
+                                    }
+                                    else{
+                                        $(formId + '_' + key).addClass('error');
+                                        $(formId + '_' + key).after($('<small class="formError error">' + val[0] + '</small>').hide());
+                                    }
                                 });
                             }
 
-                            $('<small class="formError error">' + responce.formMessage + '</small>').hide().insertAfter(btnElement);
+                            $('<small class="formError error">' + response.formMessage + '</small>').hide().insertAfter(btnElement);
 
                             $('.formError').fadeIn(200);
                         }

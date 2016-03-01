@@ -414,26 +414,26 @@ class DefaultController extends Controller {
                         ->setTo($this->settings->getEmailRecepient())
                         ->setBody($this->renderView('PageBundle:Email:contactFormEmail.txt.twig', array('sender' => $emailData['firstname'] . ' ' . $emailData['surname'], 'mailData' => $emailData['comment'])));
 
-                // The responce for the user upon successful submission
+                // The response for the user upon successful submission
                 $successMsg = 'Thank you for contacting us, we will be in touch soon';
                 $formMessage = $successMsg;
                 $errorList = array();
-                $formhasErrors = false;
+                $formHasErrors = false;
 
-                // Send the email with php swift mailerand catch errors
+                // Send the email with php swift mailer and catch errors
                 try {
                     $this->get('mailer')->send($message);
                 } catch (\Swift_TransportException $exception) {
-                    // The responce for the user upon unsuccessful mailer send
+                    // The response for the user upon unsuccessful mailer send
                     $formMessage = $exception->getMessage();
-                    $formhasErrors = true;
+                    $formHasErrors = true;
                 }
             } else {
                 // Validate the data and get errors
                 $successMsg = '';
                 $errorList = $this->get('bardiscms_page.services.helpers')->getFormErrorMessages($form);
                 $formMessage = 'There was an error submitting your form. Please try again.';
-                $formhasErrors = true;
+                $formHasErrors = true;
             }
 
             // Return the response to the user
@@ -442,18 +442,18 @@ class DefaultController extends Controller {
                 $ajaxFormData = array(
                     'errors' => $errorList,
                     'formMessage' => $formMessage,
-                    'hasErrors' => $formhasErrors
+                    'hasErrors' => $formHasErrors
                 );
 
-                $ajaxFormResponce = new Response(json_encode($ajaxFormData));
-                $ajaxFormResponce->headers->set('Content-Type', 'application/json');
+                $ajaxFormResponse = new Response(json_encode($ajaxFormData));
+                $ajaxFormResponse->headers->set('Content-Type', 'application/json');
 
-                return $ajaxFormResponce;
+                return $ajaxFormResponse;
             } else {
                 return $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'form' => $form->createView(), 'ajaxform' => $ajaxForm, 'formMessage' => $formMessage));
             }
         }
-        // If the form has not been submited yet
+        // If the form has not been submitted yet
         else {
             $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'form' => $form->createView(), 'ajaxform' => $ajaxForm));
 

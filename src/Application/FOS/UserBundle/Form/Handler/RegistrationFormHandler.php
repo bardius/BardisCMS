@@ -56,4 +56,14 @@ class RegistrationFormHandler extends BaseHandler
         $token = new UsernamePasswordToken($user, null, 'main', $user->getRoles());
         $this->container->get('security.token_storage')->setToken($token);
     }
+
+    /**
+     * Extend with a method that returns the errors of the process
+     *
+     * @return Array
+     */
+    public function getErrors()
+    {
+        return $this->container->get('bardiscms_page.services.helpers')->getFormErrorMessages($this->form);
+    }
 }

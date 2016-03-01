@@ -1,5 +1,23 @@
-    {{ form_start(form, {'action': path('fos_user_registration_register'), 'method': 'POST', 'attr': {'novalidate': 'novalidate'} }) }}
-        <small class="right">{{ 'form.mandatory_fields'|trans({}, 'SonataUserBundle') }}</small>
-        {{ form_widget(form) }}
-        <input type="submit" id="subscribeFormBtn" class="button" value="{{ 'registration.submit'|trans({}, 'SonataUserBundle') }}" />
+    {% form_theme form with ['Form/fields.html.twig'] %}
+
+    {{ form_start(form, {'action': path('fos_user_registration_register'), 'method': 'POST', 'attr': {'id': 'fos_user_registration_form', 'novalidate': 'novalidate'} }) }}
+        <div class="row">
+            <div class="large-12 small-12 columns">
+                <small class="right">{{ 'form.mandatory_fields'|trans({}, 'SonataUserBundle') }}</small>
+            </div>
+            {{ form_widget(form) }}
+            {#
+            <div class="large-12 small-12 columns formFieldContainer">
+                    {{ form_errors(form) }}
+            </div>
+            #}
+            <div class="large-12 small-12 columns">
+                <input type="submit" id="userRegisterFormBtn" class="button" value="{{ 'registration.submit'|trans({}, 'SonataUserBundle') }}" />
+                {% if formMessage is defined %}
+                    <small class="form-message error">
+                        {{ formMessage }}
+                    </small>
+                {% endif %}
+            </div>
+        </div>
     {{ form_end(form) }}

@@ -13,18 +13,24 @@ namespace BardisCMS\PageBundle\Services;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use Symfony\Component\Form\Form;
+
 class Helpers {
 
     private $em;
     private $conn;
+    private $container;
 
-    public function __construct(EntityManager $em) {
+    public function __construct(EntityManager $em, ContainerInterface $container) {
         $this->em = $em;
         $this->conn = $em->getConnection();
+        $this->container = $container;
     }
 
-    // Get the error messages of the contact form assosiated with their fields in an array
-    public function getFormErrorMessages(\Symfony\Component\Form\Form $form) {
+    // Get the error messages of the contact form associated with their fields in an array
+    public function getFormErrorMessages(Form $form) {
 
         $errors = array();
         $formErrors = iterator_to_array($form->getErrors(false, true));
@@ -37,7 +43,20 @@ class Helpers {
                 $template = str_replace($var, $value, $template);
             }
 
-            $errors[$key] = $template;
+            if($error->getMessagePluralization() !== null) {
+                $errors[$key] = $this->container->get('translator')->transChoice(
+                    $error->getMessage(),
+                    $error->getMessagePluralization(),
+                    $error->getMessageParameters()
+                );
+            } else {
+                $errors[$key] = $this->container->get('translator')->trans(
+                    $error->getMessage()
+                );
+            }
+
+            //$errors[$key] = $template;
+            //$errors[$key] = $this->container->get('translator')->trans($template, array(), 'validators');
         }
         if ($form->count()) {
             foreach ($form as $child) {

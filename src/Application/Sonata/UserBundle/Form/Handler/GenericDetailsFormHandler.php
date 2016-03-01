@@ -54,4 +54,14 @@ class GenericDetailsFormHandler
     {
         $this->userManager->updateUser($user);
     }
+
+    /**
+     * Extend with a method that returns the errors of the process
+     *
+     * @return Array
+     */
+    public function getErrors()
+    {
+        return $this->container->get('bardiscms_page.services.helpers')->getFormErrorMessages($this->form);
+    }
 }

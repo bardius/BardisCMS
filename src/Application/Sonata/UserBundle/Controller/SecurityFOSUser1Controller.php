@@ -14,6 +14,7 @@ namespace Application\Sonata\UserBundle\Controller;
 
 use Sonata\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 use Symfony\Component\Security\Core\SecurityContext;
 

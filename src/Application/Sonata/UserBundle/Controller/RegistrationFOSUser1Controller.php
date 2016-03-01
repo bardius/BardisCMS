@@ -18,6 +18,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
 
+use FOS\UserBundle\Form\Handler\RegistrationFormHandler;
+
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -34,8 +36,6 @@ class RegistrationFOSUser1Controller extends Controller
     private $alias;
     private $id;
     private $extraParams;
-    private $currentpage;
-    private $totalpageitems;
     private $linkUrlParams;
     private $page;
     private $publishStates;
@@ -45,6 +45,7 @@ class RegistrationFOSUser1Controller extends Controller
     private $userRole;
     private $enableHTTPCache;
     private $logged_username;
+    private $isAjaxRequest;
 
     // Override the ContainerAware setContainer to accommodate the extra variables
     public function setContainer(ContainerInterface $container = null) {
@@ -54,8 +55,6 @@ class RegistrationFOSUser1Controller extends Controller
         $this->alias = null;
         $this->id = null;
         $this->extraParams = null;
-        $this->currentpage = null;
-        $this->totalpageitems = null;
         $this->linkUrlParams = null;
         $this->page = null;
         $this->userName = null;
@@ -72,6 +71,9 @@ class RegistrationFOSUser1Controller extends Controller
 
         // Set the flag for allowing HTTP cache
         $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+
+        // Check if request was Ajax based
+        $this->isAjaxRequest = $this->get('bardiscms_page.services.ajax_detection')->isAjaxRequest();
 
         // Set the publish status that is available for the user
         // Very basic ACL permission check
@@ -121,11 +123,12 @@ class RegistrationFOSUser1Controller extends Controller
 
         $this->page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($this->page);
 
+        $confirmationEnabled = $this->container->getParameter('fos_user.registration.confirmation.enabled');
+
         $form = $this->container->get('fos_user.registration.form');
         $formHandler = $this->container->get('fos_user.registration.form.handler');
         //$form = $this->container->get('sonata.user.registration.form');
         //$formHandler = $this->container->get('sonata.user.registration.form.handler');
-        $confirmationEnabled = $this->container->getParameter('fos_user.registration.confirmation.enabled');
 
         $process = $formHandler->process($confirmationEnabled);
         if ($process) {
@@ -160,7 +163,18 @@ class RegistrationFOSUser1Controller extends Controller
                 $this->authenticateUser($user, $response);
             }
 
+            // If the request was Ajax based and the registration was successfull
+            if($this->isAjaxRequest){
+                return $this->onAjaxSuccess($url);
+            }
+
             return $response;
+        }
+        else {
+            // If the request was Ajax based and the registration was not successfull
+            if($this->isAjaxRequest){
+                return $this->onAjaxError($formHandler);
+            }
         }
 
         $this->container->get('session')->set('sonata_user_redirect_url', $this->container->get('request')->headers->get('referer'));
@@ -174,7 +188,6 @@ class RegistrationFOSUser1Controller extends Controller
 
         // Render register page
         $response = $this->render('FOSUserBundle:Registration:register.html.twig', $pageData);
-        // $response = $this->container->get('templating')->renderResponse('FOSUserBundle:Registration:register.html.'.$this->getEngine(), $pageData);
 
         return $response;
     }
@@ -225,7 +238,6 @@ class RegistrationFOSUser1Controller extends Controller
 
         // Render register page
         $response = $this->render('FOSUserBundle:Registration:checkEmail.html.twig', $pageData);
-        // $response = $this->container->get('templating')->renderResponse('FOSUserBundle:Registration:checkEmail.html.'.$this->getEngine(), $pageData);
 
         return $response;
     }
@@ -306,7 +318,6 @@ class RegistrationFOSUser1Controller extends Controller
 
         // Render register page
         $response = $this->render('FOSUserBundle:Registration:confirmed.html.twig', $pageData);
-        // $response = $this->container->get('templating')->renderResponse('FOSUserBundle:Registration:confirmed.html.'.$this->getEngine(), $pageData);
 
         return $response;
     }
@@ -346,6 +357,58 @@ class RegistrationFOSUser1Controller extends Controller
     protected function getEngine()
     {
         return $this->container->getParameter('fos_user.template.engine');
+    }
+
+    /**
+     * Extend with new method to handle Ajax response with errors
+     *
+     * @param RegistrationFormHandler $formHandler
+     *
+     * @return Response
+     */
+    protected function onAjaxError(RegistrationFormHandler $formHandler)
+    {
+        $errorList = $formHandler->getErrors();
+        $formMessage = 'There was an error submitting your registration details. Please try again.';
+        $formHasErrors = true;
+
+        $ajaxFormData = array(
+            'errors' => $errorList,
+            'formMessage' => $formMessage,
+            'hasErrors' => $formHasErrors
+        );
+
+        $ajaxFormResponse = new Response(json_encode($ajaxFormData));
+        $ajaxFormResponse->headers->set('Content-Type', 'application/json');
+
+        return $ajaxFormResponse;
+    }
+
+    /**
+     * Extend with new method to handle Ajax response with success
+     *
+     * @param String $url
+     *
+     * @return Response
+     */
+    protected function onAjaxSuccess($url)
+    {
+        $errorList = array();
+        $formMessage = '';
+        $formHasErrors = false;
+        $redirectURL = $url;
+
+        $ajaxFormData = array(
+            'errors' => $errorList,
+            'formMessage' => $formMessage,
+            'hasErrors' => $formHasErrors,
+            'redirectURL' => $redirectURL
+        );
+
+        $ajaxFormResponse = new Response(json_encode($ajaxFormData));
+        $ajaxFormResponse->headers->set('Content-Type', 'application/json');
+
+        return $ajaxFormResponse;
     }
 
     // Render the 404 error page
