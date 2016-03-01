@@ -112,6 +112,9 @@ form:
     gender:                         Gender
     language:                       Language
     currencyCode:                   Currency
+    website:                        Website URL
+    biography:                      Description
+    timezone:                       Timezone
     secretQuestion:                 Secret question
     secretQuestionResponse:         Secret question response
     addressLine1:                   Address line 1 *
@@ -123,6 +126,14 @@ form:
     countryCode:                    Country *
     phone:                          Phone number (landline)
     mobile:                         Mobile number
+    label_firstname:                First name *
+    label_lastname:                 Last name *
+    label_date_of_birth:            Date of birth
+    label_website:                  Website URL
+    label_biography:                Description
+    label_locale:                   Language
+    label_timezone:                 Timezone
+    label_phone:                    Phone number (landline)
 
 # Change Password
 password:

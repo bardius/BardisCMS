@@ -66,6 +66,18 @@ class AccountPreferencesFormType extends AbstractType {
                 'expanded' => true,
                 'multiple' => false
             ))
+            ->add('biography', 'textarea', array(
+                'label'    => 'form.biography',
+                'required' => false,
+            ))
+            ->add('website', 'url', array(
+                'label'    => 'form.website',
+                'required' => false,
+            ))
+            ->add('timezone', 'timezone', array(
+                'label'    => 'form.timezone',
+                'required' => false,
+            ))
             ->add('secretQuestion', ChoiceType::class, array(
                 'choices' => array(
                     User::QUESTION_SPOUSE       => 'spouse_name',

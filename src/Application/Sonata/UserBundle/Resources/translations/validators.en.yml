@@ -45,4 +45,22 @@ sonata_user:
     termsAccepted:
         blank: Please read and accept the Terms & Conditions
 
+    addressLine1:
+        blank: Please enter an address
+        short: "[-Inf,Inf]The address is too short"
+        long: "[-Inf,Inf]The address is too long"
+
+    addressLine2:
+        blank: Please enter all address details
+        short: "[-Inf,Inf]The address is too short"
+        long: "[-Inf,Inf]The address is too long"
+
+    city:
+        blank: Please enter a city
+        short: "[-Inf,Inf]The city is too short"
+        long: "[-Inf,Inf]The city is too long"
+
+    countryCode:
+        blank: Please select a country
+
 

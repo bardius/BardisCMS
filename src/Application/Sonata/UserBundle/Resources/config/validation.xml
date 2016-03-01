@@ -56,6 +56,76 @@
             </constraint>
         </property>
 
+        <property name="addressLine1">
+            <constraint name="NotBlank">
+                <option name="message">sonata_user.addressLine1.blank</option>
+                <option name="groups">
+                    <value>Registration</value>
+                    <value>Profile</value>
+                </option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="minMessage">sonata_user.addressLine1.short</option>
+                <option name="max">50</option>
+                <option name="maxMessage">sonata_user.addressLine1.long</option>
+                <option name="groups">
+                    <value>Registration</value>
+                    <value>Profile</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="addressLine2">
+            <constraint name="NotBlank">
+                <option name="message">sonata_user.addressLine2.blank</option>
+                <option name="groups">
+                    <value>Registration</value>
+                    <value>Profile</value>
+                </option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="minMessage">sonata_user.addressLine2.short</option>
+                <option name="max">50</option>
+                <option name="maxMessage">sonata_user.addressLine2.long</option>
+                <option name="groups">
+                    <value>Registration</value>
+                    <value>Profile</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="city">
+            <constraint name="NotBlank">
+                <option name="message">sonata_user.city.blank</option>
+                <option name="groups">
+                    <value>Registration</value>
+                    <value>Profile</value>
+                </option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="minMessage">sonata_user.city.short</option>
+                <option name="max">50</option>
+                <option name="maxMessage">sonata_user.city.long</option>
+                <option name="groups">
+                    <value>Registration</value>
+                    <value>Profile</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="countryCode">
+            <constraint name="NotBlank">
+                <option name="message">sonata_user.countryCode.blank</option>
+                <option name="groups">
+                    <value>Registration</value>
+                    <value>Profile</value>
+                </option>
+            </constraint>
+        </property>
+
     </class>
 
 </constraint-mapping>

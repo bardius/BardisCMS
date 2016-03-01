@@ -38,6 +38,11 @@ class User extends BaseUser
     const CURRENCY_EURO = 'EUR';
     const CURRENCY_USD = 'USD';
 
+    const LANGUAGE_EN = 'en';
+    const COUNTRY_EN = 'GB';
+    const TIMEZONE_LONDON = 'London';
+    const CAMPAIGN_REGISTER = 'registration';
+
     /**
      * @var integer
      *
@@ -64,9 +69,9 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="language", type="string", length=2)
+     * @ORM\Column(name="language", type="string", length=10)
      */
-    protected $language;
+    protected $language = User::LANGUAGE_EN; // set the default to en
 
     /**
      * @var string
@@ -129,14 +134,14 @@ class User extends BaseUser
      *
      * @ORM\Column(name="country_code", type="string", length=2)
      */
-    protected $countryCode;
+    protected $countryCode = User::COUNTRY_EN; // set the default to GB
 
     /**
      * @var string
      *
      * @ORM\Column(name="currency_code", type="string", length=3)
      */
-    protected $currencyCode;
+    protected $currencyCode = User::CURRENCY_POUND; // set the default to GBP
 
     /**
      * @var string
@@ -157,7 +162,12 @@ class User extends BaseUser
      *
      * @ORM\Column(name="campaign", type="string", length=80)
      */
-    protected $campaign;
+    protected $campaign = User::CAMPAIGN_REGISTER; // set the default to registration
+
+    /**
+     * @var string
+     */
+    protected $timezone = User::TIMEZONE_LONDON; // set the default to London
 
     /**
      * @return int
@@ -431,7 +441,25 @@ class User extends BaseUser
         $this->campaign = $campaign;
     }
 
+    /**
+     * @param string $timezone
+     *
+     * @return User
+     */
+    public function setTimezone($timezone)
+    {
+        $this->timezone = $timezone;
 
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTimezone()
+    {
+        return $this->timezone;
+    }
 
     public function setEmail($email)
     {

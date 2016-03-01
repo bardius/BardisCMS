@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "929b86c0224d110635adf538fb3b186a",
+    "hash": "615fdad6b6153f5b01363415aeeff60c",
     "content-hash": "859d68ac258a87323eccbffe033dd7cd",
     "packages": [
         {
@@ -448,16 +448,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "b0e69d10852716b2ccbdff69c75c477637220790"
+                "reference": "f078eba3bcf140fd69b5fcc3ea5ac809abf729dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/b0e69d10852716b2ccbdff69c75c477637220790",
-                "reference": "b0e69d10852716b2ccbdff69c75c477637220790",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/f078eba3bcf140fd69b5fcc3ea5ac809abf729dc",
+                "reference": "f078eba3bcf140fd69b5fcc3ea5ac809abf729dc",
                 "shasum": ""
             },
             "require": {
@@ -492,7 +492,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-02-06 03:52:05"
+            "time": "2016-02-29 17:25:04"
         },
         {
             "name": "psr/log",
@@ -1259,21 +1259,25 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/Transliterator.git",
-                "reference": "868e05be3a9f25ba6424c2dd4849567f50715003"
+                "reference": "5617922041771893fb0e9593b67958e411604c09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Transliterator/zipball/868e05be3a9f25ba6424c2dd4849567f50715003",
-                "reference": "868e05be3a9f25ba6424c2dd4849567f50715003",
+                "url": "https://api.github.com/repos/Behat/Transliterator/zipball/5617922041771893fb0e9593b67958e411604c09",
+                "reference": "5617922041771893fb0e9593b67958e411604c09",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
+            "require-dev": {
+                "chuyskywalker/rolling-curl": "^3.1",
+                "php-yaoi/php-yaoi": "^1.0"
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1-dev"
+                    "dev-master": "1.2-dev"
                 }
             },
             "autoload": {
@@ -1291,7 +1295,7 @@
                 "slug",
                 "transliterator"
             ],
-            "time": "2015-09-28 16:26:35"
+            "time": "2016-03-01 09:37:21"
         },
         {
             "name": "cocur/slugify",
@@ -3833,12 +3837,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "1080c7bf8b1acebe612bbca35faea084eb365c88"
+                "reference": "25f7ebe45430472642f3758d047dc0bce154da3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/1080c7bf8b1acebe612bbca35faea084eb365c88",
-                "reference": "1080c7bf8b1acebe612bbca35faea084eb365c88",
+                "url": "https://api.github.com/repos/sonata-project/SonataAdminBundle/zipball/25f7ebe45430472642f3758d047dc0bce154da3f",
+                "reference": "25f7ebe45430472642f3758d047dc0bce154da3f",
                 "shasum": ""
             },
             "require": {
@@ -3910,7 +3914,7 @@
                 "bootstrap",
                 "sonata"
             ],
-            "time": "2016-02-29 09:19:23"
+            "time": "2016-03-01 09:38:52"
         },
         {
             "name": "sonata-project/block-bundle",
@@ -4673,12 +4677,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataMediaBundle.git",
-                "reference": "f0e6752e633cff5598ec04925bfa51e1a60fe7f4"
+                "reference": "fd73a883209994ee5d787a8240574138547c8dd9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sonata-project/SonataMediaBundle/zipball/f0e6752e633cff5598ec04925bfa51e1a60fe7f4",
-                "reference": "f0e6752e633cff5598ec04925bfa51e1a60fe7f4",
+                "url": "https://api.github.com/repos/sonata-project/SonataMediaBundle/zipball/fd73a883209994ee5d787a8240574138547c8dd9",
+                "reference": "fd73a883209994ee5d787a8240574138547c8dd9",
                 "shasum": ""
             },
             "require": {
@@ -4758,7 +4762,7 @@
                 "vimeo",
                 "youtube"
             ],
-            "time": "2016-02-19 15:51:12"
+            "time": "2016-02-29 17:54:52"
         },
         {
             "name": "sonata-project/notification-bundle",

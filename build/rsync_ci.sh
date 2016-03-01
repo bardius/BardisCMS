@@ -22,8 +22,8 @@ echo sudo -t -H -u $4 bash -c "sudo mv -v $dirRoot/$2composer.json.jenkins $dirR
 sudo -t -H -u $4 bash -c "sudo mv -v $dirRoot/$2composer.json.jenkins $dirRoot/$2composer.json"
 
 echo -e "\n\n\e[0;34m********** Updating Composer Dependensies **********\e[0m"
-echo sudo -t -H -u $4 bash -c "sudo php $dirRoot/$2composer.phar install -o"
-sudo -t -H -u $4 bash -c "sudo php $dirRoot/$2composer.phar install -o"
+echo sudo -t -H -u $4 bash -c "sudo php -dmemory_limit=750M $dirRoot/$2composer.phar install -o"
+sudo -t -H -u $4 bash -c "sudo php -dmemory_limit=750M $dirRoot/$2composer.phar install -o"
 
 echo -e "\n\n\e[0;34m********** Start Synchronising files with Rsync **********\e[0m"
 echo sudo -t -H -u $4 bash -c "sudo /usr/bin/rsync -arivzt --delete --no-p --no-o --no-g --exclude-from=$dirRoot/build/exclude.txt --stats $dirRoot/$2 $3"
