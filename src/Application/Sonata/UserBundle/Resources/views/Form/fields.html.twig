@@ -11,8 +11,8 @@ This file is part of the BardisCMS.
         {{ form_label(form) }}
         <div class="formFieldContainer">
             {{ form_widget(form) }}
+            {{ form_errors(form) }}
         </div>
-        {{ form_errors(form) }}
     </div>
     {% endspaceless %}
 {% endblock form_row %}
