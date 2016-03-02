@@ -30,8 +30,6 @@ class ResettingFOSUser1Controller extends Controller
     private $alias;
     private $id;
     private $extraParams;
-    private $currentpage;
-    private $totalpageitems;
     private $linkUrlParams;
     private $page;
     private $publishStates;
@@ -41,6 +39,8 @@ class ResettingFOSUser1Controller extends Controller
     private $userRole;
     private $enableHTTPCache;
     private $logged_username;
+    private $isAjaxRequest;
+
     const SESSION_EMAIL = 'fos_user_send_resetting_email/email';
 
     // Override the ContainerAware setContainer to accommodate the extra variables
@@ -51,8 +51,6 @@ class ResettingFOSUser1Controller extends Controller
         $this->alias = null;
         $this->id = null;
         $this->extraParams = null;
-        $this->currentpage = null;
-        $this->totalpageitems = null;
         $this->linkUrlParams = null;
         $this->page = null;
         $this->userName = null;
@@ -69,6 +67,9 @@ class ResettingFOSUser1Controller extends Controller
 
         // Set the flag for allowing HTTP cache
         $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+
+        // Check if request was Ajax based
+        $this->isAjaxRequest = $this->get('bardiscms_page.services.ajax_detection')->isAjaxRequest();
 
         // Set the publish status that is available for the user
         // Very basic ACL permission check
@@ -118,7 +119,6 @@ class ResettingFOSUser1Controller extends Controller
 
         // Render login page
         $response = $this->render('FOSUserBundle:Resetting:request.html.twig', $pageData);
-        // $response = $this->container->get('templating')->renderResponse('FOSUserBundle:Resetting:request.html.'.$this->getEngine(), $pageData);
 
         return $response;
     }
@@ -152,6 +152,16 @@ class ResettingFOSUser1Controller extends Controller
 
         // If user does not exist
         if (null === $user) {
+            // If the request was Ajax based
+            if($this->isAjaxRequest){
+                if($username){
+                    return $this->onAjaxError($this->container->get('translator')->trans('resetting.request.invalid_username', array('%username%' => $username), 'SonataUserBundle'));
+                }
+                else {
+                    return $this->onAjaxError($this->container->get('translator')->trans('resetting.request.empty_username', array(), 'SonataUserBundle'));
+                }
+            }
+
             $pageData = array(
                 'invalid_username' => $username,
                 'page' => $this->page,
@@ -161,13 +171,17 @@ class ResettingFOSUser1Controller extends Controller
 
             // Render reset request page
             $response = $this->render('FOSUserBundle:Resetting:request.html.twig', $pageData);
-            //$response = $this->container->get('templating')->renderResponse('FOSUserBundle:Resetting:request.html.'.$this->getEngine(), $pageData);
 
             return $response;
         }
 
         // If user password request token has not been expired
         if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
+            // If the request was Ajax based
+            if($this->isAjaxRequest){
+                return $this->onAjaxError($this->container->get('translator')->trans('resetting.password_already_requested', array(), 'SonataUserBundle'));
+            }
+
             $pageData = array(
                 'page' => $this->page,
                 'mobile' => $this->serveMobile,
@@ -176,7 +190,6 @@ class ResettingFOSUser1Controller extends Controller
 
             // Render passwordAlreadyRequested page
             $response = $this->render('FOSUserBundle:Resetting:passwordAlreadyRequested.html.twig', $pageData);
-            //$response = $this->container->get('templating')->renderResponse('FOSUserBundle:Resetting:passwordAlreadyRequested.html.'.$this->getEngine(), $pageData);
 
             return $response;
         }
@@ -190,8 +203,14 @@ class ResettingFOSUser1Controller extends Controller
         $this->container->get('fos_user.mailer')->sendResettingEmailMessage($user);
         $user->setPasswordRequestedAt(new \DateTime());
         $this->container->get('fos_user.user_manager')->updateUser($user);
+        $responseURL = $this->container->get('router')->generate('fos_user_resetting_check_email');
 
-        return new RedirectResponse($this->container->get('router')->generate('fos_user_resetting_check_email'));
+        // If the request was Ajax based
+        if($this->isAjaxRequest){
+            return $this->onAjaxSuccess($responseURL);
+        }
+
+        return new RedirectResponse($responseURL);
     }
 
     /**
@@ -237,7 +256,6 @@ class ResettingFOSUser1Controller extends Controller
 
         // Render login page
         $response = $this->render('FOSUserBundle:Resetting:checkEmail.html.twig', $pageData);
-        // $response = $this->container->get('templating')->renderResponse('FOSUserBundle:Resetting:checkEmail.html.'.$this->getEngine(), $pageData);
 
         return $response;
     }
@@ -248,8 +266,7 @@ class ResettingFOSUser1Controller extends Controller
     public function resetAction($token)
     {
         $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("resetting/reset");
-        //TODO: redirect to user profile page upon success
-        $redirectToRouteNameOnSuccess = 'fos_user_security_login';
+        $redirectToRouteNameOnSuccess = 'sonata_user_profile_show';
 
         if (!$page) {
             return $this->render404Page();
@@ -272,11 +289,23 @@ class ResettingFOSUser1Controller extends Controller
         $user = $this->container->get('fos_user.user_manager')->findUserByConfirmationToken($token);
 
         if (null === $user) {
-            throw new NotFoundHttpException(sprintf('The user with "confirmation token" does not exist for value "%s"', $token));
+            // If the request was Ajax based
+            if($this->isAjaxRequest){
+                return $this->onAjaxError($this->container->get('translator')->trans('resetting.reset.invalid_user', array('token' => $token), 'SonataUserBundle'));
+            }
+            else {
+                throw new NotFoundHttpException(sprintf('The user with "confirmation token" does not exist for value "%s"', $token));
+            }
         }
 
         if (!$user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
-            return new RedirectResponse($this->container->get('router')->generate('fos_user_resetting_request'));
+            // If the request was Ajax based
+            if($this->isAjaxRequest){
+                return $this->onAjaxError($this->container->get('translator')->trans('resetting.reset.token_expired', array('token' => $token), 'SonataUserBundle'));
+            }
+            else {
+                return new RedirectResponse($this->container->get('router')->generate('fos_user_resetting_request'));
+            }
         }
 
         $form = $this->container->get('fos_user.resetting.form');
@@ -287,10 +316,20 @@ class ResettingFOSUser1Controller extends Controller
             $this->setFlash('fos_user_success', 'resetting.flash.success');
             // Original FOS User bundle response
             //$response = new RedirectResponse($this->getRedirectionUrl($user));
-            $response = new RedirectResponse($this->container->get('router')->generate($redirectToRouteNameOnSuccess));
+            $responseURL = $this->container->get('router')->generate($redirectToRouteNameOnSuccess);
+            $response = new RedirectResponse($responseURL);
             $this->authenticateUser($user, $response);
 
+            // If the request was Ajax based
+            if($this->isAjaxRequest){
+                return $this->onAjaxSuccess($responseURL);
+            }
+
             return $response;
+        }
+
+        if(!$process && $this->isAjaxRequest){
+            return $this->onAjaxFieldsError($formHandler);
         }
 
         $pageData = array(
@@ -371,6 +410,81 @@ class ResettingFOSUser1Controller extends Controller
     protected function getEngine()
     {
         return $this->container->getParameter('fos_user.template.engine');
+    }
+
+    /**
+     * Extend with new method to handle Ajax response with errors
+     *
+     * @param $formHandler
+     *
+     * @return Response
+     */
+    protected function onAjaxFieldsError($formHandler)
+    {
+        $errorList = $formHandler->getErrors();
+        $formMessage = 'resetting.reset.error';
+        $formHasErrors = true;
+
+        $ajaxFormData = array(
+            'errors' => $errorList,
+            'formMessage' => $this->container->get('translator')->trans($formMessage, array(), 'SonataUserBundle'),
+            'hasErrors' => $formHasErrors
+        );
+
+        $ajaxFormResponse = new Response(json_encode($ajaxFormData));
+        $ajaxFormResponse->headers->set('Content-Type', 'application/json');
+
+        return $ajaxFormResponse;
+    }
+
+    /**
+     * Extend with new method to handle Ajax response with errors
+     *
+     * @param $formMessage
+     *
+     * @return Response
+     */
+    protected function onAjaxError($formMessage)
+    {
+        $errorList = array();
+        $formHasErrors = true;
+
+        $ajaxFormData = array(
+            'errors' => $errorList,
+            'formMessage' => $formMessage,
+            'hasErrors' => $formHasErrors
+        );
+
+        $ajaxFormResponse = new Response(json_encode($ajaxFormData));
+        $ajaxFormResponse->headers->set('Content-Type', 'application/json');
+
+        return $ajaxFormResponse;
+    }
+
+    /**
+     * Extend with new method to handle Ajax response with success
+     *
+     * @param String $redirectURL
+     *
+     * @return Response
+     */
+    protected function onAjaxSuccess($redirectURL)
+    {
+        $errorList = array();
+        $formMessage = '';
+        $formHasErrors = false;
+
+        $ajaxFormData = array(
+            'errors' => $errorList,
+            'formMessage' => $formMessage,
+            'hasErrors' => $formHasErrors,
+            'redirectURL' => $redirectURL
+        );
+
+        $ajaxFormResponse = new Response(json_encode($ajaxFormData));
+        $ajaxFormResponse->headers->set('Content-Type', 'application/json');
+
+        return $ajaxFormResponse;
     }
 
     // Render the 404 error page

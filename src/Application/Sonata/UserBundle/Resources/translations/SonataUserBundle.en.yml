@@ -65,13 +65,17 @@ registration:
 
 # Password resetting
 resetting:
-    password_already_requested: The password for this user has already been requested within the last 24 hours.
-    check_email: An email has been sent to %email%. It contains a link you must click to reset your password.
+    password_already_requested: The password for this user has already been requested within the last 24 hours
+    check_email: An email has been sent to %email%. It contains a link you must click to reset your password
     request:
-        invalid_username: The username or email address "%username%" does not exist.
+        invalid_username: The username or email address "%username%" does not exist
+        empty_username: The username or email address cannot be empty
         username: Username or email address
         submit: Reset password
     reset:
+        invalid_user: The user with confirmation token does not exist for value "%token%"
+        token_expired: The confirmation token has expired for the value "%token%". Please reset your password again
+        error: There was an error updating your password. Please try again
         submit: Change password
     flash:
         success: The password has been reset successfully

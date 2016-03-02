@@ -7,6 +7,7 @@
     <parameters>
         <parameter key="sonata_user.form.type.registration.class">Application\Sonata\UserBundle\Form\Type\RegistrationFormType</parameter>
         <parameter key="sonata_user.registration.form.handler.confirmation.class">Application\FOS\UserBundle\Form\Handler\RegistrationFormHandler</parameter>
+        <parameter key="sonata_user.resseting.form.handler.confirmation.class">Application\FOS\UserBundle\Form\Handler\ResettingFormHandler</parameter>
         <parameter key="sonata_user.contact_details.form.class">Symfony\Component\Form\Form</parameter>
         <parameter key="sonata_user.contact_details.form.type.class">Application\Sonata\UserBundle\Form\Type\ContactDetailsFormType</parameter>
         <parameter key="sonata_user.contact_details.form.handler.class">Application\Sonata\UserBundle\Form\Handler\ContactDetailsFormHandler</parameter>
@@ -36,6 +37,14 @@
             <argument type="service" id="fos_user.user_manager" />
             <argument type="service" id="fos_user.mailer" />
             <argument type="service" id="fos_user.util.token_generator" />
+            <argument type="service" id="service_container" />
+        </service>
+
+        <!-- Password Reset Form -->
+        <service id="fos_user.resetting.form.handler.default" class="%sonata_user.resseting.form.handler.confirmation.class%" scope="request" public="false">
+            <argument type="service" id="fos_user.resetting.form" />
+            <argument type="service" id="request" />
+            <argument type="service" id="fos_user.user_manager" />
             <argument type="service" id="service_container" />
         </service>
 

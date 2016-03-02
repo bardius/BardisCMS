@@ -82,6 +82,8 @@
             CMS.Forms.ajaxSubmittedForm('#sonata_user_contact_details_form', '#userContactDetailsFormBtn', 'json', true, false);
             CMS.Forms.ajaxSubmittedForm('#sonata_user_account_preferences_form', '#userAccountPreferencesFormBtn', 'json', true, false);
             CMS.Forms.ajaxSubmittedForm('#sonata_user_change_password_form', '#userPasswordFormBtn', 'json', true, true);
+            CMS.Forms.ajaxSubmittedForm('#fos_user_resetting_request', '#userResetPasswordFormBtn', 'json', false, false);
+            CMS.Forms.ajaxSubmittedForm('#fos_user_resetting_form', '#userRessetingFormBtn', 'json', false, false);
 
             // Setup the filters for the filter search page
             CMS.Forms.setupFilters();
@@ -125,6 +127,9 @@
                         $(".formError").remove();
                         $(".formSuccess").remove();
                         $("label.error").removeClass('error');
+                        $("input.error").removeClass('error');
+                        $("select.error").removeClass('error');
+                        $("textarea.error").removeClass('error');
 
                         if (responseData.hasErrors === false) {
                             if(overrideSuccess){
