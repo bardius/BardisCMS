@@ -34,8 +34,6 @@ class ProfileFOSUser1Controller extends Controller
     private $alias;
     private $id;
     private $extraParams;
-    private $currentpage;
-    private $totalpageitems;
     private $linkUrlParams;
     private $page;
     private $publishStates;
@@ -46,6 +44,7 @@ class ProfileFOSUser1Controller extends Controller
     private $enableHTTPCache;
     private $logged_username;
     private $logged_user;
+    private $isAjaxRequest;
 
     // Override the ContainerAware setContainer to accommodate the extra variables
     public function setContainer(ContainerInterface $container = null) {
@@ -55,8 +54,6 @@ class ProfileFOSUser1Controller extends Controller
         $this->alias = null;
         $this->id = null;
         $this->extraParams = null;
-        $this->currentpage = null;
-        $this->totalpageitems = null;
         $this->linkUrlParams = null;
         $this->page = null;
         $this->userName = null;
@@ -73,6 +70,9 @@ class ProfileFOSUser1Controller extends Controller
 
         // Set the flag for allowing HTTP cache
         $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+
+        // Check if request was Ajax based
+        $this->isAjaxRequest = $this->get('bardiscms_page.services.ajax_detection')->isAjaxRequest();
 
         // Set the publish status that is available for the user
         // Very basic ACL permission check
@@ -233,10 +233,19 @@ class ProfileFOSUser1Controller extends Controller
         $formSection = $this->container->get('request')->request->get('form_section');
 
         switch ($formSection) {
-            case "password":
-                $passwordProcess = $passwordFormHandler->process($user);
-                if ($passwordProcess) {
-                    $this->addFlash('fos_user_success', 'change_password.flash.success');
+            case "generic_details":
+                $genericDetailsProcess = $genericDetailsFormHandler->process($user);
+                if ($genericDetailsProcess) {
+                    $this->addFlash('fos_user_success', 'profile.flash.updated');
+                }
+
+                // If the request was Ajax based
+                if($this->isAjaxRequest){
+                    if ($genericDetailsProcess) {
+                        return $this->onAjaxSuccess('profile.flash.updated');
+                    } else {
+                        return $this->onAjaxError($genericDetailsFormHandler);
+                    }
                 }
                 break;
             case "contact":
@@ -244,19 +253,45 @@ class ProfileFOSUser1Controller extends Controller
                 if ($contactDetailsProcess) {
                     $this->addFlash('fos_user_success', 'profile.flash.updated');
                 }
+
+                // If the request was Ajax based
+                if($this->isAjaxRequest){
+                    if ($contactDetailsProcess) {
+                        return $this->onAjaxSuccess('profile.flash.updated');
+                    } else {
+                        return $this->onAjaxError($contactDetailsFormHandler);
+                    }
+                }
                 break;
             case "preferences":
                 $accountPreferencesProcess = $accountPreferencesFormHandler->process($user);
                 if ($accountPreferencesProcess) {
                     $this->addFlash('fos_user_success', 'profile.flash.updated');
                 }
+
+                // If the request was Ajax based
+                if($this->isAjaxRequest){
+                    if ($accountPreferencesProcess) {
+                        return $this->onAjaxSuccess('profile.flash.updated');
+                    } else {
+                        return $this->onAjaxError($accountPreferencesFormHandler);
+                    }
+                }
                 break;
-            case "generic_details":
-                $genericDetailsProcess = $genericDetailsFormHandler->process($user);
-                if ($genericDetailsProcess) {
-                    $this->addFlash('fos_user_success', 'profile.flash.updated');
+            case "password":
+                $passwordProcess = $passwordFormHandler->process($user);
+                if ($passwordProcess) {
+                    $this->addFlash('fos_user_success', 'change_password.flash.success');
                 }
 
+                // If the request was Ajax based
+                if($this->isAjaxRequest){
+                    if ($passwordProcess) {
+                        return $this->onAjaxSuccess('profile.flash.updated');
+                    } else {
+                        return $this->onAjaxError($passwordFormHandler);
+                    }
+                }
                 break;
         }
 
@@ -271,7 +306,6 @@ class ProfileFOSUser1Controller extends Controller
 
         // Render register page
         $response = $this->render('SonataUserBundle:Profile:edit.html.twig', $pageData);
-        // $response = $this->container->get('templating')->renderResponse('SonataUserBundle:Profile:edit.html.'.$this->container->getParameter('fos_user.template.engine'), $pageData);
 
         return $response;
     }
@@ -283,6 +317,82 @@ class ProfileFOSUser1Controller extends Controller
     protected function setFlash($action, $value)
     {
         $this->get('session')->getFlashBag()->set($action, $value);
+    }
+
+    /**
+     * Extend with new method to handle form processing
+     *
+     * @param $formHandler
+     * @param $user
+     * @param $flashSuccessMsg
+     *
+     * @return Response
+     */
+    protected function processFormSubmission($formHandler, $user, $flashSuccessMsg)
+    {
+        $formProcess = $formHandler->process($user);
+        if ($formProcess) {
+            $this->addFlash('fos_user_success', $flashSuccessMsg);
+        }
+
+        // If the request was Ajax based
+        if($this->isAjaxRequest){
+            if ($formProcess) {
+                return $this->onAjaxSuccess($flashSuccessMsg);
+            } else {
+                return $this->onAjaxError($formHandler);
+            }
+        }
+    }
+
+    /**
+     * Extend with new method to handle Ajax response with errors
+     *
+     * @param $formHandler
+     *
+     * @return Response
+     */
+    protected function onAjaxError($formHandler)
+    {
+        $errorList = $formHandler->getErrors();
+        $formMessage = 'profile.responses.error';
+        $formHasErrors = true;
+
+        $ajaxFormData = array(
+            'errors' => $errorList,
+            'formMessage' => $this->container->get('translator')->trans($formMessage, array(), 'SonataUserBundle'),
+            'hasErrors' => $formHasErrors
+        );
+
+        $ajaxFormResponse = new Response(json_encode($ajaxFormData));
+        $ajaxFormResponse->headers->set('Content-Type', 'application/json');
+
+        return $ajaxFormResponse;
+    }
+
+    /**
+     * Extend with new method to handle Ajax response with success
+     *
+     * @param String $successMsg
+     *
+     * @return Response
+     */
+    protected function onAjaxSuccess($successMsg)
+    {
+        $errorList = array();
+        $formMessage = $successMsg;
+        $formHasErrors = false;
+
+        $ajaxFormData = array(
+            'errors' => $errorList,
+            'formMessage' => $this->container->get('translator')->trans($formMessage, array(), 'SonataUserBundle'),
+            'hasErrors' => $formHasErrors
+        );
+
+        $ajaxFormResponse = new Response(json_encode($ajaxFormData));
+        $ajaxFormResponse->headers->set('Content-Type', 'application/json');
+
+        return $ajaxFormResponse;
     }
 
     // Render the 404 error page

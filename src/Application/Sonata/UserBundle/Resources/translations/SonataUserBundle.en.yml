@@ -31,8 +31,13 @@ profile:
         email: Email
     edit:
         submit: Update
+        intro_title: Profile details & account settings
+        intro_copy: Edit your profile details & account settings
     flash:
-        updated: The profile has been updated
+        updated: The profile details have been updated successfully
+    responses:
+        success: The profile details have been updated successfully
+        error: There was an error updating your profile details. Please try again.
 
 # Password change
 change_password:
@@ -91,6 +96,13 @@ layout:
         have_account:   Already have an account?
         create_account: Create new account
         user_profile:   User profile
+
+# Profile menu items
+profile_menu:
+    show: View Profile
+    edit: Manage Profile
+    logout: Logout
+
 
 # Form field labels
 form:

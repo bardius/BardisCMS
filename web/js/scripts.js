@@ -72,13 +72,16 @@
 
     CMS.UI = {
         init: function () {
-
             // Start the AJAX based forms
-            CMS.Forms.ajaxSubmittedForm('#contactform', '#contactFormBtn', true);
-            CMS.Forms.ajaxSubmittedForm('#add_comment_form', '#submitCommentBtn', true);
+            CMS.Forms.ajaxSubmittedForm('#contactform', '#contactFormBtn', 'json', true, true);
+            CMS.Forms.ajaxSubmittedForm('#add_comment_form', '#submitCommentBtn', 'json', true, true);
 
             // Start the Ajax based sonata user forms
-            CMS.Forms.ajaxSubmittedForm('#fos_user_registration_form', '#userRegisterFormBtn', false);
+            CMS.Forms.ajaxSubmittedForm('#fos_user_registration_form', '#userRegisterFormBtn', 'json', false, false);
+            CMS.Forms.ajaxSubmittedForm('#sonata_user_generic_details_form', '#userGenericDetailsFormBtn', 'json', true, false);
+            CMS.Forms.ajaxSubmittedForm('#sonata_user_contact_details_form', '#userContactDetailsFormBtn', 'json', true, false);
+            CMS.Forms.ajaxSubmittedForm('#sonata_user_account_preferences_form', '#userAccountPreferencesFormBtn', 'json', true, false);
+            CMS.Forms.ajaxSubmittedForm('#sonata_user_change_password_form', '#userPasswordFormBtn', 'json', true, true);
 
             // Setup the filters for the filter search page
             CMS.Forms.setupFilters();
@@ -92,7 +95,7 @@
                 checkboxes.removeAttr('checked');
             });
         },
-        ajaxSubmittedForm: function (formId, formSubmitBtnId, overrideSuccess) {
+        ajaxSubmittedForm: function (formId, formSubmitBtnId, dataType, overrideSuccess, resetForm) {
 
             var formElement = $(formId);
             var btnElement = $(formSubmitBtnId);
@@ -102,29 +105,45 @@
                 btnElement.on('click', function (e) {
                     e.preventDefault();
 
+                    btnElement.prop('disabled', true);
+
                     var formData = formElement.serializeArray();
                     formData.push({name: "isAjax", value: "true"});
 
                     var formAction = formElement.attr("action");
 
-                    $.post(formAction, formData, function (response) {
+                    // Submit the form data
+                    var $formAjaxRequest = $.post(formAction, formData, null, dataType);
 
+                    // Always act when Ajax call is complete
+                    $formAjaxRequest.always(function() {
+                        btnElement.prop('disabled', false);
+                    });
+
+                    // Handle the successfull JSON response
+                    $formAjaxRequest.done(function (responseData) {
                         $(".formError").remove();
+                        $(".formSuccess").remove();
                         $("label.error").removeClass('error');
 
-                        if (response.hasErrors === false) {
+                        if (responseData.hasErrors === false) {
                             if(overrideSuccess){
-                                formElement.trigger("reset");
-                                formElement.html('<p>' + response.formMessage + '</p>');
+                                if(resetForm){
+                                    formElement.trigger("reset");
+                                }
+                                if(responseData.formMessage && responseData.formMessage !== ''){
+                                    $('<small class="formSuccess alert-box success">' + responseData.formMessage + '</small>').hide().insertAfter(btnElement);
+                                    $('.formSuccess').fadeIn(200);
+                                }
                             }
-                            else if(response.redirectURL){
-                                window.location.href = response.redirectURL;
+                            else if(responseData.redirectURL){
+                                window.location.href = responseData.redirectURL;
                             }
                         }
                         else {
-                            if (response.errors !== null) {
+                            if (responseData.errors !== null) {
 
-                                var errorArray = response.errors;
+                                var errorArray = responseData.errors;
 
                                 // Find type of input, return validation
                                 $.each(errorArray, function (key, val) {
@@ -143,10 +162,22 @@
                                 });
                             }
 
-                            $('<small class="formError error">' + response.formMessage + '</small>').hide().insertAfter(btnElement);
+                            if(responseData.formMessage && responseData.formMessage !== ''){
+                                $('<small class="formError alert-box alert">' + responseData.formMessage + '</small>').hide().insertAfter(btnElement);
+                            }
 
                             $('.formError').fadeIn(200);
                         }
+                    });
+
+                    // Handle the failed response due to error
+                    $formAjaxRequest.fail(function(responseData, statusText, xhr) {
+                        $(".formError").remove();
+                        $(".formSuccess").remove();
+                        $("label.error").removeClass('error');
+
+                        $('<small class="formError alert-box alert">There was a ' + statusText + ' error submitting the details. Please try again.</small>').hide().insertAfter(btnElement);
+                        $('.formError').fadeIn(200);
                     });
                 });
             }

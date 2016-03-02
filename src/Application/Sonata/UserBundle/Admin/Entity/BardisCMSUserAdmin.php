@@ -30,17 +30,19 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
      */
     public function configureListFields(ListMapper $listMapper) {
         $listMapper
+                ->add('id')
                 ->addIdentifier('username')
                 ->add('email')
                 ->add('groups')
                 ->add('enabled', null, array('editable' => true))
+                ->add('confirmed', null, array('editable' => false))
                 ->add('locked', null, array('editable' => true))
                 ->add('createdAt')
         ;
 
         if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
             $listMapper
-                    ->add('impersonating', 'string', array('template' => 'SonataUserBundle:Admin:Field/impersonating.html.twig'))
+                ->add('impersonating', 'string', array('template' => 'SonataUserBundle:Admin:Field/impersonating.html.twig'))
             ;
         }
     }
@@ -52,8 +54,10 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
         $filterMapper
                 ->add('id')
                 ->add('username')
-                ->add('locked')
                 ->add('email')
+                ->add('enabled')
+                ->add('confirmed')
+                ->add('locked')
                 ->add('groups')
         ;
     }
@@ -63,16 +67,21 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
      */
     public function configureShowFields(ShowMapper $showMapper) {
         $showMapper
-            ->with('General')
+            ->with('Generic Details')
+                ->add('email', null, array('label' => 'email'))
                 ->add('username', null, array('label' => 'Username'))
-                ->add('email', null, array('label' => 'eMail'))
-            ->end()
-            ->with('Profile')
                 ->add('title', null, array('label' => 'Title'))
                 ->add('firstname', null, array('label' => 'First Name'))
                 ->add('lastname', null, array('label' => 'Last Name'))
                 ->add('gender', null, array('label' => 'Gender'))
                 ->add('dateOfBirth', null, array('label' => 'Date Of Birth'))
+            ->end()
+            ->with('Account Preferences')
+                ->add('language', null, array('label' => 'Language'))
+                ->add('currencyCode', null, array('label' => 'Currency'))
+                ->add('biography', null, array('label' => 'Description'))
+                ->add('website', null, array('label' => 'Website URL'))
+                ->add('timezone', null, array('label' => 'Timezone'))
             ->end()
             ->with('Contact Details')
                 ->add('addressLine1', null, array('label' => 'Address Line 1'))
@@ -80,15 +89,11 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
                 ->add('addressLine3', null, array('label' => 'Address Line 3'))
                 ->add('city', null, array('label' => 'City'))
                 ->add('county', null, array('label' => 'County'))
-                ->add('countryCode', null, array('label' => 'Country'))
                 ->add('postCode', null, array('label' => 'Postcode'))
+                ->add('countryCode', null, array('label' => 'Country'))
                 ->add('phone', null, array('label' => 'Phone'))
                 ->add('mobile', null, array('label' => 'Mobile'))
                 ->add('campaign', null, array('label' => 'Onboarding Campaign Name'))
-            ->end()
-            ->with('Account Preferences')
-                ->add('language', null, array('label' => 'Language'))
-                ->add('currencyCode', null, array('label' => 'Currency'))
                 ->add('termsAccepted', null, array('label' => 'Accepted T&Cs'))
             ->end()
             ->with('Security')
@@ -200,6 +205,7 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
                             'required' => false
                         ))
                         ->add('locked', null, array('required' => false))
+                        ->add('confirmed', null, array('required' => false))
                         ->add('expired', null, array('required' => false))
                         ->add('enabled', null, array('required' => false))
                         ->add('credentialsExpired', null, array('required' => false))

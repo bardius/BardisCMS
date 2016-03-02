@@ -53,7 +53,7 @@ sonata_user:
 
         # Customize user portal menu by setting links
         menu:
-            - { route: 'sonata_user_profile_show', label: 'sonata_profile_title', domain: 'SonataUserBundle'}
-            - { route: 'sonata_user_profile_edit', label: 'link_edit_profile', domain: 'SonataUserBundle'}
+            - { route: 'sonata_user_profile_show', label: 'profile_menu.show', domain: 'SonataUserBundle'}
+            - { route: 'sonata_user_profile_edit', label: 'profile_menu.edit', domain: 'SonataUserBundle'}
             # - { route: 'sonata_user_profile_edit_authentication', label: 'link_edit_authentication', domain: 'SonataUserBundle'}
-            - { route: 'fos_user_security_logout', label: 'link_logout', domain: 'SonataUserBundle'}
+            - { route: 'fos_user_security_logout', label: 'profile_menu.logout', domain: 'SonataUserBundle'}

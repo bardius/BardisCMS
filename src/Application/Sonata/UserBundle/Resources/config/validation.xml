@@ -12,6 +12,7 @@
                 <option name="groups">
                     <value>Registration</value>
                     <value>Profile</value>
+                    <value>GenericDetails</value>
                 </option>
             </constraint>
             <constraint name="Length">
@@ -22,6 +23,7 @@
                 <option name="groups">
                     <value>Registration</value>
                     <value>Profile</value>
+                    <value>GenericDetails</value>
                 </option>
             </constraint>
         </property>
@@ -32,6 +34,7 @@
                 <option name="groups">
                     <value>Registration</value>
                     <value>Profile</value>
+                    <value>GenericDetails</value>
                 </option>
             </constraint>
             <constraint name="Length">
@@ -42,6 +45,7 @@
                 <option name="groups">
                     <value>Registration</value>
                     <value>Profile</value>
+                    <value>GenericDetails</value>
                 </option>
             </constraint>
         </property>
@@ -52,6 +56,7 @@
                 <option name="groups">
                     <value>Registration</value>
                     <value>Profile</value>
+                    <value>GenericDetails</value>
                 </option>
             </constraint>
         </property>
@@ -61,6 +66,7 @@
                 <option name="message">sonata_user.addressLine1.blank</option>
                 <option name="groups">
                     <value>Profile</value>
+                    <value>ContactDetails</value>
                 </option>
             </constraint>
             <constraint name="Length">
@@ -70,6 +76,7 @@
                 <option name="maxMessage">sonata_user.addressLine1.long</option>
                 <option name="groups">
                     <value>Profile</value>
+                    <value>ContactDetails</value>
                 </option>
             </constraint>
         </property>
@@ -79,6 +86,7 @@
                 <option name="message">sonata_user.addressLine2.blank</option>
                 <option name="groups">
                     <value>Profile</value>
+                    <value>ContactDetails</value>
                 </option>
             </constraint>
             <constraint name="Length">
@@ -88,6 +96,7 @@
                 <option name="maxMessage">sonata_user.addressLine2.long</option>
                 <option name="groups">
                     <value>Profile</value>
+                    <value>ContactDetails</value>
                 </option>
             </constraint>
         </property>
@@ -97,6 +106,7 @@
                 <option name="message">sonata_user.city.blank</option>
                 <option name="groups">
                     <value>Profile</value>
+                    <value>ContactDetails</value>
                 </option>
             </constraint>
             <constraint name="Length">
@@ -106,6 +116,7 @@
                 <option name="maxMessage">sonata_user.city.long</option>
                 <option name="groups">
                     <value>Profile</value>
+                    <value>ContactDetails</value>
                 </option>
             </constraint>
         </property>
@@ -115,6 +126,7 @@
                 <option name="message">sonata_user.countryCode.blank</option>
                 <option name="groups">
                     <value>Profile</value>
+                    <value>ContactDetails</value>
                 </option>
             </constraint>
         </property>

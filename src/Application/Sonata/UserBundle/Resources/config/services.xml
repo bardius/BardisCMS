@@ -31,35 +31,12 @@
         </service>
 
         <service id="sonata_user.registration.form.handler.confirmation" class="%sonata_user.registration.form.handler.confirmation.class%" scope="request" public="false">
-            <argument type="service" id="fos_user.registration.form"/>
-            <argument type="service" id="request"/>
-            <argument type="service" id="fos_user.user_manager"/>
-            <argument type="service" id="fos_user.mailer"/>
-            <argument type="service" id="fos_user.util.token_generator"/>
-            <argument type="service" id="service_container"/>
-        </service>
-
-
-        <!-- Contact Details Form -->
-        <service id="sonata_user.contact_details.form" factory-method="createNamed" factory-service="form.factory" class="%sonata_user.contact_details.form.class%">
-            <argument>sonata_user_contact_details_form</argument>
-            <argument>sonata_user_contact_details</argument>
-            <argument>null</argument>
-            <argument type="collection">
-                <argument key="validation_groups">Profile</argument>
-            </argument>
-        </service>
-
-        <service id="sonata_user.contact_details.form.type" class="%sonata_user.contact_details.form.type.class%">
-            <tag name="form.type" alias="sonata_user_contact_details" />
-            <argument>%fos_user.model.user.class%</argument>
-            <argument type="service" id="service_container"/>
-        </service>
-
-        <service id="sonata_user.contact_details.form.handler" class="%sonata_user.contact_details.form.handler.class%" scope="request">
-            <argument type="service" id="sonata_user.contact_details.form" />
+            <argument type="service" id="fos_user.registration.form" />
             <argument type="service" id="request" />
             <argument type="service" id="fos_user.user_manager" />
+            <argument type="service" id="fos_user.mailer" />
+            <argument type="service" id="fos_user.util.token_generator" />
+            <argument type="service" id="service_container" />
         </service>
 
         <!-- Generic Details Form -->
@@ -68,20 +45,44 @@
             <argument>sonata_user_generic_details</argument>
             <argument>null</argument>
             <argument type="collection">
-                <argument key="validation_groups">Profile</argument>
+                <argument key="validation_groups">GenericDetails</argument>
             </argument>
         </service>
 
         <service id="sonata_user.generic_details.form.type" class="%sonata_user.generic_details.form.type.class%">
             <tag name="form.type" alias="sonata_user_generic_details" />
             <argument>%fos_user.model.user.class%</argument>
-            <argument type="service" id="service_container"/>
+            <argument type="service" id="service_container" />
         </service>
 
         <service id="sonata_user.generic_details.form.handler" class="%sonata_user.generic_details.form.handler.class%" scope="request">
             <argument type="service" id="sonata_user.generic_details.form" />
             <argument type="service" id="request" />
             <argument type="service" id="fos_user.user_manager" />
+            <argument type="service" id="service_container" />
+        </service>
+
+        <!-- Contact Details Form -->
+        <service id="sonata_user.contact_details.form" factory-method="createNamed" factory-service="form.factory" class="%sonata_user.contact_details.form.class%">
+            <argument>sonata_user_contact_details_form</argument>
+            <argument>sonata_user_contact_details</argument>
+            <argument>null</argument>
+            <argument type="collection">
+                <argument key="validation_groups">ContactDetails</argument>
+            </argument>
+        </service>
+
+        <service id="sonata_user.contact_details.form.type" class="%sonata_user.contact_details.form.type.class%">
+            <tag name="form.type" alias="sonata_user_contact_details" />
+            <argument>%fos_user.model.user.class%</argument>
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="sonata_user.contact_details.form.handler" class="%sonata_user.contact_details.form.handler.class%" scope="request">
+            <argument type="service" id="sonata_user.contact_details.form" />
+            <argument type="service" id="request" />
+            <argument type="service" id="fos_user.user_manager" />
+            <argument type="service" id="service_container" />
         </service>
 
         <!-- Account Preferences Form -->
@@ -90,20 +91,21 @@
             <argument>sonata_user_account_preferences</argument>
             <argument>null</argument>
             <argument type="collection">
-                <argument key="validation_groups">Profile</argument>
+                <argument key="validation_groups">AccountPreferences</argument>
             </argument>
         </service>
 
         <service id="sonata_user.account_preferences.form.type" class="%sonata_user.account_preferences.form.type.class%">
             <tag name="form.type" alias="sonata_user_account_preferences" />
             <argument>%fos_user.model.user.class%</argument>
-            <argument type="service" id="service_container"/>
+            <argument type="service" id="service_container" />
         </service>
 
         <service id="sonata_user.account_preferences.form.handler" class="%sonata_user.account_preferences.form.handler.class%" scope="request">
             <argument type="service" id="sonata_user.account_preferences.form" />
             <argument type="service" id="request" />
             <argument type="service" id="fos_user.user_manager" />
+            <argument type="service" id="service_container" />
         </service>
 
         <!-- Password Change Form -->
@@ -119,13 +121,14 @@
         <service id="sonata_user.change_password.form.type" class="%sonata_user.change_password.form.type.class%">
             <tag name="form.type" alias="sonata_user_change_password" />
             <argument>FOS\UserBundle\Form\Model\ChangePassword</argument>
-            <argument type="service" id="service_container"/>
+            <argument type="service" id="service_container" />
         </service>
 
         <service id="sonata_user.change_password.form.handler" class="%sonata_user.change_password.form.handler.class%" scope="request">
             <argument type="service" id="sonata_user.change_password.form" />
             <argument type="service" id="request" />
             <argument type="service" id="fos_user.user_manager" />
+            <argument type="service" id="service_container" />
         </service>
 
     </services>

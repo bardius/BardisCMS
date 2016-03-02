@@ -68,14 +68,17 @@ class AccountPreferencesFormType extends AbstractType {
             ))
             ->add('biography', 'textarea', array(
                 'label'    => 'form.biography',
+                'translation_domain' => 'SonataUserBundle',
                 'required' => false,
             ))
             ->add('website', 'url', array(
                 'label'    => 'form.website',
+                'translation_domain' => 'SonataUserBundle',
                 'required' => false,
             ))
             ->add('timezone', 'timezone', array(
                 'label'    => 'form.timezone',
+                'translation_domain' => 'SonataUserBundle',
                 'required' => false,
             ))
             ->add('secretQuestion', ChoiceType::class, array(

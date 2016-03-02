@@ -16,18 +16,21 @@ use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class GenericDetailsFormHandler
 {
     protected $request;
     protected $userManager;
     protected $form;
+    private $container;
 
-    public function __construct(FormInterface $form, Request $request, UserManagerInterface $userManager)
+    public function __construct(FormInterface $form, Request $request, UserManagerInterface $userManager, Container $container)
     {
         $this->form = $form;
         $this->request = $request;
         $this->userManager = $userManager;
+        $this->container = $container;
     }
 
     public function process(UserInterface $user)
