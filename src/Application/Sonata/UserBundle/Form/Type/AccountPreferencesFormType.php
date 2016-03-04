@@ -17,6 +17,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 
 use Application\Sonata\UserBundle\Entity\User;
 
@@ -51,6 +54,9 @@ class AccountPreferencesFormType extends AbstractType {
         // Adding custom extra user fields for Account Preferences (including the Security) Form
 		$builder
             ->add('language', LanguageType::class, array(
+                'preferred_choices' => array(
+                    User::LANGUAGE_EN
+                ),
                 'label' => 'form.language',
                 'translation_domain' => 'SonataUserBundle',
                 'data' => $defaults['language'],
@@ -62,6 +68,9 @@ class AccountPreferencesFormType extends AbstractType {
                     User::CURRENCY_EURO     => 'EUR',
                     User::CURRENCY_USD      => 'USD'
                 ),
+                'preferred_choices' => array(
+                    User::CURRENCY_POUND
+                ),
                 'label' => 'form.currencyCode',
                 'translation_domain' => 'SonataUserBundle',
                 'data' => $defaults['currencyCode'],
@@ -69,19 +78,22 @@ class AccountPreferencesFormType extends AbstractType {
                 'expanded' => true,
                 'multiple' => false
             ))
-            ->add('biography', 'textarea', array(
+            ->add('biography', TextareaType::class, array(
                 'label' => 'form.biography',
                 'translation_domain' => 'SonataUserBundle',
                 'data' => $defaults['biography'],
                 'required' => false
             ))
-            ->add('website', 'url', array(
+            ->add('website', UrlType::class, array(
                 'label' => 'form.website',
                 'translation_domain' => 'SonataUserBundle',
                 'data' => $defaults['website'],
                 'required' => false
             ))
-            ->add('timezone', 'timezone', array(
+            ->add('timezone', TimezoneType::class, array(
+                'preferred_choices' => array(
+                    User::TIMEZONE_LONDON
+                ),
                 'label' => 'form.timezone',
                 'translation_domain' => 'SonataUserBundle',
                 'data' => $defaults['timezone'],
@@ -98,7 +110,7 @@ class AccountPreferencesFormType extends AbstractType {
                 'label' => 'form.secretQuestion',
                 'translation_domain' => 'SonataUserBundle',
                 'data' => $defaults['secretQuestion'],
-                'required' => true
+                'required' => false
             ))
             ->add('secretQuestionResponse', TextType::class, array(
                 'label' => 'form.secretQuestionResponse',

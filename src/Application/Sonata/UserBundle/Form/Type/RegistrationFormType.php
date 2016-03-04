@@ -46,7 +46,7 @@ class RegistrationFormType extends AbstractType {
 
         $this->campaignData = null;
         $this->campaignData = explode('/track-campaign/', $REQUEST_URI);
-        $this->campaignData = end($this->campaignData);
+        $this->campaignData = str_replace("/", "", end($this->campaignData));
 
         // Adding custom extra user fields for Registration Form
         $builder

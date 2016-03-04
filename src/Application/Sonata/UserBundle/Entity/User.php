@@ -41,7 +41,7 @@ class User extends BaseUser
     const LANGUAGE_EN = 'en';
     const COUNTRY_EN = 'GB';
     const TIMEZONE_LONDON = 'London';
-    const CAMPAIGN_REGISTER = 'registration';
+    const CAMPAIGN_REGISTER = 'register';
 
     /**
      * @var integer

@@ -18,6 +18,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 
+use Application\Sonata\UserBundle\Entity\User;
+
 class ContactDetailsFormType extends AbstractType {
 
 	private $class;
@@ -88,7 +90,7 @@ class ContactDetailsFormType extends AbstractType {
             ))
             ->add('countryCode', CountryType::class, array(
                 'preferred_choices' => array(
-                    'GB'
+                    User::COUNTRY_EN
                 ),
                 'label' => 'form.countryCode',
                 'translation_domain' => 'SonataUserBundle',

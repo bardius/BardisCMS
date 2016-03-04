@@ -19,10 +19,31 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Sonata\UserBundle\Model\UserInterface;
 
+use Application\Sonata\UserBundle\Entity\User;
+
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
+use Symfony\Component\Form\Extension\Core\Type\LanguageType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+
 class BardisCMSUserAdmin extends BaseUserAdmin {
 
     protected $formOptions = array(
-        'validation_groups' => 'Profile'
+        'validation_groups' => array(
+            'Profile',
+            'GenericDetails',
+            'AccountPreferences',
+            'ContactDetails'
+        )
     );
 
     /**
@@ -30,14 +51,15 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
      */
     public function configureListFields(ListMapper $listMapper) {
         $listMapper
-                ->add('id')
-                ->addIdentifier('username')
-                ->add('email')
-                ->add('groups')
-                ->add('enabled', null, array('editable' => true))
-                ->add('confirmed', null, array('editable' => false))
-                ->add('locked', null, array('editable' => true))
-                ->add('createdAt')
+            ->add('id')
+            ->addIdentifier('username')
+            ->add('email')
+            ->add('enabled', null, array('editable' => true))
+            ->add('confirmed', null, array('editable' => false))
+            ->add('locked', null, array('editable' => true))
+            ->add('createdAt')
+            ->add('groups')
+            ->add('roles', null, array('editable' => true), array('translation_domain' => 'SonataUserBundle'))
         ;
 
         if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
@@ -52,13 +74,14 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
      */
     public function configureDatagridFilters(DatagridMapper $filterMapper) {
         $filterMapper
-                ->add('id')
-                ->add('username')
-                ->add('email')
-                ->add('enabled')
-                ->add('confirmed')
-                ->add('locked')
-                ->add('groups')
+            ->add('id')
+            ->add('username')
+            ->add('email')
+            ->add('enabled')
+            ->add('confirmed')
+            ->add('locked')
+            ->add('groups')
+            ->add('roles')
         ;
     }
 
@@ -68,39 +91,112 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
     public function configureShowFields(ShowMapper $showMapper) {
         $showMapper
             ->with('Generic Details')
-                ->add('email', null, array('label' => 'email'))
-                ->add('username', null, array('label' => 'Username'))
-                ->add('title', null, array('label' => 'Title'))
-                ->add('firstname', null, array('label' => 'First Name'))
-                ->add('lastname', null, array('label' => 'Last Name'))
-                ->add('gender', null, array('label' => 'Gender'))
-                ->add('dateOfBirth', null, array('label' => 'Date Of Birth'))
+                ->add('email', null, array(
+                    'label' => 'form.email',
+                    'translation_domain' => 'SonataUserBundle'
+                ))
+                ->add('username', null, array(
+                    'label' => 'form.username',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('title', null, array(
+                    'label' => 'form.title',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('firstname', null, array(
+                    'label' => 'form.firstname',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('lastname', null, array(
+                    'label' => 'form.lastname',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('gender', null, array(
+                    'label' => 'form.gender',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('dateOfBirth', null, array(
+                    'label' => 'form.dateOfBirth',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
             ->end()
             ->with('Account Preferences')
-                ->add('language', null, array('label' => 'Language'))
-                ->add('currencyCode', null, array('label' => 'Currency'))
-                ->add('biography', null, array('label' => 'Description'))
-                ->add('website', null, array('label' => 'Website URL'))
-                ->add('timezone', null, array('label' => 'Timezone'))
+                ->add('language', null, array(
+                    'label' => 'form.language',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('currencyCode', null, array(
+                    'label' => 'form.currencyCode',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('biography', null, array(
+                    'label' => 'form.biography',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('website', null, array(
+                    'label' => 'form.website',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('timezone', null, array(
+                    'label' => 'form.timezone',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
             ->end()
             ->with('Contact Details')
-                ->add('addressLine1', null, array('label' => 'Address Line 1'))
-                ->add('addressLine2', null, array('label' => 'Address Line 2'))
-                ->add('addressLine3', null, array('label' => 'Address Line 3'))
-                ->add('city', null, array('label' => 'City'))
-                ->add('county', null, array('label' => 'County'))
-                ->add('postCode', null, array('label' => 'Postcode'))
-                ->add('countryCode', null, array('label' => 'Country'))
-                ->add('phone', null, array('label' => 'Phone'))
-                ->add('mobile', null, array('label' => 'Mobile'))
-                ->add('campaign', null, array('label' => 'Onboarding Campaign Name'))
-                ->add('termsAccepted', null, array('label' => 'Accepted T&Cs'))
+                ->add('addressLine1', null, array(
+                    'label' => 'form.addressLine1',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('addressLine2', null, array(
+                    'label' => 'form.addressLine2',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('addressLine3', null, array(
+                    'label' => 'form.addressLine3',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('city', null, array(
+                    'label' => 'form.city',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('county', null, array(
+                    'label' => 'form.county',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('postCode', null, array(
+                    'label' => 'form.postcode',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('countryCode', null, array(
+                    'label' => 'form.countryCode',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('phone', null, array(
+                    'label' => 'form.phone',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('mobile', null, array(
+                    'label' => 'form.mobile',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('campaign', null, array(
+                    'label' => 'form.campaignname',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('termsAccepted', null, array(
+                    'label' => 'form.tnc',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
             ->end()
             ->with('Security')
-                ->add('secretQuestion',null, array('label' => 'Secret Question'))
-                ->add('secretQuestionResponse',null, array('label' => 'Secret Question Response'))
-                ->add('token')
-                ->add('twoStepVerificationCode')
+                ->add('secretQuestion',null, array(
+                    'label' => 'form.secretQuestion',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('secretQuestionResponse',null, array(
+                    'label' => 'form.secretQuestionResponse',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
             ->end()
             ->with('Groups')
                 ->add('groups')
@@ -113,102 +209,257 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
      */
     public function configureFormFields(FormMapper $formMapper) {
         $formMapper
-            ->tab('General')
-                ->with('General', array('collapsed' => false))
-                    ->add('username', null, array('label' => 'Username', 'required' => true))
-                    ->add('email', null, array('label' => 'email', 'required' => true))
-                    ->add('plainPassword', 'text', array('required' => false))
-                ->end()
-            ->end()
-            ->tab('Profile')
-                ->with('Profile', array('collapsed' => true))
-                    ->add('title', 'choice', array('choices' => array(
-                        'mr' => 'Mr',
-                        'ms' => 'Ms',
-                        'mrs' => 'Mrs',
-                        'miss' => 'Miss',
-                        'dr' => 'Dr',
-                        'prof' => 'Prof'
-                    ), 'label' => 'Title', 'required' => true, 'expanded' => true, 'multiple' => false))
-                    ->add('firstname', null, array('label' => 'First Name', 'required' => true))
-                    ->add('lastname', null, array('label' => 'Surname', 'required' => true))
-                    ->add('gender', 'choice', array('choices' => array(
-                        UserInterface::GENDER_UNKNOWN => 'gender_unknown',
-                        UserInterface::GENDER_FEMALE  => 'gender_female',
-                        UserInterface::GENDER_MALE    => 'gender_male',
-                    ), 'label' => 'Gender', 'required' => true, 'expanded' => true, 'multiple' => false))
-                    ->add('dateOfBirth', 'birthday', array('format' => 'yyyy-MM-dd', 'widget' => 'single_text', 'label' => 'Date Of Birth', 'required' => true))
-                ->end()
-            ->end()
-            ->tab('Contact Details')
-                ->with('Contact Details', array('collapsed' => true))
-                    ->add('addressLine1', 'text', array('label' => 'Address Line 1', 'required' => true))
-                    ->add('addressLine2', 'text', array('label' => 'Address Line 2', 'required' => true))
-                    ->add('addressLine3', 'text', array('label' => 'Address Line 3', 'required' => false))
-                    ->add('city', 'text', array('label' => 'City', 'required' => true))
-                    ->add('county', 'text', array('label' => 'County', 'required' => false))
-                    ->add('postCode', 'text', array('label' => 'Postcode', 'required' => true))
-                    ->add('countryCode', 'country', array('preferred_choices' => array(
-                        'GB' => 'UK',
-                        'US' => 'USA'
-                    ), 'label' => 'Country', 'required' => true))
-                    ->add('phone', 'text', array('label' => 'Phone', 'required' => true))
-                    ->add('mobile', 'text', array('label' => 'Mobile', 'required' => true))
+            ->tab('Generic Details')
+                ->with('Generic Details', array('collapsed' => false))
+                    ->add('email', EmailType::class, array(
+                        'label' => 'form.email',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => true
+                    ))
+                    ->add('username', TextType::class, array(
+                        'label' => 'form.username',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => true
+                    ))
+                    ->add('title', ChoiceType::class, array(
+                        'choices' => array(
+                            User::TITLE_MR      => 'mr',
+                            User::TITLE_MS      => 'ms',
+                            User::TITLE_MRS     => 'mrs',
+                            User::TITLE_MISS    => 'miss',
+                            User::TITLE_DR      => 'dr',
+                            User::TITLE_PROF    => 'prof',
+                        ),
+                        'label' => 'form.title',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => true,
+                        'expanded' => false,
+                        'multiple' => false
+                    ))
+                    ->add('firstname', TextType::class, array(
+                        'label' => 'form.firstname',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => false
+                    ))
+                    ->add('lastname', TextType::class, array(
+                        'label' => 'form.lastname',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => false
+                    ))
+                    ->add('gender', ChoiceType::class, array(
+                        'choices' => array(
+                            User::GENDER_UNKNOWN   => 'gender_unknown',
+                            User::GENDER_FEMALE    => 'gender_female',
+                            User::GENDER_MALE      => 'gender_male'
+                        ),
+                        'label' => 'form.gender',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => true,
+                        'expanded' => false,
+                        'multiple' => false
+                    ))
+                    ->add('dateOfBirth', BirthdayType::class, array(
+                        'format' => 'dd-MM-yyyy',
+                        'widget' => 'single_text',
+                        'label' => 'form.dateOfBirth',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => false,
+                        'widget' => 'single_text'
+                    ))
                 ->end()
             ->end()
             ->tab('Account Preferences')
                 ->with('Account Preferences', array('collapsed' => true))
-                    ->add('language', 'language', array('preferred_choices' => array(
-                        'en' => 'English'
-                    ),'label' => 'Language', 'required' => true, 'expanded' => false, 'multiple' => false))
-                    ->add('currencyCode', 'choice', array('choices' => array(
-                        'GBP' => '£' ,
-                        'USD' => '$',
-                        'EUR' => '€'
-                    ), 'label' => 'Currency', 'required' => true))
-                    ->add('termsAccepted', null, array('label' => 'Accepted T&Cs', 'required' => false))
+                    ->add('language', LanguageType::class, array(
+                        'preferred_choices' => array(
+                            User::LANGUAGE_EN
+                        ),
+                        'label' => 'form.language',
+                        'translation_domain' => 'SonataUserBundle',
+                        'expanded' => false,
+                        'multiple' => false,
+                        'required' => true
+                    ))
+                    ->add('currencyCode', ChoiceType::class, array(
+                        'choices' => array(
+                            User::CURRENCY_POUND    => 'GBP',
+                            User::CURRENCY_EURO     => 'EUR',
+                            User::CURRENCY_USD      => 'USD'
+                        ),
+                        'preferred_choices' => array(
+                            User::CURRENCY_POUND    => 'GBP',
+                        ),
+                        'label' => 'form.currencyCode',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => true,
+                        'expanded' => true,
+                        'multiple' => false
+                    ))
+                    ->add('biography', TextareaType::class, array(
+                        'label' => 'form.biography',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => false
+                    ))
+                    ->add('website', UrlType::class, array(
+                        'label' => 'form.website',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => false
+                    ))
+                    ->add('timezone', TimezoneType::class, array(
+                        'preferred_choices' => array(
+                            User::TIMEZONE_LONDON
+                        ),
+                        'label' => 'form.timezone',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => false
+                    ))
                 ->end()
             ->end()
-        ;
-
-        $formMapper
+            ->tab('Contact Details')
+                ->with('Contact Details', array('collapsed' => true))
+                    ->add('addressLine1', TextType::class, array(
+                        'label' => 'form.addressLine1',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => true
+                    ))
+                    ->add('addressLine2', TextType::class, array(
+                        'label' => 'form.addressLine2',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => true
+                    ))
+                    ->add('addressLine3', TextType::class, array(
+                        'label' => 'form.addressLine3',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => false
+                    ))
+                    ->add('city', TextType::class, array(
+                        'label' => 'form.city',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => true
+                    ))
+                    ->add('county', TextType::class, array(
+                        'label' => 'form.county',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => false
+                    ))
+                    ->add('postcode', TextType::class, array(
+                        'label' => 'form.postcode',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => false
+                    ))
+                    ->add('countryCode', CountryType::class, array(
+                        'preferred_choices' => array(
+                            User::COUNTRY_EN
+                        ),
+                        'label' => 'form.countryCode',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => true
+                    ))
+                    ->add('phone', TextType::class, array(
+                        'label' => 'form.phone',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => false
+                    ))
+                    ->add('mobile', TextType::class, array(
+                        'label' => 'form.mobile',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => false
+                    ))
+                    ->add('campaign', TextType::class, array(
+                        'label' => 'form.campaignname',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => false
+                    ))
+                    ->add('termsAccepted', CheckboxType::class, array(
+                        'label' => 'form.tnc',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => true
+                    ))
+                ->end()
+            ->end()
             ->tab('Security')
                 ->with('Security', array('collapsed' => true))
-                    ->add('secretQuestion','choice', array('choices' => array(
-                        'Spouse’s middle name' => 'Spouse’s middle name',
-                        'Mother’s Maiden Name' => 'Mother’s Maiden Name',
-                        'My favourite player' => 'My favourite player',
-                        'My first car' => 'My first car',
-                        'My first pet’s name' => 'My first pet’s name',
-                        'My first school' => 'My first school'
-                    ),'label' => 'Challenge','required' => true))
-                    ->add('secretQuestionResponse','text', array('label' => 'Response','required' => true))
-                    ->add('token', null, array('required' => false))
-                    ->add('twoStepVerificationCode', null, array('required' => false))
+                    ->add('plainPassword', TextType::class, array(
+                        'label' => 'form.plainPassword',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => false
+                    ))
+                    ->add('secretQuestion', ChoiceType::class, array(
+                        'choices' => array(
+                            User::QUESTION_SPOUSE       => 'spouse_name',
+                            User::QUESTION_MAIDEN_NAME  => 'maiden_name',
+                            User::QUESTION_CAR          => 'first_car',
+                            User::QUESTION_PET          => 'first_pet',
+                            User::QUESTION_SCHOOL       => 'first_school'
+                        ),
+                        'label' => 'form.secretQuestion',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => false
+                    ))
+                    ->add('secretQuestionResponse', TextType::class, array(
+                        'label' => 'form.secretQuestionResponse',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => false
+                    ))
+                    ->add('token', TextType::class, array(
+                        'label' => 'form.token',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => false
+                    ))
+                    ->add('twoStepVerificationCode', TextType::class, array(
+                        'label' => 'form.verificationCode',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => false
+                    ))
                 ->end()
             ->end()
             ->tab('Groups')
                 ->with('Groups', array('collapsed' => true))
-                    ->add('groups', 'sonata_type_model', array('required' => false, 'expanded' => true, 'multiple' => true))
+                    ->add('groups', 'sonata_type_model', array(
+                        'required' => false,
+                        'expanded' => true,
+                        'multiple' => true
+                    ))
                 ->end()
             ->end()
         ;
-
 
         if (!$this->getSubject()->hasRole('ROLE_SUPER_ADMIN')) {
             $formMapper
                 ->tab('User Management')
                     ->with('User Management', array('collapsed' => true))
+                        ->add('locked', null, array(
+                            'label' => 'form.locked',
+                            'translation_domain' => 'SonataUserBundle',
+                            'required' => false
+                        ))
+                        ->add('confirmed', null, array(
+                            'label' => 'form.confirmed',
+                            'translation_domain' => 'SonataUserBundle',
+                            'required' => false
+                        ))
+                        ->add('expired', null, array(
+                            'label' => 'form.expired',
+                            'translation_domain' => 'SonataUserBundle',
+                            'required' => false
+                        ))
+                        ->add('enabled', null, array(
+                            'label' => 'form.enabled',
+                            'translation_domain' => 'SonataUserBundle',
+                            'required' => false
+                        ))
+                        ->add('credentialsExpired', null, array(
+                            'label' => 'form.credentialsExpired',
+                            'translation_domain' => 'SonataUserBundle',
+                            'required' => false
+                        ))
                         ->add('roles', 'sonata_security_roles', array(
+                            'label' => 'form.roles',
+                            'translation_domain' => 'SonataUserBundle',
                             'expanded' => true,
                             'multiple' => true,
                             'required' => false
                         ))
-                        ->add('locked', null, array('required' => false))
-                        ->add('confirmed', null, array('required' => false))
-                        ->add('expired', null, array('required' => false))
-                        ->add('enabled', null, array('required' => false))
-                        ->add('credentialsExpired', null, array('required' => false))
                     ->end()
                 ->end()
             ;
