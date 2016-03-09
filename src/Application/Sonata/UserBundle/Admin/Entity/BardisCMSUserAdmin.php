@@ -249,9 +249,9 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
                     ))
                     ->add('gender', ChoiceType::class, array(
                         'choices' => array(
-                            User::GENDER_UNKNOWN   => 'gender_unknown',
-                            User::GENDER_FEMALE    => 'gender_female',
-                            User::GENDER_MALE      => 'gender_male'
+                            User::GENDER_UNKNOWN    => 'gender_unknown',
+                            User::GENDER_FEMALE     => 'gender_female',
+                            User::GENDER_MALE       => 'gender_male'
                         ),
                         'label' => 'form.gender',
                         'translation_domain' => 'SonataUserBundle',
@@ -268,10 +268,9 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
                         'html5' => true,
                         'error_bubbling' => false,
                         'attr' => [
-                            'class' => 'datepickerField',
+                            'class' => 'datepicker datepickerField',
                             'data-date-language' => 'en',
-                            'data-picker-position' => 'bottom-right',
-                            'data-date-format' => 'dd-mm-yyyy'
+                            'data-picker-position' => 'bottom-right'
                         ],
                         'required' => false
                     ))

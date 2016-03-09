@@ -16,7 +16,7 @@
                 {{ form_widget(genericDetailsForm) }}
                 <div class="large-12 small-12 columns">
                     <input type="hidden" name="form_section" value="generic_details" />
-                    <input type="submit" id="userGenericDetailsFormBtn" class="button" value="{{ 'profile.edit.submit'|trans({}, 'SonataUserBundle') }}" />
+                    <button type="submit" name="submit" id="userGenericDetailsFormBtn" class="button">{{ 'profile.edit.submit'|trans({}, 'SonataUserBundle') }}</button>
                     {% if formMessage is defined %}
                         <small class="form-message error">
                             {{ formMessage }}
@@ -42,7 +42,7 @@
                 {{ form_widget(contactDetailsForm) }}
                 <div class="large-12 small-12 columns">
                     <input type="hidden" name="form_section" value="contact" />
-                    <input type="submit" id="userContactDetailsFormBtn" class="button" value="{{ 'profile.edit.submit'|trans({}, 'SonataUserBundle') }}" />
+                    <button type="submit" name="submit" id="userContactDetailsFormBtn" class="button">{{ 'profile.edit.submit'|trans({}, 'SonataUserBundle') }}</button>
                     {% if formMessage is defined %}
                         <small class="form-message error">
                             {{ formMessage }}
@@ -68,7 +68,7 @@
                 {{ form_widget(accountPreferencesForm) }}
                 <div class="large-12 small-12 columns">
                     <input type="hidden" name="form_section" value="preferences" />
-                    <input type="submit" id="userAccountPreferencesFormBtn" class="button" value="{{ 'profile.edit.submit'|trans({}, 'SonataUserBundle') }}" />
+                    <button type="submit" name="submit" id="userAccountPreferencesFormBtn" class="button">{{ 'profile.edit.submit'|trans({}, 'SonataUserBundle') }}</button>
                     {% if formMessage is defined %}
                         <small class="form-message error">
                             {{ formMessage }}
@@ -94,7 +94,7 @@
                 {{ form_widget(passwordForm) }}
                 <div class="large-12 small-12 columns">
                     <input type="hidden" name="form_section" value="password" />
-                    <input type="submit" id="userPasswordFormBtn" class="button" value="{{ 'profile.edit.submit'|trans({}, 'SonataUserBundle') }}" />
+                    <button type="submit" name="submit" id="userPasswordFormBtn" class="button">{{ 'profile.edit.submit'|trans({}, 'SonataUserBundle') }}</button>
                     {% if formMessage is defined %}
                         <small class="form-message error">
                             {{ formMessage }}

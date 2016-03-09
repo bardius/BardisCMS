@@ -11492,6 +11492,7 @@ var notifications = window.notifications || {};
                 btnElement.on("click", function(e) {
                     e.preventDefault();
                     btnElement.prop("disabled", true);
+                    btnElement.addClass("sending");
                     var formData = formElement.serializeArray();
                     formData.push({
                         name: "isAjax",
@@ -11501,6 +11502,7 @@ var notifications = window.notifications || {};
                     var $formAjaxRequest = $.post(formAction, formData, null, dataType);
                     $formAjaxRequest.always(function() {
                         btnElement.prop("disabled", false);
+                        btnElement.removeClass("sending");
                     });
                     $formAjaxRequest.done(function(responseData) {
                         $(".formError").remove();
@@ -11556,7 +11558,6 @@ var notifications = window.notifications || {};
         datepicker: function() {
             CMS.Forms.$datepickerInputs.fdatepicker({
                 autoShow: true,
-                initialDate: new Date().toJSON().slice(0, 10),
                 disableDblClickSelection: false,
                 closeButton: true,
                 pickTime: false,

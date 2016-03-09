@@ -27,7 +27,7 @@
                 {% endif %}
 
                 <div class="large-12 small-12 columns">
-                    <input type="submit" id="userResetPasswordFormBtn" class="button" value="{{ 'resetting.request.submit'|trans({}, 'SonataUserBundle') }}" />
+                    <button type="submit" name="submit" id="userResetPasswordFormBtn" class="button">{{ 'resetting.request.submit'|trans({}, 'SonataUserBundle') }}</button>
                     <a class="button" href="{{ url('fos_user_registration_register') }}" title="{{ 'layout.link.create_account'|trans({}, 'SonataUserBundle') }}">
                         {{ 'layout.link.create_account'|trans({}, 'SonataUserBundle') }}
                     </a>

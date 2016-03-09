@@ -6,7 +6,7 @@
                 {{ form_widget(form) }}
 
                 <div class="large-12 small-12 columns">
-                    <input type="submit" id="userRessetingFormBtn" class="button" value="{{ 'resetting.reset.submit'|trans({}, 'SonataUserBundle') }}" />
+                    <button type="submit" name="submit" id="userRessetingFormBtn" class="button">{{ 'resetting.reset.submit'|trans({}, 'SonataUserBundle') }}</button>
                     <a class="button" href="{{ url('fos_user_registration_register') }}" title="{{ 'layout.link.create_account'|trans({}, 'SonataUserBundle') }}">
                         {{ 'layout.link.create_account'|trans({}, 'SonataUserBundle') }}
                     </a>

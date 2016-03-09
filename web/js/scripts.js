@@ -112,6 +112,7 @@
                     e.preventDefault();
 
                     btnElement.prop('disabled', true);
+                    btnElement.addClass('sending');
 
                     var formData = formElement.serializeArray();
                     formData.push({name: "isAjax", value: "true"});
@@ -124,6 +125,7 @@
                     // Always act when Ajax call is complete
                     $formAjaxRequest.always(function() {
                         btnElement.prop('disabled', false);
+                        btnElement.removeClass('sending');
                     });
 
                     // Handle the successfull JSON response
