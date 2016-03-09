@@ -123,6 +123,8 @@ class GenericDetailsFormType extends AbstractType {
                 'label' => 'form.dateOfBirth',
                 'translation_domain' => 'SonataUserBundle',
                 'data' => $defaults['dateOfBirth'],
+                'placeholder' => 'dd-mm-yyyy',
+                'html5' => true,
                 'attr' => [
                     'class' => 'datepickerField',
                     'data-date-language' => $this->container->get('translator')->getLocale(),

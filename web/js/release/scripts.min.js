@@ -11558,7 +11558,7 @@ var notifications = window.notifications || {};
                 autoShow: true,
                 initialDate: new Date().toJSON().slice(0, 10),
                 disableDblClickSelection: false,
-                closeButton: false,
+                closeButton: true,
                 pickTime: false,
                 isInline: false
             });

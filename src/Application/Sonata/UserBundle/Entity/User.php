@@ -549,6 +549,28 @@ class User extends BaseUser
     }
 
     /**
+     * Returns if Date of birth is valid.
+     *
+     * @return boolean
+     */
+    public function isValidDateOfBirth()
+    {
+        $todaysDate = date('Y-m-d s:m:h');
+
+        return ($this->dateOfBirth < $todaysDate);
+    }
+
+    /**
+     * Returns if password is legal.
+     *
+     * @return boolean
+     */
+    public function getIsPasswordLegal()
+    {
+        return ($this->firstName != $this->password);
+    }
+
+    /**
      * Returns a string representation
      *
      * @return string

@@ -131,6 +131,22 @@
             </constraint>
         </property>
 
+        <property name="dateOfBirth">
+            <constraint name="Date">
+                <option name="message">sonata_user.dateOfBirth.isNotDate</option>
+                <option name="groups">
+                    <value>Profile</value>
+                    <value>ContactDetails</value>
+                </option>
+            </constraint>
+        </property>
+
+        <getter property="validDateOfBirth">
+            <constraint name="IsFalse">
+                <option name="message">sonata_user.dateOfBirth.isNotInRange</option>
+            </constraint>
+        </getter>
+
     </class>
 
 </constraint-mapping>
