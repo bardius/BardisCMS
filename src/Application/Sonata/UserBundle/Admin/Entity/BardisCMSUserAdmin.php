@@ -262,11 +262,17 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
                     ->add('dateOfBirth', DateType::class, array(
                         'format' => 'dd-MM-yyyy',
                         'widget' => 'single_text',
-                        'attr' => array(
-                            'class' => 'datepicker'
-                        ),
                         'label' => 'form.dateOfBirth',
                         'translation_domain' => 'SonataUserBundle',
+                        'placeholder' => 'dd-mm-yyyy',
+                        'html5' => true,
+                        'error_bubbling' => false,
+                        'attr' => [
+                            'class' => 'datepickerField',
+                            'data-date-language' => 'en',
+                            'data-picker-position' => 'bottom-right',
+                            'data-date-format' => 'dd-mm-yyyy'
+                        ],
                         'required' => false
                     ))
                 ->end()

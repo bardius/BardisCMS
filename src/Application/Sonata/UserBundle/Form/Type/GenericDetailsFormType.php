@@ -125,6 +125,7 @@ class GenericDetailsFormType extends AbstractType {
                 'data' => $defaults['dateOfBirth'],
                 'placeholder' => 'dd-mm-yyyy',
                 'html5' => true,
+                'error_bubbling' => false,
                 'attr' => [
                     'class' => 'datepickerField',
                     'data-date-language' => $this->container->get('translator')->getLocale(),
@@ -141,6 +142,9 @@ class GenericDetailsFormType extends AbstractType {
         $resolver->setDefaults(array(
             'data_class' => $this->class,
             'intention' => 'profile_generic_details_edit',
+            'error_mapping' => array(
+                'validDateOfBirth' => 'dateOfBirth',
+            )
         ));
     }
 

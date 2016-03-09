@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                     xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
@@ -142,8 +142,12 @@
         </property>
 
         <getter property="validDateOfBirth">
-            <constraint name="IsFalse">
-                <option name="message">sonata_user.dateOfBirth.isNotInRange</option>
+            <constraint name="IsTrue">
+                <option name="message">sonata_user.dateOfBirth.isNotBirthday</option>
+                <option name="groups">
+                    <value>Profile</value>
+                    <value>GenericDetails</value>
+                </option>
             </constraint>
         </getter>
 

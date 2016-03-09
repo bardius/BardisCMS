@@ -1,96 +1,98 @@
 fos_user:
 
     username:
-        already_used: The username is already used
-        blank: Please enter a username
+        already_used: "The username is already used"
+        blank: "Please enter a username"
         short: "[-Inf,Inf]The username is too short"
         long: "[-Inf,Inf]The username is too long"
 
     email:
-        already_used: The email is already used
-        blank: Please enter an email
+        already_used: "The email is already used"
+        blank: "Please enter an email"
         short: "[-Inf,Inf]The email is too short"
         long: "[-Inf,Inf]The email is too long"
-        invalid: The email is not valid
+        invalid: "The email is not valid"
 
     password:
-        blank: Please enter a password
+        blank: "Please enter a password"
         short: "[-Inf,Inf]The password is too short"
-        mismatch: The entered passwords don't match
+        mismatch: "The entered passwords don't match"
 
     new_password:
-        blank: Please enter a new password
+        blank: "Please enter a new password"
         short: "[-Inf,Inf]The new password is too short"
 
     current_password:
-        invalid: The entered password is invalid
+        invalid: "The entered password is invalid"
 
     group:
-        blank: Please enter a name
+        blank: "Please enter a name"
         short: "[-Inf,Inf]The name is too short"
         long: "[-Inf,Inf]The name is too long"
 
 sonata_user:
 
     username:
-        already_used: The username is already used
-        blank: Please enter a username
+        already_used: "The username is already used"
+        blank: "Please enter a username"
         short: "[-Inf,Inf]The username is too short"
         long: "[-Inf,Inf]The username is too long"
 
     email:
-        already_used: The email is already used
-        blank: Please enter an email
+        already_used: "The email is already used"
+        blank: "Please enter an email"
         short: "[-Inf,Inf]The email is too short"
         long: "[-Inf,Inf]The email is too long"
-        invalid: The email is not valid
+        invalid: "The email is not valid"
 
     password:
-        blank: Please enter a password
+        blank: "Please enter a password"
         short: "[-Inf,Inf]The password is too short"
-        mismatch: The entered passwords don't match
+        mismatch: "The entered passwords don't match"
 
     new_password:
-        blank: Please enter a new password
+        blank: "Please enter a new password"
         short: "[-Inf,Inf]The new password is too short"
 
     current_password:
-        invalid: The entered password is invalid
+        invalid: "The entered password is invalid"
 
     group:
-        blank: Please enter a name
+        blank: "Please enter a name"
         short: "[-Inf,Inf]The name is too short"
         long: "[-Inf,Inf]The name is too long"
 
     firstname:
-        blank: Please enter a first name
+        blank: "Please enter a first name"
         short: "[-Inf,Inf]The first name is too short"
         long: "[-Inf,Inf]The first name is too long"
 
     lastname:
-        blank: Please enter a last name
+        blank: "Please enter a last name"
         short: "[-Inf,Inf]The last name is too short"
         long: "[-Inf,Inf]The last name is too long"
 
     termsAccepted:
-        blank: Please read and accept the Terms & Conditions
+        blank: "Please read and accept the Terms & Conditions"
 
     addressLine1:
-        blank: Please enter an address
+        blank: "Please enter an address"
         short: "[-Inf,Inf]The address is too short"
         long: "[-Inf,Inf]The address is too long"
 
     addressLine2:
-        blank: Please enter all address details
+        blank: "Please enter all address details"
         short: "[-Inf,Inf]The address is too short"
         long: "[-Inf,Inf]The address is too long"
 
     city:
-        blank: Please enter a city
+        blank: "Please enter a city"
         short: "[-Inf,Inf]The city is too short"
         long: "[-Inf,Inf]The city is too long"
 
     countryCode:
-        blank: Please select a country
+        blank: "Please select a country"
 
-
+    dateOfBirth:
+        isNotDate: "The provided date is not valid"
+        isNotBirthday: "The date of birth must belong to the past"

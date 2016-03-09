@@ -17,6 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Sonata\UserBundle\Model\UserInterface;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 
 class User extends BaseUser
@@ -555,7 +556,7 @@ class User extends BaseUser
      */
     public function isValidDateOfBirth()
     {
-        $todaysDate = date('Y-m-d s:m:h');
+        $todaysDate = new \DateTime();
 
         return ($this->dateOfBirth < $todaysDate);
     }
