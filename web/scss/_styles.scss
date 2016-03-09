@@ -175,6 +175,34 @@ header{
     width: 100%;
 }
 
+.accordion-navigation {
+    position: relative;
+
+    > a {
+        padding-right: 2.5rem!important;
+
+        &:after {
+            content: "\25BC";
+            position: absolute;
+            right: rem-calc(16);
+            top: rem-calc(16);
+            font-size: rem-calc(16);
+        }
+    }
+
+    &.active > a:after {
+        content: "\25B2";
+    }
+}
+
+.formFieldContainer {
+    position: relative;
+}
+
+.datepicker  {
+    position: absolute;
+}
+
 /* -----------------------------------------
         Pagination
 ----------------------------------------- */
@@ -457,7 +485,7 @@ footer{
 }
 
 /* ---------------------------------------------------
-   Media Queries for mobile / tablets responsivenes
+   Media Queries for mobile / tablets responsiveness
 ----------------------------------------------------- */
 
 @media #{$small-only} {

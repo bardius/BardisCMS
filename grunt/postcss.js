@@ -13,7 +13,7 @@ module.exports = {
                     // any browsers with >2% market share,
                     // and ensuring we support 8 and 9 with prefixes
                     browsers: ['last 2 versions', 'ie 8', 'ie 9', '> 2%'],
-                    map: true
+                    map: false
                 })
             ]
         },

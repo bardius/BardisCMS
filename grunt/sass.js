@@ -8,7 +8,8 @@ module.exports = {
     release: {
         options: {
             loadPath: [
-                '<%= config.f5scss.path %>'
+                '<%= config.f5scss.path %>',
+                '<%= config.datepicker_scss.path %>'
             ],
             unixNewlines: true,
             style: 'expanded', //compressed - expanded
@@ -38,7 +39,8 @@ module.exports = {
     production: {
         options: {
             loadPath: [
-                '<%= config.f5scss.path %>'
+                '<%= config.f5scss.path %>',
+                '<%= config.datepicker_scss.path %>'
             ],
             unixNewlines: false,
             style: 'compressed', //compressed - expanded

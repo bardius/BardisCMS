@@ -1,3 +1,8 @@
+@charset "UTF-8";
+
+/* Custom Fonts */
+@import "fonts";
+
 /* Override the default foundation framework global settings */
 @import "settings";
 
@@ -43,7 +48,13 @@
 //   "foundation/components/visibility";
 
 /* Load the animate css */
-@import "animate";
+// @import "animate";
+
+/* Load the Foundation Icon Fonts 3 */
+@import "foundation-icons";
+
+/* Load the datepicker css */
+@import "foundation-datepicker";
 
 /* Load the custom styles */
 @import "styles";

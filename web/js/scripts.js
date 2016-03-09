@@ -85,12 +85,16 @@
             CMS.Forms.ajaxSubmittedForm('#fos_user_resetting_request', '#userResetPasswordFormBtn', 'json', false, false);
             CMS.Forms.ajaxSubmittedForm('#fos_user_resetting_form', '#userRessetingFormBtn', 'json', false, false);
 
+            // Start the datepicker
+            CMS.Forms.datepicker();
+
             // Setup the filters for the filter search page
             CMS.Forms.setupFilters();
         }
     };
 
     CMS.Forms = {
+        $datepickerInputs: $(".datepickerField"),
         setupFilters: function () {
             $('#resetFilters').change(function () {
                 var checkboxes = $(this).closest('form').find(':checkbox').not(this);
@@ -186,6 +190,16 @@
                     });
                 });
             }
+        },
+        datepicker: function(){
+            CMS.Forms.$datepickerInputs.fdatepicker({
+                autoShow: true,
+                initialDate: new Date().toJSON().slice(0, 10),
+                disableDblClickSelection: false,
+                closeButton: true,
+                pickTime: false,
+                isInline: false
+            });
         }
     };
 

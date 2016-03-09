@@ -53,6 +53,7 @@ module.exports = function (grunt) {
                         //'web/bower_components/jquery-ias/src/extension/spinner.js',
                         //'web/bower_components/jquery-ias/src/extension/noneleft.js',
                         //'web/js/sample_plugin.js',
+                        'web/bower_components/foundation-datepicker/js/foundation-datepicker.js',
                         'web/js/scripts.js'
                     ],
                     modernizrScriptFile: [
@@ -74,6 +75,10 @@ module.exports = function (grunt) {
                 f5scss: {
                     // <%= config.f5scss.path %>
                     path: 'web/bower_components/foundation/scss'
+                },
+                datepicker_scss: {
+                    // <%= config.datepicker_scss.path %>
+                    path: 'web/bower_components/foundation-datepicker/css'
                 },
                 jstests: {
                     // <%= config.jstests.path %>
