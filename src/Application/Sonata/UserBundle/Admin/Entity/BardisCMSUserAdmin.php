@@ -30,6 +30,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
@@ -258,7 +259,7 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
                         'expanded' => false,
                         'multiple' => false
                     ))
-                    ->add('dateOfBirth', BirthdayType::class, array(
+                    ->add('dateOfBirth', DateType::class, array(
                         'format' => 'dd-MM-yyyy',
                         'widget' => 'single_text',
                         'label' => 'form.dateOfBirth',

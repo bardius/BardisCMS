@@ -20,7 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 use Application\Sonata\UserBundle\Entity\User;
 
@@ -117,7 +117,7 @@ class GenericDetailsFormType extends AbstractType {
                 'expanded' => false,
                 'multiple' => false
             ))
-            ->add('dateOfBirth', BirthdayType::class, array(
+            ->add('dateOfBirth', DateType::class, array(
                 'format' => 'dd-MM-yyyy',
                 'widget' => 'single_text',
                 'label' => 'form.dateOfBirth',
