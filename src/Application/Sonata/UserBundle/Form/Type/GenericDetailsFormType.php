@@ -70,7 +70,10 @@ class GenericDetailsFormType extends AbstractType {
             /*
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
-                'options' => array('translation_domain' => 'SonataUserBundle'),
+                'options' => array(
+                    'translation_domain' => 'SonataUserBundle',
+                    'error_bubbling' => false,
+                ),
                 'first_options' => array('label' => 'form.password'),
                 'second_options' => array('label' => 'form.password_confirmation'),
                 'invalid_message' => 'fos_user.password.mismatch'
@@ -144,6 +147,7 @@ class GenericDetailsFormType extends AbstractType {
             'intention' => 'profile_generic_details_edit',
             'error_mapping' => array(
                 'validDateOfBirth' => 'dateOfBirth',
+                'safePassword' => 'plainPassword',
             )
         ));
     }

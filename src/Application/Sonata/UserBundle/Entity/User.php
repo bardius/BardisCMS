@@ -465,11 +465,14 @@ class User extends BaseUser
     public function setEmail($email)
     {
         $this->email = $email;
-        if ($this->getUsername() === null) {
+        // Enable registration only with email address
+        /*
+        if ($this->username === null) {
             $this->username = $email;
             $this->password = $email;
             $this->plainPassword = $email;
         }
+        */
     }
 
     public function setEmailCanonical($emailCanonical)
@@ -566,9 +569,9 @@ class User extends BaseUser
      *
      * @return boolean
      */
-    public function getIsPasswordLegal()
+    public function isSafePassword()
     {
-        return ($this->firstName != $this->password);
+        return ($this->email != $this->password) && ($this->username != $this->password);
     }
 
     /**

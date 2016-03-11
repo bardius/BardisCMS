@@ -44,6 +44,7 @@ class RegistrationFormType extends AbstractType {
         $request = $this->requestStack->getMasterRequest();
         $REQUEST_URI = $request->server->get('REQUEST_URI');
 
+        // Getting the campaign identifier from url for KPI metrics
         $this->campaignData = null;
         $this->campaignData = explode('/track-campaign/', $REQUEST_URI);
         $this->campaignData = str_replace("/", "", end($this->campaignData));
@@ -63,7 +64,8 @@ class RegistrationFormType extends AbstractType {
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'options' => array(
-                    'translation_domain' => 'SonataUserBundle'
+                    'translation_domain' => 'SonataUserBundle',
+                    'error_bubbling' => false,
                 ),
                 'first_options' => array(
                     'label' => 'form.password'
@@ -105,6 +107,9 @@ class RegistrationFormType extends AbstractType {
         $resolver->setDefaults(array(
             'data_class' => $this->class,
             'intention' => 'registration',
+            'error_mapping' => array(
+                'safePassword' => 'plainPassword',
+            )
         ));
     }
 

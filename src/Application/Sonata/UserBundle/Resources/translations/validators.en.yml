@@ -3,8 +3,10 @@ fos_user:
     username:
         already_used: "The username is already used"
         blank: "Please enter a username"
-        short: "[-Inf,Inf]The username is too short"
-        long: "[-Inf,Inf]The username is too long"
+        short: "Your username must have at least {{ limit }} characters"
+        long: "Your username is too long. Please restrain at {{ limit }} characters"
+        invalid_chars: "Usernames can contain characters a-z, 0-9, underscores and periods. The username cannot start with a period nor end with a period. It must also not have more than one period sequentially."
+
 
     email:
         already_used: "The email is already used"
@@ -15,12 +17,19 @@ fos_user:
 
     password:
         blank: "Please enter a password"
-        short: "[-Inf,Inf]The password is too short"
+        short: "Your password must have at least {{ limit }} characters"
+        long: "Your password is too long. Please restrain at {{ limit }} characters"
         mismatch: "The entered passwords don't match"
+        isNotSafe: "You can not use your username or email as password"
+        isNotLegal: "Password must contain at least one upper case character, one lower case character and one digit without spaces"
 
     new_password:
-        blank: "Please enter a new password"
-        short: "[-Inf,Inf]The new password is too short"
+        blank: "Please enter a password"
+        short: "Your password must have at least {{ limit }} characters"
+        long: "Your password is too long. Please restrain at {{ limit }} characters"
+        mismatch: "The entered passwords don't match"
+        isNotSafe: "You can not use your username or email as password"
+        isNotLegal: "Password must contain at least one upper case character, one lower case character and one digit without spaces"
 
     current_password:
         invalid: "The entered password is invalid"
@@ -35,8 +44,9 @@ sonata_user:
     username:
         already_used: "The username is already used"
         blank: "Please enter a username"
-        short: "[-Inf,Inf]The username is too short"
-        long: "[-Inf,Inf]The username is too long"
+        short: "Your username must have at least {{ limit }} characters"
+        long: "Your username is too long. Please restrain at {{ limit }} characters"
+        invalid_chars: "Usernames can contain characters a-z, 0-9, underscores and periods. The username cannot start with a period nor end with a period. It must also not have more than one period sequentially."
 
     email:
         already_used: "The email is already used"
@@ -47,33 +57,42 @@ sonata_user:
 
     password:
         blank: "Please enter a password"
-        short: "[-Inf,Inf]The password is too short"
+        short: "Your password must have at least {{ limit }} characters"
+        long: "Your password is too long. Please restrain at {{ limit }} characters"
         mismatch: "The entered passwords don't match"
+        isNotSafe: "You can not use your username or email as password"
+        isNotLegal: "Password must contain at least one upper case character, one lower case character and one digit without spaces"
 
     new_password:
-        blank: "Please enter a new password"
-        short: "[-Inf,Inf]The new password is too short"
+        blank: "Please enter a password"
+        short: "Your password must have at least {{ limit }} characters"
+        long: "Your password is too long. Please restrain at {{ limit }} characters"
+        mismatch: "The entered passwords don't match"
+        isNotSafe: "You can not use your username or email as password"
+        isNotLegal: "Password must contain at least one upper case character, one lower case character and one digit without spaces"
 
     current_password:
         invalid: "The entered password is invalid"
-
-    group:
-        blank: "Please enter a name"
-        short: "[-Inf,Inf]The name is too short"
-        long: "[-Inf,Inf]The name is too long"
 
     firstname:
         blank: "Please enter a first name"
         short: "[-Inf,Inf]The first name is too short"
         long: "[-Inf,Inf]The first name is too long"
+        invalid_chars: "The first name contains invalid characters"
 
     lastname:
         blank: "Please enter a last name"
         short: "[-Inf,Inf]The last name is too short"
         long: "[-Inf,Inf]The last name is too long"
+        invalid_chars: "The last name contains invalid characters"
+
+    dateOfBirth:
+        isNotDate: "The provided date is not valid"
+        isNotBirthday: "The date of birth must belong to the past"
 
     termsAccepted:
         blank: "Please read and accept the Terms & Conditions"
+        not_accepted: "Please read and accept the Terms & Conditions"
 
     addressLine1:
         blank: "Please enter an address"
@@ -87,12 +106,41 @@ sonata_user:
 
     city:
         blank: "Please enter a city"
-        short: "[-Inf,Inf]The city is too short"
-        long: "[-Inf,Inf]The city is too long"
+        short: "[-Inf,Inf]The city name is too short"
+        long: "[-Inf,Inf]The city name is too long"
+        invalid_chars: "The city name contains invalid characters"
+
+    county:
+        blank: "Please enter a county"
+        short: "[-Inf,Inf]The county name is too short"
+        long: "[-Inf,Inf]The county name is too long"
+        invalid_chars: "The county name contains invalid characters"
+
+    postcode:
+        blank: "Please enter a postcode"
+        short: "[-Inf,Inf]The postcode is too short"
+        long: "[-Inf,Inf]The postcode is too long"
+        invalid_chars: "The postcode contains invalid characters"
 
     countryCode:
         blank: "Please select a country"
 
-    dateOfBirth:
-        isNotDate: "The provided date is not valid"
-        isNotBirthday: "The date of birth must belong to the past"
+    phone:
+        blank: "Please enter a phone number"
+        short: "[-Inf,Inf]The phone number is too short"
+        long: "[-Inf,Inf]The phone number is too long"
+        invalid_chars: "The phone number contains invalid characters"
+
+    mobile:
+        blank: "Please enter a mobile number"
+        short: "[-Inf,Inf]The mobile number is too short"
+        long: "[-Inf,Inf]The mobile number is too long"
+        invalid_chars: "The mobile number contains invalid characters"
+
+    website:
+        not_valid: "The url {{ value }} is not a valid url."
+
+    group:
+        blank: "Please enter a name"
+        short: "[-Inf,Inf]The name is too short"
+        long: "[-Inf,Inf]The name is too long"
