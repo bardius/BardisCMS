@@ -56,36 +56,65 @@ class ContactDetailsFormType extends AbstractType {
                 'label' => 'form.addressLine1',
                 'translation_domain' => 'SonataUserBundle',
                 'data'=> $defaults['addressLine1'],
+                "attr" => [
+                    'placeholder' => "Address Line 1",
+                    'minlength' => 2,
+                    'maxlength' => 100
+                ],
                 'required' => true
             ))
             ->add('addressLine2', TextType::class, array(
                 'label' => 'form.addressLine2',
                 'translation_domain' => 'SonataUserBundle',
                 'data'=> $defaults['addressLine2'],
+                "attr" => [
+                    'placeholder' => "Address Line 2",
+                    'minlength' => 2,
+                    'maxlength' => 100
+                ],
                 'required' => true
             ))
             ->add('addressLine3', TextType::class, array(
                 'label' => 'form.addressLine3',
                 'translation_domain' => 'SonataUserBundle',
                 'data'=> $defaults['addressLine3'],
+                "attr" => [
+                    'placeholder' => "Address Line 3",
+                    'maxlength' => 100
+                ],
                 'required' => false
             ))
             ->add('city', TextType::class, array(
                 'label' => 'form.city',
                 'translation_domain' => 'SonataUserBundle',
                 'data'=> $defaults['city'],
+                "attr" => [
+                    'placeholder' => "City",
+                    'minlength' => 2,
+                    'maxlength' => 64
+                ],
                 'required' => true
             ))
             ->add('county', TextType::class, array(
                 'label' => 'form.county',
                 'translation_domain' => 'SonataUserBundle',
                 'data'=> $defaults['county'],
+                "attr" => [
+                    'placeholder' => "County",
+                    'minlength' => 2,
+                    'maxlength' => 64
+                ],
                 'required' => false
             ))
             ->add('postcode', TextType::class, array(
                 'label' => 'form.postcode',
                 'translation_domain' => 'SonataUserBundle',
                 'data'=> $defaults['postcode'],
+                "attr" => [
+                    'placeholder' => "Postcode",
+                    'minlength' => 2,
+                    'maxlength' => 14
+                ],
                 'required' => false
             ))
             ->add('countryCode', CountryType::class, array(
@@ -101,12 +130,20 @@ class ContactDetailsFormType extends AbstractType {
                 'label' => 'form.phone',
                 'translation_domain' => 'SonataUserBundle',
                 'data'=> $defaults['phone'],
+                "attr" => [
+                    'placeholder' => "+xx xxxx xxx xxx",
+                    'maxlength' => 18
+                ],
                 'required' => false
             ))
             ->add('mobile', TextType::class, array(
                 'label' => 'form.mobile',
                 'translation_domain' => 'SonataUserBundle',
                 'data'=> $defaults['mobile'],
+                "attr" => [
+                    'placeholder' => "+xx xxxx xxx xxx",
+                    'maxlength' => 18
+                ],
                 'required' => false
             ))
         ;

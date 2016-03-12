@@ -17,7 +17,6 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use FOS\UserBundle\Model\UserManagerInterface;
-use Sonata\UserBundle\Model\UserInterface;
 
 use Application\Sonata\UserBundle\Entity\User;
 
@@ -29,7 +28,6 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
@@ -40,12 +38,26 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
 
     protected $formOptions = array(
         'validation_groups' => array(
-            'Profile',
-            'GenericDetails',
-            'AccountPreferences',
-            'ContactDetails'
+            'OverriddenProfile'
         )
     );
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFormBuilder()
+    {
+        $this->formOptions['data_class'] = $this->getClass();
+
+        $options = $this->formOptions;
+        $options['validation_groups'] = (!$this->getSubject() || is_null($this->getSubject()->getId())) ? 'Registration' : 'OverriddenProfile';
+
+        $formBuilder = $this->getFormContractor()->getFormBuilder($this->getUniqid(), $options);
+
+        $this->defineFormBuilder($formBuilder);
+
+        return $formBuilder;
+    }
 
     /**
      * {@inheritdoc}
@@ -209,6 +221,8 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
      * {@inheritdoc}
      */
     public function configureFormFields(FormMapper $formMapper) {
+        $now = new \DateTime();
+
         $formMapper
             ->tab('Generic Details')
                 ->with('Generic Details', array('collapsed' => false))
@@ -270,8 +284,14 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
                         'attr' => [
                             'class' => 'datepicker datepickerField',
                             'data-date-language' => 'en',
+                            'data-date-start-date' => '01-01-1902',
+                            'data-date-end-date' => $now->format('d-m-Y'),
+                            'data-date-format' => 'DD-MM-YYYY',
+                            'data-date-pick-time' => false,
+                            'placeholder' => "dd-mm-yyyy",
                             'data-picker-position' => 'bottom-right'
                         ],
+                        'invalid_message' => 'sonata_user.dateOfBirth.isNotDate',
                         'required' => false
                     ))
                 ->end()

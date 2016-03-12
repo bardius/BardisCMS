@@ -54,11 +54,21 @@ class RegistrationFormType extends AbstractType {
             ->add('email', EmailType::class, array(
                 'label' => 'form.email',
                 'translation_domain' => 'SonataUserBundle',
+                "attr" => [
+                    'placeholder' => "user@domain.com",
+                    'minlength' => 2,
+                    'maxlength' => 255
+                ],
                 'required' => true
             ))
             ->add('username', TextType::class, array(
                 'label' => 'form.username',
                 'translation_domain' => 'SonataUserBundle',
+                "attr" => [
+                    'placeholder' => "username",
+                    'minlength' => 6,
+                    'maxlength' => 20
+                ],
                 'required' => true
             ))
             ->add('plainPassword', RepeatedType::class, array(
@@ -68,27 +78,52 @@ class RegistrationFormType extends AbstractType {
                     'error_bubbling' => false,
                 ),
                 'first_options' => array(
-                    'label' => 'form.password'
+                    'label' => 'form.password',
+                    "attr" => [
+                        'placeholder' => "password",
+                        'minlength' => 8,
+                        'maxlength' => 255
+                    ]
                 ),
                 'second_options' => array(
-                    'label' => 'form.password_confirmation'
+                    'label' => 'form.password_confirmation',
+                    "attr" => [
+                        'placeholder' => "password",
+                        'minlength' => 8,
+                        'maxlength' => 255
+                    ]
                 ),
                 'invalid_message' => 'fos_user.password.mismatch',
             ))
             ->add('firstname', TextType::class, array(
                 'label' => 'form.firstname',
                 'translation_domain' => 'SonataUserBundle',
+                "attr" => [
+                    'placeholder' => "Name",
+                    'minlength' => 2,
+                    'maxlength' => 64
+                ],
                 'required' => true
             ))
             ->add('lastname', TextType::class, array(
                 'label' => 'form.lastname',
                 'translation_domain' => 'SonataUserBundle',
+                "attr" => [
+                    'placeholder' => "Surname",
+                    'minlength' => 2,
+                    'maxlength' => 64
+                ],
                 'required' => true
             ))
             ->add('campaign', HiddenType::class, array(
                 'label' => 'form.campaignname',
                 'translation_domain' => 'SonataUserBundle',
                 'data' => $this->campaignData,
+                "attr" => [
+                    'placeholder' => "campaign",
+                    'minlength' => 2,
+                    'maxlength' => 255
+                ],
                 'required' => false
             ))
             ->add('termsAccepted', CheckboxType::class, array(

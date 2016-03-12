@@ -261,6 +261,7 @@ class RegistrationFOSUser1Controller extends Controller
 
         $user->setConfirmationToken(null);
         $user->setEnabled(true);
+        $user->setConfirmed(true);
         $user->setLastLogin(new \DateTime());
 
         $this->get('fos_user.user_manager')->updateUser($user);
@@ -332,6 +333,26 @@ class RegistrationFOSUser1Controller extends Controller
     {
         try {
             $this->get('fos_user.security.login_manager')->loginUser(
+                $this->container->getParameter('fos_user.firewall_name'),
+                $user,
+                $response
+            );
+        } catch (AccountStatusException $ex) {
+            // We simply do not authenticate users which do not pass the user
+            // checker (not enabled, expired, etc.).
+        }
+    }
+
+    /**
+     * UnAuthenticate a user with Symfony Security.
+     *
+     * @param UserInterface $user
+     * @param Response      $response
+     */
+    protected function unAuthenticateUser(UserInterface $user, Response $response)
+    {
+        try {
+            $this->get('fos_user.security.login_manager')->logoutUser(
                 $this->container->getParameter('fos_user.firewall_name'),
                 $user,
                 $response

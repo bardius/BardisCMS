@@ -28,7 +28,7 @@ fos_user:
         # Authentication Form
         form:
             type:               sonata_user_profile
-            validation_groups: [Profile] #[Authentication] # Please note : this is not the default value
+            validation_groups: [OverriddenProfile] #[Profile] [Authentication] # Please note : this is not the default value
 
 sonata_user:
 
@@ -50,6 +50,9 @@ sonata_user:
                     # Set it to false to disable redirection
                     route:              'fos_user_registration_confirmed' #'sonata_user_profile_show'
                     route_parameters:   ~
+
+        form:
+            validation_groups:  [OverriddenProfile]
 
         # Customize user portal menu by setting links
         menu:

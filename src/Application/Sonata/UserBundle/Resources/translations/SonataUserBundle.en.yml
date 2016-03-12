@@ -132,7 +132,7 @@ form:
     biography:                      Description
     timezone:                       Timezone
     secretQuestion:                 Secret question
-    secretQuestionResponse:         Secret question response
+    secretQuestionResponse:         Secret question answer
     addressLine1:                   Address line 1 *
     addressLine2:                   Address line 2 *
     addressLine3:                   Address line 3

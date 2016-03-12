@@ -10,22 +10,71 @@
             <generator strategy="AUTO" />
         </id>
 
-        <field name="confirmed" column="confirmed" type="boolean" nullable="false" />
-        <field name="title" type="string" column="title" length="8" nullable="true" />
-        <field name="language" type="string" column="language" length="2" nullable="true" />
-        <field name="secretQuestion" type="string" column="secret_question" length="180" nullable="true" />
-        <field name="secretQuestionResponse" type="string" column="secret_question_response" length="180" nullable="true" />
-        <field name="addressLine1" type="string" column="addressLine1" length="180" nullable="true" />
-        <field name="addressLine2" type="string" column="addressLine2" length="180" nullable="true" />
-        <field name="addressLine3" type="string" column="addressLine3" length="180" nullable="true" />
-        <field name="city" type="string" column="city" length="60" nullable="true" />
-        <field name="county" type="string" column="county" length="60" nullable="true" />
-        <field name="postcode" type="string" column="postcode" length="60" nullable="true" />
-        <field name="countryCode" type="string" column="country_code" length="2" nullable="true" />
-        <field name="currencyCode" type="string" column="currency_code" length="3" nullable="true" />
-        <field name="mobile" type="string" column="mobile" length="15" nullable="true" />
-        <field name="termsAccepted" type="boolean" column="terms_accepted" nullable="false" />
-        <field name="campaign" type="string" column="campaign" length="255" nullable="true" />
+        <attribute-overrides>
+
+            <attribute-override name="username">
+                <field column="username" length="20" unique="true" />
+            </attribute-override>
+
+            <attribute-override name="email">
+                <field column="email" length="255" unique="true" />
+            </attribute-override>
+
+            <attribute-override name="firstname">
+                <field column="firstname" length="64" />
+            </attribute-override>
+
+            <attribute-override name="lastname">
+                <field column="lastname" length="64" />
+            </attribute-override>
+
+            <attribute-override name="gender">
+                <field column="gender" length="32" />
+            </attribute-override>
+
+            <attribute-override name="biography">
+                <field column="biography" length="1000" />
+            </attribute-override>
+
+            <attribute-override name="phone">
+                <field column="phone" length="18" />
+            </attribute-override>
+
+            <attribute-override name="website">
+                <field column="website" length="255" />
+            </attribute-override>
+
+        </attribute-overrides>
+
+        <!-- Generic Details fields -->
+        <field name="title"         type="string"       column="title"          length="8"      nullable="true" />
+
+        <!-- Account Preferences fields -->
+        <field name="language"      type="string"       column="language"       length="2"      nullable="true" />
+        <field name="currencyCode"  type="string"       column="currency_code"  length="3"      nullable="true" />
+
+        <!-- Contact Details fields -->
+        <field name="addressLine1"  type="string"       column="addressLine1"   length="100"    nullable="true" />
+        <field name="addressLine2"  type="string"       column="addressLine2"   length="100"    nullable="true" />
+        <field name="addressLine3"  type="string"       column="addressLine3"   length="100"    nullable="true" />
+        <field name="city"          type="string"       column="city"           length="64"     nullable="true" />
+        <field name="county"        type="string"       column="county"         length="64"     nullable="true" />
+        <field name="postcode"      type="string"       column="postcode"       length="14"     nullable="true" />
+        <field name="countryCode"   type="string"       column="country_code"   length="2"      nullable="true" />
+        <field name="mobile"        type="string"       column="mobile"         length="18"     nullable="true" />
+        <field name="campaign"      type="string"       column="campaign"       length="255"    nullable="true" />
+        <field name="termsAccepted" type="boolean"      column="terms_accepted"                 nullable="false" />
+
+        <!-- security fields -->
+        <field name="confirmed"                 type="boolean"  column="confirmed"                                  nullable="false" />
+        <field name="secretQuestion"            type="string"   column="secret_question"            length="255"    nullable="true" />
+        <field name="secretQuestionResponse"    type="string"   column="secret_question_response"   length="255"    nullable="true" />
+
+        <!-- lifecycle callbacks -->
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="prePersist" />
+            <lifecycle-callback type="preUpdate" method="preUpdate" />
+        </lifecycle-callbacks>
 
     </entity>
 

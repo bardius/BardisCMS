@@ -12,14 +12,14 @@
 namespace Application\Sonata\UserBundle\Entity;
 
 use Sonata\UserBundle\Entity\BaseUser as BaseUser;
-use Application\Sonata\UserBundle\Entity\BookieUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Sonata\UserBundle\Model\UserInterface;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 
+/**
+ * User
+ */
 class User extends BaseUser
 {
     const TITLE_MR = 'mr';
@@ -28,6 +28,10 @@ class User extends BaseUser
     const TITLE_MISS = 'miss';
     const TITLE_DR = 'dr';
     const TITLE_PROF = 'prof';
+
+    const GENDER_UNKNOWN = 'gender_unknown';
+    const GENDER_FEMALE  = 'gender_female';
+    const GENDER_MALE    = 'gender_male';
 
     const QUESTION_SPOUSE = 'spouse_name';
     const QUESTION_MAIDEN_NAME = 'maiden_name';
@@ -45,6 +49,23 @@ class User extends BaseUser
     const CAMPAIGN_REGISTER = 'register';
 
     /**
+     * Hook on pre-persist operations.
+     */
+    public function prePersist()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * Hook on pre-update operations.
+     */
+    public function preUpdate()
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -56,119 +77,104 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="confirmed", type="boolean", length=1)
+     * default to unknown
+     */
+    protected $gender = USER::GENDER_UNKNOWN;
+
+    /**
+     * @var string
+     *
+     * default to London
+     */
+    protected $timezone = User::TIMEZONE_LONDON;
+
+    /**
+     * @var string
      */
     protected $confirmed;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=8)
      */
     protected $title;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="language", type="string", length=10)
+     * default to en
      */
-    protected $language = User::LANGUAGE_EN; // set the default to en
+    protected $language = User::LANGUAGE_EN;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="secret_question", type="string", length=180)
      */
     protected $secretQuestion;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="secret_question_response", type="string", length=180)
      */
     protected $secretQuestionResponse;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="addressLine1", type="string", length=180)
      */
     protected $addressLine1;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="addressLine2", type="string", length=180)
      */
     protected $addressLine2;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="addressLine3", type="string", length=180)
      */
     protected $addressLine3;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="city", type="string", length=60)
      */
     protected $city;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="county", type="string", length=60)
      */
     protected $county;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="postcode", type="string", length=60)
      */
     protected $postcode;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="country_code", type="string", length=2)
+     * default to GB
      */
-    protected $countryCode = User::COUNTRY_EN; // set the default to GB
+    protected $countryCode = User::COUNTRY_EN;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="currency_code", type="string", length=3)
+     * default to GBP
      */
-    protected $currencyCode = User::CURRENCY_POUND; // set the default to GBP
+    protected $currencyCode = User::CURRENCY_POUND;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="mobile", type="string", length=15)
      */
     protected $mobile;
 
     /**
      * @var boolean
-     *
-     * @ORM\Column(name="terms_accepted", type="boolean", length=1)
      */
     protected $termsAccepted;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="campaign", type="string", length=80)
+     * default to register
      */
-    protected $campaign = User::CAMPAIGN_REGISTER; // set the default to registration
-
-    /**
-     * @var string
-     */
-    protected $timezone = User::TIMEZONE_LONDON; // set the default to London
+    protected $campaign = User::CAMPAIGN_REGISTER;
 
     /**
      * @return int
@@ -187,6 +193,46 @@ class User extends BaseUser
     }
 
     /**
+     * @param string $gender
+     *
+     * @return User
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * @param string $timezone
+     *
+     * @return User
+     */
+    public function setTimezone($timezone)
+    {
+        $this->timezone = $timezone;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTimezone()
+    {
+        return $this->timezone;
+    }
+
+    /**
      * @return string
      */
     public function getConfirmed()
@@ -200,6 +246,14 @@ class User extends BaseUser
     public function setConfirmed($confirmed)
     {
         $this->confirmed = $confirmed;
+    }
+
+    /**
+     * @return string
+     */
+    public function isConfirmed()
+    {
+        return $this->confirmed;
     }
 
     /**
@@ -442,26 +496,6 @@ class User extends BaseUser
         $this->campaign = $campaign;
     }
 
-    /**
-     * @param string $timezone
-     *
-     * @return User
-     */
-    public function setTimezone($timezone)
-    {
-        $this->timezone = $timezone;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTimezone()
-    {
-        return $this->timezone;
-    }
-
     public function setEmail($email)
     {
         $this->email = $email;
@@ -475,20 +509,12 @@ class User extends BaseUser
         */
     }
 
-    public function setEmailCanonical($emailCanonical)
-    {
-        $this->emailCanonical = $emailCanonical;
-        if ($this->getUsernameCanonical() === null) {
-            $this->usernameCanonical = $emailCanonical;
-        }
-    }
-
     /**
      * @return string
      */
     public function getFullname()
     {
-        return $this->getFirstname() . " " . $this->getLastname();
+        return sprintf('%s %s', $this->getFirstname(), $this->getLastname());
     }
 
     /**
@@ -499,9 +525,9 @@ class User extends BaseUser
     public static function getGenderList()
     {
         return array(
-            UserInterface::GENDER_UNKNOWN => 'gender_unknown',
-            UserInterface::GENDER_FEMALE  => 'gender_female',
-            UserInterface::GENDER_MALE    => 'gender_male',
+            User::GENDER_UNKNOWN => 'gender_unknown',
+            User::GENDER_FEMALE  => 'gender_female',
+            User::GENDER_MALE    => 'gender_male',
         );
     }
 
@@ -575,13 +601,13 @@ class User extends BaseUser
     }
 
     /**
-     * Returns a string representation
+     * Returns a string representation.
      *
      * @return string
      */
     public function __toString()
     {
-        return $this->getUsername() ? $this->getUsername() : '-';
+        return $this->getUsername() ?: '-';
     }
 
 }

@@ -82,12 +82,21 @@ class AccountPreferencesFormType extends AbstractType {
                 'label' => 'form.biography',
                 'translation_domain' => 'SonataUserBundle',
                 'data' => $defaults['biography'],
+                "attr" => [
+                    'placeholder' => "Profile details",
+                    'maxlength' => 1000
+                ],
                 'required' => false
             ))
             ->add('website', UrlType::class, array(
                 'label' => 'form.website',
                 'translation_domain' => 'SonataUserBundle',
                 'data' => $defaults['website'],
+                "attr" => [
+                    'placeholder' => "http://www.domain.com",
+                    'minlength' => 2,
+                    'maxlength' => 64
+                ],
                 'required' => false
             ))
             ->add('timezone', TimezoneType::class, array(
@@ -116,6 +125,11 @@ class AccountPreferencesFormType extends AbstractType {
                 'label' => 'form.secretQuestionResponse',
                 'translation_domain' => 'SonataUserBundle',
                 'data' => $defaults['secretQuestionResponse'],
+                "attr" => [
+                    'placeholder' => "The secret question answer",
+                    'minlength' => 2,
+                    'maxlength' => 255
+                ],
                 'required' => false
             ))
         ;

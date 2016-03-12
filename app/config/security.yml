@@ -27,7 +27,8 @@ security:
                     user:  { password: %userpass%, roles: [ 'ROLE_USER' ] }
                     admin: { password: %adminpass%, roles: [ 'ROLE_ADMIN' ] }
         fos_userbundle:
-            id: fos_user.user_manager
+            # Using both email or username to log in
+            id: fos_user.user_provider.username_email #fos_user.user_manager
 
     firewalls:
         # -> custom firewall for the admin area of the URL

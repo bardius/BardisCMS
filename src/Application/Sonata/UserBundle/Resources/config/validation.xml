@@ -7,12 +7,13 @@
 
     <class name="Application\Sonata\UserBundle\Entity\User">
 
+        <!-- Unique Storage Constraints -->
         <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
             <option name="fields">username</option>
             <option name="message">sonata_user.username.already_used</option>
             <option name="groups">
                 <value>Registration</value>
-                <value>Profile</value>
+                <value>OverriddenProfile</value>
                 <value>GenericDetails</value>
             </option>
         </constraint>
@@ -21,18 +22,46 @@
             <option name="fields">email</option>
             <option name="message">sonata_user.email.already_used</option>
             <option name="groups">
-                <value>Registration</value>
-                <value>Profile</value>
+                <value>OverriddenProfile</value>
                 <value>GenericDetails</value>
             </option>
         </constraint>
 
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">email</option>
+            <option name="message">sonata_user.email.already_registered</option>
+            <option name="groups">
+                <value>Registration</value>
+            </option>
+        </constraint>
+
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">usernameCanonical</option>
+            <option name="errorPath">username</option>
+            <option name="message">sonata_user.username.already_used</option>
+            <option name="groups">
+                <value>Registration</value>
+                <value>OverriddenProfile</value>
+            </option>
+        </constraint>
+
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">emailCanonical</option>
+            <option name="errorPath">email</option>
+            <option name="message">sonata_user.email.already_used</option>
+            <option name="groups">
+                <value>Registration</value>
+                <value>OverriddenProfile</value>
+            </option>
+        </constraint>
+
+        <!-- Generic Details Constraints -->
         <property name="username">
             <constraint name="NotBlank">
                 <option name="message">sonata_user.username.blank</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>GenericDetails</value>
                 </option>
             </constraint>
@@ -43,7 +72,7 @@
                 <option name="maxMessage">sonata_user.username.long</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>GenericDetails</value>
                 </option>
             </constraint>
@@ -53,7 +82,7 @@
                 <option name="message">sonata_user.username.invalid_chars</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>GenericDetails</value>
                 </option>
             </constraint>
@@ -64,18 +93,18 @@
                 <option name="message">sonata_user.email.blank</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>GenericDetails</value>
                 </option>
             </constraint>
             <constraint name="Length">
                 <option name="min">2</option>
                 <option name="minMessage">sonata_user.email.short</option>
-                <option name="max">254</option>
+                <option name="max">255</option>
                 <option name="maxMessage">sonata_user.email.long</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>GenericDetails</value>
                 </option>
             </constraint>
@@ -83,7 +112,7 @@
                 <option name="message">sonata_user.email.invalid</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>GenericDetails</value>
                 </option>
             </constraint>
@@ -97,11 +126,11 @@
             <constraint name="Length">
                 <option name="min">8</option>
                 <option name="minMessage">sonata_user.password.short</option>
-                <option name="max">4096</option>
+                <option name="max">255</option>
                 <option name="maxMessage">sonata_user.password.long</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                 </option>
             </constraint>
             <constraint name="Regex">
@@ -110,7 +139,7 @@
                 <option name="message">sonata_user.password.isNotLegal</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                 </option>
             </constraint>
         </property>
@@ -120,18 +149,18 @@
                 <option name="message">sonata_user.firstname.blank</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>GenericDetails</value>
                 </option>
             </constraint>
             <constraint name="Length">
                 <option name="min">2</option>
                 <option name="minMessage">sonata_user.firstname.short</option>
-                <option name="max">50</option>
+                <option name="max">64</option>
                 <option name="maxMessage">sonata_user.firstname.long</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>GenericDetails</value>
                 </option>
             </constraint>
@@ -141,7 +170,7 @@
                 <option name="message">sonata_user.firstname.invalid_chars</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>GenericDetails</value>
                 </option>
             </constraint>
@@ -151,7 +180,7 @@
                 <option name="message">sonata_user.firstname.invalid_chars</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>GenericDetails</value>
                 </option>
             </constraint>
@@ -161,7 +190,7 @@
                 <option name="message">sonata_user.firstname.invalid_chars</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>GenericDetails</value>
                 </option>
             </constraint>
@@ -172,18 +201,18 @@
                 <option name="message">sonata_user.lastname.blank</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>GenericDetails</value>
                 </option>
             </constraint>
             <constraint name="Length">
                 <option name="min">2</option>
                 <option name="minMessage">sonata_user.lastname.short</option>
-                <option name="max">50</option>
+                <option name="max">64</option>
                 <option name="maxMessage">sonata_user.lastname.long</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>GenericDetails</value>
                 </option>
             </constraint>
@@ -193,7 +222,7 @@
                 <option name="message">sonata_user.lastname.invalid_chars</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>GenericDetails</value>
                 </option>
             </constraint>
@@ -203,7 +232,7 @@
                 <option name="message">sonata_user.lastname.invalid_chars</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>GenericDetails</value>
                 </option>
             </constraint>
@@ -213,7 +242,7 @@
             <constraint name="Date">
                 <option name="message">sonata_user.dateOfBirth.isNotDate</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>GenericDetails</value>
                 </option>
             </constraint>
@@ -224,7 +253,7 @@
                 <option name="message">sonata_user.termsAccepted.blank</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>GenericDetails</value>
                 </option>
             </constraint>
@@ -232,17 +261,18 @@
                 <option name="message">sonata_user.termsAccepted.not_accepted</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>GenericDetails</value>
                 </option>
             </constraint>
         </property>
 
+        <!-- Contact Details Constraints -->
         <property name="addressLine1">
             <constraint name="NotBlank">
                 <option name="message">sonata_user.addressLine1.blank</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>ContactDetails</value>
                 </option>
             </constraint>
@@ -252,7 +282,7 @@
                 <option name="max">100</option>
                 <option name="maxMessage">sonata_user.addressLine1.long</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>ContactDetails</value>
                 </option>
             </constraint>
@@ -262,7 +292,7 @@
             <constraint name="NotBlank">
                 <option name="message">sonata_user.addressLine2.blank</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>ContactDetails</value>
                 </option>
             </constraint>
@@ -272,7 +302,18 @@
                 <option name="max">100</option>
                 <option name="maxMessage">sonata_user.addressLine2.long</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
+                    <value>ContactDetails</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="addressLine3">
+            <constraint name="Length">
+                <option name="max">100</option>
+                <option name="maxMessage">sonata_user.addressLine3.long</option>
+                <option name="groups">
+                    <value>OverriddenProfile</value>
                     <value>ContactDetails</value>
                 </option>
             </constraint>
@@ -282,17 +323,17 @@
             <constraint name="NotBlank">
                 <option name="message">sonata_user.city.blank</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>ContactDetails</value>
                 </option>
             </constraint>
             <constraint name="Length">
                 <option name="min">2</option>
                 <option name="minMessage">sonata_user.city.short</option>
-                <option name="max">50</option>
+                <option name="max">64</option>
                 <option name="maxMessage">sonata_user.city.long</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>ContactDetails</value>
                 </option>
             </constraint>
@@ -301,7 +342,7 @@
                 <option name="match">true</option>
                 <option name="message">sonata_user.city.invalid_chars</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>ContactDetails</value>
                 </option>
             </constraint>
@@ -310,7 +351,7 @@
                 <option name="match">false</option>
                 <option name="message">sonata_user.city.invalid_chars</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>ContactDetails</value>
                 </option>
             </constraint>
@@ -318,10 +359,10 @@
 
         <property name="county">
             <constraint name="Length">
-                <option name="max">50</option>
+                <option name="max">64</option>
                 <option name="maxMessage">sonata_user.county.long</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>ContactDetails</value>
                 </option>
             </constraint>
@@ -330,7 +371,7 @@
                 <option name="match">true</option>
                 <option name="message">sonata_user.county.invalid_chars</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>ContactDetails</value>
                 </option>
             </constraint>
@@ -339,7 +380,7 @@
                 <option name="match">false</option>
                 <option name="message">sonata_user.county.invalid_chars</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>ContactDetails</value>
                 </option>
             </constraint>
@@ -347,10 +388,10 @@
 
         <property name="postcode">
             <constraint name="Length">
-                <option name="max">10</option>
+                <option name="max">14</option>
                 <option name="maxMessage">sonata_user.postcode.long</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>ContactDetails</value>
                 </option>
             </constraint>
@@ -359,7 +400,7 @@
                 <option name="match">true</option>
                 <option name="message">sonata_user.postcode.invalid_chars</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>ContactDetails</value>
                 </option>
             </constraint>
@@ -368,7 +409,7 @@
                 <option name="match">false</option>
                 <option name="message">sonata_user.postcode.invalid_chars</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>ContactDetails</value>
                 </option>
             </constraint>
@@ -378,7 +419,7 @@
             <constraint name="NotBlank">
                 <option name="message">sonata_user.countryCode.blank</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>ContactDetails</value>
                 </option>
             </constraint>
@@ -389,7 +430,7 @@
                 <option name="max">18</option>
                 <option name="maxMessage">sonata_user.phone.long</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>ContactDetails</value>
                 </option>
             </constraint>
@@ -398,7 +439,7 @@
                 <option name="match">true</option>
                 <option name="message">sonata_user.phone.invalid_chars</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>ContactDetails</value>
                 </option>
             </constraint>
@@ -409,7 +450,7 @@
                 <option name="max">18</option>
                 <option name="maxMessage">sonata_user.mobile.long</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>ContactDetails</value>
                 </option>
             </constraint>
@@ -418,8 +459,20 @@
                 <option name="match">true</option>
                 <option name="message">sonata_user.mobile.invalid_chars</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>ContactDetails</value>
+                </option>
+            </constraint>
+        </property>
+
+        <!-- Account Preferences Constraints -->
+        <property name="biography">
+            <constraint name="Length">
+                <option name="max">1000</option>
+                <option name="maxMessage">sonata_user.biography.long</option>
+                <option name="groups">
+                    <value>OverriddenProfile</value>
+                    <value>AccountPreferences</value>
                 </option>
             </constraint>
         </property>
@@ -432,17 +485,37 @@
                     <value>https</value>
                 </option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
+                    <value>AccountPreferences</value>
+                </option>
+            </constraint>
+            <constraint name="Length">
+                <option name="max">255</option>
+                <option name="maxMessage">sonata_user.website.long</option>
+                <option name="groups">
+                    <value>OverriddenProfile</value>
                     <value>AccountPreferences</value>
                 </option>
             </constraint>
         </property>
 
+        <property name="secretQuestionResponse">
+            <constraint name="Length">
+                <option name="max">255</option>
+                <option name="maxMessage">sonata_user.secretQuestionResponse.long</option>
+                <option name="groups">
+                    <value>OverriddenProfile</value>
+                    <value>AccountPreferences</value>
+                </option>
+            </constraint>
+        </property>
+
+        <!-- Getter Constraints -->
         <getter property="validDateOfBirth">
             <constraint name="IsTrue">
                 <option name="message">sonata_user.dateOfBirth.isNotBirthday</option>
                 <option name="groups">
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                     <value>GenericDetails</value>
                 </option>
             </constraint>
@@ -453,7 +526,7 @@
                 <option name="message">sonata_user.password.isNotSafe</option>
                 <option name="groups">
                     <value>Registration</value>
-                    <value>Profile</value>
+                    <value>OverriddenProfile</value>
                 </option>
             </constraint>
         </getter>
@@ -462,6 +535,7 @@
 
     <class name="FOS\UserBundle\Form\Model\ChangePassword">
 
+        <!-- Change Password Constraints -->
         <property name="new">
             <constraint name="NotBlank">
                 <option name="message">sonata_user.password.blank</option>
@@ -470,7 +544,7 @@
             <constraint name="Length">
                 <option name="min">8</option>
                 <option name="minMessage">sonata_user.password.short</option>
-                <option name="max">4096</option>
+                <option name="max">255</option>
                 <option name="maxMessage">sonata_user.password.long</option>
                 <option name="groups">
                     <value>ChangePassword</value>

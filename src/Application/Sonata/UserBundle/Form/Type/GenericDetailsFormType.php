@@ -40,6 +40,7 @@ class GenericDetailsFormType extends AbstractType {
 
 	public function buildForm(FormBuilderInterface $builder, array $options) {
 
+        $now = new \DateTime();
 		$user = $this->container->get('security.context')->getToken()->getUser();
 
 		$defaults = array(
@@ -58,12 +59,22 @@ class GenericDetailsFormType extends AbstractType {
                 'label' => 'form.email',
                 'translation_domain' => 'SonataUserBundle',
                 'data' => $defaults['email'],
+                "attr" => [
+                    'placeholder' => "user@domain.com",
+                    'minlength' => 2,
+                    'maxlength' => 255
+                ],
                 'required' => true
             ))
             ->add('username', TextType::class, array(
                 'label' => 'form.username',
                 'translation_domain' => 'SonataUserBundle',
                 'data' => $defaults['username'],
+                "attr" => [
+                    'placeholder' => "username",
+                    'minlength' => 6,
+                    'maxlength' => 20
+                ],
                 'required' => true,
                 'read_only' => true
             ))
@@ -99,19 +110,29 @@ class GenericDetailsFormType extends AbstractType {
                 'label' => 'form.firstname',
                 'translation_domain' => 'SonataUserBundle',
                 'data' => $defaults['firstname'],
+                "attr" => [
+                    'placeholder' => "Name",
+                    'minlength' => 2,
+                    'maxlength' => 50
+                ],
                 'required' => false
             ))
 			->add('lastname', TextType::class, array(
                 'label' => 'form.lastname',
                 'translation_domain' => 'SonataUserBundle',
                 'data' => $defaults['lastname'],
+                "attr" => [
+                    'placeholder' => "Surname",
+                    'minlength' => 2,
+                    'maxlength' => 50
+                ],
                 'required' => false
             ))
 			->add('gender', ChoiceType::class, array(
                 'choices' => array(
-                    User::GENDER_UNKNOWN   => 'gender_unknown',
-                    User::GENDER_FEMALE    => 'gender_female',
-                    User::GENDER_MALE      => 'gender_male'
+                    User::GENDER_UNKNOWN   => 'u',
+                    User::GENDER_FEMALE    => 'f',
+                    User::GENDER_MALE      => 'm'
                 ),
                 'label' => 'form.gender',
                 'translation_domain' => 'SonataUserBundle',
@@ -133,8 +154,12 @@ class GenericDetailsFormType extends AbstractType {
                     'class' => 'datepickerField',
                     'data-date-language' => $this->container->get('translator')->getLocale(),
                     'data-picker-position' => 'bottom-right',
-                    'data-date-format' => 'dd-mm-yyyy'
+                    'data-date-format' => 'dd-mm-yyyy',
+                    'placeholder' => "dd-mm-yyyy",
+                    'minlength' => 10,
+                    'maxlength' => 10
                 ],
+                'invalid_message' => 'dateOfBirth.isNotDate',
                 'required' => false
             ))
 		;
