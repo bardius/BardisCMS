@@ -1,4 +1,5 @@
 # ACL and User management configuration
+# http://symfony.com/doc/current/bundles/FOSUserBundle/configuration_reference.html
 fos_user:
 
     db_driver:          orm # other valid values are 'mongodb', 'couchdb' and 'propel'
@@ -23,6 +24,11 @@ fos_user:
         confirmation:
             enabled:    true
             template:   FOSUserBundle:Registration:confirm_email.txt.twig
+
+    resetting:
+        token_ttl: 86400
+        email:
+            template:   FOSUserBundle:Resetting:email.txt.twig
 
     profile:
         # Authentication Form

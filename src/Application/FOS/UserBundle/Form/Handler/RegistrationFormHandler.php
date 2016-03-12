@@ -38,9 +38,8 @@ class RegistrationFormHandler extends BaseHandler
      */
     protected function onSuccess(UserInterface $user, $confirmation)
     {
-        $user->setEnabled(true);
-
         if ($confirmation) {
+            $user->setEnabled(false);
             $user->setConfirmed(false);
             if (null === $user->getConfirmationToken()) {
                 $user->setConfirmationToken($this->tokenGenerator->generateToken());
@@ -48,6 +47,7 @@ class RegistrationFormHandler extends BaseHandler
 
             $this->mailer->sendConfirmationEmailMessage($user);
         } else {
+            $user->setEnabled(true);
             $user->setConfirmed(true);
         }
 

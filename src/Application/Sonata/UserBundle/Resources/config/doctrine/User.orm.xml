@@ -13,35 +13,35 @@
         <attribute-overrides>
 
             <attribute-override name="username">
-                <field column="username" length="20" unique="true" />
+                <field column="username" length="20" nullable="false" unique="true" />
             </attribute-override>
 
             <attribute-override name="email">
-                <field column="email" length="255" unique="true" />
+                <field column="email" length="255" nullable="false" unique="true" />
             </attribute-override>
 
             <attribute-override name="firstname">
-                <field column="firstname" length="64" />
+                <field column="firstname" length="64" nullable="true"/>
             </attribute-override>
 
             <attribute-override name="lastname">
-                <field column="lastname" length="64" />
+                <field column="lastname" length="64" nullable="true"/>
             </attribute-override>
 
             <attribute-override name="gender">
-                <field column="gender" length="32" />
+                <field column="gender" length="32" nullable="true"/>
             </attribute-override>
 
             <attribute-override name="biography">
-                <field column="biography" length="1000" />
+                <field column="biography" length="1000" nullable="true"/>
             </attribute-override>
 
             <attribute-override name="phone">
-                <field column="phone" length="18" />
+                <field column="phone" length="18" nullable="true"/>
             </attribute-override>
 
             <attribute-override name="website">
-                <field column="website" length="255" />
+                <field column="website" length="255" nullable="true"/>
             </attribute-override>
 
         </attribute-overrides>
