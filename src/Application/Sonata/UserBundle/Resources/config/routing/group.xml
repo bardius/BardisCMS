@@ -24,4 +24,24 @@
         <default key="_controller">FOSUserBundle:Group:delete</default>
     </route>
 
+    <route id="sonata_user_group_list" path="/list" methods="GET">
+        <default key="_controller">FOSUserBundle:Group:list</default>
+    </route>
+
+    <route id="sonata_user_group_new" path="/new" methods="GET POST">
+        <default key="_controller">FOSUserBundle:Group:new</default>
+    </route>
+
+    <route id="sonata_user_group_show" path="/{groupname}" methods="GET">
+        <default key="_controller">FOSUserBundle:Group:show</default>
+    </route>
+
+    <route id="sonata_user_group_edit" path="/{groupname}/edit" methods="GET POST">
+        <default key="_controller">FOSUserBundle:Group:edit</default>
+    </route>
+
+    <route id="sonata_user_group_delete" path="/{groupname}/delete" methods="GET">
+        <default key="_controller">FOSUserBundle:Group:delete</default>
+    </route>
+
 </routes>

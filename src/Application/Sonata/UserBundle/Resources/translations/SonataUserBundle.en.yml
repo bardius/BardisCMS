@@ -19,7 +19,7 @@ group:
 
 security:
     login:
-        username: Username
+        username: Username or email address
         password: Password
         remember_me: Remember me
         submit: Login
@@ -66,7 +66,7 @@ registration:
 # Password resetting
 resetting:
     password_already_requested: The password for this user has already been requested within the last 24 hours
-    check_email: An email has been sent to %email%. It contains a link you must click to reset your password
+    check_email: Your user has been disabled and an email has been sent to %email%. It contains a link you must click to reset your password and enable your user again
     request:
         invalid_username: The username or email address "%username%" does not exist
         empty_username: The username or email address cannot be empty
@@ -78,13 +78,13 @@ resetting:
         error: There was an error updating your password. Please try again
         submit: Change password
     flash:
-        success: The password has been reset successfully
+        success: The password has been reset successfully and you can now use your account again
     email:
         subject: Reset Password
         message: |
             Hello %username%!
 
-            To reset your password - please visit %confirmationUrl%
+            To reset your password and enable your user again - please visit %confirmationUrl%
 
             Regards,
             the Team.

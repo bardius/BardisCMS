@@ -11466,13 +11466,13 @@ var notifications = window.notifications || {};
         init: function() {
             CMS.Forms.ajaxSubmittedForm("#contactform", "#contactFormBtn", "json", true, true);
             CMS.Forms.ajaxSubmittedForm("#add_comment_form", "#submitCommentBtn", "json", true, true);
-            CMS.Forms.ajaxSubmittedForm("#fos_user_registration_form", "#userRegisterFormBtn", "json", false, false);
+            CMS.Forms.ajaxSubmittedForm("#sonata_user_custom_user_registration_form", "#userRegisterFormBtn", "json", false, false);
             CMS.Forms.ajaxSubmittedForm("#sonata_user_generic_details_form", "#userGenericDetailsFormBtn", "json", true, false);
             CMS.Forms.ajaxSubmittedForm("#sonata_user_contact_details_form", "#userContactDetailsFormBtn", "json", true, false);
             CMS.Forms.ajaxSubmittedForm("#sonata_user_account_preferences_form", "#userAccountPreferencesFormBtn", "json", true, false);
             CMS.Forms.ajaxSubmittedForm("#sonata_user_change_password_form", "#userPasswordFormBtn", "json", true, true);
-            CMS.Forms.ajaxSubmittedForm("#fos_user_resetting_request", "#userResetPasswordFormBtn", "json", false, false);
-            CMS.Forms.ajaxSubmittedForm("#fos_user_resetting_form", "#userRessetingFormBtn", "json", false, false);
+            CMS.Forms.ajaxSubmittedForm("#sonata_user_resetting_request", "#userResetPasswordFormBtn", "json", false, false);
+            CMS.Forms.ajaxSubmittedForm("#sonata_user_resetting_form", "#userResetFormBtn", "json", false, false);
             CMS.Forms.datepicker();
             CMS.Forms.setupFilters();
         }
@@ -11540,7 +11540,7 @@ var notifications = window.notifications || {};
                                 });
                             }
                             if (responseData.formMessage && responseData.formMessage !== "") {
-                                $('<small class="formError alert-box alert">' + responseData.formMessage + "</small>").hide().insertAfter(btnElement);
+                                $('<small class="formError alert-box alert">' + responseData.formMessage + "</small>").hide().insertBefore(btnElement);
                             }
                             $(".formError").fadeIn(200);
                         }

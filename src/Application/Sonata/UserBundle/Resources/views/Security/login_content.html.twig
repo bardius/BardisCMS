@@ -2,7 +2,7 @@
         <div class="row">
             <div class="large-12 small-12 columns">
             {% block sonata_user_login_form %}
-                <form id="user_login_form" action="{{ path("fos_user_security_check") }}" method="post" role="form" novalidate>
+                <form id="user_login_form" action="{{ path("sonata_user_security_check") }}" method="post" role="form" novalidate>
                     <div class="row">
                         <div class="large-12 small-12 columns">
                             <label for="username" class="required">
@@ -43,12 +43,12 @@
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
                             <p>
                                 <button type="submit" name="submit" id="userLoginBtn" class="button">{{ 'security.login.submit'|trans({}, 'SonataUserBundle') }}</button>
-                                <a class="button" href="{{ url('fos_user_registration_register') }}" title="{{ 'layout.link.create_account'|trans({}, 'SonataUserBundle') }}">
+                                <a class="button" href="{{ url('sonata_user_registration_register') }}" title="{{ 'layout.link.create_account'|trans({}, 'SonataUserBundle') }}">
                                     {{ 'layout.link.create_account'|trans({}, 'SonataUserBundle') }}
                                 </a>
                             </p>
                             <p>
-                                <a href="{{ path('fos_user_resetting_request') }}" title="{{ 'forgotten_password'|trans({}, 'SonataUserBundle') }}">
+                                <a href="{{ path('sonata_user_resetting_request') }}" title="{{ 'forgotten_password'|trans({}, 'SonataUserBundle') }}">
                                     {{ 'forgotten_password'|trans({}, 'SonataUserBundle') }}
                                 </a>
                             </p>

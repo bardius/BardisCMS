@@ -125,10 +125,8 @@ class RegistrationFOSUser1Controller extends Controller
 
         $confirmationEnabled = $this->container->getParameter('fos_user.registration.confirmation.enabled');
 
-        $form = $this->container->get('fos_user.registration.form');
-        $formHandler = $this->container->get('fos_user.registration.form.handler');
-        //$form = $this->container->get('sonata.user.registration.form');
-        //$formHandler = $this->container->get('sonata.user.registration.form.handler');
+        $form = $this->container->get('sonata_user.registration.form');
+        $formHandler = $this->container->get('sonata_user.registration.form.handler');
 
         $process = $formHandler->process($confirmationEnabled);
         if ($process) {

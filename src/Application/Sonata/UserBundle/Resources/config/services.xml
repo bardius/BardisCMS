@@ -5,9 +5,12 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="sonata_user.form.type.registration.class">Application\Sonata\UserBundle\Form\Type\RegistrationFormType</parameter>
-        <parameter key="sonata_user.registration.form.handler.confirmation.class">Application\FOS\UserBundle\Form\Handler\RegistrationFormHandler</parameter>
-        <parameter key="sonata_user.resseting.form.handler.confirmation.class">Application\FOS\UserBundle\Form\Handler\ResettingFormHandler</parameter>
+        <parameter key="sonata_user.registration.form.class">Symfony\Component\Form\Form</parameter>
+        <parameter key="sonata_user.registration.form.type.class">Application\Sonata\UserBundle\Form\Type\RegistrationFormType</parameter>
+        <parameter key="sonata_user.registration.form.handler.class">Application\Sonata\UserBundle\Form\Handler\RegistrationFormHandler</parameter>
+        <parameter key="sonata_user.resetting.form.class">Symfony\Component\Form\Form</parameter>
+        <parameter key="sonata_user.resetting.form.type.class">Application\Sonata\UserBundle\Form\Type\ResettingFormType</parameter>
+        <parameter key="sonata_user.resetting.form.handler.class">Application\Sonata\UserBundle\Form\Handler\ResettingFormHandler</parameter>
         <parameter key="sonata_user.contact_details.form.class">Symfony\Component\Form\Form</parameter>
         <parameter key="sonata_user.contact_details.form.type.class">Application\Sonata\UserBundle\Form\Type\ContactDetailsFormType</parameter>
         <parameter key="sonata_user.contact_details.form.handler.class">Application\Sonata\UserBundle\Form\Handler\ContactDetailsFormHandler</parameter>
@@ -23,16 +26,24 @@
     </parameters>
 
     <services>
-
         <!-- Registration Form -->
-        <service id="sonata.user.registration.form.type" class="%sonata_user.form.type.registration.class%">
+        <service id="sonata_user.registration.form" factory-method="createNamed" factory-service="form.factory" class="%sonata_user.registration.form.class%">
+            <argument>sonata_user_custom_user_registration_form</argument>
+            <argument>sonata_user_custom_user_registration</argument>
+            <argument>null</argument>
+            <argument type="collection">
+                <argument key="validation_groups">%fos_user.registration.form.validation_groups%</argument>
+            </argument>
+        </service>
+
+        <service id="sonata_user.registration.form.type" class="%sonata_user.registration.form.type.class%">
             <tag name="form.type" alias="sonata_user_custom_user_registration" />
             <argument>%fos_user.model.user.class%</argument>
             <argument type="service" id="request_stack" />
         </service>
 
-        <service id="sonata_user.registration.form.handler.confirmation" class="%sonata_user.registration.form.handler.confirmation.class%" scope="request" public="false">
-            <argument type="service" id="fos_user.registration.form" />
+        <service id="sonata_user.registration.form.handler" class="%sonata_user.registration.form.handler.class%" scope="request">
+            <argument type="service" id="sonata_user.registration.form" />
             <argument type="service" id="request" />
             <argument type="service" id="fos_user.user_manager" />
             <argument type="service" id="fos_user.mailer" />
@@ -41,8 +52,21 @@
         </service>
 
         <!-- Password Reset Form -->
-        <service id="fos_user.resetting.form.handler.default" class="%sonata_user.resseting.form.handler.confirmation.class%" scope="request" public="false">
-            <argument type="service" id="fos_user.resetting.form" />
+        <service id="sonata_user.resetting.form" factory-method="createNamed" factory-service="form.factory" class="%sonata_user.resetting.form.class%">
+            <argument>sonata_user_resetting_form</argument>
+            <argument>sonata_user_resetting</argument>
+            <argument>null</argument>
+            <argument type="collection">
+                <argument key="validation_groups">%fos_user.resetting.form.validation_groups%</argument>
+            </argument>
+        </service>
+
+        <service id="sonata_user.resetting.form.type" class="%sonata_user.resetting.form.type.class%">
+            <tag name="form.type" alias="sonata_user_resetting" />
+        </service>
+
+        <service id="sonata_user.resetting.form.handler" class="%sonata_user.resetting.form.handler.class%" scope="request">
+            <argument type="service" id="sonata_user.resetting.form" />
             <argument type="service" id="request" />
             <argument type="service" id="fos_user.user_manager" />
             <argument type="service" id="service_container" />

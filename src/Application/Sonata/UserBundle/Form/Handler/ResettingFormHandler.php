@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Application\FOS\UserBundle\Form\Handler;
+namespace Application\Sonata\UserBundle\Form\Handler;
 
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\Form\FormInterface;

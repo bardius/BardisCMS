@@ -130,9 +130,9 @@ class GenericDetailsFormType extends AbstractType {
             ))
 			->add('gender', ChoiceType::class, array(
                 'choices' => array(
-                    User::GENDER_UNKNOWN   => 'u',
-                    User::GENDER_FEMALE    => 'f',
-                    User::GENDER_MALE      => 'm'
+                    User::GENDER_UNKNOWN   => 'gender_unknown',
+                    User::GENDER_FEMALE    => 'gender_female',
+                    User::GENDER_MALE      => 'gender_male'
                 ),
                 'label' => 'form.gender',
                 'translation_domain' => 'SonataUserBundle',

@@ -201,9 +201,13 @@ class ResettingFOSUser1Controller extends Controller
 
         $this->container->get('session')->set(static::SESSION_EMAIL, $user->getEmail() );
         $this->container->get('fos_user.mailer')->sendResettingEmailMessage($user);
+
+        // Disable user until password reset process is completed
+        $user->setEnabled(false);
         $user->setPasswordRequestedAt(new \DateTime());
+
         $this->container->get('fos_user.user_manager')->updateUser($user);
-        $responseURL = $this->container->get('router')->generate('fos_user_resetting_check_email');
+        $responseURL = $this->container->get('router')->generate('sonata_user_resetting_check_email');
 
         // If the request was Ajax based
         if($this->isAjaxRequest){
@@ -244,7 +248,7 @@ class ResettingFOSUser1Controller extends Controller
 
         // If the user does not come from the sendEmail action
         if (empty($email)) {
-            return new RedirectResponse($this->container->get('router')->generate('fos_user_resetting_request'));
+            return new RedirectResponse($this->container->get('router')->generate('sonata_user_resetting_request'));
         }
 
         $pageData = array(
@@ -304,20 +308,21 @@ class ResettingFOSUser1Controller extends Controller
                 return $this->onAjaxError($this->container->get('translator')->trans('resetting.reset.token_expired', array('token' => $token), 'SonataUserBundle'));
             }
             else {
-                return new RedirectResponse($this->container->get('router')->generate('fos_user_resetting_request'));
+                return new RedirectResponse($this->container->get('router')->generate('sonata_user_resetting_request'));
             }
         }
 
-        $form = $this->container->get('fos_user.resetting.form');
-        $formHandler = $this->container->get('fos_user.resetting.form.handler');
+        $form = $this->container->get('sonata_user.resetting.form');
+        $formHandler = $this->container->get('sonata_user.resetting.form.handler');
+
         $process = $formHandler->process($user);
 
         if ($process) {
-            $this->setFlash('fos_user_success', 'resetting.flash.success');
-            // Original FOS User bundle response
-            //$response = new RedirectResponse($this->getRedirectionUrl($user));
+            $this->setFlash('sonata_user_success', 'resetting.flash.success');
             $responseURL = $this->container->get('router')->generate($redirectToRouteNameOnSuccess);
             $response = new RedirectResponse($responseURL);
+            // Enable user again after successfull password reset journey
+            $user->setEnabled(true);
             $this->authenticateUser($user, $response);
 
             // If the request was Ajax based
@@ -342,7 +347,6 @@ class ResettingFOSUser1Controller extends Controller
 
         // Render login page
         $response = $this->render('FOSUserBundle:Resetting:reset.html.twig', $pageData);
-        // $response = $this->container->get('templating')->renderResponse('FOSUserBundle:Resetting:reset.html.'.$this->getEngine(), $pageData);
 
         return $response;
     }
@@ -376,7 +380,7 @@ class ResettingFOSUser1Controller extends Controller
      */
     protected function getRedirectionUrl(UserInterface $user)
     {
-        return $this->container->get('router')->generate('fos_user_profile_show');
+        return $this->container->get('router')->generate('sonata_user_profile_show');
     }
 
     /**
@@ -405,11 +409,6 @@ class ResettingFOSUser1Controller extends Controller
     protected function setFlash($action, $value)
     {
         $this->container->get('session')->getFlashBag()->set($action, $value);
-    }
-
-    protected function getEngine()
-    {
-        return $this->container->getParameter('fos_user.template.engine');
     }
 
     /**

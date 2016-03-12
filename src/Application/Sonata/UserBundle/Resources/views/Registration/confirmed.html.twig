@@ -30,11 +30,11 @@
                                 <a href="{{ path('sonata_user_profile_show') }}" title="{{ 'layout.link.user_profile' | trans({}, "SonataUserBundle") }}" class="button">
                                     {{ 'layout.link.user_profile' | trans({}, "SonataUserBundle") }}
                                 </a>
-                                <a href="{{ path('fos_user_security_logout') }}" title="{{ 'link_logout' | trans({}, "SonataUserBundle") }}" class="button">
+                                <a href="{{ path('sonata_user_security_logout') }}" title="{{ 'link_logout' | trans({}, "SonataUserBundle") }}" class="button">
                                     {{ 'link_logout' | trans({}, "SonataUserBundle") }}
                                 </a>
                             {% else %}
-                                <a href="{{ path('fos_user_security_login') }}" title="{{ 'link_login'|trans({}, 'SonataUserBundle') }} / {{ 'link_register'|trans({}, 'SonataUserBundle') }}" class="button">
+                                <a href="{{ path('sonata_user_security_login') }}" title="{{ 'link_login'|trans({}, 'SonataUserBundle') }} / {{ 'link_register'|trans({}, 'SonataUserBundle') }}" class="button">
                                     {{ 'link_login'|trans({}, 'SonataUserBundle') }} / {{ 'link_register'|trans({}, 'SonataUserBundle') }}
                                 </a>
                             {% endif %}
