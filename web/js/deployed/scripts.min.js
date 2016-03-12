@@ -11473,6 +11473,7 @@ var notifications = window.notifications || {};
             CMS.Forms.ajaxSubmittedForm("#sonata_user_change_password_form", "#userPasswordFormBtn", "json", true, true);
             CMS.Forms.ajaxSubmittedForm("#sonata_user_resetting_request", "#userResetPasswordFormBtn", "json", false, false);
             CMS.Forms.ajaxSubmittedForm("#sonata_user_resetting_form", "#userResetFormBtn", "json", false, false);
+            CMS.Forms.ajaxSubmittedForm("#user_login_form", "#loginBtn", "json", false, false);
             CMS.Forms.datepicker();
             CMS.Forms.setupFilters();
         }

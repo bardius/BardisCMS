@@ -73,6 +73,7 @@
     CMS.UI = {
         init: function () {
             // Start the AJAX based forms
+            // ajaxSubmittedForm: function (formId, formSubmitBtnId, dataType, overrideSuccess, resetForm)
             CMS.Forms.ajaxSubmittedForm('#contactform', '#contactFormBtn', 'json', true, true);
             CMS.Forms.ajaxSubmittedForm('#add_comment_form', '#submitCommentBtn', 'json', true, true);
 
@@ -84,6 +85,7 @@
             CMS.Forms.ajaxSubmittedForm('#sonata_user_change_password_form', '#userPasswordFormBtn', 'json', true, true);
             CMS.Forms.ajaxSubmittedForm('#sonata_user_resetting_request', '#userResetPasswordFormBtn', 'json', false, false);
             CMS.Forms.ajaxSubmittedForm('#sonata_user_resetting_form', '#userResetFormBtn', 'json', false, false);
+            CMS.Forms.ajaxSubmittedForm('#user_login_form', '#loginBtn', 'json', false, false);
 
             // Start the date picker
             CMS.Forms.datepicker();
