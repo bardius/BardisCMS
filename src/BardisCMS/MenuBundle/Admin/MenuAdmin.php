@@ -34,15 +34,10 @@ class MenuAdmin extends Admin {
         reset($actionsChoice);
         $prefActionsChoice = key($actionsChoice);
 
-        // Setting up the available menu types
-        $menuTypeChoice = $menuSettings['menutypes'];
-        reset($menuTypeChoice);
-        $prefMenuTypeChoice = key($menuTypeChoice);
-
         // Setting up the available menu groups
         $menuGroupsChoice = $menuSettings['menugroups'];
         reset($menuGroupsChoice);
-        $prefMenuGroupsChoice = key($menuGroupsChoice);;
+        $prefMenuGroupsChoice = key($menuGroupsChoice);
 
         // Setting up the available publish states and preferred choice
         $publishStateChoices = $menuSettings['publishState'];
@@ -64,7 +59,7 @@ class MenuAdmin extends Admin {
                 ->tab('Menu Item Essential Details')
                 ->with('Menu Item Essential Details', array('collapsed' => true))
                 ->add('title', null, array('label' => 'Title', 'required' => true))
-                ->add('menuType', 'choice', array('choices' => $menuTypeChoice, 'preferred_choices' => array($prefMenuTypeChoice), 'label' => 'Menu Item Type', 'required' => true))
+                ->add('menuType', 'choice', array('choices' => Menu::getMenuTypeList(), 'preferred_choices' => array(Menu::TYPE_PAGE), 'label' => 'Menu Item Type', 'required' => true))
                 ->add('route', 'choice', array('choices' => $actionsChoice, 'preferred_choices' => array($prefActionsChoice), 'label' => 'Link Action', 'required' => true))
                 ->setHelps(array(
                     'title' => 'Set the title of the menu item (link copy text)',
@@ -110,14 +105,13 @@ class MenuAdmin extends Admin {
         // Getting the container parameters set in the config file that exist
         $menuSettings = $this->getConfigurationPool()->getContainer()->getParameter('menu_settings');
 
-        $menuTypeChoice = $menuSettings['menutypes'];
         $menuGroupsChoice = $menuSettings['menugroups'];
         $publishStateChoices = $menuSettings['publishState'];
 
         $datagridMapper
                 ->add('title')
                 ->add('menuGroup', 'doctrine_orm_string', array(), 'choice', array('choices' => $menuGroupsChoice))
-                ->add('menuType', 'doctrine_orm_string', array(), 'choice', array('choices' => $menuTypeChoice))
+                ->add('menuType', 'doctrine_orm_string', array(), 'choice', array('choices' => Menu::getMenuTypeList()))
                 ->add('page')
                 ->add('blog')
                 ->add('publishState', 'doctrine_orm_string', array(), 'choice', array('choices' => $publishStateChoices))

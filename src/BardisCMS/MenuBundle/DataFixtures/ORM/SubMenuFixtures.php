@@ -22,7 +22,7 @@ class SubMenuFixtures extends AbstractFixture implements OrderedFixtureInterface
         $menuProfileEditPage = new Menu();
         $menuProfileEditPage->setPage($manager->merge($this->getReference('pageuser_edit_profile')));
         $menuProfileEditPage->setTitle('Manage Profile');
-        $menuProfileEditPage->setMenuType('Page');
+        $menuProfileEditPage->setMenuType(Menu::TYPE_PAGE);
         $menuProfileEditPage->setRoute('showPage');
         $menuProfileEditPage->setAccessLevel(Menu::STATUS_AUTHONLY);
         $menuProfileEditPage->setParent($manager->merge($this->getReference('menuProfilePage'))->getId());
@@ -33,7 +33,7 @@ class SubMenuFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $menuLogoutPage = new Menu();
         $menuLogoutPage->setTitle('Logout');
-        $menuLogoutPage->setMenuType('url');
+        $menuLogoutPage->setMenuType(Menu::TYPE_INTERNAL_URL);
         $menuLogoutPage->setRoute('none');
         $menuLogoutPage->setExternalUrl('/logout');
         $menuLogoutPage->setAccessLevel(Menu::STATUS_AUTHONLY);

@@ -16,6 +16,15 @@ use Application\Sonata\MediaBundle\Entity\Media;
 class Menu {
 
     /*
+     * Menu Item types
+     */
+    const TYPE_PAGE             = "page";
+    const TYPE_BLOG             = "blog";
+    const TYPE_EXTERNAL_URL     = "http";
+    const TYPE_INTERNAL_URL     = "url";
+    const TYPE_SEPARATOR        = "sep";
+
+    /*
      * AccessLevel states
      */
     const STATUS_HIDDEN         = 0;
@@ -382,7 +391,7 @@ class Menu {
     }
 
     /**
-     * Returns PublishState list.
+     * Returns AccessLevel list.
      *
      * @return array
      */
@@ -403,15 +412,46 @@ class Menu {
      * @return string
      */
     public function getAccessLevelAsString() {
-        // Defining the string values of the publish states
         switch ($this->getAccessLevel()) {
-            case(Menu::STATUS_HIDDEN): return "Hidden";
-            case(Menu::STATUS_PUBLIC): return "Public";
-            case(Menu::STATUS_ADMINONLY): return "Administrator Only";
-            case(Menu::STATUS_AUTHONLY): return "Authenticated Users Only";
+            case(Menu::STATUS_HIDDEN):      return "Hidden";
+            case(Menu::STATUS_PUBLIC):      return "Public";
+            case(Menu::STATUS_ADMINONLY):   return "Administrator Only";
+            case(Menu::STATUS_AUTHONLY):    return "Authenticated Users Only";
             case(Menu::STATUS_NONAUTHONLY): return "Anonymous Users Only";
-            default: return $this->getAccessLevel();
+            default:                        return $this->getAccessLevel();
         }
+    }
+
+    /**
+     * toString MenuType
+     *
+     * @return string
+     */
+    public function getMenuTypeAsString() {
+        switch ($this->getMenuType()) {
+            case(Menu::TYPE_PAGE):          return "Page";
+            case(Menu::TYPE_BLOG):          return "Blog";
+            case(Menu::TYPE_EXTERNAL_URL):  return "http";
+            case(Menu::TYPE_INTERNAL_URL):  return "url";
+            case(Menu::TYPE_SEPARATOR):     return "separator";
+            default:                        return $this->getMenuType();
+        }
+    }
+
+    /**
+     * Returns MenuType list.
+     *
+     * @return array
+     */
+    public static function getMenuTypeList()
+    {
+        return array(
+            Menu::TYPE_PAGE             => "Page",
+            Menu::TYPE_BLOG             => "Blog",
+            Menu::TYPE_EXTERNAL_URL     => "http",
+            Menu::TYPE_INTERNAL_URL     => "url",
+            Menu::TYPE_SEPARATOR        => "separator"
+        );
     }
 
     /**
@@ -424,22 +464,6 @@ class Menu {
             case('0'): return "Unpublished";
             case('1'): return "Published";
             default: return $this->getPublishState();
-        }
-    }
-
-    /**
-     * toString menuType
-     *
-     * @return string
-     */
-    public function getMenuTypeAsString() {
-        switch ($this->getMenuType()) {
-            case('Page'): return "Page";
-            case('Blog'): return "Blog Page";
-            case('http'): return "External URL";
-            case('url'): return "Internal URL";
-            case('seperator'): return "Seperator";
-            default: return $this->getMenuType();
         }
     }
 

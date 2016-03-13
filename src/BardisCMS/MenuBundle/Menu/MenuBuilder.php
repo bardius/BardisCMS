@@ -105,7 +105,7 @@ class MenuBuilder {
 
         foreach ($menuItemList as $menuItem) {
             $menuType = $menuItem->getMenuType();
-            $getPageFunction = 'get' . $menuType;
+            $getPageFunction = 'get' . ucfirst($menuType);
 
             $menuItemCounter++;
 
@@ -123,7 +123,7 @@ class MenuBuilder {
 
                 switch ($menuType) {
 
-                    case 'http':
+                    case Menu::TYPE_EXTERNAL_URL:
                         $targetURL = $menuItem->getExternalUrl();
 
                         if ($targetURL === null) {
@@ -138,7 +138,7 @@ class MenuBuilder {
 
                         break;
 
-                    case 'url':
+                    case Menu::TYPE_INTERNAL_URL:
                         $targetURL = $menuItem->getExternalUrl();
 
                         if ($targetURL === null) {
@@ -151,18 +151,18 @@ class MenuBuilder {
 
                         break;
 
-                    case 'seperator':
+                    case Menu::TYPE_SEPARATOR:
                         $menu->addChild($menuItem->getTitle());
                         $menu[$menuItem->getTitle()]->setLabelAttribute('class', 'divider');
 
                         break;
 
-                    case 'Page':
+                    case Menu::TYPE_PAGE:
                         $pageFunction = $menuItem->$getPageFunction();
 
                         // If Link Action is not selected point to homepage else to alias or page id based route
                         if ($pageFunction !== null) {
-                            $alias = $this->getPageAlias($pageFunction, $menuType);
+                            $alias = $this->getPageAlias($pageFunction, ucfirst($menuType));
 
                             if (null === $alias) {
                                 $menu->addChild($menuItem->getTitle(), array('uri' => '/' . $menuItem->getRoute() . '/' . $pageFunction . $urlParams));
@@ -177,17 +177,17 @@ class MenuBuilder {
 
                         break;
 
-                    case 'Blog':
+                    case Menu::TYPE_BLOG:
                         $pageFunction = $menuItem->$getPageFunction();
 
                         // If Link Action is not selected point to homepage else to alias or page id based route
                         if ($pageFunction !== null) {
-                            $alias = $this->getPageAlias($pageFunction, $menuType);
+                            $alias = $this->getPageAlias($pageFunction, ucfirst($menuType));
 
                             if (null === $alias) {
-                                $menu->addChild($menuItem->getTitle(), array('uri' => '/' . strtolower($menuType) . '/' . $menuItem->getRoute() . '/' . $menuItem->$getPageFunction() . $urlParams));
+                                $menu->addChild($menuItem->getTitle(), array('uri' => '/' . $menuType . '/' . $menuItem->getRoute() . '/' . $menuItem->$getPageFunction() . $urlParams));
                             } else {
-                                $menu->addChild($menuItem->getTitle(), array('uri' => '/' . strtolower($menuType) . '/' . $alias . $urlParams));
+                                $menu->addChild($menuItem->getTitle(), array('uri' => '/' . $menuType . '/' . $alias . $urlParams));
                             }
                         } else {
                             $menu->addChild($menuItem->getTitle(), array('uri' => '/'));
@@ -231,9 +231,10 @@ class MenuBuilder {
 
     /**
      * @param Integer $pageId
+     * @param String $menuType
      */
     public function getPageAlias($pageId, $menuType) {
-        $repo = $this->em->getRepository($menuType . 'Bundle:' . $menuType);
+        $repo = $this->em->getRepository(ucfirst($menuType) . 'Bundle:' . ucfirst($menuType));
         $page = $repo->findOneById($pageId);
 
         $pageAlias = $page->getAlias();

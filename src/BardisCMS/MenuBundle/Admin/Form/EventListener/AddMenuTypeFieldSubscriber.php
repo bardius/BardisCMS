@@ -14,6 +14,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 
+use BardisCMS\MenuBundle\Entity\Menu;
+
 class AddMenuTypeFieldSubscriber implements EventSubscriberInterface {
 
     private $factory;
@@ -43,22 +45,61 @@ class AddMenuTypeFieldSubscriber implements EventSubscriberInterface {
 
         // check the menu type and present the required field to enter page id
         switch ($data->getMenuType()) {
-            case 'Blog':
-                $form->add($this->factory->createNamed('blog', 'entity', null, array('auto_initialize' => false, 'class' => 'BardisCMS\BlogBundle\Entity\Blog', 'choice_label' => 'title', 'expanded' => false, 'multiple' => false, 'label' => 'Select Linked Blog Page', 'attr' => array('class' => 'autoCompleteItems autoCompleteBlogs', 'data-sonata-select2' => 'false'), 'required' => false)));
-                $form->add($this->factory->createNamed('menuUrlExtras', 'text', null, array('auto_initialize' => false, 'label' => 'Extra URL Params', 'required' => false)));
+            case Menu::TYPE_BLOG:
+                $form->add($this->factory->createNamed('blog', 'entity', null, array(
+                    'auto_initialize' => false,
+                    'class' => 'BardisCMS\BlogBundle\Entity\Blog',
+                    'choice_label' => 'title',
+                    'expanded' => false,
+                    'multiple' => false,
+                    'label' => 'Select Linked Blog Page',
+                    'attr' => array(
+                        'class' => 'autoCompleteItems autoCompleteBlogs',
+                        'data-sonata-select2' => 'false'
+                    ),
+                    'required' => false
+                )));
+                $form->add($this->factory->createNamed('menuUrlExtras', 'text', null, array(
+                    'auto_initialize' => false,
+                    'label' => 'Extra URL Params',
+                    'required' => false
+                )));
                 break;
-            case 'Page':
-                $form->add($this->factory->createNamed('page', 'entity', null, array('auto_initialize' => false, 'class' => 'BardisCMS\PageBundle\Entity\Page', 'choice_label' => 'title', 'expanded' => false, 'multiple' => false, 'label' => 'Select Linked Page', 'attr' => array('class' => 'autoCompleteItems autoCompletePages', 'data-sonata-select2' => 'false'), 'required' => false)));
-                $form->add($this->factory->createNamed('menuUrlExtras', 'text', null, array('auto_initialize' => false, 'label' => 'Extra URL Params', 'required' => false)));
+            case Menu::TYPE_PAGE:
+                $form->add($this->factory->createNamed('page', 'entity', null, array(
+                    'auto_initialize' => false,
+                    'class' => 'BardisCMS\PageBundle\Entity\Page',
+                    'choice_label' => 'title',
+                    'expanded' => false,
+                    'multiple' => false,
+                    'label' => 'Select Linked Page',
+                    'attr' => array(
+                        'class' => 'autoCompleteItems autoCompletePages',
+                        'data-sonata-select2' => 'false'
+                    ),
+                    'required' => false
+                )));
+                $form->add($this->factory->createNamed('menuUrlExtras', 'text', null, array(
+                    'auto_initialize' => false,
+                    'label' => 'Extra URL Params',
+                    'required' => false
+                )));
                 break;
-            case 'http':
-                $form->add($this->factory->createNamed('externalUrl', 'text', null, array('auto_initialize' => false, 'label' => 'External URL', 'required' => false)));
+            case Menu::TYPE_EXTERNAL_URL:
+                $form->add($this->factory->createNamed('externalUrl', 'text', null, array(
+                    'auto_initialize' => false,
+                    'label' => 'External URL',
+                    'required' => false
+                )));
                 break;
-            case 'url':
-                $form->add($this->factory->createNamed('externalUrl', 'text', null, array('auto_initialize' => false, 'label' => 'Page URL', 'required' => false)));
+            case Menu::TYPE_INTERNAL_URL:
+                $form->add($this->factory->createNamed('externalUrl', 'text', null, array(
+                    'auto_initialize' => false,
+                    'label' => 'Page URL',
+                    'required' => false
+                )));
                 break;
             default:
         }
     }
-
 }

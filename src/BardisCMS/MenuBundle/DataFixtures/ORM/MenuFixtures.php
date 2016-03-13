@@ -21,7 +21,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuHome = new Menu();
         $menuHome->setPage($manager->merge($this->getReference('homepage')));
         $menuHome->setTitle('Homepage');
-        $menuHome->setMenuType('Page');
+        $menuHome->setMenuType(Menu::TYPE_PAGE);
         $menuHome->setRoute('showPage');
         $menuHome->setAccessLevel(Menu::STATUS_PUBLIC);
         $menuHome->setParent(0);
@@ -33,7 +33,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuBlog = new Menu();
         $menuBlog->setBlog($manager->merge($this->getReference('bloghome')));
         $menuBlog->setTitle('Blog');
-        $menuBlog->setMenuType('Blog');
+        $menuBlog->setMenuType(Menu::TYPE_BLOG);
         $menuBlog->setRoute('showPage');
         $menuBlog->setAccessLevel(Menu::STATUS_PUBLIC);
         $menuBlog->setParent(0);
@@ -45,7 +45,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuEvents = new Menu();
         $menuEvents->setBlog($manager->merge($this->getReference('blogevents')));
         $menuEvents->setTitle('Events');
-        $menuEvents->setMenuType('Blog');
+        $menuEvents->setMenuType(Menu::TYPE_BLOG);
         $menuEvents->setRoute('showPage');
         $menuEvents->setAccessLevel(Menu::STATUS_PUBLIC);
         $menuEvents->setParent(0);
@@ -57,7 +57,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuNews = new Menu();
         $menuNews->setBlog($manager->merge($this->getReference('blognews')));
         $menuNews->setTitle('News');
-        $menuNews->setMenuType('Blog');
+        $menuNews->setMenuType(Menu::TYPE_BLOG);
         $menuNews->setRoute('showPage');
         $menuNews->setAccessLevel(Menu::STATUS_PUBLIC);
         $menuNews->setParent(0);
@@ -69,7 +69,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuSamplePage1 = new Menu();
         $menuSamplePage1->setPage($manager->merge($this->getReference('page2')));
         $menuSamplePage1->setTitle('Sports');
-        $menuSamplePage1->setMenuType('Page');
+        $menuSamplePage1->setMenuType(Menu::TYPE_PAGE);
         $menuSamplePage1->setRoute('showPage');
         $menuSamplePage1->setAccessLevel(Menu::STATUS_PUBLIC);
         $menuSamplePage1->setParent(0);
@@ -81,7 +81,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuSamplePage2 = new Menu();
         $menuSamplePage2->setPage($manager->merge($this->getReference('page1')));
         $menuSamplePage2->setTitle('E-Magazine');
-        $menuSamplePage2->setMenuType('Page');
+        $menuSamplePage2->setMenuType(Menu::TYPE_PAGE);
         $menuSamplePage2->setRoute('showPage');
         $menuSamplePage2->setAccessLevel(Menu::STATUS_PUBLIC);
         $menuSamplePage2->setParent(0);
@@ -93,7 +93,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuContactPage = new Menu();
         $menuContactPage->setPage($manager->merge($this->getReference('pagecontact')));
         $menuContactPage->setTitle('Contact Us');
-        $menuContactPage->setMenuType('Page');
+        $menuContactPage->setMenuType(Menu::TYPE_PAGE);
         $menuContactPage->setRoute('showPage');
         $menuContactPage->setAccessLevel(Menu::STATUS_PUBLIC);
         $menuContactPage->setParent(0);
@@ -105,7 +105,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuLoginPage = new Menu();
         $menuLoginPage->setPage($manager->merge($this->getReference('pageuser_login')));
         $menuLoginPage->setTitle('Login');
-        $menuLoginPage->setMenuType('Page');
+        $menuLoginPage->setMenuType(Menu::TYPE_PAGE);
         $menuLoginPage->setRoute('showPage');
         $menuLoginPage->setAccessLevel(Menu::STATUS_NONAUTHONLY);
         $menuLoginPage->setParent(0);
@@ -117,7 +117,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuProfilePage = new Menu();
         $menuProfilePage->setPage($manager->merge($this->getReference('pageuser_profile')));
         $menuProfilePage->setTitle('Profile');
-        $menuProfilePage->setMenuType('Page');
+        $menuProfilePage->setMenuType(Menu::TYPE_PAGE);
         $menuProfilePage->setRoute('showPage');
         $menuProfilePage->setAccessLevel(Menu::STATUS_AUTHONLY);
         $menuProfilePage->setParent(0);
@@ -129,7 +129,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuSitemapPage = new Menu();
         $menuSitemapPage->setPage($manager->merge($this->getReference('pagesitemap')));
         $menuSitemapPage->setTitle('Sitemap');
-        $menuSitemapPage->setMenuType('Page');
+        $menuSitemapPage->setMenuType(Menu::TYPE_PAGE);
         $menuSitemapPage->setRoute('showPage');
         $menuSitemapPage->setAccessLevel(Menu::STATUS_PUBLIC);
         $menuSitemapPage->setParent(0);
