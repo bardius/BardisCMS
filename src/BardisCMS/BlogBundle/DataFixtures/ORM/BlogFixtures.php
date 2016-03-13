@@ -132,7 +132,7 @@ class BlogFixtures extends AbstractFixture implements OrderedFixtureInterface {
     }
 
     public function getOrder() {
-        return 9;
+        return 10;
     }
 
 }
