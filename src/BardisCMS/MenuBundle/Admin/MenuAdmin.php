@@ -29,21 +29,6 @@ class MenuAdmin extends Admin {
         // Getting the container parameters set in the config file that exist
         $menuSettings = $this->getConfigurationPool()->getContainer()->getParameter('menu_settings');
 
-        // Setting up the available actions
-        $actionsChoice = $menuSettings['actions'];
-        reset($actionsChoice);
-        $prefActionsChoice = key($actionsChoice);
-
-        // Setting up the available menu groups
-        $menuGroupsChoice = $menuSettings['menugroups'];
-        reset($menuGroupsChoice);
-        $prefMenuGroupsChoice = key($menuGroupsChoice);
-
-        // Setting up the available publish states and preferred choice
-        $publishStateChoices = $menuSettings['publishState'];
-        reset($publishStateChoices);
-        $prefPublishStateChoices = key($publishStateChoices);
-
         $menus = $this->getConfigurationPool()->getContainer()->get('doctrine.orm.entity_manager')
                 ->getRepository('MenuBundle:Menu')
                 ->findAll();
@@ -60,7 +45,7 @@ class MenuAdmin extends Admin {
                 ->with('Menu Item Essential Details', array('collapsed' => true))
                 ->add('title', null, array('label' => 'Title', 'required' => true))
                 ->add('menuType', 'choice', array('choices' => Menu::getMenuTypeList(), 'preferred_choices' => array(Menu::TYPE_PAGE), 'label' => 'Menu Item Type', 'required' => true))
-                ->add('route', 'choice', array('choices' => $actionsChoice, 'preferred_choices' => array($prefActionsChoice), 'label' => 'Link Action', 'required' => true))
+                ->add('route', 'choice', array('choices' => Menu::getRouteList(), 'preferred_choices' => array(Menu::ROUTE_SHOWPAGE), 'label' => 'Link Action for Controller', 'required' => true))
                 ->setHelps(array(
                     'title' => 'Set the title of the menu item (link copy text)',
                     'menuType' => 'Set the type of the menu item linked page',
@@ -70,7 +55,7 @@ class MenuAdmin extends Admin {
                 ->end()
                 ->tab('Menu Item Taxonomy')
                 ->with('Menu Item Taxonomy', array('collapsed' => true))
-                ->add('menuGroup', 'choice', array('choices' => $menuGroupsChoice, 'preferred_choices' => array($prefMenuGroupsChoice), 'label' => 'Menu Group', 'required' => true))
+                ->add('menuGroup', 'choice', array('choices' => Menu::getMenuGroupList(), 'preferred_choices' => array(Menu::GROUP_MAIN), 'label' => 'Menu Group', 'required' => true))
                 ->add('parent', 'choice', array('choices' => $menusChoice, 'attr' => array('class' => 'autoCompleteItems autoCompleteMenus', 'data-sonata-select2' => 'false'), 'label' => 'Parent Menu Item', 'required' => false))
                 ->add('ordering', null, array('label' => 'Menu Item Order', 'required' => true))
                 ->setHelps(array(
@@ -83,7 +68,7 @@ class MenuAdmin extends Admin {
                 ->tab('Menu Item Access Control')
                 ->with('Menu Item Access Control', array('collapsed' => true))
                 ->add('accessLevel', 'choice', array('choices' => Menu::getAccessLevelList(), 'preferred_choices' => array(Menu::STATUS_ADMINONLY), 'label' => 'Access Level', 'required' => true))
-                ->add('publishState', 'choice', array('choices' => $publishStateChoices, 'preferred_choices' => array($prefPublishStateChoices), 'label' => 'Publish State', 'required' => true))
+                ->add('publishState', 'choice', array('choices' => Menu::getPublishStateList(), 'preferred_choices' => array(Menu::STATE_UNPUBLISHED), 'label' => 'Publish State', 'required' => true))
                 ->setHelps(array(
                     'accessLevel' => 'Set the minimum access level the item is visible to',
                     'publishState' => 'Set the publish state of this menu item'
@@ -105,16 +90,13 @@ class MenuAdmin extends Admin {
         // Getting the container parameters set in the config file that exist
         $menuSettings = $this->getConfigurationPool()->getContainer()->getParameter('menu_settings');
 
-        $menuGroupsChoice = $menuSettings['menugroups'];
-        $publishStateChoices = $menuSettings['publishState'];
-
         $datagridMapper
                 ->add('title')
-                ->add('menuGroup', 'doctrine_orm_string', array(), 'choice', array('choices' => $menuGroupsChoice))
+                ->add('menuGroup', 'doctrine_orm_string', array(), 'choice', array('choices' => Menu::getMenuGroupList()))
                 ->add('menuType', 'doctrine_orm_string', array(), 'choice', array('choices' => Menu::getMenuTypeList()))
                 ->add('page')
                 ->add('blog')
-                ->add('publishState', 'doctrine_orm_string', array(), 'choice', array('choices' => $publishStateChoices))
+                ->add('publishState', 'doctrine_orm_string', array(), 'choice', array('choices' => Menu::getPublishStateList()))
                 ->add('accessLevel', 'doctrine_orm_string', array(), 'choice', array('choices' => Menu::getAccessLevelList()))
         ;
     }

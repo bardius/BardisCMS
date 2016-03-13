@@ -23,23 +23,23 @@ class SubMenuFixtures extends AbstractFixture implements OrderedFixtureInterface
         $menuProfileEditPage->setPage($manager->merge($this->getReference('pageuser_edit_profile')));
         $menuProfileEditPage->setTitle('Manage Profile');
         $menuProfileEditPage->setMenuType(Menu::TYPE_PAGE);
-        $menuProfileEditPage->setRoute('showPage');
+        $menuProfileEditPage->setRoute(Menu::ROUTE_SHOWPAGE);
         $menuProfileEditPage->setAccessLevel(Menu::STATUS_AUTHONLY);
         $menuProfileEditPage->setParent($manager->merge($this->getReference('menuProfilePage'))->getId());
-        $menuProfileEditPage->setMenuGroup('Main Menu');
-        $menuProfileEditPage->setPublishState(1);
+        $menuProfileEditPage->setMenuGroup(Menu::GROUP_MAIN);
+        $menuProfileEditPage->setPublishState(Menu::STATE_PUBLISHED);
         $menuProfileEditPage->setOrdering(0);
         $manager->persist($menuProfileEditPage);
 
         $menuLogoutPage = new Menu();
         $menuLogoutPage->setTitle('Logout');
         $menuLogoutPage->setMenuType(Menu::TYPE_INTERNAL_URL);
-        $menuLogoutPage->setRoute('none');
+        $menuLogoutPage->setRoute(Menu::ROUTE_NONE);
         $menuLogoutPage->setExternalUrl('/logout');
         $menuLogoutPage->setAccessLevel(Menu::STATUS_AUTHONLY);
         $menuLogoutPage->setParent($manager->merge($this->getReference('menuProfilePage'))->getId());
-        $menuLogoutPage->setMenuGroup('Main Menu');
-        $menuLogoutPage->setPublishState(1);
+        $menuLogoutPage->setMenuGroup(Menu::GROUP_MAIN);
+        $menuLogoutPage->setPublishState(Menu::STATE_PUBLISHED);
         $menuLogoutPage->setOrdering(1);
         $manager->persist($menuLogoutPage);
 

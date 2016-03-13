@@ -24,24 +24,6 @@ class Configuration implements ConfigurationInterface {
         // more information on that topic.
         $rootNode
                 ->children()
-                ->arrayNode('actions')
-                ->isRequired()
-                ->requiresAtLeastOneElement()
-                ->useAttributeAsKey('name')
-                ->prototype('scalar')->defaultValue(null)->end()
-                ->end()
-                ->arrayNode('menugroups')
-                ->isRequired()
-                ->requiresAtLeastOneElement()
-                ->useAttributeAsKey('name')
-                ->prototype('scalar')->defaultValue(null)->end()
-                ->end()
-                ->arrayNode('publishState')
-                ->isRequired()
-                ->requiresAtLeastOneElement()
-                ->useAttributeAsKey('name')
-                ->prototype('scalar')->defaultValue(null)->end()
-                ->end()
                 ->end();
 
         return $treeBuilder;

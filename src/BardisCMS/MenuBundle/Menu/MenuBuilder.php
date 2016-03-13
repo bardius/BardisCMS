@@ -115,7 +115,7 @@ class MenuBuilder {
                 $this->allowedAccessLevels
             );
 
-            if ($menuItem->getPublishstate() != '0' && $accessAllowedForUserRole) {
+            if ($menuItem->getPublishstate() != Menu::STATE_UNPUBLISHED && $accessAllowedForUserRole) {
                 $urlParams = $menuItem->getMenuUrlExtras();
                 if (!empty($urlParams)) {
                     $urlParams = '/' . urlencode($urlParams);

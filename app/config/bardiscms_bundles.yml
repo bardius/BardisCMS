@@ -56,18 +56,6 @@ category:
     loadservices: true
 
 menu:
-    actions:
-        none:       None
-        showPage:   Show Page
-
-    menugroups:
-        Main Menu:          Main Menu
-        Small Footer Menu:  Small Footer Menu
-        Footer Menu:        Footer Menu
-
-    publishState:
-        0:      Unpublished
-        1:      Published
 
 blog:
     loadservices: true
