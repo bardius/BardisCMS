@@ -28,6 +28,15 @@ use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
  */
 class Page {
 
+    /*
+     * Publish states
+     */
+    const STATUS_UNPUBLISHED    = 0;
+    const STATUS_PUBLISHED      = 1;
+    const STATUS_PREVIEW        = 2;
+    const STATUS_NONAUTHONLY    = 3;
+    const STATUS_AUTHONLY       = 4;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -801,6 +810,22 @@ class Page {
     }
 
     /**
+     * Returns PublishState list.
+     *
+     * @return array
+     */
+    public static function getPublishStateList()
+    {
+        return array(
+            Page::STATUS_UNPUBLISHED    => "Unpublished",
+            Page::STATUS_PUBLISHED      => "Published",
+            Page::STATUS_PREVIEW        => "Preview",
+            Page::STATUS_NONAUTHONLY    => "Anonymous Users Only",
+            Page::STATUS_AUTHONLY       => "Authenticated Users Only",
+        );
+    }
+
+    /**
      * toString PublishState
      *
      * @return string
@@ -808,9 +833,12 @@ class Page {
     public function getPublishStateAsString() {
         // Defining the string values of the publish states
         switch ($this->getPublishState()) {
-            case(0): return "Unpublished";
-            case(1): return "Published";
-            case(2): return "Preview";
+            case(Page::STATUS_UNPUBLISHED): return "Unpublished";
+            case(Page::STATUS_PUBLISHED): return "Published";
+            case(Page::STATUS_PREVIEW): return "Preview";
+            case(Page::STATUS_NONAUTHONLY): return "Anonymous Users Only";
+            case(Page::STATUS_AUTHONLY): return "Authenticated Users Only";
+            default: return $this->getPublishState();
         }
     }
 

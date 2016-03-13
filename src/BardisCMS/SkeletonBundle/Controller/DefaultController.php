@@ -59,13 +59,8 @@ class DefaultController extends Controller {
         // Set the flag for allowing HHTP cache
         $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
 
-        // Set the publish status that is avaliable for the user
-        // Very basic ACL permission check
-        if ($this->userRole == "") {
-            $this->publishStates = array(1);
-        } else {
-            $this->publishStates = array(1, 2);
-        }
+        // Set the publish statuses that are available for the user
+        $this->publishStates = $this->get('bardiscms_page.services.helpers')->getAllowedPublishStates($this->userRole);
     }
 
     // Get the Skeleton page id based on alias from route

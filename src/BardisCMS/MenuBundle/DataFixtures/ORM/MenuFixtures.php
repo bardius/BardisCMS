@@ -23,7 +23,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuHome->setTitle('Homepage');
         $menuHome->setMenuType('Page');
         $menuHome->setRoute('showPage');
-        $menuHome->setAccessLevel(0);
+        $menuHome->setAccessLevel(1);
         $menuHome->setParent(0);
         $menuHome->setMenuGroup('Main Menu');
         $menuHome->setPublishState(1);
@@ -35,7 +35,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuBlog->setTitle('Blog');
         $menuBlog->setMenuType('Blog');
         $menuBlog->setRoute('showPage');
-        $menuBlog->setAccessLevel(0);
+        $menuBlog->setAccessLevel(1);
         $menuBlog->setParent(0);
         $menuBlog->setMenuGroup('Main Menu');
         $menuBlog->setPublishState(1);
@@ -47,7 +47,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuEvents->setTitle('Events');
         $menuEvents->setMenuType('Blog');
         $menuEvents->setRoute('showPage');
-        $menuEvents->setAccessLevel(0);
+        $menuEvents->setAccessLevel(1);
         $menuEvents->setParent(0);
         $menuEvents->setMenuGroup('Main Menu');
         $menuEvents->setPublishState(1);
@@ -59,7 +59,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuNews->setTitle('News');
         $menuNews->setMenuType('Blog');
         $menuNews->setRoute('showPage');
-        $menuNews->setAccessLevel(0);
+        $menuNews->setAccessLevel(1);
         $menuNews->setParent(0);
         $menuNews->setMenuGroup('Main Menu');
         $menuNews->setPublishState(1);
@@ -71,7 +71,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuSamplePage1->setTitle('Sports');
         $menuSamplePage1->setMenuType('Page');
         $menuSamplePage1->setRoute('showPage');
-        $menuSamplePage1->setAccessLevel(0);
+        $menuSamplePage1->setAccessLevel(1);
         $menuSamplePage1->setParent(0);
         $menuSamplePage1->setMenuGroup('Main Menu');
         $menuSamplePage1->setPublishState(1);
@@ -83,7 +83,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuSamplePage2->setTitle('E-Magazine');
         $menuSamplePage2->setMenuType('Page');
         $menuSamplePage2->setRoute('showPage');
-        $menuSamplePage2->setAccessLevel(0);
+        $menuSamplePage2->setAccessLevel(1);
         $menuSamplePage2->setParent(0);
         $menuSamplePage2->setMenuGroup('Main Menu');
         $menuSamplePage2->setPublishState(1);
@@ -95,7 +95,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuContactPage->setTitle('Contact Us');
         $menuContactPage->setMenuType('Page');
         $menuContactPage->setRoute('showPage');
-        $menuContactPage->setAccessLevel(0);
+        $menuContactPage->setAccessLevel(1);
         $menuContactPage->setParent(0);
         $menuContactPage->setMenuGroup('Main Menu');
         $menuContactPage->setPublishState(1);
@@ -107,19 +107,31 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuLoginPage->setTitle('Login');
         $menuLoginPage->setMenuType('Page');
         $menuLoginPage->setRoute('showPage');
-        $menuLoginPage->setAccessLevel(0);
+        $menuLoginPage->setAccessLevel(1);
         $menuLoginPage->setParent(0);
         $menuLoginPage->setMenuGroup('Main Menu');
-        $menuLoginPage->setPublishState(1);
+        $menuLoginPage->setPublishState(4);
         $menuLoginPage->setOrdering(8);
         $manager->persist($menuLoginPage);
+
+        $menuProfilePage = new Menu();
+        $menuProfilePage->setPage($manager->merge($this->getReference('pageuser_profile')));
+        $menuProfilePage->setTitle('Profile');
+        $menuProfilePage->setMenuType('Page');
+        $menuProfilePage->setRoute('showPage');
+        $menuProfilePage->setAccessLevel(1);
+        $menuProfilePage->setParent(0);
+        $menuProfilePage->setMenuGroup('Main Menu');
+        $menuProfilePage->setPublishState(3);
+        $menuProfilePage->setOrdering(8);
+        $manager->persist($menuProfilePage);
 
         $menuSitemapPage = new Menu();
         $menuSitemapPage->setPage($manager->merge($this->getReference('pagesitemap')));
         $menuSitemapPage->setTitle('Sitemap');
         $menuSitemapPage->setMenuType('Page');
         $menuSitemapPage->setRoute('showPage');
-        $menuSitemapPage->setAccessLevel(0);
+        $menuSitemapPage->setAccessLevel(1);
         $menuSitemapPage->setParent(0);
         $menuSitemapPage->setMenuGroup('Footer Menu');
         $menuSitemapPage->setPublishState(1);

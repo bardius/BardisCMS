@@ -72,11 +72,6 @@ menu:
         Small Footer Menu:  Small Footer Menu
         Footer Menu:        Footer Menu
 
-    accessLevel:
-        0:      Public
-        1:      Authenticated
-        2:      Administrator
-
     publishState:
         0:      Unpublished
         1:      Published

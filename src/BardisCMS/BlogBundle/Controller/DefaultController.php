@@ -44,19 +44,16 @@ class DefaultController extends Controller {
         $userRole = $this->get('sonata_user.services.helpers')->getLoggedUserHighestRole();
         $settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
 
-        // Simple ACL for publishing
-        if ($page->getPublishState() == 0) {
-            return $this->render404Page();
-        }
+        // Set the publish statuses that are available for the user
+        $publishStates = $this->get('bardiscms_page.services.helpers')->getAllowedPublishStates($userRole);
 
-        if ($page->getPublishState() == 2 && $userRole == '') {
+        // Simple publishing ACL based on publish state and user Allowed Publish States
+        $accessAllowedForUserRole = $this->get('bardiscms_page.services.helpers')->isUserAccessAllowedByRole(
+            $page->getPublishState(),
+            $publishStates
+        );
+        if(!$accessAllowedForUserRole){
             return $this->render404Page();
-        }
-
-        if ($userRole == "") {
-            $publishStates = array(1);
-        } else {
-            $publishStates = array(1, 2);
         }
 
         if ($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()) {

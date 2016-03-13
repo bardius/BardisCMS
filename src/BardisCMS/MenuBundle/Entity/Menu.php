@@ -15,6 +15,15 @@ use Application\Sonata\MediaBundle\Entity\Media;
  */
 class Menu {
 
+    /*
+     * AccessLevel states
+     */
+    const STATUS_HIDDEN         = 0;
+    const STATUS_PUBLIC         = 1;
+    const STATUS_ADMINONLY      = 2;
+    const STATUS_AUTHONLY       = 3;
+    const STATUS_NONAUTHONLY    = 4;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -93,7 +102,7 @@ class Menu {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId() {
         return $this->id;
@@ -113,7 +122,7 @@ class Menu {
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle() {
         return $this->title;
@@ -133,7 +142,7 @@ class Menu {
     /**
      * Get menuType
      *
-     * @return string 
+     * @return string
      */
     public function getMenuType() {
         return $this->menuType;
@@ -153,7 +162,7 @@ class Menu {
     /**
      * Get route
      *
-     * @return string 
+     * @return string
      */
     public function getRoute() {
         return $this->route;
@@ -173,7 +182,7 @@ class Menu {
     /**
      * Get externalUrl
      *
-     * @return string 
+     * @return string
      */
     public function getExternalUrl() {
         return $this->externalUrl;
@@ -193,7 +202,7 @@ class Menu {
     /**
      * Get accessLevel
      *
-     * @return integer 
+     * @return integer
      */
     public function getAccessLevel() {
         return $this->accessLevel;
@@ -213,7 +222,7 @@ class Menu {
     /**
      * Get parent
      *
-     * @return string 
+     * @return string
      */
     public function getParent() {
         return $this->parent;
@@ -233,7 +242,7 @@ class Menu {
     /**
      * Get menuGroup
      *
-     * @return string 
+     * @return string
      */
     public function getMenuGroup() {
         return $this->menuGroup;
@@ -253,7 +262,7 @@ class Menu {
     /**
      * Get publishState
      *
-     * @return integer 
+     * @return integer
      */
     public function getPublishState() {
         return $this->publishState;
@@ -273,7 +282,7 @@ class Menu {
     /**
      * Get ordering
      *
-     * @return integer 
+     * @return integer
      */
     public function getOrdering() {
         return $this->ordering;
@@ -293,7 +302,7 @@ class Menu {
     /**
      * Get page
      *
-     * @return BardisCMS\PageBundle\Entity\Page 
+     * @return BardisCMS\PageBundle\Entity\Page
      */
     public function getPage() {
         return $this->page;
@@ -313,7 +322,7 @@ class Menu {
     /**
      * Get blog
      *
-     * @return BardisCMS\BlogBundle\Entity\Blog 
+     * @return BardisCMS\BlogBundle\Entity\Blog
      */
     public function getBlog() {
         return $this->blog;
@@ -333,7 +342,7 @@ class Menu {
     /**
      * Get menuImage
      *
-     * @return Application\Sonata\MediaBundle\Entity\Media 
+     * @return Application\Sonata\MediaBundle\Entity\Media
      */
     public function getMenuImage() {
         return $this->menuImage;
@@ -353,7 +362,7 @@ class Menu {
     /**
      * Get menuUrlExtras
      *
-     * @return string 
+     * @return string
      */
     public function getMenuUrlExtras() {
         return $this->menuUrlExtras;
@@ -362,7 +371,7 @@ class Menu {
     /**
      * toString
      *
-     * @return string 
+     * @return string
      */
     public function __toString() {
         if ($this->getTitle()) {
@@ -373,34 +382,55 @@ class Menu {
     }
 
     /**
+     * Returns PublishState list.
+     *
+     * @return array
+     */
+    public static function getAccessLevelList()
+    {
+        return array(
+            Menu::STATUS_HIDDEN      => "Hidden",
+            Menu::STATUS_PUBLIC      => "Public",
+            Menu::STATUS_ADMINONLY   => "Administrator Only",
+            Menu::STATUS_AUTHONLY    => "Authenticated Users Only",
+            Menu::STATUS_NONAUTHONLY => "Anonymous Users Only"
+        );
+    }
+
+    /**
      * toString AccessLevel
      *
-     * @return string 
+     * @return string
      */
     public function getAccessLevelAsString() {
+        // Defining the string values of the publish states
         switch ($this->getAccessLevel()) {
-            case('0'): return "Public";
-            case('1'): return "Authendicated";
-            case('2'): return "Administrator";
+            case(Menu::STATUS_HIDDEN): return "Hidden";
+            case(Menu::STATUS_PUBLIC): return "Public";
+            case(Menu::STATUS_ADMINONLY): return "Administrator Only";
+            case(Menu::STATUS_AUTHONLY): return "Authenticated Users Only";
+            case(Menu::STATUS_NONAUTHONLY): return "Anonymous Users Only";
+            default: return $this->getAccessLevel();
         }
     }
 
     /**
      * toString PublishState
      *
-     * @return string 
+     * @return string
      */
     public function getPublishStateAsString() {
         switch ($this->getPublishState()) {
             case('0'): return "Unpublished";
             case('1'): return "Published";
+            default: return $this->getPublishState();
         }
     }
 
     /**
      * toString menuType
      *
-     * @return string 
+     * @return string
      */
     public function getMenuTypeAsString() {
         switch ($this->getMenuType()) {

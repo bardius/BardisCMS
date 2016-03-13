@@ -15,52 +15,67 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+use BardisCMS\MenuBundle\Entity\Menu as Menu;
+
 class MenuBuilder {
 
     private $factory;
     private $em;
     private $container;
+    private $menuItemLevel;
+    private $allowedAccessLevels;
 
     /**
      * @param FactoryInterface $factory
+     * @param EntityManager $em
+     * @param ContainerInterface $container
      */
     public function __construct(FactoryInterface $factory, EntityManager $em, ContainerInterface $container) {
         $this->factory = $factory;
         $this->em = $em;
         $this->container = $container;
+
+        // Get the highest user role security permission
+        $this->userRole = $this->container->get('sonata_user.services.helpers')->getLoggedUserHighestRole();
+
+        // Set the AccessLevels that are available for the user
+        $this->allowedAccessLevels = $this->container->get('bardiscms_menu.services.helpers')->getAllowedAccessLevels($this->userRole);
     }
 
     /**
      * @param Request $request
-     * @param String $menugroup
+     * @param String $menuGroup
      * @param String $cssClass
      * @param String $menuItemDecorator
+     *
+     * @return menu
      */
-    public function createMenu(Request $request, $menugroup, $cssClass, $menuItemDecorator) {
+    public function createMenu(Request $request, $menuGroup, $cssClass, $menuItemDecorator) {
+
         $repo = $this->em->getRepository('MenuBundle:Menu');
-        $menudata = $repo->findBy(array("menuGroup" => $menugroup), array("ordering" => "ASC"));
+        $menuData = $repo->findBy(array("menuGroup" => $menuGroup), array("ordering" => "ASC"));
 
-        $menudata = array_values($menudata);
-        $menudata = $this->buildTree($menudata);
+        $menuData = array_values($menuData);
+        $menuData = $this->buildTree($menuData);
 
-        $menu = $this->factory->createItem($menugroup);
+        $menu = $this->factory->createItem($menuGroup);
         $menu->setChildrenAttribute('class', $cssClass);
 
         $matcher = $this->container->get('knp_menu.matcher');
         $voter = $this->container->get('bardiscms_menu.voter.request');
         $matcher->addVoter($voter);
 
-        //$menu->setCurrentUri($request->getRequestUri());
-
-        $this->menuItemlevel = 0;
-        $this->setupMenuItem($menu, $menudata, $menuItemDecorator);
+        $this->menuItemLevel = 0;
+        $this->setupMenuItem($menu, $menuData, $menuItemDecorator);
 
         return $menu;
     }
 
     /**
      * @param Array $elements
-     * @param String $parentId
+     * @param String $parent
+     *
+     * @return array
      * */
     public function buildTree(array &$elements, $parent = '0') {
         $branch = array();
@@ -74,27 +89,33 @@ class MenuBuilder {
                     $element->children = null;
                 }
                 $branch[$element->getId()] = $element;
-                //unset($elements[$element->getId()]);
             }
         }
+
         return $branch;
     }
 
     /**
      * @param MenuItem $menu
-     * @param Array $menudata
+     * @param Array $menuItemList
      * @param String $menuItemDecorator
      * */
-    public function setupMenuItem($menu, $menudata, $menuItemDecorator) {
+    public function setupMenuItem($menu, $menuItemList, $menuItemDecorator) {
         $menuItemCounter = 0;
 
-        foreach ($menudata as $menuItem) {
+        foreach ($menuItemList as $menuItem) {
             $menuType = $menuItem->getMenuType();
             $getPageFunction = 'get' . $menuType;
 
             $menuItemCounter++;
 
-            if ($menuItem->getPublishstate() != '0') {
+            // Simple publishing ACL based on AccessLevel and user Allowed Access Levels
+            $accessAllowedForUserRole = $this->container->get('bardiscms_menu.services.helpers')->isUserAccessAllowedByRole(
+                $menuItem->getAccessLevel(),
+                $this->allowedAccessLevels
+            );
+
+            if ($menuItem->getPublishstate() != '0' && $accessAllowedForUserRole) {
                 $urlParams = $menuItem->getMenuUrlExtras();
                 if (!empty($urlParams)) {
                     $urlParams = '/' . urlencode($urlParams);
@@ -139,7 +160,7 @@ class MenuBuilder {
                     case 'Page':
                         $pageFunction = $menuItem->$getPageFunction();
 
-                        // If Link Action is not selected point to homepage else to alias or page id based route 
+                        // If Link Action is not selected point to homepage else to alias or page id based route
                         if ($pageFunction !== null) {
                             $alias = $this->getPageAlias($pageFunction, $menuType);
 
@@ -159,7 +180,7 @@ class MenuBuilder {
                     case 'Blog':
                         $pageFunction = $menuItem->$getPageFunction();
 
-                        // If Link Action is not selected point to homepage else to alias or page id based route 
+                        // If Link Action is not selected point to homepage else to alias or page id based route
                         if ($pageFunction !== null) {
                             $alias = $this->getPageAlias($pageFunction, $menuType);
 
@@ -179,8 +200,8 @@ class MenuBuilder {
                         $menu[$menuItem->getTitle()]->setLabelAttribute('class', 'divider');
                 }
 
-                $menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemlevel);
-                $menu[$menuItem->getTitle()]->setLinkAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemlevel);
+                $menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemLevel);
+                $menu[$menuItem->getTitle()]->setLinkAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemLevel);
                 $menu[$menuItem->getTitle()]->setLinkAttribute('title', $menuItem->getTitle());
 
                 if ($menuItemDecorator == 'main') {
@@ -189,19 +210,19 @@ class MenuBuilder {
                     }
 
                     if ($menuItem->children !== null) {
-                        $menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemlevel . ' has-dropdown not-click');
-                        $this->menuItemlevel = $this->menuItemlevel + 1;
+                        $menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemLevel . ' has-dropdown not-click');
+                        $this->menuItemLevel = $this->menuItemLevel + 1;
                         //$menu[$menuItem->getTitle()]->setAttribute('flyout-toggle', true);
-                        $menu[$menuItem->getTitle()]->setChildrenAttribute('class', 'dropdown level' . $this->menuItemlevel);
+                        $menu[$menuItem->getTitle()]->setChildrenAttribute('class', 'dropdown level' . $this->menuItemLevel);
                         $this->setupMenuItem($menu[$menuItem->getTitle()], $menuItem->children, $menuItemDecorator);
-                        $this->menuItemlevel = $this->menuItemlevel - 1;
+                        $this->menuItemLevel = $this->menuItemLevel - 1;
                     }
                 } else {
                     if ($menuItem->children !== null) {
-                        $this->menuItemlevel = $this->menuItemlevel + 1;
-                        $menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemlevel);
+                        $this->menuItemLevel = $this->menuItemLevel + 1;
+                        $menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemLevel);
                         $this->setupMenuItem($menu[$menuItem->getTitle()], $menuItem->children, $menuItemDecorator);
-                        $this->menuItemlevel = $this->menuItemlevel - 1;
+                        $this->menuItemLevel = $this->menuItemLevel - 1;
                     }
                 }
             }

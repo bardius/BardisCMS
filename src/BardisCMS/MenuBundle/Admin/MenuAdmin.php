@@ -17,6 +17,8 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use BardisCMS\MenuBundle\Admin\Form\EventListener\AddMenuTypeFieldSubscriber;
 
+use BardisCMS\MenuBundle\Entity\Menu as Menu;
+
 class MenuAdmin extends Admin {
 
     protected function configureFormFields(FormMapper $formMapper) {
@@ -40,14 +42,9 @@ class MenuAdmin extends Admin {
         // Setting up the available menu groups
         $menuGroupsChoice = $menuSettings['menugroups'];
         reset($menuGroupsChoice);
-        $prefMenuGroupsChoice = key($menuGroupsChoice);
+        $prefMenuGroupsChoice = key($menuGroupsChoice);;
 
-        // Setting up the available page types and preffered choice
-        $accessLevelChoices = $menuSettings['accessLevel'];
-        reset($accessLevelChoices);
-        $prefAccessLevelChoices = key($accessLevelChoices);
-
-        // Setting up the available publish states and preffered choice
+        // Setting up the available publish states and preferred choice
         $publishStateChoices = $menuSettings['publishState'];
         reset($publishStateChoices);
         $prefPublishStateChoices = key($publishStateChoices);
@@ -90,7 +87,7 @@ class MenuAdmin extends Admin {
                 ->end()
                 ->tab('Menu Item Access Control')
                 ->with('Menu Item Access Control', array('collapsed' => true))
-                ->add('accessLevel', 'choice', array('choices' => $accessLevelChoices, 'preferred_choices' => array($prefAccessLevelChoices), 'label' => 'Access Level', 'required' => true))
+                ->add('accessLevel', 'choice', array('choices' => Menu::getAccessLevelList(), 'preferred_choices' => array(Menu::STATUS_ADMINONLY), 'label' => 'Access Level', 'required' => true))
                 ->add('publishState', 'choice', array('choices' => $publishStateChoices, 'preferred_choices' => array($prefPublishStateChoices), 'label' => 'Publish State', 'required' => true))
                 ->setHelps(array(
                     'accessLevel' => 'Set the minimum access level the item is visible to',
@@ -115,7 +112,6 @@ class MenuAdmin extends Admin {
 
         $menuTypeChoice = $menuSettings['menutypes'];
         $menuGroupsChoice = $menuSettings['menugroups'];
-        $accessLevelChoices = $menuSettings['accessLevel'];
         $publishStateChoices = $menuSettings['publishState'];
 
         $datagridMapper
@@ -125,7 +121,7 @@ class MenuAdmin extends Admin {
                 ->add('page')
                 ->add('blog')
                 ->add('publishState', 'doctrine_orm_string', array(), 'choice', array('choices' => $publishStateChoices))
-                ->add('accessLevel', 'doctrine_orm_string', array(), 'choice', array('choices' => $accessLevelChoices))
+                ->add('accessLevel', 'doctrine_orm_string', array(), 'choice', array('choices' => Menu::getAccessLevelList()))
         ;
     }
 

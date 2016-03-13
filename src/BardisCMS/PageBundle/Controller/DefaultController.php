@@ -37,7 +37,7 @@ class DefaultController extends Controller {
     private $userRole;
     private $enableHTTPCache;
 
-    // Override the ContainerAware setcontainer to accommodate the extra variables
+    // Override the ContainerAware setContainer to accommodate the extra variables
     public function setContainer(ContainerInterface $container = null) {
         $this->container = $container;
 
@@ -66,13 +66,8 @@ class DefaultController extends Controller {
         // Set the flag for allowing HTTP cache
         $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
 
-        // Set the publish status that is available for the user
-        // Very basic ACL permission check
-        if ($this->userRole == "") {
-            $this->publishStates = array(1);
-        } else {
-            $this->publishStates = array(1, 2);
-        }
+        // Set the publish statuses that are available for the user
+        $this->publishStates = $this->get('bardiscms_page.services.helpers')->getAllowedPublishStates($this->userRole);
     }
 
     // Get the page id based on alias from route
@@ -124,12 +119,12 @@ class DefaultController extends Controller {
     // Display a page based on the id and the render variables from the settings and the routing
     public function showPageAction() {
 
-        // Simple publishing ACL based on publish state and user role
-        if ($this->page->getPublishState() == 0) {
-            return $this->render404Page();
-        }
-
-        if ($this->page->getPublishState() == 2 && $this->userRole == "") {
+        // Simple publishing ACL based on publish state and user Allowed Publish States
+        $accessAllowedForUserRole = $this->get('bardiscms_page.services.helpers')->isUserAccessAllowedByRole(
+            $this->page->getPublishState(),
+            $this->publishStates
+        );
+        if(!$accessAllowedForUserRole){
             return $this->render404Page();
         }
 
@@ -346,15 +341,38 @@ class DefaultController extends Controller {
         $filterForm->setData($filterData);
 
         if (!empty($categoryIds)) {
-            $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedCategoryItems($categoryIds, $this->id, $this->publishStates, $this->currentpage, $this->totalpageitems, $tagIds);
+            $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedCategoryItems(
+                $categoryIds,
+                $this->id,
+                $this->publishStates,
+                $this->currentpage,
+                $this->totalpageitems,
+                $tagIds
+            );
         } else {
-            $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedItems($tagIds, $this->id, $this->publishStates, $this->currentpage, $this->totalpageitems);
+            $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedItems(
+                $tagIds,
+                $this->id,
+                $this->publishStates,
+                $this->currentpage,
+                $this->totalpageitems
+            );
         }
 
         $pages = $pageList['pages'];
         $totalPages = $pageList['totalPages'];
 
-        $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $this->extraParams, 'currentpage' => $this->currentpage, 'linkUrlParams' => $this->linkUrlParams, 'totalpageitems' => $this->totalpageitems, 'filterForm' => $filterForm->createView(), 'mobile' => $this->serveMobile));
+        $response = $this->render('PageBundle:Default:page.html.twig', array(
+            'page' => $this->page,
+            'pages' => $pages,
+            'totalPages' => $totalPages,
+            'extraParams' => $this->extraParams,
+            'currentpage' => $this->currentpage,
+            'linkUrlParams' => $this->linkUrlParams,
+            'totalpageitems' => $this->totalpageitems,
+            'filterForm' => $filterForm->createView(),
+            'mobile' => $this->serveMobile
+        ));
 
         return $response;
     }
@@ -365,15 +383,37 @@ class DefaultController extends Controller {
         $categoryIds = $this->get('bardiscms_page.services.helpers')->getCategoryFilterIds($this->page->getCategories()->toArray());
 
         if (!empty($tagIds)) {
-            $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedCategoryItems($categoryIds, $this->id, $this->publishStates, $this->currentpage, $this->totalpageitems, $tagIds);
+            $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getTaggedCategoryItems(
+                $categoryIds,
+                $this->id,
+                $this->publishStates,
+                $this->currentpage,
+                $this->totalpageitems,
+                $tagIds
+            );
         } else {
-            $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getCategoryItems($categoryIds, $this->id, $this->publishStates, $this->currentpage, $this->totalpageitems);
+            $pageList = $this->getDoctrine()->getRepository('PageBundle:Page')->getCategoryItems(
+                $categoryIds,
+                $this->id,
+                $this->publishStates,
+                $this->currentpage,
+                $this->totalpageitems
+            );
         }
 
         $pages = $pageList['pages'];
         $totalPages = $pageList['totalPages'];
 
-        $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $this->extraParams, 'currentpage' => $this->currentpage, 'linkUrlParams' => $this->linkUrlParams, 'totalpageitems' => $this->totalpageitems, 'mobile' => $this->serveMobile));
+        $response = $this->render('PageBundle:Default:page.html.twig', array(
+            'page' => $this->page,
+            'pages' => $pages,
+            'totalPages' => $totalPages,
+            'extraParams' => $this->extraParams,
+            'currentpage' => $this->currentpage,
+            'linkUrlParams' => $this->linkUrlParams,
+            'totalpageitems' => $this->totalpageitems,
+            'mobile' => $this->serveMobile
+        ));
 
         return $response;
     }
@@ -508,7 +548,7 @@ class DefaultController extends Controller {
                 //      'no' => ['.mit.edu', 'foo.com']    // Don't use a proxy with these
                 //],
                 //'allow_redirects' => false,
-                //'auth' => ['bardius', 'kemp1313'],
+                //'auth' => ['username', 'password'],
                 'query' => [
                     'author' => 'bardius'
                 ],
@@ -545,36 +585,24 @@ class DefaultController extends Controller {
 
             $data = json_decode($response->getBody());
             $statusCode = $response->getStatusCode();
-            dump($response);
-            dump($data);
-            dump($statusCode);
         }
         catch (\GuzzleHttp\Exception\ConnectException $e) {
             $req = $e->getRequest();
             $resp = $e->getResponse();
-            dump($req);
-            dump($resp);
         }
         catch (\GuzzleHttp\Exception\ClientErrorResponseException $e) {
             $req = $e->getRequest();
             $resp = $e->getResponse();
-            dump($req);
-            dump($resp);
         }
         catch (\GuzzleHttp\Exception\ServerErrorResponseException $e) {
             $req = $e->getRequest();
             $resp = $e->getResponse();
-            dump($req);
-            dump($resp);
         }
         catch (\GuzzleHttp\Exception\BadResponseException $e) {
             $req = $e->getRequest();
             $resp = $e->getResponse();
-            dump($req);
-            dump($resp);
         }
         catch(\Exception $e){
-            dump($e);
         }
     }
 }

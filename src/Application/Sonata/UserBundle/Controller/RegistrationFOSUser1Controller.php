@@ -75,13 +75,8 @@ class RegistrationFOSUser1Controller extends Controller
         // Check if request was Ajax based
         $this->isAjaxRequest = $this->get('bardiscms_page.services.ajax_detection')->isAjaxRequest();
 
-        // Set the publish status that is available for the user
-        // Very basic ACL permission check
-        if ($this->userRole == "") {
-            $this->publishStates = array(1);
-        } else {
-            $this->publishStates = array(1, 2);
-        }
+        // Set the publish statuses that are available for the user
+        $this->publishStates = $this->get('bardiscms_page.services.helpers')->getAllowedPublishStates($this->userRole);
 
         // Get the logged user if any
         $logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
@@ -112,12 +107,12 @@ class RegistrationFOSUser1Controller extends Controller
         $this->page = $page;
         $this->id = $this->page->getId();
 
-        // Simple publishing ACL based on publish state and user role
-        if ($this->page->getPublishState() == 0) {
-            return $this->render404Page();
-        }
-
-        if ($this->page->getPublishState() == 2 && $this->userRole == "") {
+        // Simple publishing ACL based on publish state and user Allowed Publish States
+        $accessAllowedForUserRole = $this->get('bardiscms_page.services.helpers')->isUserAccessAllowedByRole(
+            $this->page->getPublishState(),
+            $this->publishStates
+        );
+        if(!$accessAllowedForUserRole){
             return $this->render404Page();
         }
 
@@ -208,12 +203,12 @@ class RegistrationFOSUser1Controller extends Controller
         $this->page = $page;
         $this->id = $this->page->getId();
 
-        // Simple publishing ACL based on publish state and user role
-        if ($this->page->getPublishState() == 0) {
-            return $this->render404Page();
-        }
-
-        if ($this->page->getPublishState() == 2 && $this->userRole == "") {
+        // Simple publishing ACL based on publish state and user Allowed Publish States
+        $accessAllowedForUserRole = $this->get('bardiscms_page.services.helpers')->isUserAccessAllowedByRole(
+            $this->page->getPublishState(),
+            $this->publishStates
+        );
+        if(!$accessAllowedForUserRole){
             return $this->render404Page();
         }
 
@@ -297,12 +292,12 @@ class RegistrationFOSUser1Controller extends Controller
         $this->page = $page;
         $this->id = $this->page->getId();
 
-        // Simple publishing ACL based on publish state and user role
-        if ($this->page->getPublishState() == 0) {
-            return $this->render404Page();
-        }
-
-        if ($this->page->getPublishState() == 2 && $this->userRole == "") {
+        // Simple publishing ACL based on publish state and user Allowed Publish States
+        $accessAllowedForUserRole = $this->get('bardiscms_page.services.helpers')->isUserAccessAllowedByRole(
+            $this->page->getPublishState(),
+            $this->publishStates
+        );
+        if(!$accessAllowedForUserRole){
             return $this->render404Page();
         }
 

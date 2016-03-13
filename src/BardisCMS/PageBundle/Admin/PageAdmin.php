@@ -17,6 +17,8 @@ use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 
+use BardisCMS\PageBundle\Entity\Page as Page;
+
 class PageAdmin extends Admin {
 
     protected function configureFormFields(FormMapper $formMapper) {
@@ -24,12 +26,12 @@ class PageAdmin extends Admin {
         // Getting the container parameters set in the config file that exist after the dependency injection
         $pageSettings = $this->getConfigurationPool()->getContainer()->getParameter('page_settings');
 
-        // Setting up the available page types and preffered choice
+        // Setting up the available page types and preferred choice
         $pagetypeChoices = $pageSettings['pagetypes'];
         reset($pagetypeChoices);
         $prefPagetypeChoice = key($pagetypeChoices);
 
-        // Setting up the available media sizes and preffered choice
+        // Setting up the available media sizes and preferred choice
         $introMediaSizeChoices = $pageSettings['mediasizes'];
         reset($introMediaSizeChoices);
         $prefIntroMediaSizeChoice = key($introMediaSizeChoices);
@@ -42,7 +44,7 @@ class PageAdmin extends Admin {
                 ->tab('Page Essential Details')
                 ->with('Page Essential Details', array('collapsed' => false))
                 ->add('title', null, array('attr' => array('class' => 'pageTitleField'), 'label' => 'Page Title', 'required' => true))
-                ->add('publishState', 'choice', array('choices' => array('0' => 'Unpublished', '1' => 'Published', '2' => 'Preview'), 'preferred_choices' => array('2'), 'label' => 'Publish State', 'required' => true))
+                ->add('publishState', 'choice', array('choices' => Page::getPublishStateList(), 'preferred_choices' => array(Page::STATUS_PREVIEW), 'label' => 'Publish State', 'required' => true))
                 ->add('date', 'date', array('widget' => 'single_text', 'format' => 'dd-MM-yyyy', 'attr' => array('class' => 'datepicker'), 'label' => 'Publish Date', 'required' => true))
                 ->add('author', 'entity', array('class' => 'Application\Sonata\UserBundle\Entity\User', 'choice_label' => 'username', 'expanded' => false, 'multiple' => false, 'label' => 'Author', 'data' => $loggedUser->getId(), 'required' => true))
                 ->add('alias', null, array('attr' => array('class' => 'pageAliasField'), 'label' => 'Page Alias', 'required' => false))

@@ -12,6 +12,7 @@ namespace BardisCMS\PageBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use BardisCMS\PageBundle\Entity\Page as Page;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -181,5 +182,62 @@ class Helpers {
         }
 
         return $filterTags;
+    }
+
+    // Get the publishStates that are allowed for the user
+    public function getAllowedPublishStates($userHighestRole) {
+
+        $publishStates = array();
+
+        // Setting ROLE_ANONYMOUS role for brevity
+        if ($userHighestRole == "") {
+            $userHighestRole = "ROLE_ANONYMOUS";
+        }
+
+        // Very basic ACL permission check
+        switch ($userHighestRole) {
+            case "ROLE_ANONYMOUS":
+                array_push(
+                    $publishStates,
+                    Page::STATUS_PUBLISHED,
+                    Page::STATUS_NONAUTHONLY
+                );
+                break;
+            case "ROLE_USER":
+                array_push(
+                    $publishStates,
+                    Page::STATUS_PUBLISHED,
+                    Page::STATUS_AUTHONLY
+                );
+                break;
+            case "ROLE_SUPER_ADMIN":
+                array_push(
+                    $publishStates,
+                    Page::STATUS_PUBLISHED,
+                    Page::STATUS_PREVIEW,
+                    Page::STATUS_AUTHONLY
+                );
+                break;
+            default:
+                array_push(
+                    $publishStates,
+                    Page::STATUS_PUBLISHED,
+                    Page::STATUS_NONAUTHONLY
+                );
+        }
+
+        return $publishStates;
+    }
+
+    // Simple publishing ACL based on publish state and user Allowed Publish States
+    public function isUserAccessAllowedByRole($publishState, $userAllowedPublishStates) {
+
+        $accessAllowedForUserRole = false;
+
+        if(in_array($publishState, $userAllowedPublishStates)){
+            $accessAllowedForUserRole = true;
+        }
+
+        return $accessAllowedForUserRole;
     }
 }

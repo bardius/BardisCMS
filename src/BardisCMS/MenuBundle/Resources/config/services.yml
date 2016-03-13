@@ -1,11 +1,15 @@
 parameters:
-#    page.example.class: BardisCMS\PageBundle\Example
+    menu.services.helpers_class: BardisCMS\MenuBundle\Services\Helpers
 
 services:
+    bardiscms_menu.services.helpers:
+        class: %menu.services.helpers_class%
+        arguments: [""]
+
     bardiscms_menu.menu_builder:
         class: BardisCMS\MenuBundle\Menu\MenuBuilder
         arguments: ["@knp_menu.factory", "@doctrine.orm.entity_manager", "@service_container"]
-        
+
     bardiscms_menu.voter.request:
         class: BardisCMS\MenuBundle\Voter\RequestVoter
         arguments: ["@service_container"]
