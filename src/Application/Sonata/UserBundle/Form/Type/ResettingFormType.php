@@ -1,12 +1,12 @@
 <?php
 
 /*
- * This file is part of the FOSUserBundle package.
+ * Sonata User Bundle Overrides
+ * This file is part of the BardisCMS.
+ * Manage the extended Sonata User entity with extra information for the users
  *
- * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
+ * (c) George Bardis <george@bardis.info>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  */
 
 namespace Application\Sonata\UserBundle\Form\Type;
@@ -20,7 +20,13 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class ResettingFormType extends AbstractType
 {
-
+    /**
+     * Build form for ResettingFormType
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -41,6 +47,12 @@ class ResettingFormType extends AbstractType
         ;
     }
 
+    /**
+     * Configure Options for ResettingFormType
+     *
+     * @param OptionsResolver $resolver
+     *
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
@@ -52,13 +64,18 @@ class ResettingFormType extends AbstractType
         ));
     }
 
-    public function getName() {
-        return $this->getBlockPrefix();
-    }
-
-    // Define the name of the form to call it for rendering
+    /**
+     * Define the name of the form to call it for rendering
+     *
+     * @return string
+     *
+     */
     public function getBlockPrefix() {
         return 'sonata_user_resetting';
+    }
+
+    public function getName() {
+        return $this->getBlockPrefix();
     }
 
     public function getExtendedType()

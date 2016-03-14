@@ -1,12 +1,12 @@
 <?php
 
 /*
- * This file is part of the FOSUserBundle package.
+ * Sonata User Bundle Overrides
+ * This file is part of the BardisCMS.
+ * Manage the extended Sonata User entity with extra information for the users
  *
- * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
+ * (c) George Bardis <george@bardis.info>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  */
 
 namespace Application\Sonata\UserBundle\Form\Handler;
@@ -22,6 +22,15 @@ class ResettingFormHandler extends BaseHandler
 {
     private $container;
 
+    /**
+     * Construct handler for ResettingFormHandler
+     *
+     * @param FormInterface $form
+     * @param Request $request
+     * @param UserManagerInterface $userManager
+     * @param Container $container
+     *
+     */
     public function __construct(FormInterface $form, Request $request, UserManagerInterface $userManager, Container $container)
     {
         parent::__construct($form, $request, $userManager);

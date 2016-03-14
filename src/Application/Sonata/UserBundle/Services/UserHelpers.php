@@ -1,8 +1,9 @@
 <?php
 
 /*
- * User Bundle
+ * Sonata User Bundle Overrides
  * This file is part of the BardisCMS.
+ * Manage the extended Sonata User entity with extra information for the users
  *
  * (c) George Bardis <george@bardis.info>
  *
@@ -28,7 +29,9 @@ class UserHelpers {
     }
 
     /**
-     * Get the user role
+     * Get the Logged User Highest Role.
+     * Currently three user roles are user for simple ACL
+     * ROLE_SUPER_ADMIN, ROLE_USER, ROLE_ANONYMOUS
      *
      * @return String
      */
@@ -39,7 +42,7 @@ class UserHelpers {
         } else if ($this->securityContext->isGranted('ROLE_USER')) {
             $userRole = 'ROLE_USER';
         } else {
-            $userRole = '';
+            $userRole = 'ROLE_ANONYMOUS';
         }
 
         return $userRole;
@@ -79,11 +82,9 @@ class UserHelpers {
     public function getUserByUsername($userName) {
         $user = null;
 
+        // Getting user from database
         if (isset($userName)) {
-
-            // Getting user from database
-            $user = $this->em->getRepository('ApplicationSonataUserBundle:User')
-                    ->findOneByUsername($userName);
+            $user = $this->em->getRepository('ApplicationSonataUserBundle:User')->findOneByUsername($userName);
         }
 
         return $user;
@@ -96,7 +97,7 @@ class UserHelpers {
      */
     public function getLoggedUserSecurityIdentity() {
         // Getting the logged in user
-        $user = $this->securityContext->getToken()->getUser();
+        $user = $this->getLoggedUser();
 
         // Retrieve the security identity of the currently logged-in user
         $securityIdentity = UserSecurityIdentity::fromAccount($user);

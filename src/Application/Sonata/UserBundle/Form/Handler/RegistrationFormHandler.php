@@ -1,12 +1,11 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * Sonata User Bundle Overrides
+ * This file is part of the BardisCMS.
+ * Manage the extended Sonata User entity with extra information for the users
  *
- * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * (c) George Bardis <george@bardis.info>
  *
  */
 
@@ -26,7 +25,25 @@ class RegistrationFormHandler extends BaseHandler
 {
     private $container;
 
-    public function __construct(FormInterface $form, Request $request, UserManagerInterface $userManager, MailerInterface $mailer, TokenGeneratorInterface $tokenGenerator, Container $container)
+    /**
+     * Construct handler for RegistrationFormHandler
+     *
+     * @param FormInterface $form
+     * @param Request $request
+     * @param UserManagerInterface $userManager
+     * @param MailerInterface $mailer
+     * @param TokenGeneratorInterface $tokenGenerator
+     * @param Container $container
+     *
+     */
+    public function __construct(
+        FormInterface $form,
+        Request $request,
+        UserManagerInterface $userManager,
+        MailerInterface $mailer,
+        TokenGeneratorInterface $tokenGenerator,
+        Container $container
+    )
     {
         parent::__construct($form, $request, $userManager, $mailer, $tokenGenerator);
         $this->container = $container;
@@ -58,7 +75,7 @@ class RegistrationFormHandler extends BaseHandler
     }
 
     /**
-     * Override to add two stage register process with user email verification
+     * Override onSuccess to add two stage register process with user email verification
      *
      * @param UserInterface $user
      * @param boolean $confirmation

@@ -1,8 +1,9 @@
 <?php
 
 /*
- * User Bundle
+ * Sonata User Bundle Overrides
  * This file is part of the BardisCMS.
+ * Manage the extended Sonata User entity with extra information for the users
  *
  * (c) George Bardis <george@bardis.info>
  *
@@ -30,8 +31,11 @@ class RegistrationFormType extends AbstractType {
     private $requestStack;
 
     /**
+     * Construct form for RegistrationFormType
+     *
      * @param string $class The User class name
      * @param RequestStack $requestStack
+     *
      */
     public function __construct($class, RequestStack $requestStack)
     {
@@ -39,12 +43,19 @@ class RegistrationFormType extends AbstractType {
         $this->requestStack = $requestStack;
     }
 
+    /**
+     * Build form for RegistrationFormType
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $request = $this->requestStack->getMasterRequest();
         $REQUEST_URI = $request->server->get('REQUEST_URI');
 
-        // Getting the campaign identifier from url for KPI metrics
+        // Getting the campaign identifier from url for KPI measurement
         $this->campaignData = null;
         $this->campaignData = explode('/track-campaign/', $REQUEST_URI);
         $this->campaignData = str_replace("/", "", end($this->campaignData));
@@ -137,6 +148,12 @@ class RegistrationFormType extends AbstractType {
         ;
     }
 
+    /**
+     * Configure Options for RegistrationFormType
+     *
+     * @param OptionsResolver $resolver
+     *
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
@@ -148,13 +165,18 @@ class RegistrationFormType extends AbstractType {
         ));
     }
 
-    public function getName() {
-        return $this->getBlockPrefix();
-    }
-
-    // Define the name of the form to call it for rendering
+    /**
+     * Define the name of the form to call it for rendering
+     *
+     * @return string
+     *
+     */
     public function getBlockPrefix() {
         return 'sonata_user_custom_user_registration';
+    }
+
+    public function getName() {
+        return $this->getBlockPrefix();
     }
 
     public function getExtendedType()

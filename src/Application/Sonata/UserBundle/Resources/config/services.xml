@@ -26,6 +26,12 @@
     </parameters>
 
     <services>
+        <!-- Helpers to provide access to user details -->
+        <service id="sonata_user.services.helpers" class="Application\Sonata\UserBundle\Services\UserHelpers">
+            <argument type="service" id="security.context"/>
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
         <!-- Registration Form -->
         <service id="sonata_user.registration.form" factory-method="createNamed" factory-service="form.factory" class="%sonata_user.registration.form.class%">
             <argument>sonata_user_custom_user_registration_form</argument>

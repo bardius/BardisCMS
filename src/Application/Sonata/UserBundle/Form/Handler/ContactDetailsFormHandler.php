@@ -1,12 +1,12 @@
 <?php
 
 /*
- * This file is part of the FOSUserBundle package.
+ * Sonata User Bundle Overrides
+ * This file is part of the BardisCMS.
+ * Manage the extended Sonata User entity with extra information for the users
  *
- * (c) FriendsOfSymfony <http://friendsofsymfony.github.com/>
+ * (c) George Bardis <george@bardis.info>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  */
 
 namespace Application\Sonata\UserBundle\Form\Handler;
@@ -25,6 +25,15 @@ class ContactDetailsFormHandler
     protected $form;
     private $container;
 
+    /**
+     * Construct handler for ContactDetailsFormHandler
+     *
+     * @param FormInterface $form
+     * @param Request $request
+     * @param UserManagerInterface $userManager
+     * @param Container $container
+     *
+     */
     public function __construct(FormInterface $form, Request $request, UserManagerInterface $userManager, Container $container)
     {
         $this->form = $form;
@@ -33,6 +42,13 @@ class ContactDetailsFormHandler
         $this->container = $container;
     }
 
+    /**
+     * Process the form for ContactDetailsForm
+     *
+     * @param UserInterface $user
+     *
+     * @return boolean
+     */
     public function process(UserInterface $user)
     {
         $this->form->setData($user);
@@ -52,6 +68,12 @@ class ContactDetailsFormHandler
         return false;
     }
 
+    /**
+     * onSuccess after processing the form for ContactDetailsForm
+     *
+     * @param UserInterface $user
+     *
+     */
     protected function onSuccess(UserInterface $user)
     {
         $this->userManager->updateUser($user);

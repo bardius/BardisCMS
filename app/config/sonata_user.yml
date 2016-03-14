@@ -23,7 +23,7 @@ fos_user:
             handler:    sonata_user.registration.form.handler
         confirmation:
             enabled:    true
-            template:   FOSUserBundle:Registration:confirm_email.txt.twig
+            template:   ApplicationSonataUserBundle:Registration:confirm_email.txt.twig
 
     resetting:
         token_ttl: 86400
@@ -32,7 +32,7 @@ fos_user:
             # from_email:
             #     address:        ...
             #     sender_name:    ...
-            template:   FOSUserBundle:Resetting:email.txt.twig
+            template:   ApplicationSonataUserBundle:Resetting:email.txt.twig
         form:
             type:               sonata_user_resetting
             handler:            sonata_user.resetting.form.handler
@@ -79,5 +79,4 @@ sonata_user:
         menu:
             - { route: 'sonata_user_profile_show', label: 'profile_menu.show', domain: 'SonataUserBundle'}
             - { route: 'sonata_user_profile_edit', label: 'profile_menu.edit', domain: 'SonataUserBundle'}
-            # - { route: 'sonata_user_profile_edit_authentication', label: 'link_edit_authentication', domain: 'SonataUserBundle'}
             - { route: 'sonata_user_security_logout', label: 'profile_menu.logout', domain: 'SonataUserBundle'}

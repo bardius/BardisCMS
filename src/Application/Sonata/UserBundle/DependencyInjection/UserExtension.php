@@ -1,8 +1,9 @@
 <?php
 
 /*
- * User Bundle
+ * Sonata User Bundle Overrides
  * This file is part of the BardisCMS.
+ * Manage the extended Sonata User entity with extra information for the users
  *
  * (c) George Bardis <george@bardis.info>
  *
@@ -16,11 +17,15 @@ use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Loader\XMLFileLoader;
 use Symfony\Component\Config\FileLocator;
 
-// The service for the custon registration form type should load in the services.xml of the bundle
-// but this extension is totally ignored so the service is declared in the app/config/services.xml
-// this must be fixed so bundle and app are decoupled properly
 class UserExtension extends Extension {
 
+    /*
+     * The services for the Sonata User bundle
+     *
+     * @param array $configs
+     * @param ContainerBuilder $container
+     *
+     */
     public function load(array $configs, ContainerBuilder $container) {
         $loader = new XMLFileLoader(
                 $container, new FileLocator(__DIR__ . '/../Resources/config')

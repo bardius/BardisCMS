@@ -69,10 +69,6 @@
             <tag name="sonata.media.resizer" />
             <argument type="service" id="sonata.media.adapter.image.gd" />
         </service>
-        <service id="sonata_user.services.helpers" class="Application\Sonata\UserBundle\Services\UserHelpers">
-            <argument type="service" id="security.context"/>
-            <argument type="service" id="doctrine.orm.entity_manager" />
-        </service>
         <service id="sonata.admin.comments" class="BardisCMS\CommentBundle\Admin\CommentAdmin">
             <tag name="sonata.admin" manager_type="orm" group="Comments" label="Comments" />
             <argument />

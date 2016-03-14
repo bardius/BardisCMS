@@ -1,12 +1,12 @@
 <?php
 
 /*
- * This file is part of the Sonata package.
+ * Sonata User Bundle Overrides
+ * This file is part of the BardisCMS.
+ * Manage the extended Sonata User entity with extra information for the users
  *
- * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ * (c) George Bardis <george@bardis.info>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  */
 
 namespace Application\Sonata\UserBundle\Controller;
@@ -221,7 +221,8 @@ class RegistrationFOSUser1Controller extends Controller
         $user = $this->get('fos_user.user_manager')->findUserByEmail($email);
 
         if (null === $user) {
-            throw new NotFoundHttpException(sprintf('The user with email "%s" does not exist', $email));
+            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
+            //throw new NotFoundHttpException(sprintf('The user with email "%s" does not exist', $email));
         }
 
         $pageData = array(
@@ -251,7 +252,8 @@ class RegistrationFOSUser1Controller extends Controller
         $user = $this->get('fos_user.user_manager')->findUserByConfirmationToken($token);
 
         if (null === $user) {
-            throw new NotFoundHttpException(sprintf('The user with confirmation token "%s" does not exist', $token));
+            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
+            //throw new NotFoundHttpException(sprintf('The user with confirmation token "%s" does not exist', $token));
         }
 
         $user->setConfirmationToken(null);

@@ -1,3 +1,14 @@
+{#
+
+Sonata User Bundle Overrides
+
+This file is part of the BardisCMS.
+Manage the extended Sonata User entity with extra information for the users
+
+(c) George Bardis <george@bardis.info>
+
+#}
+
     {% form_theme form with ['Form/fields.html.twig'] %}
 
     {{ form_start(form, {'action': path('sonata_user_registration_register'), 'method': 'POST', 'attr': {'id': 'sonata_user_custom_user_registration_form', 'novalidate': 'novalidate'} }) }}

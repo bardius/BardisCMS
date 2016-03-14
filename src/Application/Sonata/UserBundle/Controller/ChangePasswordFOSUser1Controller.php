@@ -1,12 +1,12 @@
 <?php
 
 /*
- * This file is part of the Sonata project.
+ * Sonata User Bundle Overrides
+ * This file is part of the BardisCMS.
+ * Manage the extended Sonata User entity with extra information for the users
  *
- * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ * (c) George Bardis <george@bardis.info>
  *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  */
 
 namespace Application\Sonata\UserBundle\Controller;

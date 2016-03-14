@@ -1,8 +1,9 @@
 <?php
 
 /*
- * User Bundle
+ * Sonata User Bundle Overrides
  * This file is part of the BardisCMS.
+ * Manage the extended Sonata User entity with extra information for the users
  *
  * (c) George Bardis <george@bardis.info>
  *
@@ -13,6 +14,7 @@ namespace Application\Sonata\UserBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\DependencyInjection\Container;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -26,18 +28,29 @@ class ContactDetailsFormType extends AbstractType {
 	private $container;
 
     /**
+     * Construct form for ContactDetailsFormType
+     *
      * @param string $class The User class name
      * @param Container $container
+     *
      */
-	public function __construct($class, $container) {
+	public function __construct($class, Container $container) {
 		$this->class = $class;
 		$this->container = $container;
 	}
 
+    /**
+     * Build form for ContactDetailsFormType
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
+     */
 	public function buildForm(FormBuilderInterface $builder, array $options) {
-
+        // Set up variable values
 		$user = $this->container->get('security.context')->getToken()->getUser();
 
+        // Load values from persisted User data
 		$defaults = array(
 			'addressLine1' => $user->getAddressLine1(),
 			'addressLine2' => $user->getAddressLine2(),
@@ -149,6 +162,13 @@ class ContactDetailsFormType extends AbstractType {
         ;
 	}
 
+    /**
+     * Configure Options for ContactDetailsFormType
+     * with error mapping for non field errors
+     *
+     * @param OptionsResolver $resolver
+     *
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
@@ -157,13 +177,18 @@ class ContactDetailsFormType extends AbstractType {
         ));
     }
 
-    public function getName() {
-        return $this->getBlockPrefix();
-    }
-
-    // Define the name of the form to call it for rendering
+    /**
+     * Define the name of the form to call it for rendering
+     *
+     * @return string
+     *
+     */
     public function getBlockPrefix() {
         return 'sonata_user_contact_details';
+    }
+
+    public function getName() {
+        return $this->getBlockPrefix();
     }
 
     public function getExtendedType()

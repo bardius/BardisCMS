@@ -1,8 +1,9 @@
 <?php
 
 /*
- * User Bundle
+ * Sonata User Bundle Overrides
  * This file is part of the BardisCMS.
+ * Manage the extended Sonata User entity with extra information for the users
  *
  * (c) George Bardis <george@bardis.info>
  *
@@ -13,6 +14,7 @@ namespace Application\Sonata\UserBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\DependencyInjection\Container;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -30,19 +32,30 @@ class GenericDetailsFormType extends AbstractType {
 	private $container;
 
     /**
+     * Construct form for GenericDetailsFormType
+     *
      * @param string $class The User class name
      * @param Container $container
+     *
      */
-	public function __construct($class, $container) {
+	public function __construct($class, Container $container) {
 		$this->class = $class;
 		$this->container = $container;
 	}
 
+    /**
+     * Build form for GenericDetailsFormType
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
+     */
 	public function buildForm(FormBuilderInterface $builder, array $options) {
-
+        // Set up variable values
         $now = new \DateTime();
 		$user = $this->container->get('security.context')->getToken()->getUser();
 
+        // Load values from persisted User data
 		$defaults = array(
             'email' => $user->getEmail(),
             'username' => $user->getUsername(),
@@ -53,7 +66,7 @@ class GenericDetailsFormType extends AbstractType {
             'dateOfBirth' => $user->getDateOfBirth()
 		);
 
-        // Adding custom extra user fields for Generic Details (with Profile Details included) Form
+        // Adding custom extra user fields for Generic Details Form
 		$builder
             ->add('email', EmailType::class, array(
                 'label' => 'form.email',
@@ -165,6 +178,13 @@ class GenericDetailsFormType extends AbstractType {
 		;
 	}
 
+    /**
+     * Configure Options for GenericDetailsFormType
+     * with error mapping for non field errors
+     *
+     * @param OptionsResolver $resolver
+     *
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
@@ -177,13 +197,18 @@ class GenericDetailsFormType extends AbstractType {
         ));
     }
 
-    public function getName() {
-        return $this->getBlockPrefix();
-    }
-
-    // Define the name of the form to call it for rendering
+    /**
+     * Define the name of the form to call it for rendering
+     *
+     * @return string
+     *
+     */
     public function getBlockPrefix() {
         return 'sonata_user_generic_details';
+    }
+
+    public function getName() {
+        return $this->getBlockPrefix();
     }
 
     public function getExtendedType()
