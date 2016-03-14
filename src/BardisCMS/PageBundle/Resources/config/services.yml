@@ -1,5 +1,6 @@
 parameters:
     page.services.helpers_class: BardisCMS\PageBundle\Services\Helpers
+    page.services.show_error_page_class: BardisCMS\PageBundle\Services\ShowErrorPage
     page.listener.response_listener_class: BardisCMS\PageBundle\Listener\ResponseListener
     page.services.ajax_detection_class: BardisCMS\PageBundle\Services\AjaxDetection
 
@@ -12,6 +13,10 @@ services:
             class: %page.listener.response_listener_class%
             tags:
                - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    bardiscms_page.services.show_error_page:
+        class: %page.services.show_error_page_class%
+        arguments: ["@doctrine.orm.entity_manager", "@service_container",]
 
     bardiscms_page.services.ajax_detection:
         class: %page.services.ajax_detection_class%

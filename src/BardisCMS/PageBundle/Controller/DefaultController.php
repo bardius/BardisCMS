@@ -10,13 +10,17 @@
 
 namespace BardisCMS\PageBundle\Controller;
 
-use BardisCMS\PageBundle\Form\Type\ContactFormType;
-use BardisCMS\PageBundle\Form\Type\FilterPagesFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use FOS\UserBundle\Model\UserInterface;
+
+use BardisCMS\PageBundle\Entity\Page as Page;
+
+use BardisCMS\PageBundle\Form\Type\ContactFormType;
+use BardisCMS\PageBundle\Form\Type\FilterPagesFormType;
 
 class DefaultController extends Controller {
 
@@ -83,7 +87,7 @@ class DefaultController extends Controller {
         $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($this->alias);
 
         if (!$page) {
-            return $this->render404Page();
+            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
 
         $this->page = $page;
@@ -92,6 +96,7 @@ class DefaultController extends Controller {
         return $this->showPageAction();
     }
 
+    // TODO: Remove this action if it is deprecated
     // Get the page id based on alias from route and user details from username
     public function userProfileAction($alias, $userName = null, $currentpage = 0, $totalpageitems = 0, Request $request) {
 
@@ -103,8 +108,12 @@ class DefaultController extends Controller {
 
         $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($this->alias);
 
-        if (!$page || !isset($this->userName) || !$this->get('sonata_user.services.helpers')->getUserByUsername($this->userName)) {
-            return $this->render404Page();
+        if (!$page) {
+            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
+        }
+
+        if (!isset($this->userName) || !$this->get('sonata_user.services.helpers')->getUserByUsername($this->userName)) {
+            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
         $this->page = $page;
@@ -125,7 +134,7 @@ class DefaultController extends Controller {
             $this->publishStates
         );
         if(!$accessAllowedForUserRole){
-            return $this->render404Page();
+            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
         // Return cached page if enabled
@@ -257,29 +266,6 @@ class DefaultController extends Controller {
         return $response;
     }
 
-    // Render the 404 error page
-    protected function render404Page() {
-
-        // Get the page with alias 404
-        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias('404');
-
-        // Check if page exists
-        if (!$this->page) {
-            throw $this->createNotFoundException('No 404 error page exists. No page found for with alias 404. Page has id: ' . $this->page->getId());
-        }
-
-        // Set the website settings and metatags
-        $this->page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($this->page);
-
-        $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page))->setStatusCode(404);
-
-        if ($this->enableHTTPCache) {
-            $response = $this->setResponseCacheHeaders($response);
-        }
-
-        return $response;
-    }
-
     // Render the home page
     protected function renderHomePage() {
 
@@ -300,7 +286,6 @@ class DefaultController extends Controller {
 
         return $response;
     }
-
 
     // Render user profile page type
     protected function renderUserProfilePage() {

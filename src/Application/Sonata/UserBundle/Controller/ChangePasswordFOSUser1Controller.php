@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
+use BardisCMS\PageBundle\Entity\Page as Page;
+
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -98,7 +100,7 @@ class ChangePasswordFOSUser1Controller extends Controller
         $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("user/password-change");
 
         if (!$page) {
-            return $this->render404Page();
+            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
 
         $this->page = $page;
@@ -110,7 +112,7 @@ class ChangePasswordFOSUser1Controller extends Controller
             $this->publishStates
         );
         if(!$accessAllowedForUserRole){
-            return $this->render404Page();
+            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
         $this->page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($this->page);
@@ -156,32 +158,6 @@ class ChangePasswordFOSUser1Controller extends Controller
     protected function setFlash($action, $value)
     {
         $this->get('session')->getFlashBag()->set($action, $value);
-    }
-
-    // Render the 404 error page
-    protected function render404Page() {
-
-        // Get the page with alias 404
-        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias('404');
-
-        // Check if page exists
-        if (!$this->page) {
-            throw $this->createNotFoundException('No 404 error page exists. No page found for with alias 404. Page has id: ' . $this->page->getId());
-        }
-
-        // Set the website settings and metatags
-        $this->page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($this->page);
-
-        $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page))->setStatusCode(404);
-
-        // Set the flag for allowing HTTP cache
-        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
-
-        if ($this->enableHTTPCache) {
-            $response = $this->setResponseCacheHeaders($response);
-        }
-
-        return $response;
     }
 
     // Set a custom Cache-Control directives

@@ -37,6 +37,14 @@ class Page {
     const STATUS_NONAUTHONLY    = 3;
     const STATUS_AUTHONLY       = 4;
 
+    /*
+     * Error Page statuses
+     */
+    const ERROR_404 = "404";
+    const ERROR_403 = "403";
+    const ERROR_401 = "401";
+
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -807,6 +815,20 @@ class Page {
         } else {
             return (string) 'New Page';
         }
+    }
+
+    /**
+     * Returns ErrorStatus list.
+     *
+     * @return array
+     */
+    public static function getErrorStatusList()
+    {
+        return array(
+            Page::ERROR_404 => "404",
+            Page::ERROR_403 => "403",
+            Page::ERROR_401 => "401",
+        );
     }
 
     /**

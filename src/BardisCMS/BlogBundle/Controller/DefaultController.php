@@ -16,6 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
+use BardisCMS\PageBundle\Entity\Page as Page;
+
 class DefaultController extends Controller {
 
     private $pageRequest;
@@ -28,7 +30,7 @@ class DefaultController extends Controller {
         $page = $this->getDoctrine()->getRepository('BlogBundle:Blog')->findOneByAlias($alias);
 
         if (!$page) {
-            return $this->render404Page();
+            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
 
         $linkUrlParams = $extraParams;
@@ -231,33 +233,6 @@ class DefaultController extends Controller {
                 $response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'mobile' => $serveMobile));
             }
         }
-
-        if ($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()) {
-            // set a custom Cache-Control directive
-            $response->setPublic();
-            $response->setLastModified($page->getDateLastModified());
-            $response->setVary(array('Accept-Encoding', 'User-Agent'));
-            $response->headers->addCacheControlDirective('must-revalidate', true);
-            $response->setSharedMaxAge(3600);
-        }
-
-        return $response;
-    }
-
-    // Get and display to the 404 error page
-    protected function render404Page() {
-        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias('404');
-        $settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
-
-        // Check if page exists
-        if (!$page) {
-            throw $this->createNotFoundException('No error page exists. No page found for with alias 404. Page has id: ' . $page->getId());
-        }
-
-        // Set the website settings and metatags
-        $page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($page);
-
-        $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $page))->setStatusCode(404);
 
         if ($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()) {
             // set a custom Cache-Control directive

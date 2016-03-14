@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+use BardisCMS\PageBundle\Entity\Page as Page;
+
 class DefaultController extends Controller {
 
     // Adding variables required for the rendering of pages
@@ -76,7 +78,7 @@ class DefaultController extends Controller {
         $page = $this->getDoctrine()->getRepository('SkeletonBundle:Skeleton')->findOneByAlias($alias);
 
         if (!$page) {
-            return $this->render404Page();
+            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
 
         $this->page = $page;
@@ -90,11 +92,11 @@ class DefaultController extends Controller {
 
         // Simple publishing ACL based on publish state and user role
         if ($this->page->getPublishState() == 0) {
-            return $this->render404Page();
+            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
 
         if ($this->page->getPublishState() == 2 && $this->userRole == "") {
-            return $this->render404Page();
+            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
 
         // Return cached page if enabled
@@ -190,29 +192,6 @@ class DefaultController extends Controller {
 
         // Redirect to the results
         return $this->redirect($url);
-    }
-
-    // Render the 404 error page
-    protected function render404Page() {
-
-        // Get the page with alias 404
-        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias('404');
-
-        // Check if page exists
-        if (!$this->page) {
-            throw $this->createNotFoundException('No 404 error page exists. No page found for with alias 404. Page has id: ' . $this->page->getId());
-        }
-
-        // Set the website settings and metatags
-        $this->page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($this->page);
-
-        $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page))->setStatusCode(404);
-
-        if ($this->enableHTTPCache) {
-            $response = $this->setResponseCacheHeaders($response);
-        }
-
-        return $response;
     }
 
     // Render the home page

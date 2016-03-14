@@ -35,7 +35,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
         $page404 = new Page();
         $page404->setDate(new \DateTime());
-        $page404->setTitle('404 Error Page');
+        $page404->setTitle('404 Error - Page not found');
         $page404->setAuthor($manager->merge($this->getReference('admin')));
         $page404->setAlias('404');
         $page404->setShowPageTitle(1);
@@ -43,6 +43,28 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $page404->setIntrotext('');
         $page404->setPagetype('404');
         $manager->persist($page404);
+
+        $page403 = new Page();
+        $page403->setDate(new \DateTime());
+        $page403->setTitle('403 Error - Unauthorised Access Forbidden');
+        $page403->setAuthor($manager->merge($this->getReference('admin')));
+        $page403->setAlias('403');
+        $page403->setShowPageTitle(1);
+        $page403->setPublishState(1);
+        $page403->setIntrotext('');
+        $page403->setPagetype('404');
+        $manager->persist($page403);
+
+        $page401 = new Page();
+        $page401->setDate(new \DateTime());
+        $page401->setTitle('401 Error - Unauthorized Access');
+        $page401->setAuthor($manager->merge($this->getReference('admin')));
+        $page401->setAlias('401');
+        $page401->setShowPageTitle(1);
+        $page401->setPublishState(1);
+        $page401->setIntrotext('');
+        $page401->setPagetype('404');
+        $manager->persist($page401);
 
         $pagesitemap = new Page();
         $pagesitemap->setDate(new \DateTime());
@@ -265,6 +287,8 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
         $this->addReference('homepage', $pagehome);
         $this->addReference('404page', $page404);
+        $this->addReference('403page', $page403);
+        $this->addReference('page401', $page401);
         $this->addReference('pagecontact', $pagecontact);
         $this->addReference('pageuser_profile', $pageuser_profile);
         $this->addReference('pagesitemap', $pagesitemap);
