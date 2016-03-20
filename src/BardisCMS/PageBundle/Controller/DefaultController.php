@@ -139,8 +139,7 @@ class DefaultController extends Controller {
 
         // Return cached page if enabled
         if ($this->enableHTTPCache) {
-
-            $response = $this->setResponseCacheHeaders(new Response());
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(null, $this->page->getDateLastModified(), false, 3600);
 
             if (!$response->isNotModified($this->pageRequest)) {
                 // Marks the Response stale
@@ -199,7 +198,7 @@ class DefaultController extends Controller {
         }
 
         if ($this->enableHTTPCache) {
-            $response = $this->setResponseCacheHeaders($response);
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders($response, $this->page->getDateLastModified(), false, 3600);
         }
 
         return $response;
@@ -252,7 +251,7 @@ class DefaultController extends Controller {
         $response = $this->render('PageBundle:Default:sitemap.xml.twig', array('sitemapList' => $sitemapList));
 
         if ($this->enableHTTPCache) {
-            $response = $this->setResponseCacheHeaders($response);
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders($response, $this->page->getDateLastModified(), false, 3600);
         }
 
         return $response;
@@ -483,23 +482,11 @@ class DefaultController extends Controller {
             $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'form' => $form->createView(), 'ajaxform' => $ajaxForm));
 
             if ($this->enableHTTPCache) {
-                $response = $this->setResponseCacheHeaders($response);
+                $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders($response, $this->page->getDateLastModified(), false, 3600);
             }
 
             return $response;
         }
-    }
-
-    // set a custom Cache-Control directives
-    protected function setResponseCacheHeaders(Response $response) {
-
-        $response->setPublic();
-        $response->setLastModified($this->page->getDateLastModified());
-        $response->setVary(array('Accept-Encoding', 'User-Agent'));
-        $response->headers->addCacheControlDirective('must-revalidate', true);
-        $response->setSharedMaxAge(3600);
-
-        return $response;
     }
 
     // Sort homepage items by the pageOrder value of the objects returned after the merge

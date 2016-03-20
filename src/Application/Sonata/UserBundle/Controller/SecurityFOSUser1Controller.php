@@ -27,10 +27,7 @@ class SecurityFOSUser1Controller extends Controller
 {
     // Adding variables required for the rendering of pages
     protected $container;
-    private $alias;
     private $id;
-    private $extraParams;
-    private $linkUrlParams;
     private $page;
     private $publishStates;
     private $userName;
@@ -38,21 +35,22 @@ class SecurityFOSUser1Controller extends Controller
     private $serveMobile;
     private $userRole;
     private $enableHTTPCache;
-    private $logged_username;
     private $isAjaxRequest;
 
-    // Override the ContainerAware setContainer to accommodate the extra variables
+    const LOGIN_PAGE_ALIAS = 'login';
+
+    /**
+     * Override the ContainerAware setContainer to accommodate the extra variables
+     *
+     * @param ContainerInterface $container
+     */
     public function setContainer(ContainerInterface $container = null) {
         $this->container = $container;
 
         // Setting the scoped variables required for the rendering of the page
-        $this->alias = null;
         $this->id = null;
-        $this->extraParams = null;
-        $this->linkUrlParams = null;
         $this->page = null;
         $this->userName = null;
-        $this->logged_username = null;
 
         // Get the settings from setting bundle
         $this->settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
@@ -75,14 +73,19 @@ class SecurityFOSUser1Controller extends Controller
         // Get the logged user if any
         $logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
         if (is_object($logged_user) && $logged_user instanceof UserInterface) {
-            $this->logged_username = $logged_user->getUsername();
+            $this->userName = $logged_user->getUsername();
         }
     }
 
+    /**
+     * Rendering of the login page
+     *
+     * @return Response
+     */
     public function loginAction()
     {
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->get('sonata_user.services.helpers')->getLoggedUser();
 
         if ($user instanceof UserInterface) {
             $this->container->get('session')->getFlashBag()->set('sonata_user_error', 'sonata_user_already_authenticated');
@@ -95,13 +98,12 @@ class SecurityFOSUser1Controller extends Controller
             return new RedirectResponse($url);
         }
 
-        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("login");
+        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($this::LOGIN_PAGE_ALIAS);
 
-        if (!$page) {
+        if (!$this->page) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
 
-        $this->page = $page;
         $this->id = $this->page->getId();
 
         // Simple publishing ACL based on publish state and user Allowed Publish States
@@ -109,16 +111,18 @@ class SecurityFOSUser1Controller extends Controller
             $this->page->getPublishState(),
             $this->publishStates
         );
+
         if(!$accessAllowedForUserRole){
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
+        // TODO: check if the login page should be cached or not before allowing cache here
         // Return cached page if enabled
-        // TODO: check if the login page should never be cached or not before allowing cache here
         /*
         if ($this->enableHTTPCache) {
 
-            $response = $this->setResponseCacheHeaders(new Response());
+            //$response = $this->setResponseCacheHeaders(new Response());
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(null, $this->page->getDateLastModified(), true, 3600);
 
             if (!$response->isNotModified($this->pageRequest)) {
                 // Marks the Response stale
@@ -145,9 +149,9 @@ class SecurityFOSUser1Controller extends Controller
             $error = '';
         }
 
-        // TODO: this is a potential security risk (see http://trac.symfony-project.org/ticket/9523)
+        // Get the error messages
         if ($error) {
-            // If the request was Ajax based and the registration was not successfull
+            // If the request was Ajax based and the registration was not successful
             if($this->isAjaxRequest){
                 return $this->onAjaxError($error);
             }
@@ -166,16 +170,17 @@ class SecurityFOSUser1Controller extends Controller
             'csrf_token' => $csrfToken,
             'page' => $this->page,
             'mobile' => $this->serveMobile,
-            'logged_username' => $this->logged_username
+            'logged_username' => $this->userName
         );
 
         // Render login page
         $response = $this->render('SonataUserBundle:Security:login.html.twig', $pageData);
 
-        // TODO: check if the login page should never be cached or not before allowing cache here
+        // TODO: check if the login page should be cached or not before allowing cache here
         /*
         if ($this->enableHTTPCache) {
-            $response = $this->setResponseCacheHeaders($response);
+            //$response = $this->setResponseCacheHeaders($response);
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders($response, true, 3600);
         }
         */
 
@@ -246,17 +251,5 @@ class SecurityFOSUser1Controller extends Controller
         $ajaxFormResponse->headers->set('Content-Type', 'application/json');
 
         return $ajaxFormResponse;
-    }
-
-    // Set a custom Cache-Control directives
-    protected function setResponseCacheHeaders(Response $response) {
-
-        $response->setPublic();
-        $response->setLastModified($this->page->getDateLastModified());
-        $response->setVary(array('Accept-Encoding', 'User-Agent'));
-        $response->headers->addCacheControlDirective('must-revalidate', true);
-        $response->setSharedMaxAge(3600);
-
-        return $response;
     }
 }

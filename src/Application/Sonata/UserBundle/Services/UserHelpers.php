@@ -55,6 +55,7 @@ class UserHelpers {
      */
     public function getLoggedUser() {
         // Getting the logged in user
+        //$user = $this->container->get('security.context')->getToken()->getUser();
         $user = $this->securityContext->getToken()->getUser();
 
         return $user;
