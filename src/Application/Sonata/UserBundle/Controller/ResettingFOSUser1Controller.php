@@ -29,10 +29,6 @@ class ResettingFOSUser1Controller extends Controller
 {
     // Adding variables required for the rendering of pages
     protected $container;
-    private $alias;
-    private $id;
-    private $extraParams;
-    private $linkUrlParams;
     private $page;
     private $publishStates;
     private $userName;
@@ -40,23 +36,26 @@ class ResettingFOSUser1Controller extends Controller
     private $serveMobile;
     private $userRole;
     private $enableHTTPCache;
-    private $logged_username;
     private $isAjaxRequest;
+
+    const RESET_REQUEST_PAGE_ALIAS = 'resetting/request';
+    const RESET_SEND_EMAIL_ALIAS = 'resetting/send-email';
+    const RESET_CHECK_EMAIL_PAGE_ALIAS = "resetting/check-email";
+    const RESET_PASSWORD_PAGE_ALIAS = "resetting/reset";
 
     const SESSION_EMAIL = 'fos_user_send_resetting_email/email';
 
-    // Override the ContainerAware setContainer to accommodate the extra variables
+    /**
+     * Override the ContainerAware setContainer to accommodate the extra variables
+     *
+     * @param ContainerInterface $container
+     */
     public function setContainer(ContainerInterface $container = null) {
         $this->container = $container;
 
         // Setting the scoped variables required for the rendering of the page
-        $this->alias = null;
-        $this->id = null;
-        $this->extraParams = null;
-        $this->linkUrlParams = null;
         $this->page = null;
         $this->userName = null;
-        $this->logged_username = null;
 
         // Get the settings from setting bundle
         $this->settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
@@ -79,29 +78,29 @@ class ResettingFOSUser1Controller extends Controller
         // Get the logged user if any
         $logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
         if (is_object($logged_user) && $logged_user instanceof UserInterface) {
-            $this->logged_username = $logged_user->getUsername();
+            $this->userName = $logged_user->getUsername();
         }
     }
 
     /**
-     * Request reset user password: show form
+     * Rendering of the Request user password reset page
+     *
+     * @return Response
      */
     public function requestAction()
     {
-        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("resetting/request");
+        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($this::RESET_REQUEST_PAGE_ALIAS);
 
-        if (!$page) {
+        if (!$this->page) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
-
-        $this->page = $page;
-        $this->id = $this->page->getId();
 
         // Simple publishing ACL based on publish state and user Allowed Publish States
         $accessAllowedForUserRole = $this->get('bardiscms_page.services.helpers')->isUserAccessAllowedByRole(
             $this->page->getPublishState(),
             $this->publishStates
         );
+
         if(!$accessAllowedForUserRole){
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
@@ -111,34 +110,35 @@ class ResettingFOSUser1Controller extends Controller
         $pageData = array(
             'page' => $this->page,
             'mobile' => $this->serveMobile,
-            'logged_username' => $this->logged_username
+            'logged_username' => $this->userName
         );
 
-        // Render login page
+        // Render Request user password reset page
         $response = $this->render('FOSUserBundle:Resetting:request.html.twig', $pageData);
 
         return $response;
     }
 
     /**
-     * Request reset user password: submit form and send email
+     * Submit the Request user password reset form and send email
+     * before redirecting to the next user journey page
+     *
+     * @return RedirectResponse
      */
     public function sendEmailAction()
     {
-        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("resetting/send-email");
+        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($this::RESET_SEND_EMAIL_ALIAS);
 
-        if (!$page) {
+        if (!$this->page) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
-
-        $this->page = $page;
-        $this->id = $this->page->getId();
 
         // Simple publishing ACL based on publish state and user Allowed Publish States
         $accessAllowedForUserRole = $this->get('bardiscms_page.services.helpers')->isUserAccessAllowedByRole(
             $this->page->getPublishState(),
             $this->publishStates
         );
+
         if(!$accessAllowedForUserRole){
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
@@ -163,7 +163,7 @@ class ResettingFOSUser1Controller extends Controller
                 'invalid_username' => $username,
                 'page' => $this->page,
                 'mobile' => $this->serveMobile,
-                'logged_username' => $this->logged_username
+                'logged_username' => $this->userName
             );
 
             // Render reset request page
@@ -182,7 +182,7 @@ class ResettingFOSUser1Controller extends Controller
             $pageData = array(
                 'page' => $this->page,
                 'mobile' => $this->serveMobile,
-                'logged_username' => $this->logged_username
+                'logged_username' => $this->userName
             );
 
             // Render passwordAlreadyRequested page
@@ -215,24 +215,24 @@ class ResettingFOSUser1Controller extends Controller
     }
 
     /**
-     * Tell the user to check his email provider
+     * Tell the user to check his email provider after successful password reset
+     *
+     * @return Response
      */
     public function checkEmailAction()
     {
-        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("resetting/check-email");
+        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($this::RESET_CHECK_EMAIL_PAGE_ALIAS);
 
-        if (!$page) {
+        if (!$this->page) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
-
-        $this->page = $page;
-        $this->id = $this->page->getId();
 
         // Simple publishing ACL based on publish state and user Allowed Publish States
         $accessAllowedForUserRole = $this->get('bardiscms_page.services.helpers')->isUserAccessAllowedByRole(
             $this->page->getPublishState(),
             $this->publishStates
         );
+
         if(!$accessAllowedForUserRole){
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
@@ -252,35 +252,35 @@ class ResettingFOSUser1Controller extends Controller
             'email' => $email,
             'page' => $this->page,
             'mobile' => $this->serveMobile,
-            'logged_username' => $this->logged_username
+            'logged_username' => $this->userName
         );
 
-        // Render login page
+        // Render check email page
         $response = $this->render('FOSUserBundle:Resetting:checkEmail.html.twig', $pageData);
 
         return $response;
     }
 
     /**
-     * Reset user password
+     * Password Reset with success user password page
+     *
+     * @return Response
      */
     public function resetAction($token)
     {
-        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("resetting/reset");
+        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($this::RESET_PASSWORD_PAGE_ALIAS);
         $redirectToRouteNameOnSuccess = 'sonata_user_profile_show';
 
-        if (!$page) {
+        if (!$this->page) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
-
-        $this->page = $page;
-        $this->id = $this->page->getId();
 
         // Simple publishing ACL based on publish state and user Allowed Publish States
         $accessAllowedForUserRole = $this->get('bardiscms_page.services.helpers')->isUserAccessAllowedByRole(
             $this->page->getPublishState(),
             $this->publishStates
         );
+
         if(!$accessAllowedForUserRole){
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
@@ -319,7 +319,7 @@ class ResettingFOSUser1Controller extends Controller
             $this->setFlash('sonata_user_success', 'resetting.flash.success');
             $responseURL = $this->container->get('router')->generate($redirectToRouteNameOnSuccess);
             $response = new RedirectResponse($responseURL);
-            // Enable user again after successfull password reset journey
+            // Enable user again after successful password reset journey
             $user->setEnabled(true);
             $this->authenticateUser($user, $response);
 
@@ -340,10 +340,10 @@ class ResettingFOSUser1Controller extends Controller
             'form' => $form->createView(),
             'page' => $this->page,
             'mobile' => $this->serveMobile,
-            'logged_username' => $this->logged_username
+            'logged_username' => $this->userName
         );
 
-        // Render login page
+        // Render Password Reset with success user password page
         $response = $this->render('FOSUserBundle:Resetting:reset.html.twig', $pageData);
 
         return $response;
@@ -482,17 +482,5 @@ class ResettingFOSUser1Controller extends Controller
         $ajaxFormResponse->headers->set('Content-Type', 'application/json');
 
         return $ajaxFormResponse;
-    }
-
-    // Set a custom Cache-Control directives
-    protected function setResponseCacheHeaders(Response $response) {
-
-        $response->setPublic();
-        $response->setLastModified($this->page->getDateLastModified());
-        $response->setVary(array('Accept-Encoding', 'User-Agent'));
-        $response->headers->addCacheControlDirective('must-revalidate', true);
-        $response->setSharedMaxAge(3600);
-
-        return $response;
     }
 }

@@ -23,20 +23,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Controller managing the user profile
- *
- * @author Christophe Coevoet <stof@notk.org>
- *
- * This class is inspired from the FOS Profile Controller, except :
- *   - only twig is supported
- *   - separation of the user authentication form with the profile form.
  */
 class ProfileFOSUser1Controller extends Controller
 {
     protected $container;
-    private $alias;
-    private $id;
-    private $extraParams;
-    private $linkUrlParams;
     private $page;
     private $publishStates;
     private $userName;
@@ -44,22 +34,23 @@ class ProfileFOSUser1Controller extends Controller
     private $serveMobile;
     private $userRole;
     private $enableHTTPCache;
-    private $logged_username;
     private $logged_user;
     private $isAjaxRequest;
 
-    // Override the ContainerAware setContainer to accommodate the extra variables
+    const PROFILE_PAGE_ALIAS = "profile";
+    const PROFILE_EDIT_PAGE_ALIAS = "edit-profile";
+
+    /**
+     * Override the ContainerAware setContainer to accommodate the extra variables
+     *
+     * @param ContainerInterface $container
+     */
     public function setContainer(ContainerInterface $container = null) {
         $this->container = $container;
 
         // Setting the scoped variables required for the rendering of the page
-        $this->alias = null;
-        $this->id = null;
-        $this->extraParams = null;
-        $this->linkUrlParams = null;
         $this->page = null;
         $this->userName = null;
-        $this->logged_username = null;
 
         // Get the settings from setting bundle
         $this->settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
@@ -82,7 +73,7 @@ class ProfileFOSUser1Controller extends Controller
         // Get the logged user if any
         $this->logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
         if (is_object($this->logged_user) && $this->logged_user instanceof UserInterface) {
-            $this->logged_username = $this->logged_user->getUsername();
+            $this->userName = $this->logged_user->getUsername();
         }
     }
 
@@ -96,24 +87,22 @@ class ProfileFOSUser1Controller extends Controller
      */
     public function showAction($alias = 'profile', $userName = null)
     {
-        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($alias);
+        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($alias);
 
         if($userName === null){
-            $userName = $this->logged_username;
+            $userName = $this->userName;
         }
 
-        if (!$page) {
+        if (!$this->page) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
-
-        $this->page = $page;
-        $this->id = $this->page->getId();
 
         // Simple publishing ACL based on publish state and user Allowed Publish States
         $accessAllowedForUserRole = $this->get('bardiscms_page.services.helpers')->isUserAccessAllowedByRole(
             $this->page->getPublishState(),
             $this->publishStates
         );
+
         if(!$accessAllowedForUserRole){
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
@@ -126,27 +115,30 @@ class ProfileFOSUser1Controller extends Controller
             'mobile' => $this->serveMobile,
             'profile_owner' => false,
             'page_username' => $userName,
-            'logged_username' => $this->logged_username,
+            'logged_username' => $this->userName,
             'page_user' => $this->container->get('sonata_user.services.helpers')->getUserByUsername($userName),
             'blocks' => $this->container->getParameter('sonata.user.configuration.profile_blocks'),
         );
 
         // Owner user private profile
-        if ($userName === $this->logged_username) {
+        if ($userName === $this->userName) {
             $pageData['profile_owner'] = true;
         }
 
-        // Render login page
+        // Render profile page
         $response = $this->render('SonataUserBundle:Profile:show.html.twig', $pageData);
-        // $response = $this->container->get('templating')->renderResponse('SonataUserBundle:Profile:show.html.twig', $pageData);
 
         return $response;
     }
 
     /**
+     * Render the authentication details edit page
+     * that is not used anymore in BardisCMS
+     *
      * @return Response|RedirectResponse
      *
      * @throws AccessDeniedException
+     * @deprecated
      */
     public function editAuthenticationAction()
     {
@@ -155,7 +147,7 @@ class ProfileFOSUser1Controller extends Controller
             throw $this->createAccessDeniedException('This user does not have access to this section.');
         }
 
-        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("edit-profile");
+        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($this::PROFILE_EDIT_PAGE_ALIAS);
 
         if (!$this->page) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
@@ -177,19 +169,19 @@ class ProfileFOSUser1Controller extends Controller
             'form' => $form->createView(),
             'user' => $user,
             'page' => $this->page,
+            'logged_username' => $this->userName,
             'mobile' => $this->serveMobile,
-            'logged_username' => $this->logged_username
+            'logged_username' => $this->userName
         );
 
-        // Render register page
+        // Render authentication details edit page
         $response = $this->render('SonataUserBundle:Profile:edit_authentication.html.twig', $pageData);
-        // $response = $this->container->get('templating')->renderResponse('SonataUserBundle:Profile:edit_authentication.html.'.$this->getEngine(), $pageData);
 
         return $response;
     }
 
     /**
-     * Edit the user
+     * Edit the user profile & authentication details
      *
      * @return Response|RedirectResponse
      *
@@ -202,7 +194,7 @@ class ProfileFOSUser1Controller extends Controller
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
-        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("edit-profile");
+        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($this::PROFILE_EDIT_PAGE_ALIAS);
 
         if (!$this->page) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
@@ -298,6 +290,7 @@ class ProfileFOSUser1Controller extends Controller
             'contactDetailsForm' => $contactDetailsForm->createView(),
             'accountPreferencesForm' => $accountPreferencesForm->createView(),
             'page' => $this->page,
+            'logged_username' => $this->userName,
             'mobile' => $this->serveMobile
         );
 
@@ -390,17 +383,5 @@ class ProfileFOSUser1Controller extends Controller
         $ajaxFormResponse->headers->set('Content-Type', 'application/json');
 
         return $ajaxFormResponse;
-    }
-
-    // Set a custom Cache-Control directives
-    protected function setResponseCacheHeaders(Response $response) {
-
-        $response->setPublic();
-        $response->setLastModified($this->page->getDateLastModified());
-        $response->setVary(array('Accept-Encoding', 'User-Agent'));
-        $response->headers->addCacheControlDirective('must-revalidate', true);
-        $response->setSharedMaxAge(3600);
-
-        return $response;
     }
 }

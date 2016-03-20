@@ -34,6 +34,9 @@ use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 
+/**
+ * This class is used to render the sonata admin for the user details and listing
+ */
 class BardisCMSUserAdmin extends BaseUserAdmin {
 
     protected $formOptions = array(

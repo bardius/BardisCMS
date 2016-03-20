@@ -22,22 +22,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * Class ChangePasswordFOSUser1Controller.
- *
  * This class is inspired from the FOS Change Password Controller
- *
- *
- * @author  Hugo Briand <briand@ekino.com>
  */
 class ChangePasswordFOSUser1Controller extends Controller
 {
     protected $container;
-    private $alias;
-    private $id;
-    private $extraParams;
-    private $currentpage;
-    private $totalpageitems;
-    private $linkUrlParams;
     private $page;
     private $publishStates;
     private $userName;
@@ -45,23 +34,21 @@ class ChangePasswordFOSUser1Controller extends Controller
     private $serveMobile;
     private $userRole;
     private $enableHTTPCache;
-    private $logged_username;
     private $logged_user;
 
-    // Override the ContainerAware setContainer to accommodate the extra variables
+    const PASSWORD_CHANGE_PAGE_ALIAS = "user/password-change";
+
+    /**
+     * Override the ContainerAware setContainer to accommodate the extra variables
+     *
+     * @param ContainerInterface $container
+     */
     public function setContainer(ContainerInterface $container = null) {
         $this->container = $container;
 
         // Setting the scoped variables required for the rendering of the page
-        $this->alias = null;
-        $this->id = null;
-        $this->extraParams = null;
-        $this->currentpage = null;
-        $this->totalpageitems = null;
-        $this->linkUrlParams = null;
         $this->page = null;
         $this->userName = null;
-        $this->logged_username = null;
 
         // Get the settings from setting bundle
         $this->settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
@@ -81,11 +68,13 @@ class ChangePasswordFOSUser1Controller extends Controller
         // Get the logged user if any
         $this->logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
         if (is_object($this->logged_user) && $this->logged_user instanceof UserInterface) {
-            $this->logged_username = $this->logged_user->getUsername();
+            $this->userName = $this->logged_user->getUsername();
         }
     }
 
     /**
+     * Render the Password change page
+     *
      * @return Response|RedirectResponse
      *
      * @throws AccessDeniedException
@@ -97,20 +86,18 @@ class ChangePasswordFOSUser1Controller extends Controller
             $this->createAccessDeniedException('This user does not have access to this section.');
         }
 
-        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("user/password-change");
+        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($this::PASSWORD_CHANGE_PAGE_ALIAS);
 
-        if (!$page) {
+        if (!$this->page) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
-
-        $this->page = $page;
-        $this->id = $this->page->getId();
 
         // Simple publishing ACL based on publish state and user Allowed Publish States
         $accessAllowedForUserRole = $this->get('bardiscms_page.services.helpers')->isUserAccessAllowedByRole(
             $this->page->getPublishState(),
             $this->publishStates
         );
+
         if(!$accessAllowedForUserRole){
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
@@ -130,13 +117,12 @@ class ChangePasswordFOSUser1Controller extends Controller
         $pageData = array(
             'page' => $this->page,
             'mobile' => $this->serveMobile,
-            'logged_username' => $this->logged_username,
+            'logged_username' => $this->userName,
             'form' => $form->createView()
         );
 
-        // Render login page
+        // Render Password change page
         $response = $this->render('SonataUserBundle:ChangePassword:changePassword.html.twig', $pageData);
-        // $response = $this->container->get('templating')->renderResponse('SonataUserBundle:ChangePassword:changePassword.html.$this->container->getParameter('fos_user.template.engine'), $pageData);
 
         return $response;
     }
@@ -158,17 +144,5 @@ class ChangePasswordFOSUser1Controller extends Controller
     protected function setFlash($action, $value)
     {
         $this->get('session')->getFlashBag()->set($action, $value);
-    }
-
-    // Set a custom Cache-Control directives
-    protected function setResponseCacheHeaders(Response $response) {
-
-        $response->setPublic();
-        $response->setLastModified($this->page->getDateLastModified());
-        $response->setVary(array('Accept-Encoding', 'User-Agent'));
-        $response->headers->addCacheControlDirective('must-revalidate', true);
-        $response->setSharedMaxAge(3600);
-
-        return $response;
     }
 }

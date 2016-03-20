@@ -27,18 +27,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  * Controller managing the registration
- *
- * @author Thibault Duplessis <thibault.duplessis@gmail.com>
- * @author Christophe Coevoet <stof@notk.org>
  */
 class RegistrationFOSUser1Controller extends Controller
 {
     // Adding variables required for the rendering of pages
     protected $container;
-    private $alias;
-    private $id;
-    private $extraParams;
-    private $linkUrlParams;
     private $page;
     private $publishStates;
     private $userName;
@@ -46,21 +39,22 @@ class RegistrationFOSUser1Controller extends Controller
     private $serveMobile;
     private $userRole;
     private $enableHTTPCache;
-    private $logged_username;
     private $isAjaxRequest;
 
-    // Override the ContainerAware setContainer to accommodate the extra variables
+    const REGISTER_PAGE_ALIAS = "register";
+    const REGISTER_SUCCESS_PAGE_ALIAS = "register/confirmed";
+
+    /**
+     * Override the ContainerAware setContainer to accommodate the extra variables
+     *
+     * @param ContainerInterface $container
+     */
     public function setContainer(ContainerInterface $container = null) {
         $this->container = $container;
 
         // Setting the scoped variables required for the rendering of the page
-        $this->alias = null;
-        $this->id = null;
-        $this->extraParams = null;
-        $this->linkUrlParams = null;
         $this->page = null;
         $this->userName = null;
-        $this->logged_username = null;
 
         // Get the settings from setting bundle
         $this->settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
@@ -83,11 +77,13 @@ class RegistrationFOSUser1Controller extends Controller
         // Get the logged user if any
         $logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
         if (is_object($logged_user) && $logged_user instanceof UserInterface) {
-            $this->logged_username = $logged_user->getUsername();
+            $this->userName = $logged_user->getUsername();
         }
     }
 
     /**
+     * Render the registration page
+     *
      * @return RedirectResponse
      */
     public function registerAction()
@@ -100,20 +96,18 @@ class RegistrationFOSUser1Controller extends Controller
             return $this->redirectToRoute('sonata_user_profile_show');
         }
 
-        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("register");
+        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($this::REGISTER_PAGE_ALIAS);
 
-        if (!$page) {
+        if (!$this->page) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
-
-        $this->page = $page;
-        $this->id = $this->page->getId();
 
         // Simple publishing ACL based on publish state and user Allowed Publish States
         $accessAllowedForUserRole = $this->get('bardiscms_page.services.helpers')->isUserAccessAllowedByRole(
             $this->page->getPublishState(),
             $this->publishStates
         );
+
         if(!$accessAllowedForUserRole){
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
@@ -158,7 +152,7 @@ class RegistrationFOSUser1Controller extends Controller
                 $this->authenticateUser($user, $response);
             }
 
-            // If the request was Ajax based and the registration was successfull
+            // If the request was Ajax based and the registration was successful
             if($this->isAjaxRequest){
                 return $this->onAjaxSuccess($url);
             }
@@ -166,7 +160,7 @@ class RegistrationFOSUser1Controller extends Controller
             return $response;
         }
         else {
-            // If the request was Ajax based and the registration was not successfull
+            // If the request was Ajax based and the registration was not successful
             if($this->isAjaxRequest){
                 return $this->onAjaxError($formHandler);
             }
@@ -178,7 +172,7 @@ class RegistrationFOSUser1Controller extends Controller
             'form' => $form->createView(),
             'page' => $this->page,
             'mobile' => $this->serveMobile,
-            'logged_username' => $this->logged_username
+            'logged_username' => $this->userName
         );
 
         // Render register page
@@ -196,20 +190,18 @@ class RegistrationFOSUser1Controller extends Controller
      */
     public function checkEmailAction()
     {
-        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("register");
+        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($this::REGISTER_PAGE_ALIAS);
 
-        if (!$page) {
+        if (!$this->page) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
-
-        $this->page = $page;
-        $this->id = $this->page->getId();
 
         // Simple publishing ACL based on publish state and user Allowed Publish States
         $accessAllowedForUserRole = $this->get('bardiscms_page.services.helpers')->isUserAccessAllowedByRole(
             $this->page->getPublishState(),
             $this->publishStates
         );
+
         if(!$accessAllowedForUserRole){
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
@@ -229,10 +221,10 @@ class RegistrationFOSUser1Controller extends Controller
             'user' => $user,
             'page' => $this->page,
             'mobile' => $this->serveMobile,
-            'logged_username' => $this->logged_username
+            'logged_username' => $this->userName
         );
 
-        // Render register page
+        // Render register check email page
         $response = $this->render('FOSUserBundle:Registration:checkEmail.html.twig', $pageData);
 
         return $response;
@@ -287,20 +279,18 @@ class RegistrationFOSUser1Controller extends Controller
             throw new AccessDeniedException('This user does not have access to this section.');
         }
 
-        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias("register/confirmed");
+        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($this::REGISTER_SUCCESS_PAGE_ALIAS);
 
-        if (!$page) {
+        if (!$this->page) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
-
-        $this->page = $page;
-        $this->id = $this->page->getId();
 
         // Simple publishing ACL based on publish state and user Allowed Publish States
         $accessAllowedForUserRole = $this->get('bardiscms_page.services.helpers')->isUserAccessAllowedByRole(
             $this->page->getPublishState(),
             $this->publishStates
         );
+
         if(!$accessAllowedForUserRole){
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
@@ -311,7 +301,7 @@ class RegistrationFOSUser1Controller extends Controller
             'user' => $user,
             'page' => $this->page,
             'mobile' => $this->serveMobile,
-            'logged_username' => $this->logged_username
+            'logged_username' => $this->userName
         );
 
         // Render register page
@@ -341,40 +331,12 @@ class RegistrationFOSUser1Controller extends Controller
     }
 
     /**
-     * UnAuthenticate a user with Symfony Security.
-     *
-     * @param UserInterface $user
-     * @param Response      $response
-     */
-    protected function unAuthenticateUser(UserInterface $user, Response $response)
-    {
-        try {
-            $this->get('fos_user.security.login_manager')->logoutUser(
-                $this->container->getParameter('fos_user.firewall_name'),
-                $user,
-                $response
-            );
-        } catch (AccountStatusException $ex) {
-            // We simply do not authenticate users which do not pass the user
-            // checker (not enabled, expired, etc.).
-        }
-    }
-
-    /**
      * @param string $action
      * @param string $value
      */
     protected function setFlash($action, $value)
     {
         $this->get('session')->getFlashBag()->set($action, $value);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getEngine()
-    {
-        return $this->container->getParameter('fos_user.template.engine');
     }
 
     /**
@@ -427,17 +389,5 @@ class RegistrationFOSUser1Controller extends Controller
         $ajaxFormResponse->headers->set('Content-Type', 'application/json');
 
         return $ajaxFormResponse;
-    }
-
-    // Set a custom Cache-Control directives
-    protected function setResponseCacheHeaders(Response $response) {
-
-        $response->setPublic();
-        $response->setLastModified($this->page->getDateLastModified());
-        $response->setVary(array('Accept-Encoding', 'User-Agent'));
-        $response->headers->addCacheControlDirective('must-revalidate', true);
-        $response->setSharedMaxAge(3600);
-
-        return $response;
     }
 }

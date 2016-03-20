@@ -19,10 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class ProfileMenuBlockService.
- *
- *
- * @author Hugo Briand <briand@ekino.com>
+ * Render the user profile menu
  */
 class ProfileMenuBlockService extends MenuBlockService
 {

@@ -23,11 +23,13 @@ use BardisCMS\PageBundle\Entity\Page as Page;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+/**
+ * Controller managing the user login
+ */
 class SecurityFOSUser1Controller extends Controller
 {
     // Adding variables required for the rendering of pages
     protected $container;
-    private $id;
     private $page;
     private $publishStates;
     private $userName;
@@ -48,7 +50,6 @@ class SecurityFOSUser1Controller extends Controller
         $this->container = $container;
 
         // Setting the scoped variables required for the rendering of the page
-        $this->id = null;
         $this->page = null;
         $this->userName = null;
 
@@ -103,8 +104,6 @@ class SecurityFOSUser1Controller extends Controller
         if (!$this->page) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
-
-        $this->id = $this->page->getId();
 
         // Simple publishing ACL based on publish state and user Allowed Publish States
         $accessAllowedForUserRole = $this->get('bardiscms_page.services.helpers')->isUserAccessAllowedByRole(
