@@ -52,23 +52,33 @@ class FilterBlogPostsFormType extends AbstractType {
         $qb = $this->entityManager->createQueryBuilder();
 
         $qb->select('DISTINCT c')
-                ->from('CategoryBundle:Category', 'c')
-                ->where($qb->expr()->andX(
-                    $qb->expr()->neq('c.title', ':title')
-                ))
-                ->orderBy('c.title', 'DESC')
-                ->setParameter('title', $title)
+            ->from('CategoryBundle:Category', 'c')
+            ->where($qb->expr()->andX(
+                $qb->expr()->neq('c.title', ':title')
+            ))
+            ->orderBy('c.title', 'DESC')
+            ->setParameter('title', $title)
         ;
 
         return $qb;
+    }
+
+    /**
+     * Define the name of the form to call it for rendering
+     *
+     * @return string
+     *
+     */
+    public function getBlockPrefix() {
+        return 'filterblogpostsform';
     }
 
     public function getName() {
         return $this->getBlockPrefix();
     }
 
-    // Define the name of the form to call it for rendering
-    public function getBlockPrefix() {
-        return 'filterblogpostsform';
+    public function getExtendedType()
+    {
+        return method_exists(AbstractType::class, 'getBlockPrefix') ? FormType::class : 'form';
     }
 }

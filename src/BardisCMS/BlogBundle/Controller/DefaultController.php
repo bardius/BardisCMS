@@ -10,238 +10,304 @@
 
 namespace BardisCMS\BlogBundle\Controller;
 
-use BardisCMS\CommentBundle\Entity\Comment;
-use BardisCMS\CommentBundle\Form\Type\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use BardisCMS\CommentBundle\Entity\Comment;
+use BardisCMS\CommentBundle\Form\Type\CommentType;
+use BardisCMS\BlogBundle\Form\Type\FilterBlogPostsFormType;
 
 use BardisCMS\PageBundle\Entity\Page as Page;
 
 class DefaultController extends Controller {
 
+    // Adding variables required for the rendering of pages
+    protected $container;
     private $pageRequest;
+    private $alias;
+    private $id;
+    private $extraParams;
+    private $currentpage;
+    private $totalpageitems;
+    private $linkUrlParams;
+    private $page;
+    private $publishStates;
+    private $userName;
+    private $settings;
+    private $serveMobile;
+    private $userRole;
+    private $enableHTTPCache;
+
+    // Override the ContainerAware setContainer to accommodate the extra variables
+    public function setContainer(ContainerInterface $container = null) {
+        $this->container = $container;
+
+        // Setting the scoped variables required for the rendering of the page
+        $this->alias = null;
+        $this->id = null;
+        $this->extraParams = null;
+        $this->currentpage = null;
+        $this->totalpageitems = null;
+        $this->linkUrlParams = null;
+        $this->page = null;
+        $this->userName = null;
+
+        // Get the settings from setting bundle
+        $this->settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
+
+        // Get the highest user role security permission
+        $this->userRole = $this->get('sonata_user.services.helpers')->getLoggedUserHighestRole();
+
+        // Check if mobile content should be served
+        $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
+
+        // Set the flag for allowing HTTP cache
+        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+
+        // Set the publish statuses that are available for the user
+        $this->publishStates = $this->get('bardiscms_page.services.helpers')->getAllowedPublishStates($this->userRole);
+    }
 
     // Get the blog page id based on alias from route
     public function aliasAction($alias, $extraParams = null, $currentpage = 0, $totalpageitems = 0, Request $request) {
 
         $this->pageRequest = $request;
+        $this->alias = $alias;
+        $this->extraParams = $extraParams;
+        $this->linkUrlParams = $extraParams;
+        $this->currentpage = $currentpage;
+        $this->totalpageitems = $totalpageitems;
 
-        $page = $this->getDoctrine()->getRepository('BlogBundle:Blog')->findOneByAlias($alias);
+        $this->page = $this->getDoctrine()->getRepository('BlogBundle:Blog')->findOneByAlias($this->alias);
 
-        if (!$page) {
+        if (!$this->page) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
 
-        $linkUrlParams = $extraParams;
+        $this->id = $this->page->getId();
 
-        return $this->showPageAction($page->getId(), $extraParams, $currentpage, $totalpageitems, $linkUrlParams);
+        return $this->showPageAction();
     }
 
-    // Set the variables and render the view to display page
-    public function showPageAction($id, $extraParams = null, $currentpage = null, $totalpageitems = null, $linkUrlParams = null) {
-
-        // Get data to display
-        $page = $this->getDoctrine()->getRepository('BlogBundle:Blog')->find($id);
-        $userRole = $this->get('sonata_user.services.helpers')->getLoggedUserHighestRole();
-        $settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
-
-        // Set the publish statuses that are available for the user
-        $publishStates = $this->get('bardiscms_page.services.helpers')->getAllowedPublishStates($userRole);
+    // Display a page based on the id and the render variables from the settings and the routing
+    public function showPageAction() {
 
         // Simple publishing ACL based on publish state and user Allowed Publish States
         $accessAllowedForUserRole = $this->get('bardiscms_page.services.helpers')->isUserAccessAllowedByRole(
-            $page->getPublishState(),
-            $publishStates
+            $this->page->getPublishState(),
+            $this->publishStates
         );
         if(!$accessAllowedForUserRole){
-            return $this->render404Page();
+            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
-        if ($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()) {
+        // Return cached page if enabled
+        if ($this->enableHTTPCache) {
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                null,
+                $this->page->getDateLastModified(),
+                false,
+                3600
+            );
 
-            $response = new Response();
-
-            // set a custom Cache-Control directive
-            $response->headers->addCacheControlDirective('must-revalidate', true);
-            // set multiple vary headers
-            $response->setVary(array('Accept-Encoding', 'User-Agent'));
-            // create a Response with a Last-Modified header
-            $response->setLastModified($page->getDateLastModified());
-            // Set response as public. Otherwise it will be private by default.
-            $response->setPublic();
-
-            //var_dump($response->isNotModified($this->pageRequest));
-            //var_dump($response->getStatusCode());
             if (!$response->isNotModified($this->pageRequest)) {
                 // Marks the Response stale
                 $response->expire();
             } else {
                 // return the 304 Response immediately
-                $response->setSharedMaxAge(3600);
                 return $response;
             }
         }
 
         // Set the website settings and metatags
-        $page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($page);
+        $this->page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($this->page);
 
         // Set the pagination variables
-        if (!$totalpageitems) {
-            if (is_object($settings)) {
-                $totalpageitems = $settings->getBlogItemsPerPage();
-            } else {
-                $totalpageitems = 10;
+        if (is_object($this->settings)) {
+            if (!$this->totalpageitems) {
+                $this->totalpageitems = $this->settings->getItemsPerPage();
             }
+        } else {
+            $this->totalpageitems = 10;
         }
 
         // Render the correct view depending on pagetype
-        return $this->renderPage($page, $id, $publishStates, $extraParams, $currentpage, $totalpageitems, $linkUrlParams);
-    }
-
-    // Get the tags and / or categories for filtering from the request
-    // filters are like: tag1,tag2|category1,category1 and each argument
-    // is url encoded. If all is passed as argument value everything is fetched
-    protected function getRequestedFilters($extraParams) {
-
-        $selectedTags = array();
-        $selectedCategories = array();
-        $extraParams = explode('|', urldecode($extraParams));
-
-        if (isset($extraParams[0])) {
-            if ($extraParams[0] == 'all') {
-                $selectedTags[] = null;
-            } else {
-                $tags = explode(',', $extraParams[0]);
-                foreach ($tags as $tag) {
-                    $selectedTags[] = $this->getDoctrine()->getRepository('TagBundle:Tag')->findOneByTitle(urldecode($tag));
-                }
-            }
-        } else {
-            $selectedTags[] = null;
-        }
-
-        if (isset($extraParams[1])) {
-            if ($extraParams[1] == 'all') {
-                $selectedCategories[] = null;
-            } else {
-                $categories = explode(',', $extraParams[1]);
-                foreach ($categories as $category) {
-                    $selectedCategories[] = $this->getDoctrine()->getRepository('CategoryBundle:Category')->findOneByTitle(urldecode($category));
-                }
-            }
-        } else {
-            $selectedCategories[] = null;
-        }
-
-        $filterParams = array('tags' => new \Doctrine\Common\Collections\ArrayCollection($selectedTags), 'categories' => new \Doctrine\Common\Collections\ArrayCollection($selectedCategories));
-
-        return $filterParams;
-    }
-
-    // Get the ids of the filter categories
-    protected function getCategoryFilterIds($selectedCategoriesArray) {
-
-        $categoryIds = array();
-
-        if (empty($selectedCategoriesArray[0])) {
-            $selectedCategoriesArray = $this->getDoctrine()->getRepository('CategoryBundle:Category')->findAll();
-        }
-
-        foreach ($selectedCategoriesArray as $selectedCategoriesEntity) {
-            $categoryIds[] = $selectedCategoriesEntity->getId();
-        }
-
-        return $categoryIds;
-    }
-
-    // Get the ids of the filter tags
-    protected function getTagFilterIds($selectedTagsArray) {
-
-        $tagIds = array();
-
-        if (empty($selectedTagsArray[0])) {
-            $selectedTagsArray = $this->getDoctrine()->getRepository('TagBundle:Tag')->findAll();
-        }
-
-        foreach ($selectedTagsArray as $selectedTagEntity) {
-            $tagIds[] = $selectedTagEntity->getId();
-        }
-
-        return $tagIds;
+        return $this->renderPage();
     }
 
     // Get the required data to display to the correct view depending on pagetype
-    protected function renderPage($page, $id, $publishStates, $extraParams, $currentpage, $totalpageitems, $linkUrlParams) {
-        // Check if mobile content should be served
-        $serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
-        $settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
+    protected function renderPage() {
 
-        if ($page->getPagetype() == 'blog_cat_page') {
-            $tagIds = $this->getTagFilterIds($page->getTags()->toArray());
-            $categoryIds = $this->getCategoryFilterIds($page->getCategories()->toArray());
+        switch ($this->page->getPagetype()) {
 
-            if (!empty($tagIds)) {
-                $pageList = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getTaggedCategoryItems($categoryIds, $id, $publishStates, $currentpage, $totalpageitems, $tagIds);
-            } else {
-                $pageList = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getCategoryItems($categoryIds, $id, $publishStates, $currentpage, $totalpageitems);
-            }
+            case 'blog_home':
+                $response = $this->renderBlogHomePage();
+                break;
 
-            $pages = $pageList['pages'];
-            $totalPages = $pageList['totalPages'];
+            case 'blog_filtered_list':
+                $response = $this->renderBlogTagListPage();
+                break;
 
-            $response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'mobile' => $serveMobile));
-        } else if ($page->getPagetype() == 'blog_filtered_list') {
-            $filterForm = $this->createForm('filterblogpostsform');
-            $filterData = $this->getRequestedFilters($extraParams);
-            $tagIds = $this->getTagFilterIds($filterData['tags']->toArray());
-            $categoryIds = $this->getCategoryFilterIds($filterData['categories']->toArray());
+            case 'blog_cat_page':
+                $response = $this->renderBlogCategoryPage();
+                break;
 
-            $filterForm->setData($filterData);
+            default:
+                // TODO: Make this to be a setting of the Comments bundle
+                $commentsEnabled = true;
 
-            if (!empty($categoryIds)) {
-                $pageList = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getTaggedCategoryItems($categoryIds, $id, $publishStates, $currentpage, $totalpageitems, $tagIds);
-            } else {
-                $pageList = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getTaggedItems($tagIds, $id, $publishStates, $currentpage, $totalpageitems);
-            }
+                if ($commentsEnabled) {
 
-            $pages = $pageList['pages'];
-            $totalPages = $pageList['totalPages'];
+                    // Adding the form for new comment
+                    $comment = new Comment();
+                    $comment->setBlogPost($this->page);
+                    $form = $this->createForm(new CommentType(), $comment);
 
-            $response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'filterForm' => $filterForm->createView(), 'mobile' => $serveMobile));
-        } else if ($page->getPagetype() == 'blog_home') {
-            $pageList = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getAllItems($id, $publishStates, $currentpage, $totalpageitems);
+                    // Retrieving the comments the views
+                    $postComments = $this->getPostComments($this->id);
 
-            $pages = $pageList['pages'];
-            $totalPages = $pageList['totalPages'];
+                    $pageParams = array(
+                        'page' => $this->page,
+                        'form' => $form->createView(),
+                        'comments' => $postComments,
+                        'mobile' => $this->serveMobile
+                    );
+                } else {
+                    $pageParams = array(
+                        'page' => $this->page,
+                        'mobile' => $this->serveMobile
+                    );
+                }
 
-            $response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $extraParams, 'currentpage' => $currentpage, 'linkUrlParams' => $linkUrlParams, 'totalpageitems' => $totalpageitems, 'mobile' => $serveMobile));
+                // Render normal page type
+                $response = $this->render('BlogBundle:Default:page.html.twig', $pageParams);
+        }
+
+        if ($this->enableHTTPCache) {
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                $response,
+                $this->page->getDateLastModified(),
+                false,
+                3600
+            );
+        }
+
+        return $response;
+    }
+
+    // Render the home page
+    protected function renderBlogHomePage() {
+        // get all blog pages
+        $pageList = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getAllItems(
+            $this->id,
+            $this->publishStates,
+            $this->currentpage,
+            $this->totalpageitems
+        );
+
+        $pages = $pageList['pages'];
+        $totalPages = $pageList['totalPages'];
+
+        $response = $this->render('BlogBundle:Default:page.html.twig', array(
+            'page' => $this->page,
+            'pages' => $pages,
+            'totalPages' => $totalPages,
+            'extraParams' => $this->extraParams,
+            'currentpage' => $this->currentpage,
+            'linkUrlParams' => $this->linkUrlParams,
+            'totalpageitems' => $this->totalpageitems,
+            'mobile' => $this->serveMobile
+        ));
+
+        return $response;
+    }
+
+    // Render tag list page type
+    protected function renderBlogTagListPage() {
+
+        $filterForm = $this->createForm(new FilterBlogPostsFormType($this->getDoctrine()->getManager()));
+        $filterData = $this->get('bardiscms_page.services.helpers')->getRequestedFilters($this->extraParams);
+        $tagIds = $this->get('bardiscms_page.services.helpers')->getTagFilterIds($filterData['tags']->toArray());
+        $categoryIds = $this->get('bardiscms_page.services.helpers')->getCategoryFilterIds($filterData['categories']->toArray());
+
+        $filterForm->setData($filterData);
+
+        if (!empty($categoryIds)) {
+            $pageList = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getTaggedCategoryItems(
+                $categoryIds,
+                $this->id,
+                $this->publishStates,
+                $this->currentpage,
+                $this->totalpageitems,
+                $tagIds
+            );
         } else {
-            $commentsEnabled = true;
-
-            if ($commentsEnabled) {
-                // Retrieving the comments the views
-                $postComments = $this->getPostComments($id);
-
-                // Adding the form for new comment
-                $comment = new Comment();
-                $comment->setBlogPost($page);
-                $form = $this->createForm(new CommentType(), $comment);
-
-                $response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'form' => $form->createView(), 'comments' => $postComments, 'mobile' => $serveMobile));
-            } else {
-                $response = $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'mobile' => $serveMobile));
-            }
+            $pageList = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getTaggedItems(
+                $tagIds,
+                $this->id,
+                $this->publishStates,
+                $this->currentpage,
+                $this->totalpageitems
+            );
         }
 
-        if ($this->container->getParameter('kernel.environment') == 'prod' && $settings->getActivateHttpCache()) {
-            // set a custom Cache-Control directive
-            $response->setPublic();
-            $response->setLastModified($page->getDateLastModified());
-            $response->setVary(array('Accept-Encoding', 'User-Agent'));
-            $response->headers->addCacheControlDirective('must-revalidate', true);
-            $response->setSharedMaxAge(3600);
+        $pages = $pageList['pages'];
+        $totalPages = $pageList['totalPages'];
+
+        $response = $this->render('BlogBundle:Default:page.html.twig', array(
+            'page' => $this->page,
+            'pages' => $pages,
+            'totalPages' => $totalPages,
+            'extraParams' => $this->extraParams,
+            'currentpage' => $this->currentpage,
+            'linkUrlParams' => $this->linkUrlParams,
+            'totalpageitems' => $this->totalpageitems,
+            'filterForm' => $filterForm->createView(),
+            'mobile' => $this->serveMobile
+        ));
+
+        return $response;
+    }
+
+    // Render category list page type
+    protected function renderBlogCategoryPage() {
+        $tagIds = $this->get('bardiscms_page.services.helpers')->getTagFilterIds($this->page->getTags()->toArray());
+        $categoryIds = $this->get('bardiscms_page.services.helpers')->getCategoryFilterIds($this->page->getCategories()->toArray());
+
+        if (!empty($tagIds)) {
+            $pageList = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getTaggedCategoryItems(
+                $categoryIds,
+                $this->id,
+                $this->publishStates,
+                $this->currentpage,
+                $this->totalpageitems,
+                $tagIds
+            );
+        } else {
+            $pageList = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getCategoryItems(
+                $categoryIds,
+                $this->id,
+                $this->publishStates,
+                $this->currentpage,
+                $this->totalpageitems
+            );
         }
+
+        $pages = $pageList['pages'];
+        $totalPages = $pageList['totalPages'];
+
+        $response = $this->render('BlogBundle:Default:page.html.twig', array(
+            'page' => $this->page,
+            'pages' => $pages,
+            'totalPages' => $totalPages,
+            'extraParams' => $this->extraParams,
+            'currentpage' => $this->currentpage,
+            'linkUrlParams' => $this->linkUrlParams,
+            'totalpageitems' => $this->totalpageitems,
+            'mobile' => $this->serveMobile
+        ));
 
         return $response;
     }
@@ -251,66 +317,39 @@ class DefaultController extends Controller {
 
         $filterTags = 'all';
         $filterCategories = 'all';
-        $filterForm = $this->createForm('filterblogpostsform');
+
+        // Create the filters form
+        $filterForm = $this->createForm(new FilterBlogPostsFormType($this->getDoctrine()->getManager()));
         $filterData = null;
 
+        // If the filter form has been submitted
         if ($request->getMethod() == 'POST') {
 
+            // Bind the data with the form
             $filterForm->handleRequest($request);
+
+            // Get the data from the form
             $filterData = $filterForm->getData();
 
-            $filterTags = $this->getTagFilterTitles($filterData['tags']);
-            $filterCategories = $this->getCategoryFilterTitles($filterData['categories']);
+            // Assign the filters to categories and tags
+            $filterTags = $this->get('bardiscms_page.services.helpers')->getTagFilterTitles($filterData['tags']);
+            $filterCategories = $this->get('bardiscms_page.services.helpers')->getCategoryFilterTitles($filterData['categories']);
         }
 
-        $extraParams = urlencode($filterTags) . '|' . urlencode($filterCategories);
+        // Use the filters based on the routing structure
+        $this->extraParams = urlencode($filterTags) . '|' . urlencode($filterCategories);
 
+        // Generate the proper route for the required results
         $url = $this->get('router')->generate(
-                'BlogBundle_tagged_noslash', array('extraParams' => $extraParams), true
+            'BlogBundle_tagged_noslash', array('extraParams' => $this->extraParams), true
         );
+
+        // Redirect to the results
         return $this->redirect($url);
     }
 
-    // Get the titles of the filter categories
-    protected function getCategoryFilterTitles($selectedCategoriesArray) {
-
-        $categories = array();
-
-        if (!empty($selectedCategoriesArray)) {
-            foreach ($selectedCategoriesArray as $selectedCategoriesEntity) {
-                $categories[] = $selectedCategoriesEntity->getTitle();
-            }
-        }
-
-        $filterCategories = implode(',', $categories);
-
-        if (empty($filterCategories)) {
-            $filterCategories = 'all';
-        }
-
-        return $filterCategories;
-    }
-
-    // Get the titles of the filter tags
-    protected function getTagFilterTitles($selectedTagsArray) {
-        $tags = array();
-
-        if (!empty($selectedTagsArray)) {
-            foreach ($selectedTagsArray as $selectedTagEntity) {
-                $tags[] = $selectedTagEntity->getTitle();
-            }
-        }
-
-        $filterTags = implode(',', $tags);
-
-        if (empty($filterTags)) {
-            $filterTags = 'all';
-        }
-
-        return $filterTags;
-    }
-
     // Get the approved comments for the blog post
+    // TODO: Make this to be a service of the Comments bundle
     protected function getPostComments($blogPostId) {
 
         $comments = null;

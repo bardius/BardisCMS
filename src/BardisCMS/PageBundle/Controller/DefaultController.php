@@ -84,13 +84,12 @@ class DefaultController extends Controller {
         $this->currentpage = $currentpage;
         $this->totalpageitems = $totalpageitems;
 
-        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($this->alias);
+        $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($this->alias);
 
-        if (!$page) {
+        if (!$this->page) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
 
-        $this->page = $page;
         $this->id = $this->page->getId();
 
         return $this->showPageAction();
@@ -214,7 +213,7 @@ class DefaultController extends Controller {
         $filterForm = $this->createForm(new FilterPagesFormType());
         $filterData = null;
 
-        // If the filter form has been submited
+        // If the filter form has been submitted
         if ($request->getMethod() == 'POST') {
 
             // Bind the data with the form
@@ -233,7 +232,7 @@ class DefaultController extends Controller {
 
         // Generate the proper route for the required results
         $url = $this->get('router')->generate(
-                'PageBundle_tagged_noslash', array('extraParams' => $this->extraParams), true
+            'PageBundle_tagged_noslash', array('extraParams' => $this->extraParams), true
         );
 
         // Redirect to the results
