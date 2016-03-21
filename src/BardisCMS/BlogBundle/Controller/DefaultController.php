@@ -15,11 +15,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+use FOS\UserBundle\Model\UserInterface;
+
 use BardisCMS\CommentBundle\Entity\Comment;
 use BardisCMS\CommentBundle\Form\Type\CommentType;
 use BardisCMS\BlogBundle\Form\Type\FilterBlogPostsFormType;
 
 use BardisCMS\PageBundle\Entity\Page as Page;
+use BardisCMS\BlogBundle\Entity\Blog as Blog;
 
 class DefaultController extends Controller {
 
@@ -39,6 +42,8 @@ class DefaultController extends Controller {
     private $serveMobile;
     private $userRole;
     private $enableHTTPCache;
+    private $logged_user;
+    private $isAjaxRequest;
 
     // Override the ContainerAware setContainer to accommodate the extra variables
     public function setContainer(ContainerInterface $container = null) {
@@ -66,8 +71,17 @@ class DefaultController extends Controller {
         // Set the flag for allowing HTTP cache
         $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
 
+        // Check if request was Ajax based
+        $this->isAjaxRequest = $this->get('bardiscms_page.services.ajax_detection')->isAjaxRequest();
+
         // Set the publish statuses that are available for the user
         $this->publishStates = $this->get('bardiscms_page.services.helpers')->getAllowedPublishStates($this->userRole);
+
+        // Get the logged user if any
+        $this->logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
+        if (is_object($this->logged_user) && $this->logged_user instanceof UserInterface) {
+            $this->userName = $this->logged_user->getUsername();
+        }
     }
 
     // Get the blog page id based on alias from route
@@ -172,11 +186,13 @@ class DefaultController extends Controller {
                         'page' => $this->page,
                         'form' => $form->createView(),
                         'comments' => $postComments,
+                        'logged_username' => $this->userName,
                         'mobile' => $this->serveMobile
                     );
                 } else {
                     $pageParams = array(
                         'page' => $this->page,
+                        'logged_username' => $this->userName,
                         'mobile' => $this->serveMobile
                     );
                 }
@@ -218,6 +234,7 @@ class DefaultController extends Controller {
             'currentpage' => $this->currentpage,
             'linkUrlParams' => $this->linkUrlParams,
             'totalpageitems' => $this->totalpageitems,
+            'logged_username' => $this->userName,
             'mobile' => $this->serveMobile
         ));
 
@@ -265,6 +282,7 @@ class DefaultController extends Controller {
             'linkUrlParams' => $this->linkUrlParams,
             'totalpageitems' => $this->totalpageitems,
             'filterForm' => $filterForm->createView(),
+            'logged_username' => $this->userName,
             'mobile' => $this->serveMobile
         ));
 
@@ -306,6 +324,7 @@ class DefaultController extends Controller {
             'currentpage' => $this->currentpage,
             'linkUrlParams' => $this->linkUrlParams,
             'totalpageitems' => $this->totalpageitems,
+            'logged_username' => $this->userName,
             'mobile' => $this->serveMobile
         ));
 

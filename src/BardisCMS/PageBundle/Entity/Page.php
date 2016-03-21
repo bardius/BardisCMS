@@ -44,7 +44,6 @@ class Page {
     const ERROR_403 = "403";
     const ERROR_401 = "401";
 
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")

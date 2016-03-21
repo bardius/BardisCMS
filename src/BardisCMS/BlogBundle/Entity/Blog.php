@@ -30,6 +30,15 @@ use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
  */
 class Blog {
 
+    /*
+     * Publish states
+     */
+    const STATUS_UNPUBLISHED    = 0;
+    const STATUS_PUBLISHED      = 1;
+    const STATUS_PREVIEW        = 2;
+    const STATUS_NONAUTHONLY    = 3;
+    const STATUS_AUTHONLY       = 4;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -185,7 +194,7 @@ class Blog {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId() {
         return $this->id;
@@ -205,7 +214,7 @@ class Blog {
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate() {
         return $this->date;
@@ -225,7 +234,7 @@ class Blog {
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle() {
         return $this->title;
@@ -245,7 +254,7 @@ class Blog {
     /**
      * Get alias
      *
-     * @return string 
+     * @return string
      */
     public function getAlias() {
         return $this->alias;
@@ -266,7 +275,7 @@ class Blog {
     /**
      * Get pageOrder
      *
-     * @return integer 
+     * @return integer
      */
     public function getPageOrder() {
         return $this->pageOrder;
@@ -287,7 +296,7 @@ class Blog {
     /**
      * Get showPageTitle
      *
-     * @return integer 
+     * @return integer
      */
     public function getShowPageTitle() {
         return $this->showPageTitle;
@@ -308,7 +317,7 @@ class Blog {
     /**
      * Get publishState
      *
-     * @return integer 
+     * @return integer
      */
     public function getPublishState() {
         return $this->publishState;
@@ -329,7 +338,7 @@ class Blog {
     /**
      * Get pageclass
      *
-     * @return string 
+     * @return string
      */
     public function getPageclass() {
         return $this->pageclass;
@@ -350,7 +359,7 @@ class Blog {
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription() {
         return $this->description;
@@ -371,7 +380,7 @@ class Blog {
     /**
      * Get keywords
      *
-     * @return string 
+     * @return string
      */
     public function getKeywords() {
         return $this->keywords;
@@ -392,7 +401,7 @@ class Blog {
     /**
      * Get introtext
      *
-     * @return string 
+     * @return string
      */
     public function getIntrotext() {
         return $this->introtext;
@@ -413,7 +422,7 @@ class Blog {
     /**
      * Get intromediasize
      *
-     * @return string 
+     * @return string
      */
     public function getIntromediasize() {
         return $this->intromediasize;
@@ -434,7 +443,7 @@ class Blog {
     /**
      * Get introclass
      *
-     * @return string 
+     * @return string
      */
     public function getIntroclass() {
         return $this->introclass;
@@ -466,7 +475,7 @@ class Blog {
     /**
      * Get introvideo
      *
-     * @return Application\Sonata\MediaBundle\Entity\Media 
+     * @return Application\Sonata\MediaBundle\Entity\Media
      */
     public function getIntrovideo() {
         return $this->introvideo;
@@ -475,7 +484,7 @@ class Blog {
     /**
      * Get pagetype
      *
-     * @return string 
+     * @return string
      */
     public function getPagetype() {
         return $this->pagetype;
@@ -496,7 +505,7 @@ class Blog {
     /**
      * Get author
      *
-     * @return \Application\Sonata\UserBundle\Entity\User 
+     * @return \Application\Sonata\UserBundle\Entity\User
      */
     public function getAuthor() {
         return $this->author;
@@ -517,7 +526,7 @@ class Blog {
     /**
      * Get introimage
      *
-     * @return \Application\Sonata\MediaBundle\Entity\Media 
+     * @return \Application\Sonata\MediaBundle\Entity\Media
      */
     public function getIntroimage() {
         return $this->introimage;
@@ -538,7 +547,7 @@ class Blog {
     /**
      * Get bgimage
      *
-     * @return \Application\Sonata\MediaBundle\Entity\Media 
+     * @return \Application\Sonata\MediaBundle\Entity\Media
      */
     public function getBgimage() {
         return $this->bgimage;
@@ -568,7 +577,7 @@ class Blog {
     /**
      * Get categories
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCategories() {
         return $this->categories;
@@ -598,7 +607,7 @@ class Blog {
     /**
      * Get tags
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTags() {
         return $this->tags;
@@ -628,7 +637,7 @@ class Blog {
     /**
      * Get maincontentblocks
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMaincontentblocks() {
         return $this->maincontentblocks;
@@ -658,7 +667,7 @@ class Blog {
     /**
      * Get bannercontentblocks
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getBannercontentblocks() {
         return $this->bannercontentblocks;
@@ -688,7 +697,7 @@ class Blog {
     /**
      * Get modalcontentblocks
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getModalcontentblocks() {
         return $this->modalcontentblocks;
@@ -718,7 +727,7 @@ class Blog {
     /**
      * Get extracontentblocks
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getExtracontentblocks() {
         return $this->extracontentblocks;
@@ -749,7 +758,7 @@ class Blog {
     /**
      * Get comments
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getComments() {
         return $this->comments;
@@ -758,7 +767,7 @@ class Blog {
     /**
      * Get dateLastModified
      *
-     * @return integer 
+     * @return integer
      */
     public function getDateLastModified() {
         return $this->dateLastModified;
@@ -778,7 +787,7 @@ class Blog {
     /**
      * toString Title
      *
-     * @return string 
+     * @return string
      */
     public function __toString() {
         if ($this->getTitle()) {
@@ -789,23 +798,42 @@ class Blog {
     }
 
     /**
+     * Returns PublishState list.
+     *
+     * @return array
+     */
+    public static function getPublishStateList()
+    {
+        return array(
+            Blog::STATUS_UNPUBLISHED    => "Unpublished",
+            Blog::STATUS_PUBLISHED      => "Published",
+            Blog::STATUS_PREVIEW        => "Preview",
+            Blog::STATUS_NONAUTHONLY    => "Anonymous Users Only",
+            Blog::STATUS_AUTHONLY       => "Authenticated Users Only",
+        );
+    }
+
+    /**
      * toString PublishState
      *
-     * @return string 
+     * @return string
      */
     public function getPublishStateAsString() {
         // Defining the string values of the publish states
         switch ($this->getPublishState()) {
-            case(0): return "Unpublished";
-            case(1): return "Published";
-            case(2): return "Preview";
+            case(Blog::STATUS_UNPUBLISHED): return "Unpublished";
+            case(Blog::STATUS_PUBLISHED): return "Published";
+            case(Blog::STATUS_PREVIEW): return "Preview";
+            case(Blog::STATUS_NONAUTHONLY): return "Anonymous Users Only";
+            case(Blog::STATUS_AUTHONLY): return "Authenticated Users Only";
+            default: return $this->getPublishState();
         }
     }
 
     /**
      * toString Pagetype
      *
-     * @return string 
+     * @return string
      */
     public function getPagetypeAsString() {
         // Defining the string values of the page types

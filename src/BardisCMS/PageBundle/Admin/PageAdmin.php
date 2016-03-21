@@ -22,7 +22,6 @@ use BardisCMS\PageBundle\Entity\Page as Page;
 class PageAdmin extends Admin {
 
     protected function configureFormFields(FormMapper $formMapper) {
-
         // Getting the container parameters set in the config file that exist after the dependency injection
         $pageSettings = $this->getConfigurationPool()->getContainer()->getParameter('page_settings');
 
@@ -42,62 +41,62 @@ class PageAdmin extends Admin {
         // Using sonata admin to generate the edit page form and its fields
         $formMapper
                 ->tab('Page Essential Details')
-                ->with('Page Essential Details', array('collapsed' => false))
-                ->add('title', null, array('attr' => array('class' => 'pageTitleField'), 'label' => 'Page Title', 'required' => true))
-                ->add('publishState', 'choice', array('choices' => Page::getPublishStateList(), 'preferred_choices' => array(Page::STATUS_PREVIEW), 'label' => 'Publish State', 'required' => true))
-                ->add('date', 'date', array('widget' => 'single_text', 'format' => 'dd-MM-yyyy', 'attr' => array('class' => 'datepicker'), 'label' => 'Publish Date', 'required' => true))
-                ->add('author', 'entity', array('class' => 'Application\Sonata\UserBundle\Entity\User', 'choice_label' => 'username', 'expanded' => false, 'multiple' => false, 'label' => 'Author', 'data' => $loggedUser->getId(), 'required' => true))
-                ->add('alias', null, array('attr' => array('class' => 'pageAliasField'), 'label' => 'Page Alias', 'required' => false))
-                ->add('pagetype', 'choice', array('choices' => $pagetypeChoices, 'preferred_choices' => array($prefPagetypeChoice), 'label' => 'Page Type', 'required' => true))
-                ->add('showPageTitle', 'choice', array('choices' => array('0' => 'Hide Title', '1' => 'Show Title'), 'preferred_choices' => array('1'), 'label' => 'Title Display State', 'required' => true))
-                ->add('pageclass', null, array('label' => 'Page CSS Class', 'required' => false))
-                ->add('bgimage', 'sonata_media_type', array('provider' => 'sonata.media.provider.image', 'context' => 'bgimage', 'attr' => array('class' => 'imagefield'), 'label' => 'Top Banner Image', 'required' => false))
-                ->setHelps(array(
-                    'title' => 'Set the title',
-                    'publishState' => 'Set the publish',
-                    'date' => 'Set the publishing date',
-                    'author' => 'Select the Author',
-                    'alias' => 'Set the URL alias',
-                    'pagetype' => 'Select the type of the page (page template)',
-                    'pageclass' => 'Set the CSS class that wraps the page',
-                    'bgimage' => 'Set the Top Banner Image of the page'
-                ))
-                ->end()
+                    ->with('Page Essential Details', array('collapsed' => false))
+                        ->add('title', null, array('attr' => array('class' => 'pageTitleField'), 'label' => 'Page Title', 'required' => true))
+                        ->add('publishState', 'choice', array('choices' => Page::getPublishStateList(), 'preferred_choices' => array(Page::STATUS_PREVIEW), 'label' => 'Publish State', 'required' => true))
+                        ->add('date', 'date', array('widget' => 'single_text', 'format' => 'dd-MM-yyyy', 'attr' => array('class' => 'datepicker'), 'label' => 'Publish Date', 'required' => true))
+                        ->add('author', 'entity', array('class' => 'Application\Sonata\UserBundle\Entity\User', 'choice_label' => 'username', 'expanded' => false, 'multiple' => false, 'label' => 'Author', 'data' => $loggedUser->getId(), 'required' => true))
+                        ->add('alias', null, array('attr' => array('class' => 'pageAliasField'), 'label' => 'Page Alias', 'required' => false))
+                        ->add('pagetype', 'choice', array('choices' => $pagetypeChoices, 'preferred_choices' => array($prefPagetypeChoice), 'label' => 'Page Type', 'required' => true))
+                        ->add('showPageTitle', 'choice', array('choices' => array('0' => 'Hide Title', '1' => 'Show Title'), 'preferred_choices' => array('1'), 'label' => 'Title Display State', 'required' => true))
+                        ->add('pageclass', null, array('label' => 'Page CSS Class', 'required' => false))
+                        ->add('bgimage', 'sonata_media_type', array('provider' => 'sonata.media.provider.image', 'context' => 'bgimage', 'attr' => array('class' => 'imagefield'), 'label' => 'Top Banner Image', 'required' => false))
+                    ->setHelps(array(
+                        'title' => 'Set the title',
+                        'publishState' => 'Set the publish status',
+                        'date' => 'Set the publishing date',
+                        'author' => 'Select the Author',
+                        'alias' => 'Set the URL alias',
+                        'pagetype' => 'Select the type of the page (page template)',
+                        'pageclass' => 'Set the CSS class that wraps the page',
+                        'bgimage' => 'Set the Top Banner Image of the page'
+                    ))
+                    ->end()
                 ->end()
                 ->tab('Categories & Tags')
-                ->with('Categories & Tags', array('collapsed' => true))
-                ->add('categories', 'entity', array('class' => 'BardisCMS\CategoryBundle\Entity\Category', 'choice_label' => 'title', 'expanded' => true, 'multiple' => true, 'label' => 'Associated Categories', 'required' => false))
-                ->add('tags', 'entity', array('class' => 'BardisCMS\TagBundle\Entity\Tag', 'choice_label' => 'title', 'expanded' => true, 'multiple' => true, 'label' => 'Associated Tags', 'required' => false))
-                ->setHelps(array(
-                    'tags' => 'Select the associated tags',
-                    'categories' => 'Select the associated categories'
-                ))
-                ->end()
+                    ->with('Categories & Tags', array('collapsed' => true))
+                        ->add('categories', 'entity', array('class' => 'BardisCMS\CategoryBundle\Entity\Category', 'choice_label' => 'title', 'expanded' => true, 'multiple' => true, 'label' => 'Associated Categories', 'required' => false))
+                        ->add('tags', 'entity', array('class' => 'BardisCMS\TagBundle\Entity\Tag', 'choice_label' => 'title', 'expanded' => true, 'multiple' => true, 'label' => 'Associated Tags', 'required' => false))
+                    ->setHelps(array(
+                        'tags' => 'Select the associated tags',
+                        'categories' => 'Select the associated categories'
+                    ))
+                    ->end()
                 ->end()
                 ->tab('Homepage & Listing Page Intro')
-                ->with('Homepage & Listing Page Intro', array('collapsed' => true))
-                ->add('introtext', 'textarea', array('attr' => array('class' => 'tinymce', 'data-theme' => 'advanced'), 'label' => 'Intro Text/HTML', 'required' => false))
-                ->add('introimage', 'sonata_media_type', array('provider' => 'sonata.media.provider.image', 'context' => 'intro', 'attr' => array('class' => 'imagefield'), 'label' => 'Intro Image', 'required' => false))
-                ->add('intromediasize', 'choice', array('choices' => $introMediaSizeChoices, 'preferred_choices' => array($prefIntroMediaSizeChoice), 'label' => 'Media Size', 'required' => true))
-                ->add('pageOrder', null, array('label' => 'Intro Item Ordering in Homepage', 'required' => true))
-                ->add('introclass', null, array('label' => 'Intro Item CSS Class', 'required' => false))
-                ->setHelps(array(
-                    'introtext' => 'Set the Text/HTML content to display for category listing items',
-                    'introimage' => 'Set the Image content to display for category listing items',
-                    'pageOrder' => 'Set the order of this page for the homepage',
-                    'introclass' => 'Set the CSS class that wraps content to display for category listing items'
-                ))
-                ->end()
+                    ->with('Homepage & Listing Page Intro', array('collapsed' => true))
+                        ->add('introtext', 'textarea', array('attr' => array('class' => 'tinymce', 'data-theme' => 'advanced'), 'label' => 'Intro Text/HTML', 'required' => false))
+                        ->add('introimage', 'sonata_media_type', array('provider' => 'sonata.media.provider.image', 'context' => 'intro', 'attr' => array('class' => 'imagefield'), 'label' => 'Intro Image', 'required' => false))
+                        ->add('intromediasize', 'choice', array('choices' => $introMediaSizeChoices, 'preferred_choices' => array($prefIntroMediaSizeChoice), 'label' => 'Media Size', 'required' => true))
+                        ->add('pageOrder', null, array('label' => 'Intro Item Ordering in Homepage', 'required' => true))
+                        ->add('introclass', null, array('label' => 'Intro Item CSS Class', 'required' => false))
+                    ->setHelps(array(
+                        'introtext' => 'Set the Text/HTML content to display for category listing items',
+                        'introimage' => 'Set the Image content to display for category listing items',
+                        'pageOrder' => 'Set the order of this page for the homepage',
+                        'introclass' => 'Set the CSS class that wraps content to display for category listing items'
+                    ))
+                    ->end()
                 ->end()
                 ->tab('Page Metatags Manual Override')
-                ->with('Page Metatags Manual Override', array('collapsed' => true))
-                ->add('keywords', null, array('label' => 'Meta Keywords', 'required' => false))
-                ->add('description', null, array('label' => 'Meta Description', 'required' => false))
-                ->setHelps(array(
-                    'keywords' => 'Set the keyword metadata of the page of leave empty to autogenerate',
-                    'description' => 'Set the description metadata of the page of leave empty to autogenerate'
-                ))
-                ->end()
+                    ->with('Page Metatags Manual Override', array('collapsed' => true))
+                        ->add('keywords', null, array('label' => 'Meta Keywords', 'required' => false))
+                        ->add('description', null, array('label' => 'Meta Description', 'required' => false))
+                    ->setHelps(array(
+                        'keywords' => 'Set the keyword metadata of the page of leave empty to autogenerate',
+                        'description' => 'Set the description metadata of the page of leave empty to autogenerate'
+                    ))
+                    ->end()
                 ->end()
         ;
 
@@ -108,16 +107,16 @@ class PageAdmin extends Admin {
                 case 'one_columned':
                     $formMapper
                             ->tab('Page Contents')
-                            ->with('Page Contents', array('collapsed' => true))
-                            ->add('bannercontentblocks', 'contentblockcollection', array('attr' => array('class' => 'bannercontentblocks'), 'label' => 'Top Banner Contents'))
-                            ->add('maincontentblocks', 'contentblockcollection', array('attr' => array('class' => 'maincontentblocks'), 'label' => 'Page Contents'))
-                            ->add('modalcontentblocks', 'contentblockcollection', array('attr' => array('class' => 'modalcontentblocks'), 'label' => 'Modal Windows Contents'))
-                            ->setHelps(array(
-                                'bannercontentblocks' => 'Enter the contents for the top banner',
-                                'maincontentblocks' => 'Enter the contents for the page',
-                                'modalcontentblocks' => 'Enter the contents for the modal windows'
-                            ))
-                            ->end()
+                                ->with('Page Contents', array('collapsed' => true))
+                                    ->add('bannercontentblocks', 'contentblockcollection', array('attr' => array('class' => 'bannercontentblocks'), 'label' => 'Top Banner Contents'))
+                                    ->add('maincontentblocks', 'contentblockcollection', array('attr' => array('class' => 'maincontentblocks'), 'label' => 'Page Contents'))
+                                    ->add('modalcontentblocks', 'contentblockcollection', array('attr' => array('class' => 'modalcontentblocks'), 'label' => 'Modal Windows Contents'))
+                                ->setHelps(array(
+                                    'bannercontentblocks' => 'Enter the contents for the top banner',
+                                    'maincontentblocks' => 'Enter the contents for the page',
+                                    'modalcontentblocks' => 'Enter the contents for the modal windows'
+                                ))
+                                ->end()
                             ->end()
                     ;
                     break;
@@ -125,18 +124,18 @@ class PageAdmin extends Admin {
                 case 'contact':
                     $formMapper
                             ->tab('Page Contents')
-                            ->with('Page Contents', array('collapsed' => true))
-                            ->add('bannercontentblocks', 'contentblockcollection', array('attr' => array('class' => 'bannercontentblocks'), 'label' => 'Top Banner Contents'))
-                            ->add('maincontentblocks', 'contentblockcollection', array('attr' => array('class' => 'maincontentblocks'), 'label' => 'Left Column Contents'))
-                            ->add('secondarycontentblocks', 'contentblockcollection', array('attr' => array('class' => 'secondarycontentblocks'), 'label' => 'Right Column Contents'))
-                            ->add('modalcontentblocks', 'contentblockcollection', array('attr' => array('class' => 'modalcontentblocks'), 'label' => 'Modal Windows Contents'))
-                            ->setHelps(array(
-                                'bannercontentblocks' => 'Enter the contents for the top banner',
-                                'maincontentblocks' => 'Enter the contents for the left column',
-                                'secondarycontentblocks' => 'Enter the contents for the right column',
-                                'modalcontentblocks' => 'Enter the contents for the modal windows'
-                            ))
-                            ->end()
+                                ->with('Page Contents', array('collapsed' => true))
+                                    ->add('bannercontentblocks', 'contentblockcollection', array('attr' => array('class' => 'bannercontentblocks'), 'label' => 'Top Banner Contents'))
+                                    ->add('maincontentblocks', 'contentblockcollection', array('attr' => array('class' => 'maincontentblocks'), 'label' => 'Left Column Contents'))
+                                    ->add('secondarycontentblocks', 'contentblockcollection', array('attr' => array('class' => 'secondarycontentblocks'), 'label' => 'Right Column Contents'))
+                                    ->add('modalcontentblocks', 'contentblockcollection', array('attr' => array('class' => 'modalcontentblocks'), 'label' => 'Modal Windows Contents'))
+                                ->setHelps(array(
+                                    'bannercontentblocks' => 'Enter the contents for the top banner',
+                                    'maincontentblocks' => 'Enter the contents for the left column',
+                                    'secondarycontentblocks' => 'Enter the contents for the right column',
+                                    'modalcontentblocks' => 'Enter the contents for the modal windows'
+                                ))
+                                ->end()
                             ->end()
                     ;
                     break;
@@ -204,12 +203,12 @@ class PageAdmin extends Admin {
         // Getting the container parameters set in the config file that exist after the dependency injection
         $pageSettings = $this->getConfigurationPool()->getContainer()->getParameter('page_settings');
 
-        // Setting up the available page types and preffered choice
+        // Setting up the available page types and preferred choice
         $pagetypeChoices = $pageSettings['pagetypes'];
 
         $datagridMapper
                 ->add('title')
-                ->add('publishState', 'doctrine_orm_string', array(), 'choice', array('choices' => array('0' => 'Unpublished', '1' => 'Published', '2' => 'Preview')))
+                ->add('publishState', 'doctrine_orm_string', array(), 'choice', array('choices' => Page::getPublishStateList()))
                 ->add('pagetype', 'doctrine_orm_string', array(), 'choice', array('choices' => $pagetypeChoices))
                 ->add('categories')
                 ->add('tags')

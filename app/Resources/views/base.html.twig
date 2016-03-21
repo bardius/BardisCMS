@@ -93,6 +93,11 @@
                     <div class="columns small-12 large-9">
                         {% include '::site_top_nav.html.twig' %}
                     </div>
+                    {% if logged_username is defined and logged_username is not null %}
+                        <div class="columns small-12 large-12">
+                            {% include '::user_header_nav.html.twig' %}
+                        </div>
+                    {% endif %}
                 </header>
 
                 <div class="row pageContents">

@@ -27,11 +27,12 @@ class BlogExtension extends Extension {
      */
     public function load(array $configs, ContainerBuilder $container) {
         $configuration = new Configuration();
-        $config = array();
         $config = $this->processConfiguration($configuration, $configs);
 
+        // Setting the name of the variable in the container pool for this injection values
         $container->setParameter('blog_settings', $config);
 
+        // Setting the path and filename injection values file
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         if (isset($config['loadservices']) && $config['loadservices']) {
             $loader->load('services.yml');

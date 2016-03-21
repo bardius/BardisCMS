@@ -11,17 +11,18 @@
 namespace BardisCMS\PageBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class PageAdminController extends Controller {
 
     // Defining the custom sonata admin action for the duplicate page feature
     public function duplicateAction($id = null) {
-        // The sonata admin action key used to lookup the template to use for this action 
+        // The sonata admin action key used to lookup the template to use for this action
         $templateKey = 'edit';
 
         $id = $this->get('request')->get($this->admin->getIdParameter());

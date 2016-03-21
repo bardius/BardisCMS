@@ -40,6 +40,8 @@ class DefaultController extends Controller {
     private $serveMobile;
     private $userRole;
     private $enableHTTPCache;
+    private $logged_user;
+    private $isAjaxRequest;
 
     // Override the ContainerAware setContainer to accommodate the extra variables
     public function setContainer(ContainerInterface $container = null) {
@@ -55,6 +57,7 @@ class DefaultController extends Controller {
         $this->page = null;
         $this->userName = null;
 
+        // TODO: MAke the sample Guzzle call to be a service
         // Sample Guzzle call
         //$this->sampleGuzzleCall();
 
@@ -70,8 +73,17 @@ class DefaultController extends Controller {
         // Set the flag for allowing HTTP cache
         $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
 
+        // Check if request was Ajax based
+        $this->isAjaxRequest = $this->get('bardiscms_page.services.ajax_detection')->isAjaxRequest();
+
         // Set the publish statuses that are available for the user
         $this->publishStates = $this->get('bardiscms_page.services.helpers')->getAllowedPublishStates($this->userRole);
+
+        // Get the logged user if any
+        $this->logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
+        if (is_object($this->logged_user) && $this->logged_user instanceof UserInterface) {
+            $this->userName = $this->logged_user->getUsername();
+        }
     }
 
     // Get the page id based on alias from route
@@ -91,35 +103,6 @@ class DefaultController extends Controller {
         }
 
         $this->id = $this->page->getId();
-
-        return $this->showPageAction();
-    }
-
-    // TODO: Remove this action if it is deprecated
-    // Get the page id based on alias from route and user details from username
-    public function userProfileAction($alias, $userName = null, $currentpage = 0, $totalpageitems = 0, Request $request) {
-
-        $this->pageRequest = $request;
-        $this->alias = $alias;
-        $this->currentpage = $currentpage;
-        $this->totalpageitems = $totalpageitems;
-        $this->userName = $userName;
-
-        $page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($this->alias);
-
-        if (!$page) {
-            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
-        }
-
-        if (!isset($this->userName) || !$this->get('sonata_user.services.helpers')->getUserByUsername($this->userName)) {
-            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
-        }
-
-        $this->page = $page;
-        $this->id = $this->page->getId();
-
-        $this->linkUrlParams = $this->userName;
-        $this->extraParams = $this->userName;
 
         return $this->showPageAction();
     }
@@ -178,10 +161,6 @@ class DefaultController extends Controller {
                 $response = $this->renderTagListPage();
                 break;
 
-            case 'user_profile':
-                $response = $this->renderUserProfilePage();
-                break;
-
             case 'homepage':
                 $response = $this->renderHomePage();
                 break;
@@ -193,11 +172,20 @@ class DefaultController extends Controller {
 
             default:
                 // Render normal page type
-                $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'mobile' => $this->serveMobile));
+                $response = $this->render('PageBundle:Default:page.html.twig', array(
+                    'page' => $this->page,
+                    'logged_username' => $this->userName,
+                    'mobile' => $this->serveMobile
+                ));
         }
 
         if ($this->enableHTTPCache) {
-            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders($response, $this->page->getDateLastModified(), false, 3600);
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                $response,
+                $this->page->getDateLastModified(),
+                false,
+                3600
+            );
         }
 
         return $response;
@@ -232,7 +220,9 @@ class DefaultController extends Controller {
 
         // Generate the proper route for the required results
         $url = $this->get('router')->generate(
-            'PageBundle_tagged_noslash', array('extraParams' => $this->extraParams), true
+            'PageBundle_tagged_noslash',
+            array('extraParams' => $this->extraParams),
+            true
         );
 
         // Redirect to the results
@@ -250,7 +240,12 @@ class DefaultController extends Controller {
         $response = $this->render('PageBundle:Default:sitemap.xml.twig', array('sitemapList' => $sitemapList));
 
         if ($this->enableHTTPCache) {
-            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders($response, $this->page->getDateLastModified(), false, 3600);
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                $response,
+                $this->page->getDateLastModified(),
+                false,
+                3600
+            );
         }
 
         return $response;
@@ -280,35 +275,13 @@ class DefaultController extends Controller {
         // Sort all the items based on custom sorting
         usort($pages, array("BardisCMS\PageBundle\Controller\DefaultController", "sortHomepageItemsCompare"));
 
-        $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'pages' => $pages, 'blogs' => $blog_pages, 'mobile' => $this->serveMobile));
-
-        return $response;
-    }
-
-    // Render user profile page type
-    protected function renderUserProfilePage() {
-
-        // Get the logged user
-        $logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
-
-        // Get the details of the requested user
-        $user_details_to_show = array(
-            'page_username' => $this->userName,
-            'logged_username' => '',
-            'page_user' => $this->get('sonata_user.services.helpers')->getUserByUsername($this->userName)
-        );
-
-        if (!is_object($logged_user) || !$logged_user instanceof UserInterface) {
-            // Public profile
-            // add logic here
-        } else {
-            // Private profile
-            // add logic here
-            $user_details_to_show['logged_username'] = $logged_user->getUsername();
-        }
-
-        // Render user profile page type
-        $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'mobile' => $this->serveMobile, 'user_details_to_show' => $user_details_to_show));
+        $response = $this->render('PageBundle:Default:page.html.twig', array(
+            'page' => $this->page,
+            'pages' => $pages,
+            'blogs' => $blog_pages,
+            'logged_username' => $this->userName,
+            'mobile' => $this->serveMobile
+        ));
 
         return $response;
     }
@@ -354,6 +327,7 @@ class DefaultController extends Controller {
             'linkUrlParams' => $this->linkUrlParams,
             'totalpageitems' => $this->totalpageitems,
             'filterForm' => $filterForm->createView(),
+            'logged_username' => $this->userName,
             'mobile' => $this->serveMobile
         ));
 
@@ -395,12 +369,14 @@ class DefaultController extends Controller {
             'currentpage' => $this->currentpage,
             'linkUrlParams' => $this->linkUrlParams,
             'totalpageitems' => $this->totalpageitems,
+            'logged_username' => $this->userName,
             'mobile' => $this->serveMobile
         ));
 
         return $response;
     }
 
+    // TODO: move the contact form process action to a handler service
     // Get the contact form page
     protected function processContactForm(Request $request) {
 
@@ -411,10 +387,6 @@ class DefaultController extends Controller {
         }
 
         $successMsg = '';
-        $ajaxForm = $request->get('isAjax');
-        if (!isset($ajaxForm) || !$ajaxForm) {
-            $ajaxForm = false;
-        }
 
         // Create the form
         $form = $this->createForm(new ContactFormType());
@@ -426,6 +398,7 @@ class DefaultController extends Controller {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
+                // TODO: split the email sending to a service
                 // Get the field values
                 $emailData = $form->getData();
 
@@ -460,7 +433,7 @@ class DefaultController extends Controller {
             }
 
             // Return the response to the user
-            if ($ajaxForm) {
+            if ($this->isAjaxRequest) {
 
                 $ajaxFormData = array(
                     'errors' => $errorList,
@@ -473,15 +446,33 @@ class DefaultController extends Controller {
 
                 return $ajaxFormResponse;
             } else {
-                return $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'form' => $form->createView(), 'ajaxform' => $ajaxForm, 'formMessage' => $formMessage));
+                return $this->render('PageBundle:Default:page.html.twig', array(
+                    'page' => $this->page,
+                    'form' => $form->createView(),
+                    'ajaxform' => $this->isAjaxRequest,
+                    'formMessage' => $formMessage,
+                    'logged_username' => $this->userName,
+                    'mobile' => $this->serveMobile
+                ));
             }
         }
         // If the form has not been submitted yet
         else {
-            $response = $this->render('PageBundle:Default:page.html.twig', array('page' => $this->page, 'form' => $form->createView(), 'ajaxform' => $ajaxForm));
+            $response = $this->render('PageBundle:Default:page.html.twig', array(
+                'page' => $this->page,
+                'form' => $form->createView(),
+                'ajaxform' => $this->isAjaxRequest,
+                'logged_username' => $this->userName,
+                'mobile' => $this->serveMobile
+            ));
 
             if ($this->enableHTTPCache) {
-                $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders($response, $this->page->getDateLastModified(), false, 3600);
+                $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                    $response,
+                    $this->page->getDateLastModified(),
+                    false,
+                    3600
+                );
             }
 
             return $response;
