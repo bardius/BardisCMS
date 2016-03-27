@@ -51,7 +51,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $test01->setConfirmed(true);
         $test01->setTermsAccepted(true);
         $test01->setSuperAdmin(false);
-        $test01->addRole(static::ROLE_USER);
+        //$test01->addRole(static::ROLE_USER);
         $manager->persist($test01);
 
         $manager->flush();
