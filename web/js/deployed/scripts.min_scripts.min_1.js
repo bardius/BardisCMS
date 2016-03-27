@@ -11464,7 +11464,7 @@ var notifications = window.notifications || {};
     };
     CMS.UI = {
         init: function() {
-            CMS.Forms.ajaxSubmittedForm("#contactform", "#contactFormBtn", "json", true, true);
+            CMS.Forms.ajaxSubmittedForm("#contactform_form", "#contactFormBtn", "json", true, true);
             CMS.Forms.ajaxSubmittedForm("#add_comment_form", "#submitCommentBtn", "json", true, true);
             CMS.Forms.ajaxSubmittedForm("#sonata_user_custom_user_registration_form", "#userRegisterFormBtn", "json", false, false);
             CMS.Forms.ajaxSubmittedForm("#sonata_user_generic_details_form", "#userGenericDetailsFormBtn", "json", true, false);

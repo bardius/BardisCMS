@@ -4,6 +4,10 @@ parameters:
     page.listener.response_listener_class: BardisCMS\PageBundle\Listener\ResponseListener
     page.services.ajax_detection_class: BardisCMS\PageBundle\Services\AjaxDetection
     page.services.http_cache_headers_handler_class: BardisCMS\PageBundle\Services\HttpCacheHeadersHandler
+    page.services.form_mailer_class: BardisCMS\PageBundle\Services\FormMailerService
+    page.contact.form.class: Symfony\Component\Form\Form
+    page.contact.form.type.class: BardisCMS\PageBundle\Form\Type\ContactFormType
+    page.contact.form.handler.class: BardisCMS\PageBundle\Form\Handler\ContactFormHandler
 
 services:
     bardiscms_page.services.helpers:
@@ -17,7 +21,7 @@ services:
 
     bardiscms_page.services.show_error_page:
         class: %page.services.show_error_page_class%
-        arguments: ["@doctrine.orm.entity_manager", "@service_container",]
+        arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
     bardiscms_page.services.ajax_detection:
         class: %page.services.ajax_detection_class%
@@ -26,3 +30,27 @@ services:
 
     bardiscms_page.services.http_cache_headers_handler:
         class: %page.services.http_cache_headers_handler_class%
+
+    bardiscms_page.services.form_mailer:
+        class: %page.services.form_mailer_class%
+        arguments: ["@service_container"]
+
+    bardiscms_page.contact.form:
+        factory_method: createNamed
+        factory_service: form.factory
+        class: %page.contact.form.class%
+        arguments:
+            - contactform_form                  # name of the form
+            - contactform                       # alias of the form type
+            - null                              # data to bind, this is where your entity could go if you have that defined as a service
+            - { validation_groups: [] }         # validation groups
+
+    bardiscms_page.contact.form.handler:
+        class: %page.contact.form.handler.class%
+        scope: request
+        arguments: ["@bardiscms_page.contact.form", "@request", "@service_container"]
+
+    bardiscms_page.contact.form.type:
+        class: %page.contact.form.type.class%
+        tags:
+            - { name: form.type, alias: contactform }

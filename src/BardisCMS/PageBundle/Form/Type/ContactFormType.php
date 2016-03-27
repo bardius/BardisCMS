@@ -13,6 +13,7 @@ namespace BardisCMS\PageBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
 use Symfony\Component\Validator\Constraints as Assert;
 use BardisCMS\PageBundle\Form\EventListener\SanitizeFieldSubscriber;
 
@@ -23,11 +24,19 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class ContactFormType extends AbstractType {
 
+    /**
+     * Construct form for ContactFormType
+     *
+     */
+    public function __construct() {
+    }
+
     // Creating the contact form and the fields
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
         $builder->add('firstname', TextType::class, array(
             'label' => 'First Name',
+            'translation_domain' => 'BardisCMSPageBundle',
             'required' => true,
             'attr' => array(
                 'placeholder' => '',
@@ -38,6 +47,7 @@ class ContactFormType extends AbstractType {
 
         $builder->add('surname', TextType::class, array(
             'label' => 'Surname',
+            'translation_domain' => 'BardisCMSPageBundle',
             'required' => true,
             'attr' => array(
                 'placeholder' => '',
@@ -48,6 +58,7 @@ class ContactFormType extends AbstractType {
 
         $builder->add('email', EmailType::class, array(
             'label' => 'Email',
+            'translation_domain' => 'BardisCMSPageBundle',
             'required' => true,
             'attr' => array(
                 'placeholder' => '',
@@ -58,6 +69,7 @@ class ContactFormType extends AbstractType {
 
         $builder->add('comment', TextareaType::class, array(
             'label' => 'Comment / Question',
+            'translation_domain' => 'BardisCMSPageBundle',
             'required' => true,
             'attr' => array(
                 'placeholder' => '',
@@ -70,6 +82,7 @@ class ContactFormType extends AbstractType {
 
         $builder->add('bottrap', TextType::class, array(
             'label' => 'Bot trap',
+            'translation_domain' => 'BardisCMSPageBundle',
             'required' => false,
             'attr' => array(
                 'placeholder' => '',
@@ -83,9 +96,9 @@ class ContactFormType extends AbstractType {
 
     // Adding field validation constraints
     public function configureOptions(OptionsResolver $resolver) {
-        $collectionConstraint = new Assert\Collection(array(
+        $contactFormConstraints = new Assert\Collection(array(
             'firstname' => array(
-                new Assert\NotBlank(array('message' => 'First Name should not be blank.')),
+                new Assert\NotBlank(array('message' => 'contact_form.firstname.blank')),
                 new Assert\Regex(array('pattern' => '/[0-9]/', 'match' => false, 'message' => 'First Name cannot contain numbers')),
                 new Assert\Length(array('min' => 2, 'max' => 50))
             ),
@@ -110,16 +123,35 @@ class ContactFormType extends AbstractType {
         ));
 
         $resolver->setDefaults(array(
-            'constraints' => $collectionConstraint
+            'intention' => 'contact_form_submit',
+            'error_mapping' => array(
+            ),
+            /*
+            'csrf_protection' => true,
+            'csrf_field_name' => '_token',
+            // a unique key to help generate the secret token
+            'csrf_token_id'   => 'contact_form',
+            */
+            'constraints' => $contactFormConstraints
         ));
+    }
+
+    /**
+     * Define the name of the form to call it for rendering
+     *
+     * @return string
+     *
+     */
+    public function getBlockPrefix() {
+        return 'contactform';
     }
 
     public function getName() {
         return $this->getBlockPrefix();
     }
 
-    // Define the name of the form to call it for rendering
-    public function getBlockPrefix() {
-        return 'contactform';
+    public function getExtendedType()
+    {
+        return method_exists(AbstractType::class, 'getBlockPrefix') ? FormType::class : 'form';
     }
 }

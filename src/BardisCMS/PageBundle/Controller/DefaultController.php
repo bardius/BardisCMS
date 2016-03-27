@@ -19,7 +19,6 @@ use FOS\UserBundle\Model\UserInterface;
 
 use BardisCMS\PageBundle\Entity\Page as Page;
 
-use BardisCMS\PageBundle\Form\Type\ContactFormType;
 use BardisCMS\PageBundle\Form\Type\FilterPagesFormType;
 
 class DefaultController extends Controller {
@@ -107,7 +106,11 @@ class DefaultController extends Controller {
         return $this->showPageAction();
     }
 
-    // Display a page based on the id and the render variables from the settings and the routing
+    /**
+     * Render a page based on the id and the render variables from the settings and the routing
+     *
+     * @return Response
+     */
     public function showPageAction() {
 
         // Simple publishing ACL based on publish state and user Allowed Publish States
@@ -144,11 +147,14 @@ class DefaultController extends Controller {
             $this->totalpageitems = 10;
         }
 
-        // Render the correct view depending on pagetype
         return $this->renderPage();
     }
 
-    // Get the required data to display to the correct view depending on pagetype
+    /**
+     * Render the proper action/view depending on pagetype
+     *
+     * @return Response
+     */
     protected function renderPage() {
 
         switch ($this->page->getPagetype()) {
@@ -191,7 +197,13 @@ class DefaultController extends Controller {
         return $response;
     }
 
-    // Get and format the filtering arguments to use with the actions
+    /**
+     * Get and normalise the filtering arguments to use with the actions
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
     public function filterPagesAction(Request $request) {
 
         $filterTags = 'all';
@@ -229,7 +241,11 @@ class DefaultController extends Controller {
         return $this->redirect($url);
     }
 
-    // Get and display all items from all bundles in the sitemap xml
+    /**
+     * Get and display all items from all bundles in the sitemap xml
+     *
+     * @return Response
+     */
     public function sitemapAction() {
 
         $page_pages = $this->getDoctrine()->getRepository('PageBundle:Page')->getSitemapList($this->publishStates);
@@ -251,7 +267,11 @@ class DefaultController extends Controller {
         return $response;
     }
 
-    // Get and display the sitemap xsl to style the xml of the sitemap
+    /**
+     * Render the sitemap xsl to style the xml of the sitemap
+     *
+     * @return Response
+     */
     public function sitemapxslAction() {
 
         $response = $this->render('PageBundle:Default:sitemap.xsl.twig');
@@ -259,7 +279,11 @@ class DefaultController extends Controller {
         return $response;
     }
 
-    // Render the home page
+    /**
+     * Render the home page page type
+     *
+     * @return Response
+     */
     protected function renderHomePage() {
 
         // Render homepage page type
@@ -286,7 +310,11 @@ class DefaultController extends Controller {
         return $response;
     }
 
-    // Render tag list page type
+    /**
+     * Render tag list page type
+     *
+     * @return Response
+     */
     protected function renderTagListPage() {
 
         $filterForm = $this->createForm(new FilterPagesFormType());
@@ -334,7 +362,11 @@ class DefaultController extends Controller {
         return $response;
     }
 
-    // Render category list page type
+    /**
+     * Render category list page type
+     *
+     * @return Response
+     */
     protected function renderCategoryPage() {
         $tagIds = $this->get('bardiscms_page.services.helpers')->getTagFilterIds($this->page->getTags()->toArray());
         $categoryIds = $this->get('bardiscms_page.services.helpers')->getCategoryFilterIds($this->page->getCategories()->toArray());
@@ -376,115 +408,132 @@ class DefaultController extends Controller {
         return $response;
     }
 
-    // TODO: move the contact form process action to a handler service
-    // Get the contact form page
+    /**
+     * render and handle the contact form page
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
     protected function processContactForm(Request $request) {
+        $formMessage = null;
+        $errorList = null;
+        $formHasErrors = false;
 
-        if (is_object($this->settings)) {
-            $websiteTitle = $this->settings->getWebsiteTitle();
-        } else {
-            $websiteTitle = '';
-        }
+        // Contact Form
+        $contactForm = $this->container->get('bardiscms_page.contact.form');
+        $contactFormHandler = $this->container->get('bardiscms_page.contact.form.handler');
 
-        $successMsg = '';
-
-        // Create the form
-        $form = $this->createForm(new ContactFormType());
-
-        // If the page has been submitted
+        // If the Contact Form has been submitted
         if ($request->getMethod() == 'POST') {
+            $contactFormProcess = $contactFormHandler->process();
 
-            //Bind the posted form field values
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                // TODO: split the email sending to a service
-                // Get the field values
-                $emailData = $form->getData();
-
-                // If data is valid send the email with the twig email template set in the views
-                $message = \Swift_Message::newInstance()
-                        ->setSubject('Enquiry from ' . $websiteTitle . ' website: ' . $emailData['firstname'] . ' ' . $emailData['surname'] - $emailData['email'])
-                        ->setFrom($this->settings->getEmailSender())
-                        ->setReplyTo($emailData['email'])
-                        ->setTo($this->settings->getEmailRecepient())
-                        ->setBody($this->renderView('PageBundle:Email:contactFormEmail.txt.twig', array('sender' => $emailData['firstname'] . ' ' . $emailData['surname'], 'mailData' => $emailData['comment'])));
-
-                // The response for the user upon successful submission
-                $successMsg = 'Thank you for contacting us, we will be in touch soon';
-                $formMessage = $successMsg;
+            // Validate the data and get errors if any
+            if ($contactFormProcess) {
+                $formMessage = $this->container->get('translator')->trans('contactform.response.success', array(), 'BardisCMSPageBundle');
                 $errorList = array();
                 $formHasErrors = false;
-
-                // Send the email with php swift mailer and catch errors
-                try {
-                    $this->get('mailer')->send($message);
-                } catch (\Swift_TransportException $exception) {
-                    // The response for the user upon unsuccessful mailer send
-                    $formMessage = $exception->getMessage();
-                    $formHasErrors = true;
-                }
-            } else {
-                // Validate the data and get errors
-                $successMsg = '';
-                $errorList = $this->get('bardiscms_page.services.helpers')->getFormErrorMessages($form);
-                $formMessage = 'There was an error submitting your form. Please try again.';
+            }
+            else {
+                $formMessage = $this->container->get('translator')->trans('contactform.response.error', array(), 'BardisCMSPageBundle');
+                $errorList = $this->get('bardiscms_page.services.helpers')->getFormErrorMessages($contactForm);
                 $formHasErrors = true;
             }
 
-            // Return the response to the user
-            if ($this->isAjaxRequest) {
-
-                $ajaxFormData = array(
-                    'errors' => $errorList,
-                    'formMessage' => $formMessage,
-                    'hasErrors' => $formHasErrors
-                );
-
-                $ajaxFormResponse = new Response(json_encode($ajaxFormData));
-                $ajaxFormResponse->headers->set('Content-Type', 'application/json');
-
-                return $ajaxFormResponse;
-            } else {
-                return $this->render('PageBundle:Default:page.html.twig', array(
-                    'page' => $this->page,
-                    'form' => $form->createView(),
-                    'ajaxform' => $this->isAjaxRequest,
-                    'formMessage' => $formMessage,
-                    'logged_username' => $this->userName,
-                    'mobile' => $this->serveMobile
-                ));
+            // If the request was Ajax based
+            if($this->isAjaxRequest){
+                if ($contactFormProcess) {
+                    return $this->onAjaxSuccess('contact.flash.success');
+                } else {
+                    return $this->onAjaxError($contactFormHandler);
+                }
             }
         }
-        // If the form has not been submitted yet
-        else {
-            $response = $this->render('PageBundle:Default:page.html.twig', array(
-                'page' => $this->page,
-                'form' => $form->createView(),
-                'ajaxform' => $this->isAjaxRequest,
-                'logged_username' => $this->userName,
-                'mobile' => $this->serveMobile
-            ));
 
-            if ($this->enableHTTPCache) {
-                $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
-                    $response,
-                    $this->page->getDateLastModified(),
-                    false,
-                    3600
-                );
-            }
+        $response = $this->render('PageBundle:Default:page.html.twig', array(
+            'page' => $this->page,
+            'form' => $contactForm->createView(),
+            'ajaxform' => $this->isAjaxRequest,
+            'formMessage' => $formMessage,
+            'errorList' => $errorList,
+            'formHasErrors' => $formHasErrors,
+            'logged_username' => $this->userName,
+            'mobile' => $this->serveMobile
+        ));
 
-            return $response;
+        if ($this->enableHTTPCache) {
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                $response,
+                $this->page->getDateLastModified(),
+                false,
+                3600
+            );
         }
+
+        return $response;
     }
 
-    // Sort homepage items by the pageOrder value of the objects returned after the merge
+    /**
+     * Sort homepage items by the pageOrder value
+     *
+     * @param $introItemA
+     * @param $introItemB
+     *
+     * @return integer
+     */
     protected function sortHomepageItemsCompare($introItemA, $introItemB) {
         if ($introItemA->getPageOrder() == $introItemB->getPageOrder()) {
             return 0;
         }
         return ($introItemA->getPageOrder() < $introItemB->getPageOrder()) ? -1 : 1;
+    }
+
+    /**
+     * Extend with new method to handle Ajax response with errors
+     *
+     * @param $formHandler
+     *
+     * @return Response
+     */
+    protected function onAjaxError($formHandler)
+    {
+        $errorList = $formHandler->getErrors();
+        $formMessage = 'contactform.response.error';
+        $formHasErrors = true;
+
+        $ajaxFormData = array(
+            'errors' => $errorList,
+            'formMessage' => $this->container->get('translator')->trans($formMessage, array(), 'BardisCMSPageBundle'),
+            'hasErrors' => $formHasErrors
+        );
+
+        $ajaxFormResponse = new Response(json_encode($ajaxFormData));
+        $ajaxFormResponse->headers->set('Content-Type', 'application/json');
+
+        return $ajaxFormResponse;
+    }
+
+    /**
+     * Extend with new method to handle Ajax response with success
+     *
+     * @return Response
+     */
+    protected function onAjaxSuccess()
+    {
+        $errorList = array();
+        $formMessage = 'contactform.response.success';
+        $formHasErrors = false;
+
+        $ajaxFormData = array(
+            'errors' => $errorList,
+            'formMessage' => $this->container->get('translator')->trans($formMessage, array(), 'BardisCMSPageBundle'),
+            'hasErrors' => $formHasErrors
+        );
+
+        $ajaxFormResponse = new Response(json_encode($ajaxFormData));
+        $ajaxFormResponse->headers->set('Content-Type', 'application/json');
+
+        return $ajaxFormResponse;
     }
 
     // Sample Guzzle Call

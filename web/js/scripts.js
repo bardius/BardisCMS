@@ -74,7 +74,7 @@
         init: function () {
             // Start the AJAX based forms
             // ajaxSubmittedForm: function (formId, formSubmitBtnId, dataType, overrideSuccess, resetForm)
-            CMS.Forms.ajaxSubmittedForm('#contactform', '#contactFormBtn', 'json', true, true);
+            CMS.Forms.ajaxSubmittedForm('#contactform_form', '#contactFormBtn', 'json', true, true);
             CMS.Forms.ajaxSubmittedForm('#add_comment_form', '#submitCommentBtn', 'json', true, true);
 
             // Start the Ajax based sonata user forms
