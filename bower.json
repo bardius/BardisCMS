@@ -1,6 +1,6 @@
 {
     "name": "bardis-cms-symfony2",
-    "version": "v2.8.3",
+    "version": "v2.8.4",
     "homepage": "https://github.com/bardius/BardisCMS",
     "authors": [
         "George Bardis @bardius george@bardis.info"
@@ -17,7 +17,7 @@
     ],
     "dependencies": {
         "jquery-ias": "~2.2.1",
-        "modernizr": "~2.8.3",
+        "modernizr": "~2.8.4",
         "jasmine-jquery": "~2.1.0",
         "foundation": "~5.5.3",
         "foundation-datepicker": "~1.5.0"
