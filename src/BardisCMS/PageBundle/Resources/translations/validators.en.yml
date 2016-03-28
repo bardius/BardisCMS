@@ -1,41 +1,27 @@
 contact_form:
 
     firstname:
-        already_used: "This username is already used"
-        blank: "Please enter a username"
-        short: "The username must have at least {{ limit }} characters"
-        long: "The username is too long. Please restrain at {{ limit }} characters"
-        invalid_chars: "Usernames can contain characters a-z, 0-9, underscores and periods. The username cannot start with a period nor end with a period. It must also not have more than one period sequentially."
+        blank: "Please enter a first name"
+        short: "The first name must have at least {{ limit }} characters"
+        long: "The first name is too long. Please restrain at {{ limit }} characters"
+        invalid_chars: "The first name contains invalid characters"
+
+    surname:
+        blank: "Please enter a last name"
+        short: "The last name must have at least {{ limit }} characters"
+        long: "The last name is too long. Please restrain at {{ limit }} characters"
+        invalid_chars: "The last name contains invalid characters"
 
     email:
-        already_registered: "This email is already used. You can retrieve your password via the password reset feature"
-        already_used: "This email is already used"
         blank: "Please enter an email"
         short: "The email must have at least {{ limit }} characters"
         long: "The email is too long. Please restrain at {{ limit }} characters"
-        invalid: "The email is not valid"
+        invalid: "The email is not a valid email address"
 
-    password:
-        blank: "Please enter a password"
-        short: "The password must have at least {{ limit }} characters"
-        long: "The password is too long. Please restrain at {{ limit }} characters"
-        mismatch: "The entered passwords don't match"
-        isNotSafe: "The username or email cann not be used as password"
-        isNotLegal: "Password must contain at least one upper case character, one lower case character and one digit without spaces"
+    comment:
+        blank: "Please enter your comment / question"
+        short: "The comment / question must have at least {{ limit }} characters"
+        long: "The comment / question is too long. Please restrain at {{ limit }} characters"
 
-    new_password:
-        blank: "Please enter a password"
-        short: "The password must have at least {{ limit }} characters"
-        long: "The password is too long. Please restrain at {{ limit }} characters"
-        mismatch: "The entered passwords don't match"
-        isNotSafe: "The username or email cann not be used as password"
-        isNotLegal: "Password must contain at least one upper case character, one lower case character and one digit without spaces"
-
-    current_password:
-        invalid: "The entered password is invalid"
-
-    group:
-        blank: "Please enter a group name"
-        short: "The group name must have at least {{ limit }} characters"
-        long: "The group name is too long. Please restrain at {{ limit }} characters"
-        invalid_chars: "The group name contains invalid characters"
+    bottrap:
+        not_blank: "If you are not a bot this field should be empty"

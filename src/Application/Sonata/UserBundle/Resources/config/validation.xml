@@ -165,16 +165,6 @@
                 </option>
             </constraint>
             <constraint name="Regex">
-                <option name="pattern">/[\p{L}][\p{L} ]+/u</option>
-                <option name="match">true</option>
-                <option name="message">sonata_user.firstname.invalid_chars</option>
-                <option name="groups">
-                    <value>Registration</value>
-                    <value>OverriddenProfile</value>
-                    <value>GenericDetails</value>
-                </option>
-            </constraint>
-            <constraint name="Regex">
                 <option name="pattern">/[\p{L}][\p{L}\.\- '`]+/u</option>
                 <option name="match">true</option>
                 <option name="message">sonata_user.firstname.invalid_chars</option>

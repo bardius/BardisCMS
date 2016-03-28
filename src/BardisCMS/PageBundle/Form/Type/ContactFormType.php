@@ -35,7 +35,7 @@ class ContactFormType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
 
         $builder->add('firstname', TextType::class, array(
-            'label' => 'First Name',
+            'label' => 'contact_form.firstname',
             'translation_domain' => 'BardisCMSPageBundle',
             'required' => true,
             'attr' => array(
@@ -46,7 +46,7 @@ class ContactFormType extends AbstractType {
         );
 
         $builder->add('surname', TextType::class, array(
-            'label' => 'Surname',
+            'label' => 'contact_form.lastname',
             'translation_domain' => 'BardisCMSPageBundle',
             'required' => true,
             'attr' => array(
@@ -57,7 +57,7 @@ class ContactFormType extends AbstractType {
         );
 
         $builder->add('email', EmailType::class, array(
-            'label' => 'Email',
+            'label' => 'contact_form.email',
             'translation_domain' => 'BardisCMSPageBundle',
             'required' => true,
             'attr' => array(
@@ -68,7 +68,7 @@ class ContactFormType extends AbstractType {
         );
 
         $builder->add('comment', TextareaType::class, array(
-            'label' => 'Comment / Question',
+            'label' => 'contact_form.comment',
             'translation_domain' => 'BardisCMSPageBundle',
             'required' => true,
             'attr' => array(
@@ -81,7 +81,7 @@ class ContactFormType extends AbstractType {
         );
 
         $builder->add('bottrap', TextType::class, array(
-            'label' => 'Bot trap',
+            'label' => 'contact_form.bottrap',
             'translation_domain' => 'BardisCMSPageBundle',
             'required' => false,
             'attr' => array(
@@ -99,26 +99,28 @@ class ContactFormType extends AbstractType {
         $contactFormConstraints = new Assert\Collection(array(
             'firstname' => array(
                 new Assert\NotBlank(array('message' => 'contact_form.firstname.blank')),
-                new Assert\Regex(array('pattern' => '/[0-9]/', 'match' => false, 'message' => 'First Name cannot contain numbers')),
-                new Assert\Length(array('min' => 2, 'max' => 50))
+                new Assert\Regex(array('pattern' => '/[\p{L}][\p{L}\.\- \'\`]+/u', 'match' => true, 'message' => 'contact_form.firstname.invalid_chars')),
+                new Assert\Regex(array('pattern' => '/[\d\!\"\£\$\%\^\*\(\)\_\=\+\[\]\{\}\;\:\@\|\,]/', 'match' => false, 'message' => 'contact_form.firstname.invalid_chars')),
+                new Assert\Length(array('min' => 2, 'max' => 64, 'minMessage' => 'contact_form.firstname.short', 'maxMessage' => 'contact_form.firstname.long'))
             ),
             'surname' => array(
-                new Assert\NotBlank(array('message' => 'Surname should not be blank.')),
-                new Assert\Regex(array('pattern' => '/[0-9]/', 'match' => false, 'message' => 'Surname cannot contain numbers')),
-                new Assert\Length(array('min' => 2, 'max' => 50))
+                new Assert\NotBlank(array('message' => 'contact_form.surname.blank')),
+                new Assert\Regex(array('pattern' => '/[\p{L}][\p{L}\.\- \'\`]+/u', 'match' => true, 'message' => 'contact_form.surname.invalid_chars')),
+                new Assert\Regex(array('pattern' => '/[\d\!\"\£\$\%\^\*\(\)\_\=\+\[\]\{\}\;\:\@\|\,]/', 'match' => false, 'message' => 'contact_form.surname.invalid_chars')),
+                new Assert\Length(array('min' => 2, 'max' => 64, 'minMessage' => 'contact_form.surname.short', 'maxMessage' => 'contact_form.surname.long'))
             ),
             'email' => array(
-                new Assert\NotBlank(array('message' => 'Email should not be blank.')),
-                new Assert\Length(array('min' => 2, 'max' => 150)),
-                new Assert\Email(array('message' => 'Invalid email address.'))
+                new Assert\NotBlank(array('message' => 'contact_form.email.blank')),
+                new Assert\Length(array('min' => 2, 'max' => 255, 'minMessage' => 'contact_form.email.short', 'maxMessage' => 'contact_form.email.long')),
+                new Assert\Email(array('message' => 'contact_form.email.invalid'))
             ),
             'comment' => array(
-                new Assert\NotBlank(array('message' => 'Comment should not be blank.')),
-                new Assert\Length(array('min' => 2, 'max' => 1000))
+                new Assert\NotBlank(array('message' => 'contact_form.comment.blank')),
+                new Assert\Length(array('min' => 2, 'max' => 1000, 'minMessage' => 'contact_form.comment.short', 'maxMessage' => 'contact_form.comment.long'))
             ),
             'bottrap' => array(
-                new Assert\Blank(array('message' => 'Bot Trap should be blank.')),
-                new Assert\Length(array('max' => 1))
+                new Assert\Blank(array('message' => 'contact_form.bottrap.not_blank')),
+                new Assert\Length(array('max' => 1, 'maxMessage' => 'contact_form.bottrap.not_blank'))
             )
         ));
 

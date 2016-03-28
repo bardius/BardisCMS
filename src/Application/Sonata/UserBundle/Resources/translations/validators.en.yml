@@ -13,7 +13,7 @@ fos_user:
         blank: "Please enter an email"
         short: "The email must have at least {{ limit }} characters"
         long: "The email is too long. Please restrain at {{ limit }} characters"
-        invalid: "The email is not valid"
+        invalid: "The email is not a valid email address"
 
     password:
         blank: "Please enter a password"
@@ -55,7 +55,7 @@ sonata_user:
         blank: "Please enter an email"
         short: "The email must have at least {{ limit }} characters"
         long: "The email is too long. Please restrain at {{ limit }} characters"
-        invalid: "The email is not valid"
+        invalid: "The email is not a valid email address"
 
     password:
         blank: "Please enter a password"

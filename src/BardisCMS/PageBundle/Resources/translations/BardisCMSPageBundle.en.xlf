@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="" >
+        <body>
+            <trans-unit id="contact_form.firstname">
+                <source>contact_form.firstname</source>
+                <target>First Name*</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>Please enter your First Name</source>
+                <target>Please enter your First Name</target>
+            </trans-unit>
+            <trans-unit id="contact_form.lastname">
+                <source>contact_form.lastname</source>
+                <target>Last Name*</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>Please enter your Surname</source>
+                <target>Please enter your Surname</target>
+            </trans-unit>
+            <trans-unit id="contact_form.email">
+                <source>contact_form.email</source>
+                <target>email*</target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>Please enter a valid email address</source>
+                <target>Please enter a valid email address</target>
+            </trans-unit>
+            <trans-unit id="contact_form.comment">
+                <source>contact_form.comment</source>
+                <target>Comment / Question*</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>Please enter your Comment / Question</source>
+                <target>Please enter your Comment / Question</target>
+            </trans-unit>
+            <trans-unit id="contact_form.bottrap">
+                <source>contact_form.bottrap</source>
+                <target>Bot trap</target>
+            </trans-unit>
+            <trans-unit id="contact_form.submit">
+                <source>contact_form.submit</source>
+                <target>Submit</target>
+            </trans-unit>
+            <trans-unit id="contact_form.mandatory_fields">
+                <source>contact_form.mandatory_fields</source>
+                <target>* Mandatory fields</target>
+            </trans-unit>
+            <trans-unit id="contact_form.response.error">
+                <source>contact_form.response.error</source>
+                <target>there was an error sending your comment / question. Please try again</target>
+            </trans-unit>
+            <trans-unit id="contact_form.response.success">
+                <source>contact_form.response.success</source>
+                <target>Your comment / question has been successfully sent</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

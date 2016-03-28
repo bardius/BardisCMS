@@ -430,12 +430,12 @@ class DefaultController extends Controller {
 
             // Validate the data and get errors if any
             if ($contactFormProcess) {
-                $formMessage = $this->container->get('translator')->trans('contactform.response.success', array(), 'BardisCMSPageBundle');
+                $formMessage = $this->container->get('translator')->trans('contact_form.response.success', array(), 'BardisCMSPageBundle');
                 $errorList = array();
                 $formHasErrors = false;
             }
             else {
-                $formMessage = $this->container->get('translator')->trans('contactform.response.error', array(), 'BardisCMSPageBundle');
+                $formMessage = $this->container->get('translator')->trans('contact_form.response.error', array(), 'BardisCMSPageBundle');
                 $errorList = $this->get('bardiscms_page.services.helpers')->getFormErrorMessages($contactForm);
                 $formHasErrors = true;
             }
@@ -498,7 +498,7 @@ class DefaultController extends Controller {
     protected function onAjaxError($formHandler)
     {
         $errorList = $formHandler->getErrors();
-        $formMessage = 'contactform.response.error';
+        $formMessage = 'contact_form.response.error';
         $formHasErrors = true;
 
         $ajaxFormData = array(
@@ -521,7 +521,7 @@ class DefaultController extends Controller {
     protected function onAjaxSuccess()
     {
         $errorList = array();
-        $formMessage = 'contactform.response.success';
+        $formMessage = 'contact_form.response.success';
         $formHasErrors = false;
 
         $ajaxFormData = array(
