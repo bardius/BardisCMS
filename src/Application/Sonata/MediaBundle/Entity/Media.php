@@ -37,4 +37,26 @@ class Media extends BaseMedia {
         return $this->id;
     }
 
+    /*
+     * Required to fix known bug on media update while on a form
+     * https://github.com/sonata-project/SonataMediaBundle/issues/247
+     */
+    public function setBinaryContent($binaryContent)
+    {
+        $this->previousProviderReference = $this->providerReference;
+        $this->providerReference = null;
+
+        if ($this->providerReference) {
+            $this->previousProviderReference = $this->providerReference;
+            $this->providerReference = null;
+        }
+        else if ($this->previousProviderReference) {
+            $this->providerReference = $this->previousProviderReference;
+        }
+        else{
+            $this->previousProviderReference = null;
+            $this->providerReference = null;
+        }
+        $this->binaryContent = $binaryContent;
+    }
 }

@@ -92,6 +92,32 @@ Manage the extended Sonata User entity with extra information for the users
     </li>
 
     <li class="accordion-navigation">
+        <a href="#media"  role="tab" id="media-heading" aria-controls="media" title="Account media">
+            Account media
+        </a>
+        <div id="media" class="content" role="tabpanel" aria-labelledby="media-heading">
+            {% form_theme accountMediaForm with ['Form/fields.html.twig'] %}
+            {{ form_start(accountMediaForm, {'action': path('sonata_user_profile_edit'), 'method': 'POST', 'attr': {'id': 'sonata_user_account_media_form', 'novalidate': 'novalidate'} }) }}
+            <div class="row">
+                <div class="large-12 small-12 columns">
+                    <small class="right">{{ 'form.mandatory_fields'|trans({}, 'SonataUserBundle') }}</small>
+                </div>
+                {{ form_widget(accountMediaForm) }}
+                <div class="large-12 small-12 columns">
+                    <input type="hidden" name="form_section" value="media" />
+                    <button type="submit" name="submit" id="userAccountMediaFormBtn" class="button">{{ 'profile.edit.submit'|trans({}, 'SonataUserBundle') }}</button>
+                    {% if formMessage is defined %}
+                        <small class="form-message error">
+                            {{ formMessage }}
+                        </small>
+                    {% endif %}
+                </div>
+            </div>
+            {{ form_end(accountMediaForm) }}
+        </div>
+    </li>
+
+    <li class="accordion-navigation">
         <a href="#password" role="tab" id="password-heading" aria-controls="password" title="Change password">
             Change password
         </a>

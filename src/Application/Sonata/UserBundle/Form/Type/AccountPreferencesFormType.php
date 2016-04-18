@@ -145,6 +145,17 @@ class AccountPreferencesFormType extends AbstractType {
                 ],
                 'required' => false
             ))
+            ->add('secretQuestionResponse', TextType::class, array(
+                'label' => 'form.secretQuestionResponse',
+                'translation_domain' => 'SonataUserBundle',
+                'data' => $defaults['secretQuestionResponse'],
+                "attr" => [
+                    'placeholder' => "The secret question answer",
+                    'minlength' => 2,
+                    'maxlength' => 255
+                ],
+                'required' => false
+            ))
         ;
 	}
 

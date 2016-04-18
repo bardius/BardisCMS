@@ -15,6 +15,7 @@ use Sonata\UserBundle\Entity\BaseUser as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Application\Sonata\MediaBundle\Entity\Media;
 
 
 /**
@@ -175,6 +176,18 @@ class User extends BaseUser
      * default to register
      */
     protected $campaign = User::CAMPAIGN_REGISTER;
+
+    /**
+     * @ORM\OneToOne(targetEntity="\Application\Sonata\MediaBundle\Entity\Media", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="userAvatar", referencedColumnName="id",  nullable=true, onDelete="SET NULL")
+     */
+    protected $userAvatar = null;
+
+    /**
+     * @ORM\OneToOne(targetEntity="\Application\Sonata\MediaBundle\Entity\Media", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="userHeroImage", referencedColumnName="id",  nullable=true, onDelete="SET NULL")
+     */
+    protected $userHeroImage = null;
 
     /**
      * @return int
@@ -496,6 +509,50 @@ class User extends BaseUser
         $this->campaign = $campaign;
     }
 
+    /**
+     * Set userAvatar
+     *
+     * @param \Application\Sonata\MediaBundle\Entity\Media $userAvatar
+     * @return User
+     */
+    public function setUserAvatar(\Application\Sonata\MediaBundle\Entity\Media $userAvatar = null) {
+        $this->userAvatar = $userAvatar;
+        return $this;
+    }
+
+    /**
+     * Get userAvatar
+     *
+     * @return \Application\Sonata\MediaBundle\Entity\Media
+     */
+    public function getUserAvatar() {
+        return $this->userAvatar;
+    }
+
+    /**
+     * Set userHeroImage
+     *
+     * @param \Application\Sonata\MediaBundle\Entity\Media $userHeroImage
+     * @return User
+     */
+    public function setUserHeroImage(\Application\Sonata\MediaBundle\Entity\Media $userHeroImage = null) {
+        $this->userHeroImage = $userHeroImage;
+        return $this;
+    }
+
+    /**
+     * Get userHeroImage
+     *
+     * @return \Application\Sonata\MediaBundle\Entity\Media
+     */
+    public function getUserHeroImage() {
+        return $this->userHeroImage;
+    }
+
+
+    /**
+     * @param string $email
+     */
     public function setEmail($email)
     {
         $this->email = $email;

@@ -214,6 +214,7 @@ twig:
         - 'ContentBlockBundle:Form:fields.html.twig'
         - 'PageBundle:Form:fields.html.twig'
         - 'SonataCoreBundle:Form:datepicker.html.twig'
+        - 'SonataUserBundle:Form:fields.html.twig'
 
 # Assetic Configuration
 minifier:

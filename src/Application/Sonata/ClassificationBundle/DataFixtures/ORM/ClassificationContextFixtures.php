@@ -19,13 +19,13 @@ class ClassificationContextFixtures extends AbstractFixture implements OrderedFi
 
     public function load(ObjectManager $manager) {
 
-        $context4 = new Context();
-        $context4->setId('default');
-        $context4->setName('default');
-        $context4->setEnabled(1);
-        $context4->setCreatedAt(new \DateTime());
-        $context4->setUpdatedAt(new \DateTime());
-        $manager->persist($context4);
+        $context0 = new Context();
+        $context0->setId('default');
+        $context0->setName('default');
+        $context0->setEnabled(1);
+        $context0->setCreatedAt(new \DateTime());
+        $context0->setUpdatedAt(new \DateTime());
+        $manager->persist($context0);
 
         $context1 = new Context();
         $context1->setId('intro');
@@ -51,12 +51,30 @@ class ClassificationContextFixtures extends AbstractFixture implements OrderedFi
         $context3->setUpdatedAt(new \DateTime());
         $manager->persist($context3);
 
+        $context4 = new Context();
+        $context4->setId('user_avatar');
+        $context4->setName('user_avatar');
+        $context4->setEnabled(1);
+        $context4->setCreatedAt(new \DateTime());
+        $context4->setUpdatedAt(new \DateTime());
+        $manager->persist($context4);
+
+        $context5 = new Context();
+        $context5->setId('user_hero');
+        $context5->setName('user_hero');
+        $context5->setEnabled(1);
+        $context5->setCreatedAt(new \DateTime());
+        $context5->setUpdatedAt(new \DateTime());
+        $manager->persist($context5);
+
         $manager->flush();
 
-        $this->addReference('context4', $context4);
+        $this->addReference('context0', $context0);
         $this->addReference('context1', $context1);
         $this->addReference('context2', $context2);
         $this->addReference('context3', $context3);
+        $this->addReference('context4', $context4);
+        $this->addReference('context5', $context5);
     }
 
     public function getOrder() {

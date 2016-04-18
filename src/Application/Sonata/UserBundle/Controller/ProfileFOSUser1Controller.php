@@ -218,6 +218,10 @@ class ProfileFOSUser1Controller extends Controller
         $accountPreferencesForm = $this->container->get('sonata_user.account_preferences.form');
         $accountPreferencesFormHandler = $this->container->get('sonata_user.account_preferences.form.handler');
 
+        // Account Media Form
+        $accountMediaForm = $this->container->get('sonata_user.account_media.form');
+        $accountMediaFormHandler = $this->container->get('sonata_user.account_media.form.handler');
+
         // Determine what form to process
         $formSection = $this->container->get('request')->request->get('form_section');
 
@@ -267,6 +271,21 @@ class ProfileFOSUser1Controller extends Controller
                     }
                 }
                 break;
+            case "media":
+                $accountMediaProcess = $accountMediaFormHandler->process($user);
+                if ($accountMediaProcess) {
+                    $this->addFlash('fos_user_success', 'profile.flash.updated');
+                }
+
+                // If the request was Ajax based
+                if($this->isAjaxRequest){
+                    if ($accountMediaProcess) {
+                        return $this->onAjaxSuccess('profile.flash.updated');
+                    } else {
+                        return $this->onAjaxError($accountMediaFormHandler);
+                    }
+                }
+                break;
             case "password":
                 $passwordProcess = $passwordFormHandler->process($user);
                 if ($passwordProcess) {
@@ -289,6 +308,7 @@ class ProfileFOSUser1Controller extends Controller
             'genericDetailsForm' => $genericDetailsForm->createView(),
             'contactDetailsForm' => $contactDetailsForm->createView(),
             'accountPreferencesForm' => $accountPreferencesForm->createView(),
+            'accountMediaForm' => $accountMediaForm->createView(),
             'page' => $this->page,
             'logged_username' => $this->userName,
             'mobile' => $this->serveMobile

@@ -33,6 +33,7 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Sonata\MediaBundle\Form\Type\MediaType;
 
 /**
  * This class is used to render the sonata admin for the user details and listing
@@ -201,6 +202,16 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
                 ))
                 ->add('termsAccepted', null, array(
                     'label' => 'form.tnc',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+            ->end()
+            ->with('Account Media')
+                ->add('userAvatar',null, array(
+                    'label' => 'form.userAvatar',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
+                ->add('userHeroImage',null, array(
+                    'label' => 'form.userHeroImage',
                     'translation_domain' => 'SonataUserBundle',
                 ))
             ->end()
@@ -405,6 +416,28 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
                         'label' => 'form.tnc',
                         'translation_domain' => 'SonataUserBundle',
                         'required' => true
+                    ))
+                ->end()
+            ->end()
+            ->tab('Account Media')
+                ->with('Media', array('collapsed' => true))
+                    ->add('userAvatar', MediaType::class, array(
+                        'data_class' =>  'Application\Sonata\MediaBundle\Entity\Media',
+                        'provider' => 'sonata.media.provider.image',
+                        'context' => 'user_avatar',
+                        'attr' => array('class' => 'imagefield'),
+                        'label' => 'form.userAvatar',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => false
+                    ))
+                    ->add('userHeroImage', MediaType::class, array(
+                        'data_class' =>  'Application\Sonata\MediaBundle\Entity\Media',
+                        'provider' => 'sonata.media.provider.image',
+                        'context' => 'user_hero',
+                        'attr' => array('class' => 'imagefield'),
+                        'label' => 'form.userHeroImage',
+                        'translation_domain' => 'SonataUserBundle',
+                        'required' => false
                     ))
                 ->end()
             ->end()

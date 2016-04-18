@@ -20,7 +20,7 @@ class ClassificationCategoryFixtures extends AbstractFixture implements OrderedF
     public function load(ObjectManager $manager) {
 
         $category1 = new Category();
-        $category1->setContext($manager->merge($this->getReference('context4')));
+        $category1->setContext($manager->merge($this->getReference('context0')));
         $category1->setName('default');
         $category1->setEnabled(1);
         $category1->setSlug('default');
@@ -67,12 +67,38 @@ class ClassificationCategoryFixtures extends AbstractFixture implements OrderedF
         $category4->setUpdatedAt(new \DateTime());
         $manager->persist($category4);
 
+        $category5 = new Category();
+        $category5->setContext($manager->merge($this->getReference('context4')));
+        $category5->setName('user_avatar');
+        $category5->setEnabled(1);
+        $category5->setSlug('user_avatar');
+        $category5->setDescription('User Avatars Category');
+        $category5->setPosition(null);
+        $category5->setParent(null);
+        $category5->setCreatedAt(new \DateTime());
+        $category5->setUpdatedAt(new \DateTime());
+        $manager->persist($category5);
+
+        $category6 = new Category();
+        $category6->setContext($manager->merge($this->getReference('context5')));
+        $category6->setName('user_hero');
+        $category6->setEnabled(1);
+        $category6->setSlug('user_hero');
+        $category6->setDescription('User Hero Images Category');
+        $category6->setPosition(null);
+        $category6->setParent(null);
+        $category6->setCreatedAt(new \DateTime());
+        $category6->setUpdatedAt(new \DateTime());
+        $manager->persist($category6);
+
         $manager->flush();
 
         $this->addReference('category1', $category1);
         $this->addReference('category2', $category2);
         $this->addReference('category3', $category3);
         $this->addReference('category4', $category4);
+        $this->addReference('category5', $category5);
+        $this->addReference('category6', $category6);
     }
 
     public function getOrder() {

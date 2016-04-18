@@ -20,6 +20,9 @@
         <parameter key="sonata_user.account_preferences.form.class">Symfony\Component\Form\Form</parameter>
         <parameter key="sonata_user.account_preferences.form.type.class">Application\Sonata\UserBundle\Form\Type\AccountPreferencesFormType</parameter>
         <parameter key="sonata_user.account_preferences.form.handler.class">Application\Sonata\UserBundle\Form\Handler\AccountPreferencesFormHandler</parameter>
+        <parameter key="sonata_user.account_media.form.class">Symfony\Component\Form\Form</parameter>
+        <parameter key="sonata_user.account_media.form.type.class">Application\Sonata\UserBundle\Form\Type\AccountMediaFormType</parameter>
+        <parameter key="sonata_user.account_media.form.handler.class">Application\Sonata\UserBundle\Form\Handler\AccountMediaFormHandler</parameter>
         <parameter key="sonata_user.change_password.form.class">Symfony\Component\Form\Form</parameter>
         <parameter key="sonata_user.change_password.form.type.class">Application\Sonata\UserBundle\Form\Type\ChangePasswordFormType</parameter>
         <parameter key="sonata_user.change_password.form.handler.class">Application\Sonata\UserBundle\Form\Handler\ChangePasswordFormHandler</parameter>
@@ -142,6 +145,29 @@
 
         <service id="sonata_user.account_preferences.form.handler" class="%sonata_user.account_preferences.form.handler.class%" scope="request">
             <argument type="service" id="sonata_user.account_preferences.form" />
+            <argument type="service" id="request" />
+            <argument type="service" id="fos_user.user_manager" />
+            <argument type="service" id="service_container" />
+        </service>
+
+        <!-- Account Media Form -->
+        <service id="sonata_user.account_media.form" factory-method="createNamed" factory-service="form.factory" class="%sonata_user.account_media.form.class%">
+            <argument>sonata_user_account_media_form</argument>
+            <argument>sonata_user_account_media</argument>
+            <argument>null</argument>
+            <argument type="collection">
+                <argument key="validation_groups">AccountMedia</argument>
+            </argument>
+        </service>
+
+        <service id="sonata_user.account_media.form.type" class="%sonata_user.account_media.form.type.class%">
+            <tag name="form.type" alias="sonata_user_account_media" />
+            <argument>%fos_user.model.user.class%</argument>
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="sonata_user.account_media.form.handler" class="%sonata_user.account_media.form.handler.class%" scope="request">
+            <argument type="service" id="sonata_user.account_media.form" />
             <argument type="service" id="request" />
             <argument type="service" id="fos_user.user_manager" />
             <argument type="service" id="service_container" />

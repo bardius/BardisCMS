@@ -160,7 +160,11 @@ form:
     enabled:                        Enabled
     credentialsExpired:             Credentials expired
     roles:                          Roles
+    userAvatar:                     User Avatar
+    userHeroImage:                  User Hero Image
 
+widget_label_binary_content:        Select Image
+widget_label_unlink:        Remove Image
 
 # Change Password
 password:

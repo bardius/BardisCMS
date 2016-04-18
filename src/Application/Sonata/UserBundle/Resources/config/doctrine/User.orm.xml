@@ -70,6 +70,22 @@
         <field name="secretQuestion"            type="string"   column="secret_question"            length="255"    nullable="true" />
         <field name="secretQuestionResponse"    type="string"   column="secret_question_response"   length="255"    nullable="true" />
 
+        <!-- user media -->
+        <one-to-one field="userAvatar" target-entity="\Application\Sonata\MediaBundle\Entity\Media" orphan-removal="true">
+            <cascade>
+                <cascade-remove />
+                <cascade-persist />
+            </cascade>
+            <join-column name="userAvatar" referenced-column-name="id" nullable="true" on-delete="SET NULL" />
+        </one-to-one>
+        <one-to-one field="userHeroImage" target-entity="\Application\Sonata\MediaBundle\Entity\Media" orphan-removal="true" >
+            <cascade>
+                <cascade-remove />
+                <cascade-persist />
+            </cascade>
+            <join-column name="userHeroImage" referenced-column-name="id" nullable="true" on-delete="SET NULL" />
+        </one-to-one>
+
         <!-- lifecycle callbacks -->
         <lifecycle-callbacks>
             <lifecycle-callback type="prePersist" method="prePersist" />
