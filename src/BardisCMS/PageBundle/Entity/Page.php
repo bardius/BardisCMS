@@ -40,6 +40,7 @@ class Page {
     /*
      * Error Page statuses
      */
+    const ERROR_405 = "405";
     const ERROR_404 = "404";
     const ERROR_403 = "403";
     const ERROR_401 = "401";
@@ -824,6 +825,7 @@ class Page {
     public static function getErrorStatusList()
     {
         return array(
+            Page::ERROR_405 => "405",
             Page::ERROR_404 => "404",
             Page::ERROR_403 => "403",
             Page::ERROR_401 => "401",

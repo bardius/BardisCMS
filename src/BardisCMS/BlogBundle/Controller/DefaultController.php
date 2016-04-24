@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use FOS\UserBundle\Model\UserInterface;
 
 use BardisCMS\CommentBundle\Entity\Comment;
-use BardisCMS\CommentBundle\Form\Type\CommentType;
+use BardisCMS\CommentBundle\Form\Type\CommentFormType;
 use BardisCMS\BlogBundle\Form\Type\FilterBlogPostsFormType;
 
 use BardisCMS\PageBundle\Entity\Page as Page;
@@ -169,7 +169,7 @@ class DefaultController extends Controller {
                 break;
 
             default:
-                // TODO: Make this to be a setting of the Comments bundle
+                // TODO: Make this to be a setting/service of the Comments bundle
                 $commentsEnabled = true;
 
                 if ($commentsEnabled) {
@@ -177,7 +177,9 @@ class DefaultController extends Controller {
                     // Adding the form for new comment
                     $comment = new Comment();
                     $comment->setBlogPost($this->page);
-                    $form = $this->createForm(new CommentType(), $comment);
+
+                    //$form = $this->createForm(new CommentFormType(), $comment);
+                    $form = $this->get('bardiscms_comment.comment.form');
 
                     // Retrieving the comments the views
                     $postComments = $this->getPostComments($this->id);

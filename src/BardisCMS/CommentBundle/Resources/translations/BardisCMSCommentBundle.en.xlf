@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="comment.form.mandatory_fields">
+                <source>comment.form.mandatory_fields</source>
+                <target>* mandatory fields</target>
+            </trans-unit>
+            <trans-unit id="comment.form.title.label">
+                <source>comment.form.title.label</source>
+                <target>* Please enter title</target>
+            </trans-unit>
+            <trans-unit id="comment.form.title.placeholder">
+                <source>comment.form.title.placeholder</source>
+                <target>title</target>
+            </trans-unit>
+            <trans-unit id="comment.form.username.label">
+                <source>comment.form.username.label</source>
+                <target>* Username</target>
+            </trans-unit>
+            <trans-unit id="comment.form.username.placeholder">
+                <source>comment.form.username.placeholder</source>
+                <target>username</target>
+            </trans-unit>
+            <trans-unit id="comment.form.comment.label">
+                <source>comment.form.comment.label</source>
+                <target>* Comment</target>
+            </trans-unit>
+            <trans-unit id="comment.form.comment.placeholder">
+                <source>comment.form.comment.placeholder</source>
+                <target>comment...</target>
+            </trans-unit>
+            <trans-unit id="comment.form.bottrap.label">
+                <source>comment.form.bottrap.label</source>
+                <target>Bot Trap</target>
+            </trans-unit>
+            <trans-unit id="comment.form.submit">
+                <source>comment.form.submit</source>
+                <target>Submit</target>
+            </trans-unit>
+            <trans-unit id="comment.form.response.error">
+                <source>comment.form.response.error</source>
+                <target>There was an error sending your comment. Please try again</target>
+            </trans-unit>
+            <trans-unit id="comment.form.response.success">
+                <source>comment.form.response.success</source>
+                <target>Your comment has been successfully sent</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

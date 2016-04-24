@@ -1,0 +1,20 @@
+comment:
+
+    username:
+        blank: "Please enter a username"
+        short: "The username must have at least {{ limit }} characters"
+        long: "The username is too long. Please restrain at {{ limit }} characters"
+        invalid_chars: "Usernames can contain characters a-z, 0-9, underscores and periods. The username cannot start with a period nor end with a period. It must also not have more than one period sequentially."
+
+    title:
+        blank: "Please enter a title for the comment"
+        short: "The title must have at least {{ limit }} characters"
+        long: "The title is too long. Please restrain at {{ limit }} characters"
+
+    comment:
+        blank: "Please enter a comment"
+        short: "The comment must have at least {{ limit }} characters"
+        long: "The comment is too long. Please restrain at {{ limit }} characters"
+
+    bottrap:
+        not_blank: "If you are not a bot this field should be empty"

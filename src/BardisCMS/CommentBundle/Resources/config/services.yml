@@ -1,6 +1,40 @@
+parameters:
+    comment.listeners.timestamp.class: BardisCMS\CommentBundle\Listener\TimestampListener
+    comment.form.class: Symfony\Component\Form\Form
+    comment.form.type.class: BardisCMS\CommentBundle\Form\Type\CommentFormType
+    comment.form.handler.class: BardisCMS\CommentBundle\Form\Handler\CommentFormHandler
+    comment.model.class: BardisCMS\CommentBundle\Entity\Comment
+
 services:
-      
-  comment.comment_timestamp_listener:
-    class: BardisCMS\CommentBundle\Listener\TimestampListener
-    tags:
-        - { name: doctrine.event_listener, event: onFlush }
+    bardiscms_comment.timestamp_listener:
+        class: %comment.listeners.timestamp.class%
+        tags:
+            - { name: doctrine.event_listener, event: onFlush }
+
+    bardiscms_comment.comment.form:
+        factory_method: createNamed
+        factory_service: form.factory
+        class: %comment.form.class%
+        arguments:
+            - commentform_form                      # name of the form
+            - commentform                           # alias of the form type
+            - null                                  # data to bind, this is where your entity could go if you have that defined as a service
+            - { validation_groups: [AddComment] }   # validation groups
+
+    bardiscms_comment.comment.form.handler:
+        class: %comment.form.handler.class%
+        scope: request
+        arguments:
+            - "@bardiscms_comment.comment.form"
+            - "@request"
+            - "@service_container"
+            - "@doctrine.orm.entity_manager"
+
+    bardiscms_comment.comment.form.type:
+        class: %comment.form.type.class%
+        tags:
+            - { name: form.type, alias: commentform }
+        arguments:
+            - %comment.model.class%
+            - "@service_container"
+

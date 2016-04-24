@@ -11,204 +11,279 @@
 namespace BardisCMS\CommentBundle\Controller;
 
 use BardisCMS\CommentBundle\Entity\Comment;
-use BardisCMS\CommentBundle\Form\Type\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
+use BardisCMS\PageBundle\Entity\Page as Page;
+use BardisCMS\BlogBundle\Entity\Blog as Blog;
+
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 class DefaultController extends Controller {
 
+    // Adding variables required for the rendering of pages
+    protected $container;
     private $pageRequest;
+    private $userName;
+    private $settings;
+    private $serveMobile;
+    private $enableHTTPCache;
+    private $logged_user;
+    private $isAjaxRequest;
+    private $commentType;
+    private $associated_object_id;
+    private $associated_object;
 
-    // Add a new comment
-    public function addCommentAction($commentType, $page_id = null, Request $request) {
+    /**
+     * Override the ContainerAware setContainer to accommodate the extra variables
+     *
+     * @param ContainerInterface $container
+     */
+    public function setContainer(ContainerInterface $container = null) {
+        $this->container = $container;
 
-        $this->pageRequest = $request;
+        // Setting the scoped variables required for the rendering of the page
+        $this->userName = null;
+        $this->commentType = null;
+        $this->associated_object_id = null;
+        $this->associated_object = null;
 
-        if ($commentType == 'Blog') {
-            $blog_post = $this->getBlog($page_id);
+        // Get the settings from setting bundle
+        $this->settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
 
-            if (!$blog_post) {
-                throw $this->createNotFoundException('Unable to find Blog post.');
-            } else {
-                return $this->createComment($commentType, $blog_post, $page_id);
-            }
-        } else {
-            throw $this->createNotFoundException('Commenting is not available.');
+        // Get the highest user role security permission
+        $this->userRole = $this->get('sonata_user.services.helpers')->getLoggedUserHighestRole();
+
+        // Check if mobile content should be served
+        $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
+
+        // Set the flag for allowing HTTP cache
+        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+
+        // Check if request was Ajax based
+        $this->isAjaxRequest = $this->get('bardiscms_page.services.ajax_detection')->isAjaxRequest();
+
+        // Set the publish statuses that are available for the user
+        $this->publishStates = $this->get('bardiscms_page.services.helpers')->getAllowedPublishStates($this->userRole);
+
+        // Get the logged user if any
+        $this->logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
+        if (is_object($this->logged_user) && $this->logged_user instanceof UserInterface) {
+            $this->userName = $this->logged_user->getUsername();
         }
     }
 
-    // Validate form and store data with proper associations
-    protected function createComment($commentType, $associated_object, $associated_object_id) {
+    /**
+     * Add a new comment
+     *
+     * @param $commentType
+     * @param $associated_object_id
+     * @param $request
+     *
+     * @return Response
+     */
+    public function addCommentAction($commentType, $associated_object_id = null, Request $request) {
+        $this->pageRequest = $request;
+        $this->commentType = $commentType;
+        $this->associated_object_id = $associated_object_id;
 
-        // Create new comment object and associate with the desired object
-        $comment = new Comment();
-        if ($commentType == 'Blog') {
-            $comment->setBlogPost($associated_object);
-            $comment->setCommentType('Blog');
-            $comment->setApproved(false);
-        } else {
-            throw $this->createNotFoundException('Commenting is not available.');
+        if($this->associated_object_id == null){
+            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
 
-        // get the request and check if it was ajax based
-        $ajaxForm = $this->pageRequest->get('isAjax');
-        if (!isset($ajaxForm) || !$ajaxForm) {
-            $ajaxForm = false;
-        }
+        switch($this->commentType){
+            case 'Blog':
+                $this->associated_object = $this->getBlogPost();
 
-        // Bind the request to the comment form
-        $form = $this->createForm(new CommentType(), $comment);
-        $form->handleRequest($this->pageRequest);
-
-        //Prepare the response data
-        $errorList = array();
-        $successMsg = '';
-        $formhasErrors = true;
-
-        if ($form->isValid()) {
-
-            // Persist (save) the form data to the database
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($comment);
-            $em->flush();
-
-            // The response for the user upon successful submission
-            $successMsg = 'Thank you submitting your comment.';
-            $formMessage = $successMsg;
-            $formhasErrors = false;
-        } else {
-            // Validate the data and get errors
-            $errorList = $this->getFormErrorMessages($form);
-            $formMessage = 'There was an error submitting your comment. Please try again.';
-        }
-
-        // Return the response to the user
-        if ($ajaxForm) {
-
-            $ajaxFormData = array(
-                'errors' => $errorList,
-                'formMessage' => $formMessage,
-                'hasErrors' => $formhasErrors
-            );
-
-            // Return the response in json format
-            $ajaxFormResponse = new Response(json_encode($ajaxFormData));
-            $ajaxFormResponse->headers->set('Content-Type', 'application/json');
-
-            return $ajaxFormResponse;
-        } else {
-            if ($commentType == 'Blog') {
-
-                // Clear the form data object if it was submited successfully
-                if (!$formhasErrors) {
-                    $comment = new Comment();
+                if (!$this->associated_object) {
+                    return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
                 }
 
-                // Retrieving the comments the view
-                $postComments = $this->getBlogPostComments($associated_object_id);
+                // TODO: add ACL here
 
-                // get the blog post details (similar to the blog bundle)
-                $settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
-                $page = $this->setBlogSettings($settings, $associated_object);
+                return $this->createComment();
+                break;
 
-                // Return the response as the blog post with form data
-                return $this->render('BlogBundle:Default:page.html.twig', array('page' => $page, 'form' => $form->createView(), 'comments' => $postComments, 'comment' => $comment, 'ajaxform' => $ajaxForm, 'formMessage' => $formMessage));
-            } else {
-                throw $this->createNotFoundException('Commenting is not available.');
-            }
+            default:
+                return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
     }
 
-    // Check if the associated Blog post exists
-    protected function getBlog($blog_id) {
+    /**
+     * Validate form and store data with proper associations
+     *
+     * @return Response
+     */
+    protected function createComment() {
+        $formMessage = null;
+        $errorList = null;
+        $formHasErrors = false;
 
-        $em = $this->getDoctrine()->getManager();
-        $blog_post = $em->getRepository('BlogBundle:Blog')->find($blog_id);
+        // Create new comment object and associate with the desired object
+        $comment = $this->getInitialisedComment();
 
-        return $blog_post;
+        // Bind the request to the comment form
+        $form = $this->get('bardiscms_comment.comment.form');
+        $formHandler = $this->get('bardiscms_comment.comment.form.handler');
+
+        $process = $formHandler->process($comment);
+
+        // Validate the data and get errors if any
+        if ($process) {
+            // Commend was saved, Clear the form data object
+            $comment = new Comment();
+
+            $formMessage = $this->container->get('translator')->trans('comment.form.response.success', array(), 'BardisCMSCommentBundle');
+            $errorList = array();
+            $formHasErrors = false;
+        }
+        else {
+            $formMessage = $this->container->get('translator')->trans('comment.form.response.error', array(), 'BardisCMSCommentBundle');
+            $errorList = $this->get('bardiscms_page.services.helpers')->getFormErrorMessages($form);
+            $formHasErrors = true;
+        }
+
+        // If the request was Ajax based
+        if($this->isAjaxRequest){
+            if ($process) {
+                return $this->onAjaxSuccess();
+            } else {
+                return $this->onAjaxError($formHandler);
+            }
+        }
+
+        switch($this->commentType){
+            case 'Blog':
+                // TODO: return the blog post actual page instead of the create comment route
+                // Retrieving the comments the view
+                $postComments = $this->getBlogPostComments();
+
+                // Return the response as the blog post with form data
+                $response = $this->render('BlogBundle:Default:page.html.twig', array(
+                    'page' => $this->associated_object,
+                    'form' => $form->createView(),
+                    'ajaxform' => $this->isAjaxRequest,
+                    'comments' => $postComments,
+                    'comment' => $comment,
+                    'formMessage' => $formMessage,
+                    'errorList' => $errorList,
+                    'formHasErrors' => $formHasErrors,
+                    'logged_username' => $this->userName,
+                    'mobile' => $this->serveMobile
+                ));
+
+                if ($this->enableHTTPCache) {
+                    $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                        $response,
+                        $this->associated_object->getDateLastModified(),
+                        false,
+                        3600
+                    );
+                }
+
+                return $response;
+                break;
+
+            default:
+                return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_405);
+        }
     }
 
-    // Get the approved comments for the blog post
-    protected function getBlogPostComments($blogPostId) {
+    /**
+     * Prepare the comment based on comment type
+     *
+     * @return Comment
+     */
+    protected function getInitialisedComment() {
+        $initialisedComment = new Comment();
 
-        $comments = $this->getDoctrine()->getRepository('CommentBundle:Comment')->getCommentsForBlogPost($blogPostId);
+        switch($this->commentType) {
+            case 'Blog':
+                $initialisedComment->setBlogPost($this->associated_object);
+                $initialisedComment->setCommentType('Blog');
+                $initialisedComment->setApproved(true);
+                break;
+            default:
+        }
+
+        return $initialisedComment;
+    }
+
+    /**
+     * Check if the associated Blog post exists
+     *
+     * @return Blog
+     */
+    protected function getBlogPost() {
+        $blogPost = $this->getDoctrine()->getRepository('BlogBundle:Blog')->find($this->associated_object_id);
+
+        // Set the website settings and metatags
+        $blogPost = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($blogPost);
+
+        return $blogPost;
+    }
+
+    /**
+     * Get the associated Blog post comments
+     *
+     * @return Array
+     */
+    protected function getBlogPostComments() {
+        $comments = $this->getDoctrine()->getRepository('CommentBundle:Comment')->getCommentsForBlogPost($this->associated_object_id);
 
         return $comments;
     }
 
-    // Set the settings as defined from the service of the settings bundle
-    // alternative could be to skip that bundle and use the config.yml
-    protected function setBlogSettings($settings, $page) {
-        if (is_object($settings)) {
-            if ($settings->getUseWebsiteAuthor()) {
-                $page->metaAuthor = $settings->getWebsiteAuthor();
-            } else {
-                $page->metaAuthor = $page->getAuthor()->getUsername();
-            }
+    /**
+     * Handle Ajax response with errors
+     *
+     * @param $formHandler
+     *
+     * @return Response
+     */
+    protected function onAjaxError($formHandler)
+    {
+        $errorList = $formHandler->getErrors();
+        $formMessage = 'comment.form.response.error';
+        $formHasErrors = true;
 
-            $pageTitle = $page->getTitle();
-            $titleKeywords = trim(preg_replace("/\b[A-za-z0-9']{1,3}\b/", "", strtolower($pageTitle)));
-            $titleKeywords = str_replace(' ', ',', preg_replace('!\s+!', ' ', $titleKeywords));
-            $fromTitle = $pageTitle . ' ' . $settings->getFromTitle();
-            $pageTitle .= ' - ' . $settings->getWebsiteTitle();
-
-            $page->pagetitle = $pageTitle;
-
-            $page->enableGA = $settings->getEnableGoogleAnalytics();
-            $page->gaID = $settings->getGoogleAnalyticsId();
-
-            if ($page->getKeywords() === null) {
-                $page->setKeywords($settings->getMetaKeywords() . ',' . $titleKeywords);
-            } else {
-                $page->setKeywords($page->getKeywords() . ',' . $titleKeywords);
-            }
-
-            if ($page->getDescription() === null) {
-                $page->setDescription($settings->getMetaDescription() . ' ' . $fromTitle);
-            } else {
-                $page->setDescription($page->getDescription() . ' ' . $fromTitle);
-            }
-        } else {
-            $page->metaAuthor = '';
-            $pageTitle = $page->getTitle();
-            $titleKeywords = trim(preg_replace("/\b[A-za-z0-9']{1,3}\b/", "", strtolower($pageTitle)));
-            $titleKeywords = str_replace(' ', ',', preg_replace('!\s+!', ' ', $titleKeywords));
-            $page->pagetitle = $pageTitle;
-            $page->enableGA = false;
-            $page->gaID = null;
-
-            $page->setDescription($page->getDescription());
-            $page->setKeywords($page->getKeywords() . ',' . $titleKeywords);
-        }
-
-        return $page;
+        return $this->returnAjaxResponse($errorList, $formMessage, $formHasErrors);
     }
 
-    // Get the error messages of the comment form assosiated with their fields in an array
-    private function getFormErrorMessages(\Symfony\Component\Form\Form $form) {
+    /**
+     * Handle Ajax response with success
+     *
+     * @return Response
+     */
+    protected function onAjaxSuccess()
+    {
+        $errorList = array();
+        $formMessage = 'comment.form.response.success';
+        $formHasErrors = false;
 
-        $errors = array();
-        $formErrors = iterator_to_array($form->getErrors(false, true));
-
-        foreach ($formErrors as $key => $error) {
-            $template = $error->getMessageTemplate();
-            $parameters = $error->getMessageParameters();
-
-            foreach ($parameters as $var => $value) {
-                $template = str_replace($var, $value, $template);
-            }
-
-            $errors[$key] = $template;
-        }
-        if ($form->count()) {
-            foreach ($form as $child) {
-                if (!$child->isValid()) {
-                    $errors[$child->getName()] = $this->getFormErrorMessages($child);
-                }
-            }
-        }
-        return $errors;
+        return $this->returnAjaxResponse($errorList, $formMessage, $formHasErrors);
     }
 
+    /**
+     * Return Ajax response
+     *
+     * @param $errorList
+     * @param $formMessage
+     * @param $formHasErrors
+     *
+     * @return Response
+     */
+    protected function returnAjaxResponse($errorList, $formMessage, $formHasErrors) {
+        $ajaxFormData = array(
+            'errors' => $errorList,
+            'formMessage' => $this->container->get('translator')->trans($formMessage, array(), 'BardisCMSCommentBundle'),
+            'hasErrors' => $formHasErrors
+        );
+
+        $ajaxFormResponse = new Response(json_encode($ajaxFormData));
+        $ajaxFormResponse->headers->set('Content-Type', 'application/json');
+
+        return $ajaxFormResponse;
+    }
 }

@@ -44,9 +44,20 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $page404->setPagetype('404');
         $manager->persist($page404);
 
+        $page405 = new Page();
+        $page405->setDate(new \DateTime());
+        $page405->setTitle('405 Error - Not Allowed, Method not allowed on resource');
+        $page405->setAuthor($manager->merge($this->getReference('admin')));
+        $page405->setAlias('405');
+        $page405->setShowPageTitle(1);
+        $page405->setPublishState(1);
+        $page405->setIntrotext('');
+        $page405->setPagetype('404');
+        $manager->persist($page405);
+
         $page403 = new Page();
         $page403->setDate(new \DateTime());
-        $page403->setTitle('403 Error - Unauthorised Access Forbidden');
+        $page403->setTitle('403 Error - Forbidden, Authentication failure or invalid Application ID.');
         $page403->setAuthor($manager->merge($this->getReference('admin')));
         $page403->setAlias('403');
         $page403->setShowPageTitle(1);
@@ -57,7 +68,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
         $page401 = new Page();
         $page401->setDate(new \DateTime());
-        $page401->setTitle('401 Error - Unauthorized Access');
+        $page401->setTitle('401 Error - Unauthorized Access, Action requires user authentication.');
         $page401->setAuthor($manager->merge($this->getReference('admin')));
         $page401->setAlias('401');
         $page401->setShowPageTitle(1);
@@ -287,6 +298,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
         $this->addReference('homepage', $pagehome);
         $this->addReference('404page', $page404);
+        $this->addReference('405page', $page405);
         $this->addReference('403page', $page403);
         $this->addReference('page401', $page401);
         $this->addReference('pagecontact', $pagecontact);

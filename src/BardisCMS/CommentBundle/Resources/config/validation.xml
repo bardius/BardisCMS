@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+        http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+
+    <class name="BardisCMS\CommentBundle\Entity\Comment">
+
+        <property name="username">
+            <constraint name="NotBlank">
+                <option name="message">comment.username.blank</option>
+                <option name="groups">
+                    <value>AddComment</value>
+                </option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">6</option>
+                <option name="minMessage">comment.username.short</option>
+                <option name="max">20</option>
+                <option name="maxMessage">comment.username.long</option>
+                <option name="groups">
+                    <value>AddComment</value>
+                </option>
+            </constraint>
+            <constraint name="Regex">
+                <option name="pattern">/^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{6,20}$/</option>
+                <option name="match">true</option>
+                <option name="message">comment.username.invalid_chars</option>
+                <option name="groups">
+                    <value>AddComment</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="title">
+            <constraint name="NotBlank">
+                <option name="message">comment.title.blank</option>
+                <option name="groups">
+                    <value>AddComment</value>
+                </option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="minMessage">comment.title.short</option>
+                <option name="max">255</option>
+                <option name="maxMessage">comment.title.long</option>
+                <option name="groups">
+                    <value>AddComment</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="comment">
+            <constraint name="NotBlank">
+                <option name="message">comment.comment.blank</option>
+                <option name="groups">
+                    <value>AddComment</value>
+                </option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="minMessage">comment.comment.short</option>
+                <option name="max">1000</option>
+                <option name="maxMessage">comment.comment.long</option>
+                <option name="groups">
+                    <value>AddComment</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="bottrap">
+            <constraint name="Blank">
+                <option name="message">comment.bottrap.not_blank</option>
+                <option name="groups">
+                    <value>AddComment</value>
+                </option>
+            </constraint>
+        </property>
+
+    </class>
+
+</constraint-mapping>
