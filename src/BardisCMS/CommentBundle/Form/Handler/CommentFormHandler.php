@@ -44,7 +44,7 @@ class CommentFormHandler
      *
      * @param Comment $comment
      *
-     * @return boolean
+     * @return integer
      */
     public function process(Comment $comment)
     {
@@ -57,13 +57,11 @@ class CommentFormHandler
             if ($this->form->isValid()) {
                 $processedComment = $this->form->getData();
 
-                $this->onSuccess($processedComment);
-
-                return true;
+                return $this->onSuccess($processedComment);
             }
         }
 
-        return false;
+        return 0;
     }
 
     /**
@@ -71,12 +69,16 @@ class CommentFormHandler
      *
      * @param Comment $comment
      *
+     * @return integer
+     *
      */
     protected function onSuccess(Comment $comment)
     {
         // Persist (save) the form data to the database
         $this->em->persist($comment);
         $this->em->flush();
+
+        return $comment->getId();
     }
 
     /**

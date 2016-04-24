@@ -11513,6 +11513,14 @@ var notifications = window.notifications || {};
                         $("select.error").removeClass("error");
                         $("textarea.error").removeClass("error");
                         if (responseData.hasErrors === false) {
+                            if (responseData.newComment !== null && responseData.newComment.length > 0) {
+                                console.log(responseData.newComment);
+                                var commentHtml = '<div class="row comment odd">';
+                                commentHtml += '<div id="comment-' + responseData.newComment[0].id + '" class="large-12 small-12 columns panel">';
+                                commentHtml += "<h4>" + responseData.newComment[0].title + "</h4>";
+                                commentHtml += "<p>" + responseData.newComment[0].comment + "</p></div></div>";
+                                $(".previous-comments").prepend(commentHtml);
+                            }
                             if (overrideSuccess) {
                                 if (resetForm) {
                                     formElement.trigger("reset");

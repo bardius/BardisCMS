@@ -181,8 +181,8 @@ class DefaultController extends Controller {
                     //$form = $this->createForm(new CommentFormType(), $comment);
                     $form = $this->get('bardiscms_comment.comment.form');
 
-                    // Retrieving the comments the views
-                    $postComments = $this->getPostComments($this->id);
+                    // Retrieving the comments for the post
+                    $postComments = $this->get('bardiscms_comment.services.commenthelper')->getBlogPostComments($this->id);
 
                     $pageParams = array(
                         'page' => $this->page,
@@ -191,6 +191,13 @@ class DefaultController extends Controller {
                         'logged_username' => $this->userName,
                         'mobile' => $this->serveMobile
                     );
+
+                    // If the Comment Form has been submitted
+                    if ('POST' === $this->pageRequest->getMethod() && $this->pageRequest->request->has('commentform_form')) {
+                        $response = $this->get('bardiscms_comment.services.controller')->addCommentAction('Blog', $this->id, $this->pageRequest);
+
+                        return $response;
+                    }
                 } else {
                     $pageParams = array(
                         'page' => $this->page,
@@ -368,15 +375,4 @@ class DefaultController extends Controller {
         // Redirect to the results
         return $this->redirect($url);
     }
-
-    // Get the approved comments for the blog post
-    // TODO: Make this to be a service of the Comments bundle
-    protected function getPostComments($blogPostId) {
-
-        $comments = null;
-        $comments = $this->getDoctrine()->getRepository('CommentBundle:Comment')->getCommentsForBlogPost($blogPostId);
-
-        return $comments;
-    }
-
 }

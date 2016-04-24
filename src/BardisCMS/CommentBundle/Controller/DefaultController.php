@@ -35,12 +35,8 @@ class DefaultController extends Controller {
     private $associated_object_id;
     private $associated_object;
 
-    /**
-     * Override the ContainerAware setContainer to accommodate the extra variables
-     *
-     * @param ContainerInterface $container
-     */
-    public function setContainer(ContainerInterface $container = null) {
+    public function __construct(ContainerInterface $container = null)
+    {
         $this->container = $container;
 
         // Setting the scoped variables required for the rendering of the page
@@ -147,7 +143,7 @@ class DefaultController extends Controller {
         // If the request was Ajax based
         if($this->isAjaxRequest){
             if ($process) {
-                return $this->onAjaxSuccess();
+                return $this->onAjaxSuccess($process);
             } else {
                 return $this->onAjaxError($formHandler);
             }
@@ -155,7 +151,6 @@ class DefaultController extends Controller {
 
         switch($this->commentType){
             case 'Blog':
-                // TODO: return the blog post actual page instead of the create comment route
                 // Retrieving the comments the view
                 $postComments = $this->getBlogPostComments();
 
@@ -236,6 +231,19 @@ class DefaultController extends Controller {
     }
 
     /**
+     * Get the requested Blog post comment
+     *
+     * @param $commentId
+     *
+     * @return Array
+     */
+    protected function getCommentById($commentId) {
+        $comment = $this->getDoctrine()->getRepository('CommentBundle:Comment')->getCommentById($commentId);
+
+        return $comment;
+    }
+
+    /**
      * Handle Ajax response with errors
      *
      * @param $formHandler
@@ -247,8 +255,9 @@ class DefaultController extends Controller {
         $errorList = $formHandler->getErrors();
         $formMessage = 'comment.form.response.error';
         $formHasErrors = true;
+        $newComment = null;
 
-        return $this->returnAjaxResponse($errorList, $formMessage, $formHasErrors);
+        return $this->returnAjaxResponse($errorList, $formMessage, $formHasErrors, $newComment);
     }
 
     /**
@@ -256,13 +265,14 @@ class DefaultController extends Controller {
      *
      * @return Response
      */
-    protected function onAjaxSuccess()
+    protected function onAjaxSuccess($newCommentId)
     {
         $errorList = array();
         $formMessage = 'comment.form.response.success';
         $formHasErrors = false;
+        $newComment = $this->getCommentById($newCommentId);
 
-        return $this->returnAjaxResponse($errorList, $formMessage, $formHasErrors);
+        return $this->returnAjaxResponse($errorList, $formMessage, $formHasErrors, $newComment);
     }
 
     /**
@@ -271,14 +281,16 @@ class DefaultController extends Controller {
      * @param $errorList
      * @param $formMessage
      * @param $formHasErrors
+     * @param $newComment
      *
      * @return Response
      */
-    protected function returnAjaxResponse($errorList, $formMessage, $formHasErrors) {
+    protected function returnAjaxResponse($errorList, $formMessage, $formHasErrors, $newComment) {
         $ajaxFormData = array(
             'errors' => $errorList,
             'formMessage' => $this->container->get('translator')->trans($formMessage, array(), 'BardisCMSCommentBundle'),
-            'hasErrors' => $formHasErrors
+            'hasErrors' => $formHasErrors,
+            'newComment' => $newComment
         );
 
         $ajaxFormResponse = new Response(json_encode($ajaxFormData));

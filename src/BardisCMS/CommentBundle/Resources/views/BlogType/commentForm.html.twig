@@ -1,5 +1,5 @@
 {% if form is defined %}
-    {{ form_start(form, {'action': path('CommentBundle_blog_comment_add_no_slash', { 'associated_object_id' : page.id } ), 'method': 'POST', 'attr': {'id': 'commentform_form', 'novalidate': 'novalidate'} }) }}
+    {{ form_start(form, {'method': 'POST', 'attr': {'id': 'commentform_form', 'novalidate': 'novalidate'} }) }}
     <div class="row">
         <div class="large-12 small-12 columns">
             <small class="right">{{ 'comment.form.mandatory_fields'|trans({}, 'BardisCMSCommentBundle') }}</small>

@@ -8,7 +8,7 @@
             </trans-unit>
             <trans-unit id="comment.form.title.label">
                 <source>comment.form.title.label</source>
-                <target>* Please enter title</target>
+                <target>Please enter title *</target>
             </trans-unit>
             <trans-unit id="comment.form.title.placeholder">
                 <source>comment.form.title.placeholder</source>
@@ -16,7 +16,7 @@
             </trans-unit>
             <trans-unit id="comment.form.username.label">
                 <source>comment.form.username.label</source>
-                <target>* Username</target>
+                <target>Username *</target>
             </trans-unit>
             <trans-unit id="comment.form.username.placeholder">
                 <source>comment.form.username.placeholder</source>
@@ -24,7 +24,7 @@
             </trans-unit>
             <trans-unit id="comment.form.comment.label">
                 <source>comment.form.comment.label</source>
-                <target>* Comment</target>
+                <target>Comment *</target>
             </trans-unit>
             <trans-unit id="comment.form.comment.placeholder">
                 <source>comment.form.comment.placeholder</source>

@@ -4,12 +4,26 @@ parameters:
     comment.form.type.class: BardisCMS\CommentBundle\Form\Type\CommentFormType
     comment.form.handler.class: BardisCMS\CommentBundle\Form\Handler\CommentFormHandler
     comment.model.class: BardisCMS\CommentBundle\Entity\Comment
+    comment.services.comment_helper_class: BardisCMS\CommentBundle\Services\CommentHelper
+    comment.services.controller_class: BardisCMS\CommentBundle\Controller\DefaultController
 
 services:
     bardiscms_comment.timestamp_listener:
         class: %comment.listeners.timestamp.class%
         tags:
             - { name: doctrine.event_listener, event: onFlush }
+
+    bardiscms_comment.services.controller:
+        class: %comment.services.controller_class%
+        scope: request
+        arguments:
+            - "@service_container"
+
+    bardiscms_comment.services.commenthelper:
+        class: %comment.services.comment_helper_class%
+        scope: request
+        arguments:
+            - "@doctrine.orm.entity_manager"
 
     bardiscms_comment.comment.form:
         factory_method: createNamed
