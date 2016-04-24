@@ -1,4 +1,4 @@
-{% if form is defined %}
+{% if form is defined and logged_username is not empty %}
     {{ form_start(form, {'method': 'POST', 'attr': {'id': 'commentform_form', 'novalidate': 'novalidate'} }) }}
     <div class="row">
         <div class="large-12 small-12 columns">
@@ -22,4 +22,18 @@
         </div>
     </div>
     {{ form_end(form) }}
+{% else %}
+    <div class="row">
+        <div class="large-12 small-12 columns">
+            <p>Login to be able to add new comments</p>
+            <p>
+                <a class="button" href="{{ url('sonata_user_security_login') }}" title="{{ 'layout.link.login'|trans({}, 'SonataUserBundle') }}">
+                    {{ 'layout.link.login'|trans({}, 'SonataUserBundle') }}
+                </a>
+                <a class="button" href="{{ url('sonata_user_registration_register') }}" title="{{ 'layout.link.create_account'|trans({}, 'SonataUserBundle') }}">
+                    {{ 'layout.link.create_account'|trans({}, 'SonataUserBundle') }}
+                </a>
+            </p>
+        </div>
+    </div>
 {% endif %}

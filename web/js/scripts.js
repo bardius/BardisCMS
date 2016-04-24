@@ -142,7 +142,7 @@
                         if (responseData.hasErrors === false) {
 
                             // Append new comment in the comments list if it was a comment form
-                            if(responseData.newComment !== null && responseData.newComment.length >0){
+                            if(typeof responseData.newComment != 'undefined' && responseData.newComment.length >0){
                                 console.log(responseData.newComment);
                                 var commentHtml = '<div class="row comment odd">';
                                 commentHtml += '<div id="comment-' + responseData.newComment[0].id + '" class="large-12 small-12 columns panel">';

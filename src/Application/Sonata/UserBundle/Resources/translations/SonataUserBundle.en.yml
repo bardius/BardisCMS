@@ -101,6 +101,7 @@ layout:
         have_account:   Already have an account?
         create_account: Create new account
         user_profile:   User profile
+        login:          Login
 
 # Profile menu items
 profile_menu:
