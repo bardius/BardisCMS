@@ -1,6 +1,7 @@
-CommentBundle_blog_comment_add_no_slash:
-    path:  /create_comment/blog/{associated_object_id}
-    defaults: { _controller: CommentBundle:Default:addComment, commentType: Blog}
-    methods: [ POST ]
-    requirements:
-        page_id: \d+
+#CommentBundle_blog_comment_add_no_slash:
+#    path:  /create_comment/blog/{associated_object_id}
+#    defaults: { _controller: CommentBundle:Default:addComment, commentType: Blog}
+#    methods: [ POST ]
+#    requirements:
+#        page_id: \d+
+

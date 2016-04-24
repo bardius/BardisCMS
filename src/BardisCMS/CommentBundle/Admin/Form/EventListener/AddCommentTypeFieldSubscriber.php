@@ -10,6 +10,7 @@
 
 namespace BardisCMS\CommentBundle\Admin\Form\EventListener;
 
+use BardisCMS\CommentBundle\Entity\Comment;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvents;
@@ -45,7 +46,7 @@ class AddCommentTypeFieldSubscriber implements EventSubscriberInterface {
         // Check the comment type and presend the required field to enter page/blog post id
         switch ($data->getCommentType()) {
 
-            case 'Blog':
+            case Comment::TYPE_BLOG:
                 $form->add($this->factory->createNamed('blogPost', 'entity', null, array(
                     'auto_initialize' => false,
                     'class' => 'BardisCMS\BlogBundle\Entity\Blog',

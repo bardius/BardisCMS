@@ -13,10 +13,6 @@ namespace BardisCMS\CommentBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use BardisCMS\BlogBundle\Entity\Blog;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
-use Symfony\Component\Validator\Constraints\Blank;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * BardisCMS\CommentBundle\Entity\Comment
@@ -26,6 +22,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @ORM\Entity(repositoryClass="BardisCMS\CommentBundle\Repository\CommentRepository")
  */
 class Comment {
+
+    /*
+     * Publish states
+     */
+    const TYPE_BLOG = "Blog";
 
     /**
      * @ORM\Id
@@ -90,7 +91,7 @@ class Comment {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId() {
         return $this->id;
@@ -112,7 +113,7 @@ class Comment {
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle() {
         return $this->title;
@@ -134,7 +135,7 @@ class Comment {
     /**
      * Get username
      *
-     * @return string 
+     * @return string
      */
     public function getUsername() {
         return $this->username;
@@ -156,7 +157,7 @@ class Comment {
     /**
      * Get comment
      *
-     * @return string 
+     * @return string
      */
     public function getComment() {
         return $this->comment;
@@ -178,7 +179,7 @@ class Comment {
     /**
      * Get approved
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getApproved() {
         return $this->approved;
@@ -200,7 +201,7 @@ class Comment {
     /**
      * Get created
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreated() {
         return $this->created;
@@ -209,7 +210,7 @@ class Comment {
     /**
      * Set commentType
      *
-     * @param string $title
+     * @param string $commentType
      * @return Comment
      */
     public function setCommentType($commentType) {
@@ -220,7 +221,7 @@ class Comment {
     /**
      * Get commentType
      *
-     * @return string 
+     * @return string
      */
     public function getCommentType() {
         return $this->commentType;
@@ -229,7 +230,7 @@ class Comment {
     /**
      * Set bottrap
      *
-     * @param string $title
+     * @param string $bottrap
      * @return Comment
      */
     public function setBottrap($bottrap) {
@@ -240,7 +241,7 @@ class Comment {
     /**
      * Get bottrap
      *
-     * @return string 
+     * @return string
      */
     public function getBottrap() {
         return $this->bottrap;
@@ -262,7 +263,7 @@ class Comment {
     /**
      * Get blogPost
      *
-     * @return \BardisCMS\BlogBundle\Entity\Blog 
+     * @return \BardisCMS\BlogBundle\Entity\Blog
      */
     public function getBlogPost() {
         return $this->blogPost;
@@ -271,7 +272,7 @@ class Comment {
     /**
      * Get dateLastModified
      *
-     * @return integer 
+     * @return integer
      */
     public function getDateLastModified() {
         return $this->dateLastModified;
@@ -280,7 +281,7 @@ class Comment {
     /**
      * toString
      *
-     * @return string 
+     * @return string
      */
     public function __toString() {
         if ($this->getTitle()) {
@@ -293,7 +294,7 @@ class Comment {
     /**
      * toString Approved
      *
-     * @return string 
+     * @return string
      */
     public function getApprovedAsString() {
         switch ($this->getApproved()) {
@@ -306,39 +307,24 @@ class Comment {
     /**
      * toString commentType
      *
-     * @return string 
+     * @return string
      */
     public function getCommentTypeAsString() {
         switch ($this->getCommentType()) {
-            case('Blog'): return "Blog Post";
+            case(Comment::TYPE_BLOG): return "Blog Post";
             default: return $this->getCommentType();
         }
     }
 
-    // Adding the validation restrictions
-    public static function loadValidatorMetadata(ClassMetadata $metadata) {
-        $metadata->addPropertyConstraint('title', new NotBlank(array('message' => 'Title should not be blank.'))
-        );
-
-        $metadata->addPropertyConstraint('title', new Length(array('min' => 2, 'max' => 150))
-        );
-
-        $metadata->addPropertyConstraint('username', new NotBlank(array('message' => 'Name should not be blank.'))
-        );
-
-        $metadata->addPropertyConstraint('username', new Length(array('min' => 2, 'max' => 150))
-        );
-
-        $metadata->addPropertyConstraint('comment', new NotBlank(array('message' => 'Comment should not be blank.'))
-        );
-
-        $metadata->addPropertyConstraint('comment', new Length(array('min' => 2, 'max' => 1000))
-        );
-
-        $metadata->addPropertyConstraint('bottrap', new Blank(array('message' => 'Bot Trap should be blank.'))
-        );
-
-        $metadata->addPropertyConstraint('bottrap', new Length(array('max' => 1))
+    /**
+     * Returns PublishState list.
+     *
+     * @return array
+     */
+    public static function getCommentTypeList()
+    {
+        return array(
+            Comment::TYPE_BLOG => "Blog Post"
         );
     }
 

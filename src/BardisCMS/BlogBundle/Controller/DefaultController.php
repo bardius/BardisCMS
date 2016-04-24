@@ -173,41 +173,17 @@ class DefaultController extends Controller {
                 $commentsEnabled = true;
 
                 if ($commentsEnabled) {
-
-                    // Adding the form for new comment
-                    $comment = new Comment();
-                    $comment->setBlogPost($this->page);
-
-                    //$form = $this->createForm(new CommentFormType(), $comment);
-                    $form = $this->get('bardiscms_comment.comment.form');
-
-                    // Retrieving the comments for the post
-                    $postComments = $this->get('bardiscms_comment.services.commenthelper')->getBlogPostComments($this->id);
-
-                    $pageParams = array(
-                        'page' => $this->page,
-                        'form' => $form->createView(),
-                        'comments' => $postComments,
-                        'logged_username' => $this->userName,
-                        'mobile' => $this->serveMobile
-                    );
-
-                    // If the Comment Form has been submitted
-                    if ('POST' === $this->pageRequest->getMethod() && $this->pageRequest->request->has('commentform_form')) {
-                        $response = $this->get('bardiscms_comment.services.controller')->addCommentAction('Blog', $this->id, $this->pageRequest);
-
-                        return $response;
-                    }
+                    $response = $this->getResponseWithComments();
                 } else {
                     $pageParams = array(
                         'page' => $this->page,
                         'logged_username' => $this->userName,
                         'mobile' => $this->serveMobile
                     );
-                }
 
-                // Render normal page type
-                $response = $this->render('BlogBundle:Default:page.html.twig', $pageParams);
+                    // Render normal page type
+                    $response = $this->render('BlogBundle:Default:page.html.twig', $pageParams);
+                }
         }
 
         if ($this->enableHTTPCache) {
@@ -374,5 +350,35 @@ class DefaultController extends Controller {
 
         // Redirect to the results
         return $this->redirect($url);
+    }
+
+    private function getResponseWithComments()
+    {
+        // Adding the form for new comment
+        $comment = new Comment();
+        $comment->setBlogPost($this->page);
+
+        $form = $this->get('bardiscms_comment.comment.form');
+
+        // Retrieving the comments for the post
+        $postComments = $this->get('bardiscms_comment.services.commenthelper')->getBlogPostComments($this->id);
+
+        $pageParams = array(
+            'page' => $this->page,
+            'form' => $form->createView(),
+            'comments' => $postComments,
+            'logged_username' => $this->userName,
+            'mobile' => $this->serveMobile
+        );
+
+        // If the Comment Form has been submitted
+        if ('POST' === $this->pageRequest->getMethod() && $this->pageRequest->request->has('commentform_form')) {
+            $response = $this->get('bardiscms_comment.services.controller')->addCommentAction(Comment::TYPE_BLOG, $this->id, $this->pageRequest);
+        } else {
+            // Render normal page type
+            $response = $this->render('BlogBundle:Default:page.html.twig', $pageParams);
+        }
+
+        return $response;
     }
 }

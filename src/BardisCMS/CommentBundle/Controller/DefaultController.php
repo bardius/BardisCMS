@@ -28,7 +28,6 @@ class DefaultController extends Controller {
     private $userName;
     private $settings;
     private $serveMobile;
-    private $enableHTTPCache;
     private $logged_user;
     private $isAjaxRequest;
     private $commentType;
@@ -53,9 +52,6 @@ class DefaultController extends Controller {
 
         // Check if mobile content should be served
         $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
-
-        // Set the flag for allowing HTTP cache
-        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
 
         // Check if request was Ajax based
         $this->isAjaxRequest = $this->get('bardiscms_page.services.ajax_detection')->isAjaxRequest();
@@ -89,7 +85,7 @@ class DefaultController extends Controller {
         }
 
         switch($this->commentType){
-            case 'Blog':
+            case Comment::TYPE_BLOG:
                 $this->associated_object = $this->getBlogPost();
 
                 if (!$this->associated_object) {
@@ -150,7 +146,7 @@ class DefaultController extends Controller {
         }
 
         switch($this->commentType){
-            case 'Blog':
+            case Comment::TYPE_BLOG:
                 // Retrieving the comments the view
                 $postComments = $this->getBlogPostComments();
 
@@ -167,15 +163,6 @@ class DefaultController extends Controller {
                     'logged_username' => $this->userName,
                     'mobile' => $this->serveMobile
                 ));
-
-                if ($this->enableHTTPCache) {
-                    $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
-                        $response,
-                        $this->associated_object->getDateLastModified(),
-                        false,
-                        3600
-                    );
-                }
 
                 return $response;
                 break;
@@ -194,9 +181,9 @@ class DefaultController extends Controller {
         $initialisedComment = new Comment();
 
         switch($this->commentType) {
-            case 'Blog':
+            case Comment::TYPE_BLOG:
                 $initialisedComment->setBlogPost($this->associated_object);
-                $initialisedComment->setCommentType('Blog');
+                $initialisedComment->setCommentType($this->commentType);
                 $initialisedComment->setApproved(true);
                 break;
             default:
