@@ -129,4 +129,3 @@ sonata_admin:
               items:
                   - sonata.media.admin.media
                   - sonata.media.admin.gallery
-                  

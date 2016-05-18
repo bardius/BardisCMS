@@ -37,3 +37,4 @@ npm-debug.log
 /app/sessions/*
 parameters.yml
 /vendor/
+/web/bundles/
