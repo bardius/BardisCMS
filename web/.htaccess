@@ -182,7 +182,7 @@ AddType application/octet-stream .zip
         Header always set Cache-Control "public"
     </filesMatch>
     <filesMatch "\.(js)$">
-        Header always set Cache-Control "private"
+        Header always set Cache-Control "public"
     </filesMatch>
     #### Disable Cache for pages with authedicated functionality ####
     <filesMatch "\.(x?html?|php)$">

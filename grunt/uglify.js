@@ -25,8 +25,7 @@ module.exports = {
             beautify: false, // beautify: beautify your code for debugging/troubleshooting purposes
             compress: true,
             // report: 'gzip', // report: Show file size report
-            sourceMap: '<%=config.js.releaseDir%><%=config.js.releaseFile%>.map',
-            sourceMappingURL: '/<%=config.js.releaseFile%>.map'
+            sourceMap: false
         },
         files: {
             '<%=config.js.releaseDir%><%=config.js.releaseFile%>': '<%=config.js.scriptFileList%>',

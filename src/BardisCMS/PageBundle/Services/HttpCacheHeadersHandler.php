@@ -28,17 +28,23 @@ class HttpCacheHeadersHandler {
         if($response == null){
             $response = new Response();
         }
+        // TODO: use ETag based on username, alias and getDateLastModified to accommodate logged users properly
+        // TODO: calculate the getDateLastModified properly based on the contents of  the page
 
         if($isPrivate){
-            $response->setPrivate();
-            $response->setMaxAge($sharedMaxAge);
+            $response->headers->set('X-User-Context-Hash', '67890');
+            $response->headers->set('ETag', '67890');
             $response->setVary(array('Accept-Encoding', 'User-Agent', 'X-User-Context-Hash', 'Cookie'));
         }
         else {
-            $response->setPublic();
-            $response->setSharedMaxAge($sharedMaxAge);
-            $response->setVary(array('Accept-Encoding', 'User-Agent'));
+            $response->headers->set('X-User-Context-Hash', '12345');
+            $response->headers->set('ETag', '12345');
+            $response->setVary(array('Accept-Encoding', 'User-Agent', 'X-User-Context-Hash'));
         }
+
+        // Set Cache header to public to allow caching on reverse proxy servers
+        $response->setPublic();
+        $response->setSharedMaxAge($sharedMaxAge);
 
         $response->setLastModified($dateLastModified);
         $response->headers->addCacheControlDirective('must-revalidate', true);
