@@ -109,20 +109,23 @@ framework:
     # Session storage configuration
     session:
         # storage_id:           session.storage.native
-        # handler_id:           session.handler.native_file
+        # save_path:            %kernel.cache_dir%/sessions
+        handler_id:             session.handler.pdo # session.handler.native_file
+
+        # session cookie name, default is PHPSESSID
         name:                   bardiscms
-        # cookie_lifetime:      ~
+
+        # time in seconds
+        cookie_lifetime:        86400
         # cookie_path:          ~
         # cookie_domain:        ~
         # cookie_secure:        ~
         cookie_httponly:		true
+
+        # logout user after inactivity time in seconds
+        gc_maxlifetime:         1800
         # gc_divisor:           ~
         # gc_probability:       ~
-        # gc_maxlifetime:       ~
-        # save_path:            %kernel.cache_dir%/sessions
-        handler_id:             session.handler.pdo
-        # time in seconds
-        cookie_lifetime:	    43200
 
 # Doctrine Configuration
 doctrine:

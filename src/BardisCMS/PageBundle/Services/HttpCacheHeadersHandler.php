@@ -32,14 +32,15 @@ class HttpCacheHeadersHandler {
         if($isPrivate){
             $response->setPrivate();
             $response->setMaxAge($sharedMaxAge);
+            $response->setVary(array('Accept-Encoding', 'User-Agent', 'X-User-Context-Hash', 'Cookie'));
         }
         else {
             $response->setPublic();
             $response->setSharedMaxAge($sharedMaxAge);
+            $response->setVary(array('Accept-Encoding', 'User-Agent'));
         }
 
         $response->setLastModified($dateLastModified);
-        $response->setVary(array('Accept-Encoding', 'User-Agent', 'X-User-Context-Hash', 'Cookie'));
         $response->headers->addCacheControlDirective('must-revalidate', true);
 
         return $response;
