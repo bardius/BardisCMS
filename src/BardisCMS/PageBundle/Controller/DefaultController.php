@@ -56,10 +56,6 @@ class DefaultController extends Controller {
         $this->page = null;
         $this->userName = null;
 
-        // TODO: MAke the sample Guzzle call to be a service
-        // Sample Guzzle call
-        //$this->sampleGuzzleCall();
-
         // Get the settings from setting bundle
         $this->settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
 
@@ -70,7 +66,8 @@ class DefaultController extends Controller {
         $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 
         // Set the flag for allowing HTTP cache
-        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+        // $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+        $this->enableHTTPCache = $this->settings->getActivateHttpCache();
 
         // Check if request was Ajax based
         $this->isAjaxRequest = $this->get('bardiscms_page.services.ajax_detection')->isAjaxRequest();
@@ -83,6 +80,10 @@ class DefaultController extends Controller {
         if (is_object($this->logged_user) && $this->logged_user instanceof UserInterface) {
             $this->userName = $this->logged_user->getUsername();
         }
+
+        // TODO: MAke the sample Guzzle call to be a service
+        // Sample Guzzle call
+        //$this->sampleGuzzleCall();
     }
 
     // Get the page id based on alias from route
@@ -103,7 +104,9 @@ class DefaultController extends Controller {
 
         $this->id = $this->page->getId();
 
-        return $this->showPageAction();
+        $response = $this->showPageAction();
+
+        return $response;
     }
 
     /**
@@ -124,7 +127,12 @@ class DefaultController extends Controller {
 
         // Return cached page if enabled
         if ($this->enableHTTPCache) {
-            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(null, $this->page->getDateLastModified(), false, 3600);
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                null,
+                $this->page->getDateLastModified(),
+                $this->userName ? true : false,
+                3600
+            );
 
             if (!$response->isNotModified($this->pageRequest)) {
                 // Marks the Response stale
@@ -178,20 +186,26 @@ class DefaultController extends Controller {
 
             default:
                 // Render normal page type
-                $response = $this->render('PageBundle:Default:page.html.twig', array(
+                $response = new Response();
+
+                if ($this->enableHTTPCache) {
+                    $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                        $response,
+                        $this->page->getDateLastModified(),
+                        $this->userName ? true : false,
+                        3600
+                    );
+
+                    $response->sendHeaders();
+                }
+
+                $template = $this->renderView('PageBundle:Default:page.html.twig', array(
                     'page' => $this->page,
                     'logged_username' => $this->userName,
                     'mobile' => $this->serveMobile
-                ));
-        }
+                ), $response);
 
-        if ($this->enableHTTPCache) {
-            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
-                $response,
-                $this->page->getDateLastModified(),
-                false,
-                3600
-            );
+                $response->setContent($template);
         }
 
         return $response;
@@ -253,16 +267,24 @@ class DefaultController extends Controller {
 
         $sitemapList = array_merge($page_pages, $blog_pages);
 
-        $response = $this->render('PageBundle:Default:sitemap.xml.twig', array('sitemapList' => $sitemapList));
+        $response = new Response();
 
         if ($this->enableHTTPCache) {
             $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
                 $response,
                 $this->page->getDateLastModified(),
-                false,
+                $this->userName ? true : false,
                 3600
             );
+
+            $response->sendHeaders();
         }
+
+        $template = $this->renderView('PageBundle:Default:sitemap.xml.twig', array(
+            'sitemapList' => $sitemapList
+        ), $response);
+
+        $response->setContent($template);
 
         return $response;
     }
@@ -273,8 +295,22 @@ class DefaultController extends Controller {
      * @return Response
      */
     public function sitemapxslAction() {
+        $response = new Response();
 
-        $response = $this->render('PageBundle:Default:sitemap.xsl.twig');
+        if ($this->enableHTTPCache) {
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                $response,
+                $this->page->getDateLastModified(),
+                $this->userName ? true : false,
+                3600
+            );
+
+            $response->sendHeaders();
+        }
+
+        $template = $this->renderView('PageBundle:Default:sitemap.xsl.twig', array(), $response);
+
+        $response->setContent($template);
 
         return $response;
     }
@@ -299,13 +335,28 @@ class DefaultController extends Controller {
         // Sort all the items based on custom sorting
         usort($pages, array("BardisCMS\PageBundle\Controller\DefaultController", "sortHomepageItemsCompare"));
 
-        $response = $this->render('PageBundle:Default:page.html.twig', array(
+        $response = new Response();
+
+        if ($this->enableHTTPCache) {
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                $response,
+                $this->page->getDateLastModified(),
+                $this->userName ? true : false,
+                3600
+            );
+
+            $response->sendHeaders();
+        }
+
+        $template  = $this->renderView('PageBundle:Default:page.html.twig', array(
             'page' => $this->page,
             'pages' => $pages,
             'blogs' => $blog_pages,
             'logged_username' => $this->userName,
             'mobile' => $this->serveMobile
-        ));
+        ), $response);
+
+        $response->setContent($template);
 
         return $response;
     }
@@ -346,7 +397,20 @@ class DefaultController extends Controller {
         $pages = $pageList['pages'];
         $totalPages = $pageList['totalPages'];
 
-        $response = $this->render('PageBundle:Default:page.html.twig', array(
+        $response = new Response();
+
+        if ($this->enableHTTPCache) {
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                $response,
+                $this->page->getDateLastModified(),
+                $this->userName ? true : false,
+                3600
+            );
+
+            $response->sendHeaders();
+        }
+
+        $template = $this->renderView('PageBundle:Default:page.html.twig', array(
             'page' => $this->page,
             'pages' => $pages,
             'totalPages' => $totalPages,
@@ -357,7 +421,9 @@ class DefaultController extends Controller {
             'filterForm' => $filterForm->createView(),
             'logged_username' => $this->userName,
             'mobile' => $this->serveMobile
-        ));
+        ), $response);
+
+        $response->setContent($template);
 
         return $response;
     }
@@ -393,7 +459,20 @@ class DefaultController extends Controller {
         $pages = $pageList['pages'];
         $totalPages = $pageList['totalPages'];
 
-        $response = $this->render('PageBundle:Default:page.html.twig', array(
+        $response = new Response();
+
+        if ($this->enableHTTPCache) {
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                $response,
+                $this->page->getDateLastModified(),
+                $this->userName ? true : false,
+                3600
+            );
+
+            $response->sendHeaders();
+        }
+
+        $template = $this->renderView('PageBundle:Default:page.html.twig', array(
             'page' => $this->page,
             'pages' => $pages,
             'totalPages' => $totalPages,
@@ -403,7 +482,9 @@ class DefaultController extends Controller {
             'totalpageitems' => $this->totalpageitems,
             'logged_username' => $this->userName,
             'mobile' => $this->serveMobile
-        ));
+        ), $response);
+
+        $response->setContent($template);
 
         return $response;
     }
@@ -450,7 +531,20 @@ class DefaultController extends Controller {
             }
         }
 
-        $response = $this->render('PageBundle:Default:page.html.twig', array(
+        $response = new Response();
+
+        if ($this->enableHTTPCache) {
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                $response,
+                $this->page->getDateLastModified(),
+                $this->userName ? true : false,
+                3600
+            );
+
+            $response->sendHeaders();
+        }
+
+        $template = $this->renderView('PageBundle:Default:page.html.twig', array(
             'page' => $this->page,
             'form' => $contactForm->createView(),
             'ajaxform' => $this->isAjaxRequest,
@@ -459,16 +553,9 @@ class DefaultController extends Controller {
             'formHasErrors' => $formHasErrors,
             'logged_username' => $this->userName,
             'mobile' => $this->serveMobile
-        ));
+        ), $response);
 
-        if ($this->enableHTTPCache) {
-            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
-                $response,
-                $this->page->getDateLastModified(),
-                false,
-                3600
-            );
-        }
+        $response->setContent($template);
 
         return $response;
     }

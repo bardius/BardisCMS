@@ -11,23 +11,48 @@
 namespace BardisCMS\PageBundle\Listener;
 
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class ResponseListener {
 
-    public function onKernelResponse(FilterResponseEvent $event)
-    {
-        $event->getResponse()->headers->set('X-UA-Compatible', 'IE=Edge,chrome=1');
-        $event->getResponse()->headers->set('P3P', 'cp=BardisCMS');
-        $event->getResponse()->headers->set('X-XSS-Protection', '1; mode=block');
-        $event->getResponse()->headers->set('X-Content-Type-Options', 'nosniff');
-        $event->getResponse()->headers->set('x-frame-options', 'deny');
-        $event->getResponse()->headers->set('ServerSignature', 'Off');
-        $event->getResponse()->headers->set('ServerTokens', 'Prod');
-        $event->getResponse()->headers->set('Content-Language', 'en');
-        $event->getResponse()->headers->set('Created-By', 'George Bardis - george@bardis.info');
+    protected $container;
 
-        $event->getResponse()->headers->unset('link');
-        $event->getResponse()->headers->unset('Server');
-        $event->getResponse()->headers->unset('X-Pingback');
+    public function __construct(ContainerInterface $container) {
+        $this->container = $container;
+    }
+
+    public function onKernelRequest(GetResponseEvent $event) {
+        $kernel    = $event->getKernel();
+        $request   = $event->getRequest();
+    }
+
+    public function onKernelResponse(FilterResponseEvent $event) {
+        $headers    = $event->getResponse()->headers;
+        $request    = $event->getRequest();
+        $kernel     = $event->getKernel();
+
+        /*
+        $userStatusCookieValue = $request->cookies->get('bardiscms_user_status');
+
+        if ($userStatusCookieValue != $this->userRole) {
+            // TODO: find a way to purge varnish cache
+            $userStatusCookie = new Cookie('bardiscms.user.status', '', time() + 3600 * 24 * 1, '/', null, false, true);
+            //$headers->setCookie($userStatusCookie);
+        }
+        */
+
+        $headers->set('X-UA-Compatible', 'IE=Edge,chrome=1');
+        $headers->set('P3P', 'cp=BardisCMS');
+        $headers->set('X-XSS-Protection', '1; mode=block');
+        $headers->set('X-Content-Type-Options', 'nosniff');
+        $headers->set('x-frame-options', 'deny');
+        $headers->set('ServerSignature', 'Off');
+        $headers->set('ServerTokens', 'Prod');
+        $headers->set('Content-Language', 'en');
+        $headers->set('Created-By', 'George Bardis - george@bardis.info');
+
+        //$event->getResponse()->sendHeaders();
     }
 }

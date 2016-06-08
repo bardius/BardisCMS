@@ -14,10 +14,12 @@ services:
         class: %page.services.helpers_class%
         arguments: ["@doctrine.orm.entity_manager", "@service_container"]
 
-        kernel.listener.response_listener:
-            class: %page.listener.response_listener_class%
-            tags:
-               - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+    kernel.listener.response_listener:
+        class: %page.listener.response_listener_class%
+        arguments: [ @service_container ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
     bardiscms_page.services.show_error_page:
         class: %page.services.show_error_page_class%

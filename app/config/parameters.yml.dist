@@ -1,12 +1,12 @@
 parameters:
     database_driver:    pdo_mysql
     database_host:      localhost
-    database_port:      ~
+    database_port:      3306
     database_name:      bardiscms
     database_user:      root
     database_password:  ~
 
-    pdo_service_dsn:    "mysql:dbhost=%database_host%;dbname=%database_name%"
+    pdo_service_dsn:    "mysql:host=%database_host%;port=%database_port%;dbname=%database_name%"
 
     mailer_transport:	smtp
     mailer_host:	    localhost

@@ -37,12 +37,14 @@ class UserHelpers {
      */
     public function getLoggedUserHighestRole() {
 
-        if ($this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
-            $userRole = 'ROLE_SUPER_ADMIN';
-        } else if ($this->securityContext->isGranted('ROLE_USER')) {
-            $userRole = 'ROLE_USER';
-        } else {
-            $userRole = 'ROLE_ANONYMOUS';
+        $userRole = 'ROLE_ANONYMOUS';
+
+        if ($this->securityContext && $this->securityContext->getToken()) {
+            if ($this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
+                $userRole = 'ROLE_SUPER_ADMIN';
+            } else if ($this->securityContext->isGranted('ROLE_USER')) {
+                $userRole = 'ROLE_USER';
+            }
         }
 
         return $userRole;

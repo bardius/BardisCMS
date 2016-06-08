@@ -14,15 +14,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class HttpCacheHeadersHandler {
 
-    // Set custom HTTP Header Cache-Control directives
-
     /**
      * Set custom HTTP Header Cache-Control directives
      *
      * @param Response|null $response       The response that will be returned
      * @param \DateTime $dateLastModified   The last modified datetime of the page in CMS
      * @param bool $isPrivate               If the response is public or private
-     * @param int $sharedMaxAge             The SharedMaxAge of the response eg. 3600ms
+     * @param int $sharedMaxAge             The SharedMaxAge/MaxAge of the response eg. 3600ms
      *
      * @return Response
      */
@@ -33,15 +31,16 @@ class HttpCacheHeadersHandler {
 
         if($isPrivate){
             $response->setPrivate();
+            $response->setMaxAge($sharedMaxAge);
         }
         else {
             $response->setPublic();
+            $response->setSharedMaxAge($sharedMaxAge);
         }
 
         $response->setLastModified($dateLastModified);
-        $response->setVary(array('Accept-Encoding', 'User-Agent'));
+        $response->setVary(array('Accept-Encoding', 'User-Agent', 'X-User-Context-Hash', 'Cookie'));
         $response->headers->addCacheControlDirective('must-revalidate', true);
-        $response->setSharedMaxAge($sharedMaxAge);
 
         return $response;
     }

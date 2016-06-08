@@ -11,6 +11,9 @@
     RewriteCond %{HTTP_HOST} ^bardiscms.test [NC]
     RewriteRule .* - [E=ENVIRONMENT:test]
 
+    # Use authorization headers for user context
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
     #### Redirect non www to www ####
     # RewriteCond %{HTTP_HOST} ^domain.com [NC]
     # RewriteRule ^(.*)$ http://www.domain.com/$1 [L,R=301]
@@ -184,9 +187,9 @@ AddType application/octet-stream .zip
     #### Disable Cache for pages with authedicated functionality ####
     <filesMatch "\.(x?html?|php)$">
         # Header set Cache-Control "private, must-revalidate"
-        Header set Cache-Control "no-cache, no-store, must-revalidate"
-        Header set Pragma "no-cache"
-        Header set Expires "0"
+        # Header set Cache-Control "no-cache, no-store, must-revalidate"
+        # Header set Pragma "no-cache"
+        # Header set Expires "0"
     </filesMatch>
 </ifModule>
 
@@ -201,7 +204,7 @@ AddType application/octet-stream .zip
     </FilesMatch>
 
     ExpiresActive On
-    ExpiresDefault A3600
+    #ExpiresDefault A3600
     ExpiresByType image/x-icon A2592000
     ExpiresByType application/x-javascript A604800
     ExpiresByType text/css A604800
@@ -212,7 +215,7 @@ AddType application/octet-stream .zip
     ExpiresByType application/x-shockwave-flash A2592000
     ExpiresByType video/x-flv A2592000
     ExpiresByType application/pdf A2592000
-    ExpiresByType text/html A3600
+    #ExpiresByType text/html A3600
 </IfModule>
 
 # Send the CORS header for images when browsers request it.
