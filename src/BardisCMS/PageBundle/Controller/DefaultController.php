@@ -41,6 +41,7 @@ class DefaultController extends Controller {
     private $enableHTTPCache;
     private $logged_user;
     private $isAjaxRequest;
+    private $eTagHash;
 
     // Override the ContainerAware setContainer to accommodate the extra variables
     public function setContainer(ContainerInterface $container = null) {
@@ -66,8 +67,7 @@ class DefaultController extends Controller {
         $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 
         // Set the flag for allowing HTTP cache
-        // $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
-        $this->enableHTTPCache = $this->settings->getActivateHttpCache();
+        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') != 'test' && $this->settings->getActivateHttpCache();
 
         // Check if request was Ajax based
         $this->isAjaxRequest = $this->get('bardiscms_page.services.ajax_detection')->isAjaxRequest();
@@ -81,7 +81,7 @@ class DefaultController extends Controller {
             $this->userName = $this->logged_user->getUsername();
         }
 
-        // TODO: MAke the sample Guzzle call to be a service
+        // TODO: Make the sample Guzzle call to be a service
         // Sample Guzzle call
         //$this->sampleGuzzleCall();
     }
@@ -102,6 +102,15 @@ class DefaultController extends Controller {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
 
+        // Calculate the ETag hash that will be used for the HTTP Headers of the response
+        // TODO: calculate the getDateLastModified properly based on the contents of  the page
+        $this->eTagHash = $this->get('bardiscms_page.services.etag_header_hash_provider')->getETagHash(
+            $this->alias . '?' . $this->extraParams,
+            $this->page->getPublishState(),
+            $this->page->getDateLastModified(),
+            $this->userName
+        );
+
         $this->id = $this->page->getId();
 
         $response = $this->showPageAction();
@@ -121,29 +130,31 @@ class DefaultController extends Controller {
             $this->page->getPublishState(),
             $this->publishStates
         );
+
         if(!$accessAllowedForUserRole){
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
-        // Return cached page if enabled
+        // Return cached page if reverse proxy cache is enabled
         if ($this->enableHTTPCache) {
-            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+            $invalidationResponse = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
                 null,
                 $this->page->getDateLastModified(),
+                $this->eTagHash,
                 $this->userName ? true : false,
                 3600
             );
 
-            if (!$response->isNotModified($this->pageRequest)) {
-                // Marks the Response stale
-                $response->expire();
-            } else {
+            if ($invalidationResponse->isNotModified($this->pageRequest)) {
                 // return the 304 Response immediately
-                return $response;
+                return $invalidationResponse;
+            } else {
+                // Marks the Response stale in case LastModified header is used for invalidation
+                $invalidationResponse->expire();
             }
         }
 
-        // Set the website settings and metatags
+        // Set the website settings and metaTags
         $this->page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($this->page);
 
         // Set the pagination variables
@@ -159,7 +170,7 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Render the proper action/view depending on pagetype
+     * Render the proper action/view depending on page type
      *
      * @return Response
      */
@@ -192,12 +203,14 @@ class DefaultController extends Controller {
                     $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
                         $response,
                         $this->page->getDateLastModified(),
+                        $this->eTagHash,
                         $this->userName ? true : false,
                         3600
                     );
-
-                    $response->sendHeaders();
                 }
+
+                $response->setETag($this->eTagHash);
+                $response->sendHeaders();
 
                 $template = $this->renderView('PageBundle:Default:page.html.twig', array(
                     'page' => $this->page,
@@ -273,12 +286,14 @@ class DefaultController extends Controller {
             $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
                 $response,
                 $this->page->getDateLastModified(),
+                $this->eTagHash,
                 $this->userName ? true : false,
                 3600
             );
-
-            $response->sendHeaders();
         }
+
+        $response->setETag($this->eTagHash);
+        $response->sendHeaders();
 
         $template = $this->renderView('PageBundle:Default:sitemap.xml.twig', array(
             'sitemapList' => $sitemapList
@@ -301,12 +316,14 @@ class DefaultController extends Controller {
             $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
                 $response,
                 $this->page->getDateLastModified(),
+                $this->eTagHash,
                 $this->userName ? true : false,
                 3600
             );
-
-            $response->sendHeaders();
         }
+
+        $response->setETag($this->eTagHash);
+        $response->sendHeaders();
 
         $template = $this->renderView('PageBundle:Default:sitemap.xsl.twig', array(), $response);
 
@@ -341,12 +358,14 @@ class DefaultController extends Controller {
             $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
                 $response,
                 $this->page->getDateLastModified(),
+                $this->eTagHash,
                 $this->userName ? true : false,
                 3600
             );
-
-            $response->sendHeaders();
         }
+
+        $response->setETag($this->eTagHash);
+        $response->sendHeaders();
 
         $template  = $this->renderView('PageBundle:Default:page.html.twig', array(
             'page' => $this->page,
@@ -403,12 +422,14 @@ class DefaultController extends Controller {
             $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
                 $response,
                 $this->page->getDateLastModified(),
+                $this->eTagHash,
                 $this->userName ? true : false,
                 3600
             );
-
-            $response->sendHeaders();
         }
+
+        $response->setETag($this->eTagHash);
+        $response->sendHeaders();
 
         $template = $this->renderView('PageBundle:Default:page.html.twig', array(
             'page' => $this->page,
@@ -465,12 +486,14 @@ class DefaultController extends Controller {
             $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
                 $response,
                 $this->page->getDateLastModified(),
+                $this->eTagHash,
                 $this->userName ? true : false,
                 3600
             );
-
-            $response->sendHeaders();
         }
+
+        $response->setETag($this->eTagHash);
+        $response->sendHeaders();
 
         $template = $this->renderView('PageBundle:Default:page.html.twig', array(
             'page' => $this->page,
@@ -537,12 +560,14 @@ class DefaultController extends Controller {
             $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
                 $response,
                 $this->page->getDateLastModified(),
+                $this->eTagHash,
                 $this->userName ? true : false,
                 3600
             );
-
-            $response->sendHeaders();
         }
+
+        $response->setETag($this->eTagHash);
+        $response->sendHeaders();
 
         $template = $this->renderView('PageBundle:Default:page.html.twig', array(
             'page' => $this->page,

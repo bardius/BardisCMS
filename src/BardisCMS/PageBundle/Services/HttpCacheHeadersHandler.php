@@ -17,36 +17,51 @@ class HttpCacheHeadersHandler {
     /**
      * Set custom HTTP Header Cache-Control directives
      *
+     * To better understand the caching strategy read the resources
+     * https://devcenter.heroku.com/articles/increasing-application-performance-with-http-cache-headers
+     * https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching?hl=en
+     *
      * @param Response|null $response       The response that will be returned
      * @param \DateTime $dateLastModified   The last modified datetime of the page in CMS
+     * @param string $eTagHash              The ETag Http Header
      * @param bool $isPrivate               If the response is public or private
      * @param int $sharedMaxAge             The SharedMaxAge/MaxAge of the response eg. 3600ms
      *
      * @return Response
      */
-    public function setResponseCacheHeaders($response, \DateTime $dateLastModified ,$isPrivate = true, $sharedMaxAge = 3600) {
+    public function setResponseCacheHeaders($response, \DateTime $dateLastModified , $eTagHash, $isPrivate = true, $sharedMaxAge = 3600) {
         if($response == null){
             $response = new Response();
         }
-        // TODO: use ETag based on username, alias and getDateLastModified to accommodate logged users properly
-        // TODO: calculate the getDateLastModified properly based on the contents of  the page
+
+        $sharedMaxAge = 1;
 
         if($isPrivate){
-            $response->headers->set('X-User-Context-Hash', '67890');
-            $response->headers->set('ETag', '67890');
-            $response->setVary(array('Accept-Encoding', 'User-Agent', 'X-User-Context-Hash', 'Cookie'));
+            $response->setPrivate();
+            $response->setMaxAge($sharedMaxAge);
+            $response->headers->set('X-User-Context-Hash', $eTagHash);
+            $response->setVary(array('Accept-Encoding', 'User-Agent', 'Cookie'));
+
+            // To disallow proxies storing any cached response
+            //$response->headers->addCacheControlDirective('no-store', true);
+            //$response->headers->addCacheControlDirective('no-cache', true);
+            //$response->headers->set('Pragma', 'no-cache');
         }
         else {
-            $response->headers->set('X-User-Context-Hash', '12345');
-            $response->headers->set('ETag', '12345');
-            $response->setVary(array('Accept-Encoding', 'User-Agent', 'X-User-Context-Hash'));
+            // Set Cache header to public to allow caching on reverse proxy servers
+            $response->setPublic();
+            $response->setSharedMaxAge($sharedMaxAge);
+            $response->setMaxAge($sharedMaxAge);
+            $response->headers->set('X-User-Context-Hash', $eTagHash);
+            $response->setVary(array('Accept-Encoding', 'User-Agent'));
         }
 
-        // Set Cache header to public to allow caching on reverse proxy servers
-        $response->setPublic();
-        $response->setSharedMaxAge($sharedMaxAge);
+        // Use instead of ETag if non authenticated pages exist for caching
+        //$response->setLastModified($dateLastModified);
+        $response->setETag($eTagHash);
 
-        $response->setLastModified($dateLastModified);
+        // To enforce browsers to request server for revalidate each time
+        //$response->headers->set('Expires', '-1');
         $response->headers->addCacheControlDirective('must-revalidate', true);
 
         return $response;

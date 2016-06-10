@@ -111,6 +111,7 @@ class PageAdminController extends Controller {
         ));
     }
 
+    // Defining the custom sonata admin action for the clearing the Symfony2 reverse proxy cache
     public function clearHTTPCacheAction() {
 
         $fs = new Filesystem;
@@ -119,6 +120,7 @@ class PageAdminController extends Controller {
             $fs->remove(
                     array(
                         $this->get('kernel')->getRootDir() . '/../app/cache/prod/http_cache',
+                        $this->get('kernel')->getRootDir() . '/../app/cache/test/http_cache',
                         $this->get('kernel')->getRootDir() . '/../app/cache/dev/http_cache'
                     )
             );
@@ -126,6 +128,8 @@ class PageAdminController extends Controller {
         } catch (IOExceptionInterface $e) {
             $this->get('session')->getFlashBag()->add('sonata_flash_error', 'An error occurred while deleting your HTTP cache at ' . $e->getPath() . '');
         }
+
+        // TODO: find a way to invalidate/clear all varnish cache if any
 
         return new RedirectResponse('/admin/dashboard');
     }

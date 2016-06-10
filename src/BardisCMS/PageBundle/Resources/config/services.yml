@@ -4,6 +4,7 @@ parameters:
     page.listener.response_listener_class: BardisCMS\PageBundle\Listener\ResponseListener
     page.services.ajax_detection_class: BardisCMS\PageBundle\Services\AjaxDetection
     page.services.http_cache_headers_handler_class: BardisCMS\PageBundle\Services\HttpCacheHeadersHandler
+    page.services.etag_header_hash_provider_class: BardisCMS\PageBundle\Services\ETagHeaderHashProvider
     page.services.form_mailer_class: BardisCMS\PageBundle\Services\FormMailerService
     page.contact.form.class: Symfony\Component\Form\Form
     page.contact.form.type.class: BardisCMS\PageBundle\Form\Type\ContactFormType
@@ -32,6 +33,9 @@ services:
 
     bardiscms_page.services.http_cache_headers_handler:
         class: %page.services.http_cache_headers_handler_class%
+
+    bardiscms_page.services.etag_header_hash_provider:
+        class: %page.services.etag_header_hash_provider_class%
 
     bardiscms_page.services.form_mailer:
         class: %page.services.form_mailer_class%
