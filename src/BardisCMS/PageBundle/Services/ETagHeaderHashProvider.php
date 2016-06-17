@@ -53,4 +53,21 @@ STRING;
 
         return $request;
     }
+
+    /**
+     * Normalize the if_none_match header for for the ETag invalidation to work properly when gzip is enabled
+     * more info at https://coderwall.com/p/rl6v7a/http-caching-in-symfony2-max-age-etag-gzip
+     *
+     * @param Request $request      The request with Etag to normalize
+     *
+     * @return string
+     */
+    public function getNormalizedETagHashWithGzip(Request $request){
+        $originalETags = $request->headers->get('if_none_match');
+        $eTagsWithoutGzip = str_replace('-gzip"', '"', $originalETags);
+        var_dump($originalETags);
+        var_dump($eTagsWithoutGzip);
+
+        return $eTagsWithoutGzip;
+    }
 }

@@ -3,25 +3,36 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
 
+// If you don't want to setup permissions the proper way, just uncomment the following PHP line
+// read http://symfony.com/doc/current/book/installation.html#configuration-and-setup for more information
+//umask(0000);
+
+// This check prevents access to debug front controllers that are deployed by accident to production servers.
+// Feel free to remove this, extend it, or make something more sophisticated.
+/*
+if (isset($_SERVER['HTTP_CLIENT_IP'])
+    || isset($_SERVER['HTTP_X_FORWARDED_FOR'])
+    //|| !isset($_SERVER['REMOTE_USER'])
+    || !in_array(@$_SERVER['REMOTE_ADDR'], array(
+        '127.0.0.1',
+        '::1',
+    ))
+	|| !in_array(@$_SERVER['HTTP_HOST'], array(
+        'bardiscms.dev'
+    ))
+) {
+    header('HTTP/1.0 403 Forbidden');
+    exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
+}
+*/
+
 $loader = require __DIR__.'/../app/autoload.php';
-//require_once __DIR__.'/../app/bootstrap.php.cache';
 require_once __DIR__.'/../app/AppCache.php';
 
 Debug::enable();
 
 $kernel = new AppKernel('dev', true);
 $kernel->loadClassCache();
-// wrap the default AppKernel with the AppCache one
-$kernel = new AppCache($kernel);
-
-// Returns a string representation of what happened in the cache layer.
-// In the development environment, use it to debug and validate your cache strategy
-error_log($kernel->getLog());
-
-// When using the HttpCache, you need to call the _method in your front controller instead
-// of relying on the configuration parameter
-//http://symfony.com/doc/2.8/reference/configuration/framework.html#configuration-framework-http-method-override
-Request::enableHttpMethodParameterOverride();
 
 $request = Request::createFromGlobals();
 

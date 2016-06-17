@@ -40,12 +40,13 @@ class HttpCacheHeadersHandler {
             $response->setPrivate();
             $response->setMaxAge($sharedMaxAge);
             $response->headers->set('X-User-Context-Hash', $eTagHash);
-            $response->setVary(array('Accept-Encoding', 'User-Agent', 'Cookie'));
+            $response->setVary(array('Authorization', 'Accept-Encoding', 'User-Agent', 'Cookie', 'X-User-Context-Hash'));
 
             // To disallow proxies storing any cached response
             //$response->headers->addCacheControlDirective('no-store', true);
             //$response->headers->addCacheControlDirective('no-cache', true);
             //$response->headers->set('Pragma', 'no-cache');
+            //$response->setMaxAge(0);
         }
         else {
             // Set Cache header to public to allow caching on reverse proxy servers
@@ -53,11 +54,11 @@ class HttpCacheHeadersHandler {
             $response->setSharedMaxAge($sharedMaxAge);
             $response->setMaxAge($sharedMaxAge);
             $response->headers->set('X-User-Context-Hash', $eTagHash);
-            $response->setVary(array('Accept-Encoding', 'User-Agent'));
+            $response->setVary(array('Authorization', 'Accept-Encoding', 'User-Agent', 'X-User-Context-Hash'));
         }
 
         // Use instead of ETag if non authenticated pages exist for caching
-        //$response->setLastModified($dateLastModified);
+        $response->setLastModified($dateLastModified);
         $response->setETag($eTagHash);
 
         // To enforce browsers to request server for revalidate each time

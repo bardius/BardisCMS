@@ -67,7 +67,7 @@ class DefaultController extends Controller {
         $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 
         // Set the flag for allowing HTTP cache
-        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') != 'test' && $this->settings->getActivateHttpCache();
+        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
 
         // Check if request was Ajax based
         $this->isAjaxRequest = $this->get('bardiscms_page.services.ajax_detection')->isAjaxRequest();
@@ -137,17 +137,27 @@ class DefaultController extends Controller {
 
         // Return cached page if reverse proxy cache is enabled
         if ($this->enableHTTPCache) {
-            $invalidationResponse = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
-                null,
-                $this->page->getDateLastModified(),
-                $this->eTagHash,
-                $this->userName ? true : false,
-                3600
-            );
+            $invalidationResponse = new Response();
+            $invalidationResponse->setETag($this->eTagHash);
+            $invalidationResponse->setLastModified($this->page->getDateLastModified());
+            $invalidationResponse->setPublic();
 
-            if ($invalidationResponse->isNotModified($this->pageRequest)) {
-                // return the 304 Response immediately
+            $requestNormalizedETags = $this->get('bardiscms_page.services.etag_header_hash_provider')->getNormalizedETagHashWithGzip($this->pageRequest);
+            var_dump($requestNormalizedETags);
+            var_dump($this->eTagHash);
+            var_dump($this->pageRequest);
+            // TODO: vary the response based on X-User-Context-Hash and check against the X-User-Context-Hash of the request
+            var_dump(strpos($requestNormalizedETags, $this->eTagHash) !== false && $this->pageRequest->headers->get('X-User-Context-Hash') === $this->eTagHash);
+            // If the current eTag matches one of the request eTags return 304
+            //if ($invalidationResponse->isNotModified($this->pageRequest)) {
+            if (strpos($requestNormalizedETags, $this->eTagHash) !== false) {
+                // Return the 304 Response immediately
+                $invalidationResponse->setNotModified();
+
                 return $invalidationResponse;
+            } else if($this->pageRequest->headers->get('if_none_match') && strpos($requestNormalizedETags, $this->eTagHash) === false) {
+                // Marks the Response stale in case ETag header is used for invalidation
+                $invalidationResponse->expire();
             } else {
                 // Marks the Response stale in case LastModified header is used for invalidation
                 $invalidationResponse->expire();
