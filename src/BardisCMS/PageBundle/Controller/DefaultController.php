@@ -137,30 +137,33 @@ class DefaultController extends Controller {
 
         // Return cached page if reverse proxy cache is enabled
         if ($this->enableHTTPCache) {
-            $invalidationResponse = new Response();
-            $invalidationResponse->setETag($this->eTagHash);
-            $invalidationResponse->setLastModified($this->page->getDateLastModified());
-            $invalidationResponse->setPublic();
-
             $requestNormalizedETags = $this->get('bardiscms_page.services.etag_header_hash_provider')->getNormalizedETagHashWithGzip($this->pageRequest);
-            var_dump($requestNormalizedETags);
-            var_dump($this->eTagHash);
-            var_dump($this->pageRequest);
-            // TODO: vary the response based on X-User-Context-Hash and check against the X-User-Context-Hash of the request
-            var_dump(strpos($requestNormalizedETags, $this->eTagHash) !== false && $this->pageRequest->headers->get('X-User-Context-Hash') === $this->eTagHash);
-            // If the current eTag matches one of the request eTags return 304
-            //if ($invalidationResponse->isNotModified($this->pageRequest)) {
-            if (strpos($requestNormalizedETags, $this->eTagHash) !== false) {
-                // Return the 304 Response immediately
-                $invalidationResponse->setNotModified();
+            $invalidationResponse = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                new Response(),
+                $this->page->getDateLastModified(),
+                $this->eTagHash,
+                $this->userName ? true : false,
+                $this->userName ? 0 : 360
+            );
 
-                return $invalidationResponse;
-            } else if($this->pageRequest->headers->get('if_none_match') && strpos($requestNormalizedETags, $this->eTagHash) === false) {
-                // Marks the Response stale in case ETag header is used for invalidation
-                $invalidationResponse->expire();
+            if ($invalidationResponse->isNotModified($this->pageRequest)) {
+                // Check the ETag header for validation
+                // TODO: properly check the ETag against the if_none_match headers
+                if ($this->pageRequest->headers->get('if_none_match') && strpos($requestNormalizedETags, $this->eTagHash) !== false) {
+                    // Return the 304 Status Response (with empty content) immediately
+                    $invalidationResponse->setNotModified();
+
+                    return $invalidationResponse;
+                } else if (!$this->pageRequest->headers->get('if_none_match')) {
+                    // Return the 304 Status Response (with empty content) immediately
+                    $invalidationResponse->setNotModified();
+
+                    return $invalidationResponse;
+                }
             } else {
                 // Marks the Response stale in case LastModified header is used for invalidation
                 $invalidationResponse->expire();
+                // TODO: purge the response from proxies
             }
         }
 
@@ -215,7 +218,7 @@ class DefaultController extends Controller {
                         $this->page->getDateLastModified(),
                         $this->eTagHash,
                         $this->userName ? true : false,
-                        3600
+                        $this->userName ? 0 : 360
                     );
                 }
 
@@ -298,7 +301,7 @@ class DefaultController extends Controller {
                 $this->page->getDateLastModified(),
                 $this->eTagHash,
                 $this->userName ? true : false,
-                3600
+                $this->userName ? 0 : 360
             );
         }
 
@@ -328,7 +331,7 @@ class DefaultController extends Controller {
                 $this->page->getDateLastModified(),
                 $this->eTagHash,
                 $this->userName ? true : false,
-                3600
+                $this->userName ? 0 : 360
             );
         }
 
@@ -370,7 +373,7 @@ class DefaultController extends Controller {
                 $this->page->getDateLastModified(),
                 $this->eTagHash,
                 $this->userName ? true : false,
-                3600
+                $this->userName ? 0 : 360
             );
         }
 
@@ -434,7 +437,7 @@ class DefaultController extends Controller {
                 $this->page->getDateLastModified(),
                 $this->eTagHash,
                 $this->userName ? true : false,
-                3600
+                $this->userName ? 0 : 360
             );
         }
 
@@ -498,7 +501,7 @@ class DefaultController extends Controller {
                 $this->page->getDateLastModified(),
                 $this->eTagHash,
                 $this->userName ? true : false,
-                3600
+                $this->userName ? 0 : 360
             );
         }
 
@@ -572,7 +575,7 @@ class DefaultController extends Controller {
                 $this->page->getDateLastModified(),
                 $this->eTagHash,
                 $this->userName ? true : false,
-                3600
+                $this->userName ? 0 : 360
             );
         }
 

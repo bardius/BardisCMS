@@ -43,6 +43,7 @@ class ResponseListener {
         }
         */
 
+        // TODO: Add these into the htaccess instead
         $headers->set('X-UA-Compatible', 'IE=Edge,chrome=1');
         $headers->set('P3P', 'cp=BardisCMS');
         $headers->set('X-Frame-Options', 'deny');

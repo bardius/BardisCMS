@@ -65,8 +65,6 @@ STRING;
     public function getNormalizedETagHashWithGzip(Request $request){
         $originalETags = $request->headers->get('if_none_match');
         $eTagsWithoutGzip = str_replace('-gzip"', '"', $originalETags);
-        var_dump($originalETags);
-        var_dump($eTagsWithoutGzip);
 
         return $eTagsWithoutGzip;
     }
