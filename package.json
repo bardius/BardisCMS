@@ -2,7 +2,7 @@
     "name": "bardis-cms-symfony2",
     "title": "Symfony2 BardisCMS & Foundation 5",
     "description": "Foundation 5 front end framework for Symfony2 BardisCMS",
-    "version": "v2.8.6",
+    "version": "v2.8.7",
     "homepage": "",
     "authors": [{
             "name": "George Bardis",
