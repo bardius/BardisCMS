@@ -42,8 +42,7 @@ class ResponseListener {
             //$headers->setCookie($userStatusCookie);
         }
         */
-
-        // TODO: Add these into the htaccess instead
+        /*
         $headers->set('X-UA-Compatible', 'IE=Edge,chrome=1');
         $headers->set('P3P', 'cp=BardisCMS');
         $headers->set('X-Frame-Options', 'deny');
@@ -52,7 +51,8 @@ class ResponseListener {
         $headers->set('ServerSignature', 'Off');
         $headers->set('ServerTokens', 'Prod');
         $headers->set('Content-Language', 'en');
-        $headers->set('Created-By', 'George Bardis - george@bardis.info');
-        $headers->set('Version', '1.0.0');
+        $headers->set('X-Created-By', 'George Bardis - george@bardis.info');
+        $headers->set('X-Version', '0.0.1');
+        */
     }
 }

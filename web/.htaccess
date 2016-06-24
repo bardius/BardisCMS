@@ -123,32 +123,35 @@ AddType application/octet-stream .zip
 #### Set headers
 <ifModule mod_headers.c>
     #### IE
-    #Header append X-UA-Compatible "IE=Edge,chrome=1"
+    Header append X-UA-Compatible "IE=Edge,chrome=1"
 
     #### P3P Header of IE issues with 3rd party coockies
-    #Header append P3P: "cp=BardisCMS"
+    Header append P3P: "cp=BardisCMS"
 
     #### Security Hardening
     # Vivid Matter - Bulletproof Header Security
     # Don't allow pages to be framed externally - Defends against CSRF
     # Prevent Clickjacking
-    #Header append X-FRAME-OPTIONS "deny"
+    Header append X-Frame-Options "deny"
 
     # Turn on IE8-IE9 XSS prevention tools
-    #Header append X-XSS-Protection "1; mode=block"
+    Header append X-XSS-Protection "1; mode=block"
 
     # Prevent mime based attacks
-    #Header append X-Content-Type-Options "nosniff"
+    Header append X-Content-Type-Options "nosniff"
 
     # Disable server signature
-    #Header append ServerSignature "Off"
-    #Header append ServerTokens "Prod"
+    Header append ServerSignature "Off"
+    Header append ServerTokens "Prod"
 
     #### Set the content language header
-    #Header append Content-Language en
+    Header append Content-Language en
 
     #### Set the Creator
-    #Header append Created-By "George Bardis - george@bardis.info"
+    Header append X-Created-By "George Bardis - george@bardis.info"
+
+    #### Set the Version
+    Header append X-Version "0.0.1"
 
     Header always unset link
     Header always unset Server
@@ -183,12 +186,11 @@ AddType application/octet-stream .zip
     <filesMatch "\.(js)$">
         Header always set Cache-Control "public"
     </filesMatch>
-    #### Disable Cache for pages with authedicated functionality ####
+    #### Disable Cache for generted pages ####
     <filesMatch "\.(x?html?|php)$">
-        # Header set Cache-Control "private, must-revalidate"
-        # Header set Cache-Control "no-cache, no-store, must-revalidate"
+        # Header set Cache-Control "private, no-cache, no-store, must-revalidate"
         # Header set Pragma "no-cache"
-        # Header set Expires "0"
+        # Header set Expires "-1"
     </filesMatch>
 </ifModule>
 
