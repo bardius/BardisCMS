@@ -22,3 +22,9 @@ parameters:
 
     userpass:           userpass
     adminpass:          adminpass
+
+    s3_bucket_name:     s3_bucket_name
+    s3_region:          s3_region
+    s3_access_key:      s3_access_key
+    s3_secret_key:      s3_secret_key
+    s3_subfolder:       s3_subfolder
