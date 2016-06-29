@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c64809a397e0edf5680e00717c833903",
-    "content-hash": "a698c7804cf40f78b71013b0a3e27be4",
+    "hash": "033e38aac3c6e2df7e04cb1e03dbe180",
+    "content-hash": "1e440c353fa19f6d59e0c1b66f4aeca0",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -1509,12 +1509,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/csarrazi/CsaGuzzleBundle.git",
-                "reference": "81e37ff7369f450af6141ab0b2a6cc37366cc82a"
+                "reference": "56dc5bb8f974b6135106596f21241545d084f0b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/csarrazi/CsaGuzzleBundle/zipball/81e37ff7369f450af6141ab0b2a6cc37366cc82a",
-                "reference": "81e37ff7369f450af6141ab0b2a6cc37366cc82a",
+                "url": "https://api.github.com/repos/csarrazi/CsaGuzzleBundle/zipball/56dc5bb8f974b6135106596f21241545d084f0b4",
+                "reference": "56dc5bb8f974b6135106596f21241545d084f0b4",
                 "shasum": ""
             },
             "require": {
@@ -1543,7 +1543,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1.x-dev"
+                    "dev-master": "2.2.x-dev"
                 }
             },
             "autoload": {
@@ -1562,7 +1562,7 @@
                 }
             ],
             "description": "A bundle integrating GuzzleHttp >= 4.0",
-            "time": "2016-06-07 07:57:56"
+            "time": "2016-06-29 01:55:39"
         },
         {
             "name": "doctrine/data-fixtures",
@@ -6017,26 +6017,7 @@
             "time": "2016-04-01 10:39:00"
         }
     ],
-    "aliases": [
-        {
-            "alias": "2.3.12",
-            "alias_normalized": "2.3.12.0",
-            "version": "3.0.0.0",
-            "package": "sonata-project/block-bundle"
-        },
-        {
-            "alias": "2.3.10",
-            "alias_normalized": "2.3.10.0",
-            "version": "3.0.0.0",
-            "package": "sonata-project/core-bundle"
-        },
-        {
-            "alias": "2.3.0",
-            "alias_normalized": "2.3.0.0",
-            "version": "3.0.0.0",
-            "package": "sonata-project/classification-bundle"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
         "doctrine/doctrine-bundle": 20,
