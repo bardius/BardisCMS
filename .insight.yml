@@ -6,6 +6,7 @@ pre_composer_script: |
 
     # Do what you need to setup your project
     cp app/config/parameters.yml.dist app/config/parameters.yml
+    sed 's/"%database_driver%"/"%database_driver%"\n        server_version: 5.6/g' -i app/config/config.yml
     sed -i -e "s/database_user:.*/database_user: root/" app/config/parameters.yml
     sed -i -e "s/database_password:.*/database_password: Secr3t/" app/config/parameters.yml
     #sed -i -e "s/unix_socket:.*/unix_socket: ~" app/config/parameters.yml
