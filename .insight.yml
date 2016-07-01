@@ -128,7 +128,7 @@ rules:
     symfony.app.sensitive_data_found_in_application_configuration:
         enabled: true
     symfony.application_not_bootable:
-        enabled: true
+        enabled: false
     symfony.configuration.yaml_syntax_error:
         enabled: true
     symfony.controller.action_method_too_long:
