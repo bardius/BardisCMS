@@ -13,4 +13,4 @@
 
     CSS3, HTML5
     Grunt, Zurb Foundation 5.5, Animate.css
-    Symfony2, Guzzlee
+    Symfony2
