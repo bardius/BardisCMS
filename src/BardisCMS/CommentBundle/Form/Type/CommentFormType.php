@@ -14,6 +14,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use BardisCMS\CommentBundle\Form\EventListener\SanitizeFieldSubscriber;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 use Symfony\Component\DependencyInjection\Container;
 use FOS\UserBundle\Model\UserInterface;

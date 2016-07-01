@@ -14,6 +14,7 @@ use BardisCMS\CommentBundle\Entity\Comment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\UserBundle\Model\UserInterface;
 
 use BardisCMS\PageBundle\Entity\Page as Page;
 use BardisCMS\BlogBundle\Entity\Blog as Blog;
@@ -80,7 +81,7 @@ class DefaultController extends Controller {
         $this->commentType = $commentType;
         $this->associated_object_id = $associated_object_id;
 
-        if($this->associated_object_id == null){
+        if($this->associated_object_id === null){
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
 

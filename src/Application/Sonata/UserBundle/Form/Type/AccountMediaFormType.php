@@ -15,6 +15,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 use Application\Sonata\UserBundle\Entity\User;
 

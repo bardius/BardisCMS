@@ -32,7 +32,7 @@ class HttpCacheHeadersHandler {
      * @return Response
      */
     public function setResponseCacheHeaders($response, \DateTime $dateLastModified , $eTagHash, $isPrivate = true, $maxAge = 3600, $disallowCache = false) {
-        if($response == null){
+        if($response === null){
             $response = new Response();
         }
 

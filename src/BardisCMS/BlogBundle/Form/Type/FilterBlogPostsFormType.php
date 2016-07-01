@@ -13,6 +13,7 @@ namespace BardisCMS\BlogBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 class FilterBlogPostsFormType extends AbstractType {
 

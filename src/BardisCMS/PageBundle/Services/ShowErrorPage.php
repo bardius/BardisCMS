@@ -33,7 +33,7 @@ class ShowErrorPage
     }
 
     public function errorPageAction($statusCode = null){
-        if($statusCode == null){
+        if($statusCode === null){
             $statusCode = "404";
         }
 
