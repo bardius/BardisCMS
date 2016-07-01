@@ -34,7 +34,7 @@ exclude_patterns:
     - app/SymfonyRequirements.php
     - web/config.php
     - web/app_*.php
-    
+
 rules:
     composer.apc_class_loader_should_be_enabled:
         enabled: true
