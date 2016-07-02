@@ -28,6 +28,15 @@ use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
  */
 class Skeleton {
 
+    /*
+     * Publish states
+     */
+    const STATUS_UNPUBLISHED    = 0;
+    const STATUS_PUBLISHED      = 1;
+    const STATUS_PREVIEW        = 2;
+    const STATUS_NONAUTHONLY    = 3;
+    const STATUS_AUTHONLY       = 4;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -131,19 +140,19 @@ class Skeleton {
     protected $pagetype = null;
 
     /**
-     * @ORM\ManyToMany(targetEntity="BardisCMS\ContentBlockBundle\Entity\ContentBlock", inversedBy="skeleton_maincontents", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="BardisCMS\ContentBlockBundle\Entity\ContentBlock", inversedBy="skeleton_maincontents", cascade={"all"}, orphanRemoval=true)
      * @ORM\JoinTable(name="skeleton_maincontent_blocks")
      * */
     protected $maincontentblocks;
 
     /**
-     * @ORM\ManyToMany(targetEntity="BardisCMS\ContentBlockBundle\Entity\ContentBlock", inversedBy="skeleton_bannercontents", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="BardisCMS\ContentBlockBundle\Entity\ContentBlock", inversedBy="skeleton_bannercontents", cascade={"all"}, orphanRemoval=true)
      * @ORM\JoinTable(name="skeleton_bannercontent_blocks")
      * */
     protected $bannercontentblocks;
 
     /**
-     * @ORM\ManyToMany(targetEntity="BardisCMS\ContentBlockBundle\Entity\ContentBlock", inversedBy="skeleton_modalcontents", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="BardisCMS\ContentBlockBundle\Entity\ContentBlock", inversedBy="skeleton_modalcontents", cascade={"all"}, orphanRemoval=true)
      * @ORM\JoinTable(name="skeleton_modalcontent_blocks")
      * */
     protected $modalcontentblocks;
@@ -164,7 +173,7 @@ class Skeleton {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId() {
         return $this->id;
@@ -185,7 +194,7 @@ class Skeleton {
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate() {
         return $this->date;
@@ -206,7 +215,7 @@ class Skeleton {
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle() {
         return $this->title;
@@ -227,7 +236,7 @@ class Skeleton {
     /**
      * Get alias
      *
-     * @return string 
+     * @return string
      */
     public function getAlias() {
         return $this->alias;
@@ -248,7 +257,7 @@ class Skeleton {
     /**
      * Get pageOrder
      *
-     * @return integer 
+     * @return integer
      */
     public function getPageOrder() {
         return $this->pageOrder;
@@ -269,7 +278,7 @@ class Skeleton {
     /**
      * Get showPageTitle
      *
-     * @return integer 
+     * @return integer
      */
     public function getShowPageTitle() {
         return $this->showPageTitle;
@@ -290,7 +299,7 @@ class Skeleton {
     /**
      * Get publishState
      *
-     * @return integer 
+     * @return integer
      */
     public function getPublishState() {
         return $this->publishState;
@@ -311,7 +320,7 @@ class Skeleton {
     /**
      * Get pageclass
      *
-     * @return string 
+     * @return string
      */
     public function getPageclass() {
         return $this->pageclass;
@@ -332,7 +341,7 @@ class Skeleton {
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription() {
         return $this->description;
@@ -353,7 +362,7 @@ class Skeleton {
     /**
      * Get keywords
      *
-     * @return string 
+     * @return string
      */
     public function getKeywords() {
         return $this->keywords;
@@ -374,7 +383,7 @@ class Skeleton {
     /**
      * Get introtext
      *
-     * @return string 
+     * @return string
      */
     public function getIntrotext() {
         return $this->introtext;
@@ -395,7 +404,7 @@ class Skeleton {
     /**
      * Get intromediasize
      *
-     * @return string 
+     * @return string
      */
     public function getIntromediasize() {
         return $this->intromediasize;
@@ -416,7 +425,7 @@ class Skeleton {
     /**
      * Get introclass
      *
-     * @return string 
+     * @return string
      */
     public function getIntroclass() {
         return $this->introclass;
@@ -437,7 +446,7 @@ class Skeleton {
     /**
      * Get pagetype
      *
-     * @return string 
+     * @return string
      */
     public function getPagetype() {
         return $this->pagetype;
@@ -458,7 +467,7 @@ class Skeleton {
     /**
      * Get author
      *
-     * @return \Application\Sonata\UserBundle\Entity\User 
+     * @return \Application\Sonata\UserBundle\Entity\User
      */
     public function getAuthor() {
         return $this->author;
@@ -479,7 +488,7 @@ class Skeleton {
     /**
      * Get introimage
      *
-     * @return \Application\Sonata\MediaBundle\Entity\Media 
+     * @return \Application\Sonata\MediaBundle\Entity\Media
      */
     public function getIntroimage() {
         return $this->introimage;
@@ -500,7 +509,7 @@ class Skeleton {
     /**
      * Get introvideo
      *
-     * @return \Application\Sonata\MediaBundle\Entity\Media 
+     * @return \Application\Sonata\MediaBundle\Entity\Media
      */
     public function getIntrovideo() {
         return $this->introvideo;
@@ -530,7 +539,7 @@ class Skeleton {
     /**
      * Get categories
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCategories() {
         return $this->categories;
@@ -560,7 +569,7 @@ class Skeleton {
     /**
      * Get tags
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTags() {
         return $this->tags;
@@ -590,7 +599,7 @@ class Skeleton {
     /**
      * Get maincontentblocks
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMaincontentblocks() {
         return $this->maincontentblocks;
@@ -620,7 +629,7 @@ class Skeleton {
     /**
      * Get bannercontentblocks
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getBannercontentblocks() {
         return $this->bannercontentblocks;
@@ -650,7 +659,7 @@ class Skeleton {
     /**
      * Get modalcontentblocks
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getModalcontentblocks() {
         return $this->modalcontentblocks;
@@ -659,7 +668,7 @@ class Skeleton {
     /**
      * Get dateLastModified
      *
-     * @return integer 
+     * @return integer
      */
     public function getDateLastModified() {
         return $this->dateLastModified;
@@ -669,18 +678,18 @@ class Skeleton {
      * Set dateLastModified
      *
      * @param integer $dateLastModified
-     * @return Page
+     * @return Skeleton
      */
     public function setDateLastModified($dateLastModified) {
         $this->dateLastModified = $dateLastModified;
-        
+
         return $this;
     }
 
     /**
      * toString Title
      *
-     * @return string 
+     * @return string
      */
     public function __toString() {
         if ($this->getTitle()) {
@@ -691,23 +700,42 @@ class Skeleton {
     }
 
     /**
+     * Returns PublishState list.
+     *
+     * @return array
+     */
+    public static function getPublishStateList()
+    {
+        return array(
+            Skeleton::STATUS_UNPUBLISHED    => "Unpublished",
+            Skeleton::STATUS_PUBLISHED      => "Published",
+            Skeleton::STATUS_PREVIEW        => "Preview",
+            Skeleton::STATUS_NONAUTHONLY    => "Anonymous Users Only",
+            Skeleton::STATUS_AUTHONLY       => "Authenticated Users Only",
+        );
+    }
+
+    /**
      * toString PublishState
      *
-     * @return string 
+     * @return string
      */
     public function getPublishStateAsString() {
         // Defining the string values of the publish states
         switch ($this->getPublishState()) {
-            case(0): return "Unpublished";
-            case(1): return "Published";
-            case(2): return "Preview";
+            case(Skeleton::STATUS_UNPUBLISHED): return "Unpublished";
+            case(Skeleton::STATUS_PUBLISHED): return "Published";
+            case(Skeleton::STATUS_PREVIEW): return "Preview";
+            case(Skeleton::STATUS_NONAUTHONLY): return "Anonymous Users Only";
+            case(Skeleton::STATUS_AUTHONLY): return "Authenticated Users Only";
+            default: return $this->getPublishState();
         }
     }
 
     /**
      * toString Pagetype
      *
-     * @return string 
+     * @return string
      */
     public function getPagetypeAsString() {
         // Defining the string values of the page types
@@ -715,6 +743,7 @@ class Skeleton {
             case('skeleton_article'): return "Skeleton Article";
             case('skeleton_filtered_list'): return "Skeleton Filtered Results";
             case('skeleton_home'): return "Skeleton Homepage";
+            default: return $this->getPagetype();
         }
     }
 }

@@ -16,8 +16,9 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class SkeletonAdminController extends Controller {
 
+    // Defining the custom sonata admin action for the duplicate page feature
     public function duplicateAction($id = null) {
-        // the key used to lookup the template
+        // The sonata admin action key used to lookup the template to use for this action
         $templateKey = 'edit';
 
         $id = $this->get('request')->get($this->admin->getIdParameter());

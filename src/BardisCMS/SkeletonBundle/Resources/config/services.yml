@@ -3,7 +3,7 @@ parameters:
 
 services:
     bardiscms_skeleton.services.helpers:
-        class: %page.services.helpers_class%
+        class: %skeleton.services.helpers_class%
         arguments: ["@doctrine.orm.entity_manager"]
 
 

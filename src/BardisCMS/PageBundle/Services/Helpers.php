@@ -12,6 +12,7 @@ namespace BardisCMS\PageBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+
 use BardisCMS\PageBundle\Entity\Page as Page;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;

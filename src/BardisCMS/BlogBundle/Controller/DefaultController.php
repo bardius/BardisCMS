@@ -17,12 +17,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use FOS\UserBundle\Model\UserInterface;
 
-use BardisCMS\CommentBundle\Entity\Comment;
-use BardisCMS\CommentBundle\Form\Type\CommentFormType;
-use BardisCMS\BlogBundle\Form\Type\FilterBlogPostsFormType;
-
 use BardisCMS\PageBundle\Entity\Page as Page;
 use BardisCMS\BlogBundle\Entity\Blog as Blog;
+
+use BardisCMS\BlogBundle\Form\Type\FilterBlogPostsFormType;
+
+use BardisCMS\CommentBundle\Entity\Comment;
+use BardisCMS\CommentBundle\Form\Type\CommentFormType;
 
 class DefaultController extends Controller {
 
@@ -44,6 +45,7 @@ class DefaultController extends Controller {
     private $enableHTTPCache;
     private $logged_user;
     private $isAjaxRequest;
+    private $eTagHash;
 
     // Override the ContainerAware setContainer to accommodate the extra variables
     public function setContainer(ContainerInterface $container = null) {
@@ -100,12 +102,27 @@ class DefaultController extends Controller {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
 
+        // Calculate the ETag hash that will be used for the HTTP Headers of the response
+        // TODO: calculate the getDateLastModified properly based on the contents of  the page
+        $this->eTagHash = $this->get('bardiscms_page.services.etag_header_hash_provider')->getETagHash(
+            $this->alias . '?' . $this->extraParams,
+            $this->page->getPublishState(),
+            $this->page->getDateLastModified(),
+            $this->userName
+        );
+
         $this->id = $this->page->getId();
 
-        return $this->showPageAction();
+        $response = $this->showPageAction();
+
+        return $response;
     }
 
-    // Display a page based on the id and the render variables from the settings and the routing
+    /**
+     * Render a page based on the id and the render variables from the settings and the routing
+     *
+     * @return Response
+     */
     public function showPageAction() {
 
         // Simple publishing ACL based on publish state and user Allowed Publish States
@@ -113,29 +130,44 @@ class DefaultController extends Controller {
             $this->page->getPublishState(),
             $this->publishStates
         );
+
         if(!$accessAllowedForUserRole){
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
-        // Return cached page if enabled
+        // Return cached page if reverse proxy cache is enabled
         if ($this->enableHTTPCache) {
-            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
-                null,
+            $requestNormalizedETags = $this->get('bardiscms_page.services.etag_header_hash_provider')->getNormalizedETagHashWithGzip($this->pageRequest);
+            $invalidationResponse = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                new Response(),
                 $this->page->getDateLastModified(),
-                false,
-                3600
+                $this->eTagHash,
+                $this->userName ? true : false,
+                $this->userName ? 0 : 360
             );
 
-            if (!$response->isNotModified($this->pageRequest)) {
-                // Marks the Response stale
-                $response->expire();
+            if ($invalidationResponse->isNotModified($this->pageRequest)) {
+                // Check the ETag header for validation
+                // TODO: properly check the ETag against the if_none_match headers
+                if ($this->pageRequest->headers->get('if_none_match') && strpos($requestNormalizedETags, $this->eTagHash) !== false) {
+                    // Return the 304 Status Response (with empty content) immediately
+                    $invalidationResponse->setNotModified();
+
+                    return $invalidationResponse;
+                } else if (!$this->pageRequest->headers->get('if_none_match')) {
+                    // Return the 304 Status Response (with empty content) immediately
+                    $invalidationResponse->setNotModified();
+
+                    return $invalidationResponse;
+                }
             } else {
-                // return the 304 Response immediately
-                return $response;
+                // Marks the Response stale in case LastModified header is used for invalidation
+                $invalidationResponse->expire();
+                // TODO: purge the response from proxies
             }
         }
 
-        // Set the website settings and metatags
+        // Set the website settings and metaTags
         $this->page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($this->page);
 
         // Set the pagination variables
@@ -147,11 +179,14 @@ class DefaultController extends Controller {
             $this->totalpageitems = 10;
         }
 
-        // Render the correct view depending on pagetype
         return $this->renderPage();
     }
 
-    // Get the required data to display to the correct view depending on pagetype
+    /**
+     * Render the proper action/view depending on page type
+     *
+     * @return Response
+     */
     protected function renderPage() {
 
         switch ($this->page->getPagetype()) {
@@ -175,30 +210,40 @@ class DefaultController extends Controller {
                 if ($commentsEnabled) {
                     $response = $this->getResponseWithComments();
                 } else {
-                    $pageParams = array(
+                    // Render normal page type
+                    $response = new Response();
+
+                    if ($this->enableHTTPCache) {
+                        $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                            $response,
+                            $this->page->getDateLastModified(),
+                            $this->eTagHash,
+                            $this->userName ? true : false,
+                            $this->userName ? 0 : 360
+                        );
+                    }
+
+                    $response->setETag($this->eTagHash);
+                    $response->sendHeaders();
+
+                    $template = $this->renderView('BlogBundle:Default:page.html.twig', array(
                         'page' => $this->page,
                         'logged_username' => $this->userName,
                         'mobile' => $this->serveMobile
-                    );
+                    ), $response);
 
-                    // Render normal page type
-                    $response = $this->render('BlogBundle:Default:page.html.twig', $pageParams);
+                    $response->setContent($template);
                 }
-        }
-
-        if ($this->enableHTTPCache) {
-            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
-                $response,
-                $this->page->getDateLastModified(),
-                false,
-                3600
-            );
         }
 
         return $response;
     }
 
-    // Render the home page
+    /**
+     * Render the blog home page page type
+     *
+     * @return Response
+     */
     protected function renderBlogHomePage() {
         // get all blog pages
         $pageList = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getAllItems(
@@ -211,7 +256,22 @@ class DefaultController extends Controller {
         $pages = $pageList['pages'];
         $totalPages = $pageList['totalPages'];
 
-        $response = $this->render('BlogBundle:Default:page.html.twig', array(
+        $response = new Response();
+
+        if ($this->enableHTTPCache) {
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                $response,
+                $this->page->getDateLastModified(),
+                $this->eTagHash,
+                $this->userName ? true : false,
+                $this->userName ? 0 : 360
+            );
+        }
+
+        $response->setETag($this->eTagHash);
+        $response->sendHeaders();
+
+        $template  = $this->renderView('BlogBundle:Default:page.html.twig', array(
             'page' => $this->page,
             'pages' => $pages,
             'totalPages' => $totalPages,
@@ -221,7 +281,9 @@ class DefaultController extends Controller {
             'totalpageitems' => $this->totalpageitems,
             'logged_username' => $this->userName,
             'mobile' => $this->serveMobile
-        ));
+        ), $response);
+
+        $response->setContent($template);
 
         return $response;
     }
@@ -258,7 +320,22 @@ class DefaultController extends Controller {
         $pages = $pageList['pages'];
         $totalPages = $pageList['totalPages'];
 
-        $response = $this->render('BlogBundle:Default:page.html.twig', array(
+        $response = new Response();
+
+        if ($this->enableHTTPCache) {
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                $response,
+                $this->page->getDateLastModified(),
+                $this->eTagHash,
+                $this->userName ? true : false,
+                $this->userName ? 0 : 360
+            );
+        }
+
+        $response->setETag($this->eTagHash);
+        $response->sendHeaders();
+
+        $template  = $this->renderView('BlogBundle:Default:page.html.twig', array(
             'page' => $this->page,
             'pages' => $pages,
             'totalPages' => $totalPages,
@@ -269,7 +346,9 @@ class DefaultController extends Controller {
             'filterForm' => $filterForm->createView(),
             'logged_username' => $this->userName,
             'mobile' => $this->serveMobile
-        ));
+        ), $response);
+
+        $response->setContent($template);
 
         return $response;
     }
@@ -301,7 +380,22 @@ class DefaultController extends Controller {
         $pages = $pageList['pages'];
         $totalPages = $pageList['totalPages'];
 
-        $response = $this->render('BlogBundle:Default:page.html.twig', array(
+        $response = new Response();
+
+        if ($this->enableHTTPCache) {
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                $response,
+                $this->page->getDateLastModified(),
+                $this->eTagHash,
+                $this->userName ? true : false,
+                $this->userName ? 0 : 360
+            );
+        }
+
+        $response->setETag($this->eTagHash);
+        $response->sendHeaders();
+
+        $template  = $this->renderView('BlogBundle:Default:page.html.twig', array(
             'page' => $this->page,
             'pages' => $pages,
             'totalPages' => $totalPages,
@@ -311,7 +405,9 @@ class DefaultController extends Controller {
             'totalpageitems' => $this->totalpageitems,
             'logged_username' => $this->userName,
             'mobile' => $this->serveMobile
-        ));
+        ), $response);
+
+        $response->setContent($template);
 
         return $response;
     }
@@ -354,6 +450,8 @@ class DefaultController extends Controller {
 
     private function getResponseWithComments()
     {
+        $response = new Response();
+
         // Adding the form for new comment
         $comment = new Comment();
         $comment->setBlogPost($this->page);
@@ -376,7 +474,22 @@ class DefaultController extends Controller {
             $response = $this->get('bardiscms_comment.services.controller')->addCommentAction(Comment::TYPE_BLOG, $this->id, $this->pageRequest);
         } else {
             // Render normal page type
-            $response = $this->render('BlogBundle:Default:page.html.twig', $pageParams);
+            if ($this->enableHTTPCache) {
+                $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                    $response,
+                    $this->page->getDateLastModified(),
+                    $this->eTagHash,
+                    $this->userName ? true : false,
+                    $this->userName ? 0 : 360
+                );
+            }
+
+            $response->setETag($this->eTagHash);
+            $response->sendHeaders();
+
+            $template = $this->renderView('BlogBundle:Default:page.html.twig', $pageParams, $response);
+
+            $response->setContent($template);
         }
 
         return $response;

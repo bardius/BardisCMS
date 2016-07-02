@@ -80,10 +80,6 @@ class DefaultController extends Controller {
         if (is_object($this->logged_user) && $this->logged_user instanceof UserInterface) {
             $this->userName = $this->logged_user->getUsername();
         }
-
-        // TODO: Make the sample Guzzle call to be a service
-        // Sample Guzzle call
-        //$this->sampleGuzzleCall();
     }
 
     // Get the page id based on alias from route
@@ -659,86 +655,5 @@ class DefaultController extends Controller {
         $ajaxFormResponse->headers->set('Content-Type', 'application/json');
 
         return $ajaxFormResponse;
-    }
-
-    // Sample Guzzle Call
-    protected function sampleGuzzleCall(){
-        // Sample Guzzle Client Service
-        // http://docs.guzzlephp.org/en/latest/
-        try {
-            $sampleGuzzleAPIClient = $this->get('guzzle.client.github');
-
-            // Sample API endpoint URL
-            $sampleAPIClientURL = "/repos/bardius/BardisCMS/commits";
-
-            // Sample GET request
-            $response = $sampleGuzzleAPIClient->request('GET', $sampleAPIClientURL, [
-                'headers' => [
-                //    'Accept' => 'application/json',
-                    'Content-Type' => 'application/json',
-                //    'Sample-Header' => 'BardisCMS'
-                ],
-                //'proxy' => [
-                //      'http'  => 'tcp://localhost:8125', // Use this proxy with "http"
-                //      'https' => 'tcp://localhost:9124', // Use this proxy with "https",
-                //      'no' => ['.mit.edu', 'foo.com']    // Don't use a proxy with these
-                //],
-                //'allow_redirects' => false,
-                //'auth' => ['username', 'password'],
-                'query' => [
-                    'author' => 'bardius'
-                ],
-                'http_errors' => false,
-                'connect_timeout' => 30,
-                'timeout' => 30
-            ]);
-
-            // Sample POST request with form parameters or json as body
-            //$response = $sampleGuzzleAPIClient->request('POST', $sampleAPIClientURL, [
-                //'headers' => [
-                //  'Accept' => 'application/json',
-                //  'Content-Type' => 'application/json',
-                //  'Sample-Header' => 'BardisCMS'
-                //],
-                //'proxy' => [
-                //    'http'  => 'tcp://localhost:8125', // Use this proxy with "http"
-                //    'https' => 'tcp://localhost:9124', // Use this proxy with "https",
-                //    'no' => ['.mit.edu', 'foo.com']    // Don't use a proxy with these
-                //],
-                //'json' => [
-                //    'username' => 'bardius',
-                //    'project' => 'BardisCMS'
-                //],
-                //'auth' => ['username', 'password'],
-                //'form_params' => [
-                //    'username' => 'bardius',
-                //    'project' => 'BardisCMS'
-                //],
-                //'http_errors' => false,
-                //'connect_timeout' => 30,
-                //'timeout' => 30
-           // ]);
-
-            $data = json_decode($response->getBody());
-            $statusCode = $response->getStatusCode();
-        }
-        catch (\GuzzleHttp\Exception\ConnectException $e) {
-            $req = $e->getRequest();
-            $resp = $e->getResponse();
-        }
-        catch (\GuzzleHttp\Exception\ClientErrorResponseException $e) {
-            $req = $e->getRequest();
-            $resp = $e->getResponse();
-        }
-        catch (\GuzzleHttp\Exception\ServerErrorResponseException $e) {
-            $req = $e->getRequest();
-            $resp = $e->getResponse();
-        }
-        catch (\GuzzleHttp\Exception\BadResponseException $e) {
-            $req = $e->getRequest();
-            $resp = $e->getResponse();
-        }
-        catch(\Exception $e){
-        }
     }
 }

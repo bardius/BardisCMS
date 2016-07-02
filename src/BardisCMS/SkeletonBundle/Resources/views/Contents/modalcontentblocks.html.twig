@@ -36,7 +36,7 @@
                         {% media contentBlock.vimeo.id, contentBlock.mediaSize %}
                     </div>
                 {% elseif contentBlock.contentType == 'contact' %}
-                    {% include 'PageBundle:Contents:contactFormHolder.html.twig' %}
+                    {% include 'SkeletonBundle:Contents:contactFormHolder.html.twig' %}
                 {% else %}
                     <p class="error">No content yet. Please Add content from the administation panel.</p>
                 {% endif %}

@@ -15,11 +15,11 @@
                         {% for i in 0..(totalPages - 1) %}
                             {% if i != currentpage %}
                                 <li><a class="pageNumber" href="{{ app.request.getBaseURL() }}/tagged{% if linkUrlParams %}/{{ linkUrlParams|url_encode() }}{% endif %}/{{ i }}" title="Page {{ i }}">{{ i }}</a></li>
-                                {% else %}
+                            {% else %}
                                 <li class="current"><a class="pageNumber" href="#" title="Page {{ i }}">{{ i }}</a></li>
-                                {% endif %}
-                            {% endfor %}
-                            {% if (currentpage + 1) < totalPages %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if (currentpage + 1) < totalPages %}
                             <li class="arrow">
                                 <a class="nextPageLink" href="{{ app.request.getBaseURL() }}/tagged{% if linkUrlParams %}/{{ linkUrlParams|url_encode() }}{% endif %}/{{ currentpage + 1 }}" title="Next Page">Next Page</a>
                             </li>

@@ -13,7 +13,6 @@
 {% block siteLogoKeywords %}{{ page.keywords }}{% endblock %}
 {% block siteLogoDescription %}{{ page.title }} {{ page.description }}{% endblock %}
 
-
 {% block body_start %}
     {#
     {% if page.bannercontentblocks|length > 0 %}
@@ -43,7 +42,7 @@
                 </div>
             </div>
         </div>
-    {% elseif page.pagetype == 'category_page' or page.pagetype == 'skeleton_filtered_list' or page.pagetype == 'skeleton_category_list' %} 
+    {% elseif page.pagetype == 'category_page' or page.pagetype == 'skeleton_filtered_list' or page.pagetype == 'skeleton_category_list' %}
         <div class="large-12 small-12 columns categoryPage">
             <div class="row">
                 {% if page.showPageTitle == 1 %}
@@ -51,7 +50,7 @@
                         <h2>{{ page.title }}</h2>
                     </div>
                 {% endif %}
-                {% if page.pagetype == 'skeleton_filtered_list' %} 
+                {% if page.pagetype == 'skeleton_filtered_list' %}
                     <div class="large-12 small-12 columns">
                         <div class="row">
                             {% include 'SkeletonBundle:Contents:filterResultsFormHolder.html.twig' %}
@@ -83,14 +82,14 @@
                         </div>
                     </div>
                 </div>
-                {% if page.pagetype == 'page_tag_list' %} 
+                {% if page.pagetype == 'page_tag_list' %}
                     {% include 'SkeletonBundle:Contents:tags-pagination.html.twig' %}
-                {% else %} 
-                    {% include 'SkeletonBundle:Contents:pagination.html.twig' %}            
-                {% endif %} 
+                {% else %}
+                    {% include 'SkeletonBundle:Contents:pagination.html.twig' %}
+                {% endif %}
             </div>
         </div>
-    {% elseif page.pagetype == 'skeleton_home'%} 
+    {% elseif page.pagetype == 'skeleton_home'%}
         <div class="large-12 small-12 columns homePage">
             <div class="row">
                 {% if page.showPageTitle == 1 %}
@@ -113,7 +112,7 @@
                                     {% include 'SkeletonBundle:Contents:page-list-item.html.twig' %}
                                 </div>
                             {% endfor %}
-                        {% endif %} 
+                        {% endif %}
                     </div>
                 </div>
                 {% include 'SkeletonBundle:Contents:home_pagination.html.twig' %}

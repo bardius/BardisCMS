@@ -10,13 +10,16 @@
 
 namespace BardisCMS\SkeletonBundle\Controller;
 
-use BardisCMS\SkeletonBundle\Form\Type\FilterResultsFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+use FOS\UserBundle\Model\UserInterface;
+
 use BardisCMS\PageBundle\Entity\Page as Page;
+
+use BardisCMS\SkeletonBundle\Form\Type\FilterResultsFormType;
 
 class DefaultController extends Controller {
 
@@ -36,6 +39,9 @@ class DefaultController extends Controller {
     private $serveMobile;
     private $userRole;
     private $enableHTTPCache;
+    private $logged_user;
+    private $isAjaxRequest;
+    private $eTagHash;
 
     // Override the ContainerAware setcontainer to accomodate the extra variables
     public function setContainer(ContainerInterface $container = null) {
@@ -53,16 +59,27 @@ class DefaultController extends Controller {
 
         // Get the settings from setting bundle
         $this->settings = $this->get('bardiscms_settings.load_settings')->loadSettings();
+
         // Get the highest user role security permission
         $this->userRole = $this->get('sonata_user.services.helpers')->getLoggedUserHighestRole();
+
         // Check if mobile content should be served
         $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 
         // Set the flag for allowing HHTP cache
         $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
 
+        // Check if request was Ajax based
+        $this->isAjaxRequest = $this->get('bardiscms_page.services.ajax_detection')->isAjaxRequest();
+
         // Set the publish statuses that are available for the user
-        $this->publishStates = $this->get('bardiscms_page.services.helpers')->getAllowedPublishStates($this->userRole);
+        $this->publishStates = $this->get('bardiscms_skeleton.services.helpers')->getAllowedPublishStates($this->userRole);
+
+        // Get the logged user if any
+        $this->logged_user = $this->get('sonata_user.services.helpers')->getLoggedUser();
+        if (is_object($this->logged_user) && $this->logged_user instanceof UserInterface) {
+            $this->userName = $this->logged_user->getUsername();
+        }
     }
 
     // Get the Skeleton page id based on alias from route
@@ -75,45 +92,78 @@ class DefaultController extends Controller {
         $this->currentpage = $currentpage;
         $this->totalpageitems = $totalpageitems;
 
-        $page = $this->getDoctrine()->getRepository('SkeletonBundle:Skeleton')->findOneByAlias($alias);
+        $this->page = $this->getDoctrine()->getRepository('SkeletonBundle:Skeleton')->findOneByAlias($this->alias);
 
-        if (!$page) {
+        if (!$this->page) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
 
-        $this->page = $page;
+        // Calculate the ETag hash that will be used for the HTTP Headers of the response
+        // TODO: calculate the getDateLastModified properly based on the contents of  the page
+        $this->eTagHash = $this->get('bardiscms_page.services.etag_header_hash_provider')->getETagHash(
+            $this->alias . '?' . $this->extraParams,
+            $this->page->getPublishState(),
+            $this->page->getDateLastModified(),
+            $this->userName
+        );
+
         $this->id = $this->page->getId();
 
-        return $this->showPageAction();
+        $response = $this->showPageAction();
+
+        return $response;
     }
 
-    // Display a page based on the id and the render variables from the settings and the routing
+    /**
+     * Render a page based on the id and the render variables from the settings and the routing
+     *
+     * @return Response
+     */
     public function showPageAction() {
 
-        // Simple publishing ACL based on publish state and user role
-        if ($this->page->getPublishState() == 0) {
-            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
+        // Simple publishing ACL based on publish state and user Allowed Publish States
+        $accessAllowedForUserRole = $this->get('bardiscms_skeleton.services.helpers')->isUserAccessAllowedByRole(
+            $this->page->getPublishState(),
+            $this->publishStates
+        );
+
+        if(!$accessAllowedForUserRole){
+            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
-        if ($this->page->getPublishState() == 2 && $this->userRole == "") {
-            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
-        }
-
-        // Return cached page if enabled
+        // Return cached page if reverse proxy cache is enabled
         if ($this->enableHTTPCache) {
+            $requestNormalizedETags = $this->get('bardiscms_page.services.etag_header_hash_provider')->getNormalizedETagHashWithGzip($this->pageRequest);
+            $invalidationResponse = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                new Response(),
+                $this->page->getDateLastModified(),
+                $this->eTagHash,
+                $this->userName ? true : false,
+                $this->userName ? 0 : 360
+            );
 
-            $response = $this->setResponseCacheHeaders(new Response());
+            if ($invalidationResponse->isNotModified($this->pageRequest)) {
+                // Check the ETag header for validation
+                // TODO: properly check the ETag against the if_none_match headers
+                if ($this->pageRequest->headers->get('if_none_match') && strpos($requestNormalizedETags, $this->eTagHash) !== false) {
+                    // Return the 304 Status Response (with empty content) immediately
+                    $invalidationResponse->setNotModified();
 
-            if (!$response->isNotModified($this->pageRequest)) {
-                // Marks the Response stale
-                $response->expire();
+                    return $invalidationResponse;
+                } else if (!$this->pageRequest->headers->get('if_none_match')) {
+                    // Return the 304 Status Response (with empty content) immediately
+                    $invalidationResponse->setNotModified();
+
+                    return $invalidationResponse;
+                }
             } else {
-                // return the 304 Response immediately
-                return $response;
+                // Marks the Response stale in case LastModified header is used for invalidation
+                $invalidationResponse->expire();
+                // TODO: purge the response from proxies
             }
         }
 
-        // Set the website settings and metatags
+        // Set the website settings and metaTags
         $this->page = $this->get('bardiscms_settings.set_page_settings')->setPageSettings($this->page);
 
         // Set the pagination variables
@@ -125,11 +175,14 @@ class DefaultController extends Controller {
             $this->totalpageitems = 10;
         }
 
-        // Render the correct view depending on pagetype
         return $this->renderPage();
     }
 
-    // Get the required data to display to the correct view depending on pagetype
+    /**
+     * Render the proper action/view depending on page type
+     *
+     * @return Response
+     */
     protected function renderPage() {
 
         switch ($this->page->getPagetype()) {
@@ -148,17 +201,40 @@ class DefaultController extends Controller {
 
             default:
                 // Render normal page type
-                $response = $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $this->page, 'mobile' => $this->serveMobile));
-        }
+                $response = new Response();
 
-        if ($this->enableHTTPCache) {
-            $response = $this->setResponseCacheHeaders($response);
+                if ($this->enableHTTPCache) {
+                    $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                        $response,
+                        $this->page->getDateLastModified(),
+                        $this->eTagHash,
+                        $this->userName ? true : false,
+                        $this->userName ? 0 : 360
+                    );
+                }
+
+                $response->setETag($this->eTagHash);
+                $response->sendHeaders();
+
+                $template = $this->renderView('SkeletonBundle:Default:page.html.twig', array(
+                    'page' => $this->page,
+                    'logged_username' => $this->userName,
+                    'mobile' => $this->serveMobile
+                ), $response);
+
+                $response->setContent($template);
         }
 
         return $response;
     }
 
-    // Get and format the filtering arguments to use with the actions
+    /**
+     * Get and normalise the filtering arguments to use with the actions
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
     public function filterPagesAction(Request $request) {
 
         $filterTags = 'all';
@@ -168,7 +244,7 @@ class DefaultController extends Controller {
         $filterForm = $this->createForm(new FilterResultsFormType());
         $filterData = null;
 
-        // If the filter form has been submited
+        // If the filter form has been submitted
         if ($request->getMethod() == 'POST') {
 
             // Bind the data with the form
@@ -187,7 +263,9 @@ class DefaultController extends Controller {
 
         // Generate the proper route for the required results
         $url = $this->get('router')->generate(
-                'SkeletonBundle_tagged_noslash', array('extraParams' => $this->extraParams), true
+            'SkeletonBundle_tagged_noslash',
+            array('extraParams' => $this->extraParams),
+            true
         );
 
         // Redirect to the results
@@ -207,7 +285,11 @@ class DefaultController extends Controller {
         return $response;
     }
 
-    // Render filtered list page type
+    /**
+     * Render the home page page type
+     *
+     * @return Response
+     */
     protected function renderFilteredListPage() {
 
         $filterForm = $this->createForm(new FilterResultsFormType());
@@ -226,7 +308,35 @@ class DefaultController extends Controller {
         $pages = $pageList['pages'];
         $totalPages = $pageList['totalPages'];
 
-        $response = $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $this->page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $this->extraParams, 'currentpage' => $this->currentpage, 'linkUrlParams' => $this->linkUrlParams, 'totalpageitems' => $this->totalpageitems, 'filterForm' => $filterForm->createView(), 'mobile' => $this->serveMobile));
+        $response = new Response();
+
+        if ($this->enableHTTPCache) {
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                $response,
+                $this->page->getDateLastModified(),
+                $this->eTagHash,
+                $this->userName ? true : false,
+                $this->userName ? 0 : 360
+            );
+        }
+
+        $response->setETag($this->eTagHash);
+        $response->sendHeaders();
+
+        $template  = $this->renderView('SkeletonBundle:Default:page.html.twig', array(
+            'page' => $this->page,
+            'pages' => $pages,
+            'totalPages' => $totalPages,
+            'extraParams' => $this->extraParams,
+            'currentpage' => $this->currentpage,
+            'linkUrlParams' => $this->linkUrlParams,
+            'totalpageitems' => $this->totalpageitems,
+            'filterForm' => $filterForm->createView(),
+            'logged_username' => $this->userName,
+            'mobile' => $this->serveMobile
+        ), $response);
+
+        $response->setContent($template);
 
         return $response;
     }
@@ -245,20 +355,83 @@ class DefaultController extends Controller {
         $pages = $pageList['pages'];
         $totalPages = $pageList['totalPages'];
 
-        $response = $this->render('SkeletonBundle:Default:page.html.twig', array('page' => $this->page, 'pages' => $pages, 'totalPages' => $totalPages, 'extraParams' => $this->extraParams, 'currentpage' => $this->currentpage, 'linkUrlParams' => $this->linkUrlParams, 'totalpageitems' => $this->totalpageitems, 'mobile' => $this->serveMobile));
+        $response = new Response();
+
+        if ($this->enableHTTPCache) {
+            $response = $this->get('bardiscms_page.services.http_cache_headers_handler')->setResponseCacheHeaders(
+                $response,
+                $this->page->getDateLastModified(),
+                $this->eTagHash,
+                $this->userName ? true : false,
+                $this->userName ? 0 : 360
+            );
+        }
+
+        $response->setETag($this->eTagHash);
+        $response->sendHeaders();
+
+        $template  = $this->renderView('SkeletonBundle:Default:page.html.twig', array(
+            'page' => $this->page,
+            'pages' => $pages,
+            'totalPages' => $totalPages,
+            'extraParams' => $this->extraParams,
+            'currentpage' => $this->currentpage,
+            'linkUrlParams' => $this->linkUrlParams,
+            'totalpageitems' => $this->totalpageitems,
+            'logged_username' => $this->userName,
+            'mobile' => $this->serveMobile
+        ), $response);
+
+        $response->setContent($template);
 
         return $response;
     }
 
-    // set a custom Cache-Control directives
-    protected function setResponseCacheHeaders(Response $response) {
+    /**
+     * Extend with new method to handle Ajax response with errors
+     *
+     * @param $formHandler
+     *
+     * @return Response
+     */
+    protected function onAjaxError($formHandler)
+    {
+        $errorList = $formHandler->getErrors();
+        $formMessage = 'skeleton_form.response.error';
+        $formHasErrors = true;
 
-        $response->setPublic();
-        $response->setLastModified($this->page->getDateLastModified());
-        $response->setVary(array('Accept-Encoding', 'User-Agent'));
-        $response->headers->addCacheControlDirective('must-revalidate', true);
-        $response->setSharedMaxAge(3600);
+        $ajaxFormData = array(
+            'errors' => $errorList,
+            'formMessage' => $this->container->get('translator')->trans($formMessage, array(), 'BardisCMSSkeletonBundle'),
+            'hasErrors' => $formHasErrors
+        );
 
-        return $response;
+        $ajaxFormResponse = new Response(json_encode($ajaxFormData));
+        $ajaxFormResponse->headers->set('Content-Type', 'application/json');
+
+        return $ajaxFormResponse;
+    }
+
+    /**
+     * Extend with new method to handle Ajax response with success
+     *
+     * @return Response
+     */
+    protected function onAjaxSuccess()
+    {
+        $errorList = array();
+        $formMessage = 'skeleton_form.response.success';
+        $formHasErrors = false;
+
+        $ajaxFormData = array(
+            'errors' => $errorList,
+            'formMessage' => $this->container->get('translator')->trans($formMessage, array(), 'BardisCMSSkeletonBundle'),
+            'hasErrors' => $formHasErrors
+        );
+
+        $ajaxFormResponse = new Response(json_encode($ajaxFormData));
+        $ajaxFormResponse->headers->set('Content-Type', 'application/json');
+
+        return $ajaxFormResponse;
     }
 }

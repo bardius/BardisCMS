@@ -204,7 +204,7 @@ class Page {
     /**
      * Set date
      *
-     * @param date $date
+     * @param \DateTime $date
      * @return Page
      */
     public function setDate($date) {
@@ -216,7 +216,7 @@ class Page {
     /**
      * Get date
      *
-     * @return date
+     * @return \DateTime
      */
     public function getDate() {
         return $this->date;
@@ -328,7 +328,7 @@ class Page {
     /**
      * Set introtext
      *
-     * @param text $introtext
+     * @param string $introtext
      * @return Page
      */
     public function setIntrotext($introtext) {
@@ -339,7 +339,7 @@ class Page {
     /**
      * Get introtext
      *
-     * @return text
+     * @return string
      */
     public function getIntrotext() {
         return $this->introtext;
@@ -348,7 +348,7 @@ class Page {
     /**
      * Set introimage
      *
-     * @param Application\Sonata\MediaBundle\Entity\Media $introimage
+     * @param \Application\Sonata\MediaBundle\Entity\Media $introimage
      * @return Page
      */
     public function setIntroimage(\Application\Sonata\MediaBundle\Entity\Media $introimage = null) {
@@ -359,7 +359,7 @@ class Page {
     /**
      * Get introimage
      *
-     * @return Application\Sonata\MediaBundle\Entity\Media
+     * @return \Application\Sonata\MediaBundle\Entity\Media
      */
     public function getIntroimage() {
         return $this->introimage;
@@ -368,7 +368,7 @@ class Page {
     /**
      * Add introimage
      *
-     * @param Application\Sonata\MediaBundle\Entity\Media $introimage
+     * @param \Application\Sonata\MediaBundle\Entity\Media $introimage
      * @return Page
      */
     public function addIntroimage(\Application\Sonata\MediaBundle\Entity\Media $introimage) {
@@ -379,7 +379,7 @@ class Page {
     /**
      * Remove introimage
      *
-     * @param Application\Sonata\MediaBundle\Entity\Media $introimage
+     * @param \Application\Sonata\MediaBundle\Entity\Media $introimage
      */
     public function removeIntroimage(\Application\Sonata\MediaBundle\Entity\Media $introimage) {
         $this->introimage->removeElement($introimage);
@@ -451,7 +451,7 @@ class Page {
     /**
      * Add maincontentblocks
      *
-     * @param BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks
+     * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks
      * @return Page
      */
     public function addMaincontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks) {
@@ -463,7 +463,7 @@ class Page {
     /**
      * Remove maincontentblocks
      *
-     * @param BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks
+     * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks
      */
     public function removeMaincontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks) {
         $this->maincontentblocks->removeElement($maincontentblocks);
@@ -472,7 +472,7 @@ class Page {
     /**
      * Get maincontentblocks
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMaincontentblocks() {
         return $this->maincontentblocks;
@@ -481,7 +481,7 @@ class Page {
     /**
      * Add secondarycontentblocks
      *
-     * @param BardisCMS\ContentBlockBundle\Entity\ContentBlock $secondarycontentblocks
+     * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $secondarycontentblocks
      * @return Page
      */
     public function addSecondarycontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $secondarycontentblocks) {
@@ -493,7 +493,7 @@ class Page {
     /**
      * Remove secondarycontentblocks
      *
-     * @param BardisCMS\ContentBlockBundle\Entity\ContentBlock $secondarycontentblocks
+     * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $secondarycontentblocks
      */
     public function removeSecondarycontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $secondarycontentblocks) {
         $this->secondarycontentblocks->removeElement($secondarycontentblocks);
@@ -502,7 +502,7 @@ class Page {
     /**
      * Get secondarycontentblocks
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSecondarycontentblocks() {
         return $this->secondarycontentblocks;
@@ -511,7 +511,7 @@ class Page {
     /**
      * Add extracontentblocks
      *
-     * @param BardisCMS\ContentBlockBundle\Entity\ContentBlock $extracontentblocks
+     * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $extracontentblocks
      * @return Page
      */
     public function addExtracontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $extracontentblocks) {
@@ -523,7 +523,7 @@ class Page {
     /**
      * Remove extracontentblocks
      *
-     * @param BardisCMS\ContentBlockBundle\Entity\ContentBlock $extracontentblocks
+     * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $extracontentblocks
      */
     public function removeExtracontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $extracontentblocks) {
         $this->extracontentblocks->removeElement($extracontentblocks);
@@ -532,7 +532,7 @@ class Page {
     /**
      * Get extracontentblocks
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getExtracontentblocks() {
         return $this->extracontentblocks;
@@ -541,7 +541,7 @@ class Page {
     /**
      * Add modalcontentblocks
      *
-     * @param BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks
+     * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks
      * @return Page
      */
     public function addModalcontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks) {
@@ -553,7 +553,7 @@ class Page {
     /**
      * Remove modalcontentblocks
      *
-     * @param BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks
+     * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks
      */
     public function removeModalcontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks) {
         $this->modalcontentblocks->removeElement($modalcontentblocks);
@@ -562,7 +562,7 @@ class Page {
     /**
      * Get modalcontentblocks
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getModalcontentblocks() {
         return $this->modalcontentblocks;
@@ -571,7 +571,7 @@ class Page {
     /**
      * Add categories
      *
-     * @param BardisCMS\CategoryBundle\Entity\Category $categories
+     * @param \BardisCMS\CategoryBundle\Entity\Category $categories
      * @return Page
      */
     public function addCategory(\BardisCMS\CategoryBundle\Entity\Category $categories) {
@@ -583,7 +583,7 @@ class Page {
     /**
      * Remove categories
      *
-     * @param BardisCMS\CategoryBundle\Entity\Category $categories
+     * @param \BardisCMS\CategoryBundle\Entity\Category $categories
      */
     public function removeCategory(\BardisCMS\CategoryBundle\Entity\Category $categories) {
         $this->categories->removeElement($categories);
@@ -592,7 +592,7 @@ class Page {
     /**
      * Get categories
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCategories() {
         return $this->categories;
@@ -601,7 +601,7 @@ class Page {
     /**
      * Add tags
      *
-     * @param BardisCMS\TagBundle\Entity\Tag $tags
+     * @param \BardisCMS\TagBundle\Entity\Tag $tags
      * @return Page
      */
     public function addTag(\BardisCMS\TagBundle\Entity\Tag $tags) {
@@ -613,7 +613,7 @@ class Page {
     /**
      * Remove tags
      *
-     * @param BardisCMS\TagBundle\Entity\Tag $tags
+     * @param \BardisCMS\TagBundle\Entity\Tag $tags
      */
     public function removeTag(\BardisCMS\TagBundle\Entity\Tag $tags) {
         $this->tags->removeElement($tags);
@@ -622,7 +622,7 @@ class Page {
     /**
      * Get tags
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTags() {
         return $this->tags;
@@ -631,7 +631,7 @@ class Page {
     /**
      * Add categories
      *
-     * @param BardisCMS\CategoryBundle\Entity\Category $categories
+     * @param \BardisCMS\CategoryBundle\Entity\Category $categories
      * @return Page
      */
     public function addCategories(\BardisCMS\CategoryBundle\Entity\Category $categories) {
@@ -643,7 +643,7 @@ class Page {
     /**
      * Remove categories
      *
-     * @param BardisCMS\CategoryBundle\Entity\Category $categories
+     * @param \BardisCMS\CategoryBundle\Entity\Category $categories
      */
     public function removeCategories(\BardisCMS\CategoryBundle\Entity\Category $categories) {
         $this->categories->removeElement($categories);
@@ -715,7 +715,7 @@ class Page {
     /**
      * Add bannercontentblocks
      *
-     * @param BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks
+     * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks
      * @return Page
      */
     public function addBannercontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks) {
@@ -727,7 +727,7 @@ class Page {
     /**
      * Remove bannercontentblocks
      *
-     * @param BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks
+     * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks
      */
     public function removeBannercontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks) {
         $this->bannercontentblocks->removeElement($bannercontentblocks);
@@ -736,7 +736,7 @@ class Page {
     /**
      * Get bannercontentblocks
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getBannercontentblocks() {
         return $this->bannercontentblocks;
