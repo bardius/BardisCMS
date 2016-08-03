@@ -10,7 +10,7 @@
 
 namespace BardisCMS\PageBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\CoreBundle\Validator\ErrorElement;
@@ -19,7 +19,7 @@ use Sonata\AdminBundle\Route\RouteCollection;
 
 use BardisCMS\PageBundle\Entity\Page as Page;
 
-class PageAdmin extends Admin {
+class PageAdmin extends AbstractAdmin {
 
     protected function configureFormFields(FormMapper $formMapper) {
         // Getting the container parameters set in the config file that exist after the dependency injection

@@ -1053,7 +1053,7 @@ return $this->getMethod() === strtoupper($method);
 }
 public function isMethodSafe()
 {
-return in_array($this->getMethod(), array('GET','HEAD'));
+return in_array($this->getMethod(), array('GET','HEAD','OPTIONS','TRACE'));
 }
 public function getContent($asResource = false)
 {
@@ -1523,6 +1523,11 @@ public function send()
 {
 $this->sendHeaders();
 $this->sendContent();
+if (function_exists('fastcgi_finish_request')) {
+fastcgi_finish_request();
+} elseif ('cli'!== PHP_SAPI) {
+static::closeOutputBuffers(0, true);
+}
 return $this;
 }
 public function setContent($content)

@@ -10,12 +10,12 @@
 
 namespace BardisCMS\SettingsBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\CoreBundle\Validator\ErrorElement;
 
-class SettingsAdmin extends Admin {
+class SettingsAdmin extends AbstractAdmin {
 
     protected function configureFormFields(FormMapper $formMapper) {
         $formMapper

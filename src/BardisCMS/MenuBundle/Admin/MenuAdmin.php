@@ -9,7 +9,7 @@
 
 namespace BardisCMS\MenuBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\CoreBundle\Validator\ErrorElement;
@@ -19,7 +19,7 @@ use BardisCMS\MenuBundle\Admin\Form\EventListener\AddMenuTypeFieldSubscriber;
 
 use BardisCMS\MenuBundle\Entity\Menu as Menu;
 
-class MenuAdmin extends Admin {
+class MenuAdmin extends AbstractAdmin {
 
     protected function configureFormFields(FormMapper $formMapper) {
 

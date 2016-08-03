@@ -10,14 +10,14 @@
 
 namespace BardisCMS\TagBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\CoreBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 
-class TagAdmin extends Admin {
+class TagAdmin extends AbstractAdmin {
 
     protected function configureFormFields(FormMapper $formMapper) {
 
