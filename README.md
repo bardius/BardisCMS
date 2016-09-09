@@ -60,10 +60,11 @@ The fastest way to get everything running is (must have nodejs, ruby and sass ge
 	5. alter your app/config/parameters.yml with your db and environment details
 	6. composer.phar install -o
 	7. npm install -g grunt-cli
-	8. npm run setup
-	9. grunt cms_reset
-	10. setup your vhost
-	11. login to the admin (/admin username:administrator, pass: Admin1234)
+	8. npm install -g bower
+	9. npm run setup
+	10. grunt cms_reset
+	11. setup your vhost
+	12. login to the admin (/admin username:administrator, pass: Admin1234)
 
 
 Manual Deployment / Local Installation
@@ -120,8 +121,9 @@ More information can be found below at their official web sites:
 The command line steps are:
 
 	1. [sudo] npm install -g grunt-cli
-	2. [sudo] npm run setup
-	3. grunt dev [release] [watch]
+	2. [sudo] npm install -g bower
+	3. [sudo] npm run setup
+	4. grunt dev [release] [watch]
 
 Your project should work now and you can see your front end working, all the source files are found in the ui-src folder
 along with the existing Grunt tasks.
