@@ -9,7 +9,7 @@
 [![Gitter chat](https://badges.gitter.im/bardius/BardisCMS.png)](https://gitter.im/bardius/BardisCMS)
 [![License](https://poser.pugx.org/bardis/cms-symfony2/license.png)](https://packagist.org/packages/bardis/cms-symfony2)
 
-![](http://www.bardis.info/bardisCMS.png)
+![](http://www.bardis.info/bardisCMS.png?)
 
 Symfony2 (v2.8.10) distribution with integrated Zurb Foundation 6 (v6.2)
 ============================================================================
