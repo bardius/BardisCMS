@@ -210,6 +210,7 @@ class ProfileListController extends Controller
             'totalpageitems' => $this->totalpageitems,
             'logged_username' => $this->userName,
             'filterUsersForm' => $filterUsersForm->createView(),
+            'isPublicProfilesAllowed' => $isPublicProfilesAllowed,
             'mobile' => $this->serveMobile
         ), $response);
 

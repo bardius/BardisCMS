@@ -19,7 +19,7 @@ Manage the extended Sonata User entity with extra information for the users
 
                 <div class="row">
 
-                    {% if logged_username is not null %}
+                    {% if logged_username is not null or isPublicProfilesAllowed %}
                         {% include "SonataUserBundle:Profile:filter_users_form.html.twig" %}
                     {% endif %}
 
@@ -60,22 +60,22 @@ Manage the extended Sonata User entity with extra information for the users
                         </div>
                     {% else %}
                         <div class="large-12 small-12 columns">
-                                {% if logged_username is not null %}
+                                {% if logged_username is not null or isPublicProfilesAllowed %}
                                     <p class="callout is-visible secondary">
                                         {{ 'form.search.no_results'|trans({}, 'SonataUserBundle') }}
                                     </p>
                                 {% else %}
-                                <p class="callout is-visible secondary">
-                                    {{ 'form.search.is_private_only'|trans({}, 'SonataUserBundle') }}
-                                </p>
-                                <p>
-                                    <a class="button" href="{{ url('sonata_user_security_login') }}" title="{{ 'layout.link.login'|trans({}, 'SonataUserBundle') }}">
-                                        {{ 'layout.link.login'|trans({}, 'SonataUserBundle') }}
-                                    </a>
-                                    <a class="button" href="{{ url('sonata_user_registration_register') }}" title="{{ 'layout.link.create_account'|trans({}, 'SonataUserBundle') }}">
-                                        {{ 'layout.link.create_account'|trans({}, 'SonataUserBundle') }}
-                                    </a>
-                                </p>
+                                    <p class="callout is-visible secondary">
+                                        {{ 'form.search.is_private_only'|trans({}, 'SonataUserBundle') }}
+                                    </p>
+                                    <p>
+                                        <a class="button" href="{{ url('sonata_user_security_login') }}" title="{{ 'layout.link.login'|trans({}, 'SonataUserBundle') }}">
+                                            {{ 'layout.link.login'|trans({}, 'SonataUserBundle') }}
+                                        </a>
+                                        <a class="button" href="{{ url('sonata_user_registration_register') }}" title="{{ 'layout.link.create_account'|trans({}, 'SonataUserBundle') }}">
+                                            {{ 'layout.link.create_account'|trans({}, 'SonataUserBundle') }}
+                                        </a>
+                                    </p>
                                 {% endif %}
                         </div>
                     {% endfor %}
