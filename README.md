@@ -56,15 +56,11 @@ The fastest way to get everything running is (must have nodejs, ruby and sass ge
 	1. git clone https://github.com/bardius/BardisCMS.git
 	2. cd BardisCMS
 	3. create a database
-	4. copy app/config/parameters.yml.dist to app/config/parameters.yml
-	5. alter your app/config/parameters.yml with your db and environment details
-	6. composer.phar install -o
-	7. npm install -g grunt-cli
-	8. npm install -g bower
-	9. npm run setup
-	10. grunt cms_reset
-	11. setup your vhost
-	12. login to the admin (/admin username:administrator, pass: Admin1234)
+	4. composer.phar install -o (set your db details when requested during install)
+	5. npm install -g grunt grunt-cli bower
+	6. npm run setup
+	7. grunt cms_reset
+	8. setup your vhost and access the URL in a browser. To login to the admin (/admin username:administrator, pass: Admin1234)
 
 
 Manual Deployment / Local Installation
@@ -120,10 +116,9 @@ More information can be found below at their official web sites:
 
 The command line steps are:
 
-	1. [sudo] npm install -g grunt-cli
-	2. [sudo] npm install -g bower
-	3. [sudo] npm run setup
-	4. grunt dev [release] [watch]
+	1. [sudo] npm install -g grunt grunt-cli bower
+	2. [sudo] npm run setup
+	3. grunt dev [release] [watch]
 
 Your project should work now and you can see your front end working, all the source files are found in the ui-src folder
 along with the existing Grunt tasks.

@@ -28,9 +28,7 @@ before_install:
   - nvm use stable
   - node --version
   - npm -v
-  - npm install -g grunt-cli
-  - npm install -g grunt
-  - npm install -g bower
+  - npm install -g grunt grunt-cli bower
 
 before_script:
   - mysql -e 'create database bardiscms;'
