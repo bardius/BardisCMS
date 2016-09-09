@@ -29,6 +29,7 @@ before_install:
   - node --version
   - npm -v
   - npm install -g grunt-cli
+  - npm install -g grunt
   - npm install -g bower
 
 before_script:
