@@ -27,7 +27,7 @@ global_exclude_dirs:
     - tests
     - Tests
     - lib/vendor
-    - web/bower_components
+    - ui-src
 
 exclude_patterns:
     - app/check.php

@@ -3,13 +3,19 @@ sonata_admin:
     title_logo:			/images/site_assets/adminlogo.jpg
 
     options:
-        form_type:                          horizontal
-        title_mode:                         single_text
-        html5_validate:						true      # use html5 validation
-        confirm_exit:						true      # enabled confirmation when quitting with unsaved changes
+        form_type:                          horizontal  # One of "standard"; "horizontal";
+        title_mode:                         single_text # One of "single_text"; "single_image"; "both"
+        html5_validate:						true        # use html5 validation
+        confirm_exit:						true        # enabled confirmation when quitting with unsaved changes
         dropdown_number_groups_per_colums:	4
-        # use_select2:						false      # enable select2
-        # pager_links:						10         # pager max links to display
+        lock_protection:                    true       # Enable locking when editing an object, if the corresponding object manager supports it.
+        # sort_admins:          false
+        # confirm_exit:         true
+        # use_select2:          true
+        # use_icheck:           true
+        # use_bootlint:         false
+        # use_stickyforms:      true
+        # pager_links:						10          # pager max links to display
 
     security:
         handler: sonata.admin.security.handler.acl # sonata.admin.security.handler.noop
@@ -129,3 +135,47 @@ sonata_admin:
               items:
                   - sonata.media.admin.media
                   - sonata.media.admin.gallery
+
+    assets:
+        stylesheets:
+            # Defaults:
+            - bundles/sonatacore/vendor/bootstrap/dist/css/bootstrap.min.css
+            - bundles/sonatacore/vendor/components-font-awesome/css/font-awesome.min.css
+            - bundles/sonatacore/vendor/ionicons/css/ionicons.min.css
+            - bundles/sonataadmin/vendor/admin-lte/dist/css/AdminLTE.min.css
+            - bundles/sonataadmin/vendor/admin-lte/dist/css/skins/skin-black.min.css
+            - bundles/sonataadmin/vendor/iCheck/skins/square/blue.css
+            - bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css
+            - bundles/sonataadmin/vendor/jqueryui/themes/base/jquery-ui.css
+            - bundles/sonatacore/vendor/select2/select2.css
+            - bundles/sonatacore/vendor/select2-bootstrap-css/select2-bootstrap.min.css
+            - bundles/sonataadmin/vendor/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css
+            - bundles/sonataadmin/css/styles.css
+            - bundles/sonataadmin/css/layout.css
+            - bundles/sonataadmin/css/tree.css
+            # Overrides:
+            - bundles/page/css/sonata-admin-overrides.css
+            - bundles/page/css/smoothness/jquery-ui-1.10.4.custom.css
+
+        javascripts:
+            # Defaults:
+            - bundles/sonatacore/vendor/jquery/dist/jquery.min.js
+            - bundles/sonataadmin/vendor/jquery.scrollTo/jquery.scrollTo.min.js
+            - bundles/sonatacore/vendor/moment/min/moment.min.js
+            - bundles/sonataadmin/vendor/jqueryui/ui/minified/jquery-ui.min.js
+            - bundles/sonataadmin/vendor/jqueryui/ui/minified/i18n/jquery-ui-i18n.min.js
+            - bundles/sonatacore/vendor/bootstrap/dist/js/bootstrap.min.js
+            - bundles/sonatacore/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js
+            - bundles/sonataadmin/vendor/jquery-form/jquery.form.js
+            - bundles/sonataadmin/jquery/jquery.confirmExit.js
+            - bundles/sonataadmin/vendor/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js
+            - bundles/sonatacore/vendor/select2/select2.min.js
+            - bundles/sonataadmin/vendor/admin-lte/dist/js/app.min.js
+            - bundles/sonataadmin/vendor/iCheck/icheck.min.js
+            - bundles/sonataadmin/vendor/slimScroll/jquery.slimscroll.min.js
+            - bundles/sonataadmin/vendor/waypoints/lib/jquery.waypoints.min.js
+            - bundles/sonataadmin/vendor/waypoints/lib/shortcuts/sticky.min.js
+            - bundles/sonataadmin/Admin.js
+            - bundles/sonataadmin/treeview.js
+            # Overrides:
+            - bundles/page/js/sonata-admin-overrides.js

@@ -93,6 +93,11 @@ class Settings {
     protected $blogItemsPerPage = 10;
 
     /**
+     * @ORM\Column(type="integer", length=8)
+     */
+    protected $usersPerPage = 10;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     protected $activateHttpCache = false;
@@ -101,6 +106,11 @@ class Settings {
      * @ORM\Column(type="boolean")
      */
     protected $activateSettings = true;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $isPublicProfilesAllowed = true;
 
     /**
      * Get id
@@ -385,6 +395,22 @@ class Settings {
     }
 
     /**
+     * @return mixed
+     */
+    public function getUsersPerPage()
+    {
+        return $this->usersPerPage;
+    }
+
+    /**
+     * @param mixed $usersPerPage
+     */
+    public function setUsersPerPage($usersPerPage)
+    {
+        $this->usersPerPage = $usersPerPage;
+    }
+
+    /**
      * Set activateSettings
      *
      * @param boolean $activateSettings
@@ -424,6 +450,22 @@ class Settings {
      */
     public function getActivateHttpCache() {
         return $this->activateHttpCache;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsPublicProfilesAllowed()
+    {
+        return $this->isPublicProfilesAllowed;
+    }
+
+    /**
+     * @param mixed $isPublicProfilesAllowed
+     */
+    public function setIsPublicProfilesAllowed($isPublicProfilesAllowed)
+    {
+        $this->isPublicProfilesAllowed = $isPublicProfilesAllowed;
     }
 
     public function __toString() {

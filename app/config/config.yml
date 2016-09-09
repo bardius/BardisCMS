@@ -17,12 +17,12 @@ imports:
 # framework configuration
 framework:
 
-    secret:                 %secret%
+    secret:                 "%secret%"
     http_method_override:   true
     trusted_proxies:        [192.0.0.1, 10.0.0.0/8, 127.0.0.1] #[]
     ide:                    ~
     test:                   false # true only for testing env
-    default_locale:         %locale%
+    default_locale:         "%locale%"
 
     csrf_protection:
         enabled:            false
@@ -66,29 +66,11 @@ framework:
     # annotation configuration
     annotations:
         cache:              file
-        file_cache_dir:     %kernel.cache_dir%/annotations
-        debug:              %kernel.debug%
+        file_cache_dir:     "%kernel.cache_dir%/annotations"
+        debug:              "%kernel.debug%"
 
     # templating configuration
     templating:
-        assets_version:             ~
-        assets_version_format:      %%s?%%s
-        hinclude_default_template:  ~
-
-        form:
-            resources:
-                # Default:
-                - FrameworkBundle:Form
-                # BardisCMS:
-                - ContentBlockBundle:Form:fields.html.twig
-                - PageBundle:Form:fields.html.twig
-                # UserBundle Overrides:
-                - UserBundle:Form:fields.html.twig
-
-        assets_base_urls:
-            http:               []
-            ssl:                []
-
         cache:                  ~
 
         engines:
@@ -96,14 +78,29 @@ framework:
 
         loaders:                []
 
+        assets_version:             'v2.8.10'
+        assets_version_format:      "%%s?%%s"
+        assets_base_urls:
+            http:               []
+            ssl:                []
         packages:
-            # Prototype
-            name:
-                version:            ~
-                version_format:     %%s?%%s
-                base_urls:
-                    http:           []
-                    ssl:            []
+            css:
+                version:            'v2.8.10'
+                version_format:     "%%s?%%s"
+            js:
+                version:            'v2.8.10'
+                version_format:     "%%s?%%s"
+
+        hinclude_default_template:  ~
+
+        form:
+            resources:
+                # Default:
+                - FrameworkBundle:Form
+                # UserBundle Overrides:
+                # - UserBundle:Form:fields.html.twig
+                # BardisCMS:
+                - ContentBlockBundle:Form:fields.html.twig
 
 
     # Session storage configuration
@@ -113,7 +110,7 @@ framework:
         handler_id:             session.handler.pdo # session.handler.native_file
 
         # session cookie name, default is PHPSESSID
-        name:                   bardiscms
+        name:                   bardis_cms
 
         # time in seconds
         cookie_lifetime:        86400
@@ -138,15 +135,15 @@ doctrine:
       # Database connections
       connections:
         default:
-          dbname:       %database_name%
-          host:         %database_host%
-          port:         %database_port%
-          user:         %database_user%
-          password:     %database_password%
-          driver:       %database_driver%
+          dbname:       "%database_name%"
+          host:         "%database_host%"
+          port:         "%database_port%"
+          user:         "%database_user%"
+          password:     "%database_password%"
+          driver:       "%database_driver%"
           # path:         "%kernel.data_dir%/data.sqlite"]
           memory:       true
-          unix_socket:  %unix_socket%
+          unix_socket:  "%unix_socket%"
           charset:      UTF8
 
          # Config for multible connections
@@ -158,7 +155,7 @@ doctrine:
          #   host:             localhost
 
     orm:
-        auto_generate_proxy_classes:    %kernel.debug%
+        auto_generate_proxy_classes:    "%kernel.debug%"
         auto_mapping:                   true
         # metadata_cache_driver:        apc
         # result_cache_driver:          apc
@@ -167,7 +164,7 @@ doctrine:
 
         # query_cache_driver:
         #     type:                     service
-        #     id:                       bardiscms_doctrine_orm_cache
+        #     id:                       bardiscma_doctrine_orm_cache
 
         # result_cache_driver:
         #    type:                      memcache
@@ -190,7 +187,7 @@ services:
     pdo:
         class: PDO
         arguments:
-            dsn:        %pdo_service_dsn%
+            dsn:        "%pdo_service_dsn%"
             user:       "%database_user%"
             password:   "%database_password%"
         calls:
@@ -203,8 +200,8 @@ services:
 # Twig Configuration
 twig:
 
-    debug:              %kernel.debug%
-    strict_variables:   %kernel.debug%
+    debug:              "%kernel.debug%"
+    strict_variables:   "%kernel.debug%"
     cache:              "%kernel.cache_dir%/twig"
     charset:            "%kernel.charset%"
 
@@ -212,12 +209,9 @@ twig:
         # Examples:
         pi:             3.14159265359
 
-    form:
-      resources:
+    form_themes:
+        - 'Form/form_foundation_6_layout.html.twig'
         - 'ContentBlockBundle:Form:fields.html.twig'
-        - 'PageBundle:Form:fields.html.twig'
-        - 'SonataCoreBundle:Form:datepicker.html.twig'
-        - 'SonataUserBundle:Form:fields.html.twig'
 
 # Assetic Configuration
 minifier:
@@ -229,7 +223,7 @@ minifier:
 
 assetic:
 
-    debug:              %kernel.debug%
+    debug:              "%kernel.debug%"
 
     use_controller:
         enabled:        "%kernel.debug%"
@@ -262,10 +256,10 @@ assetic:
 # Swiftmailer Configuration
 swiftmailer:
 
-    transport:  %mailer_transport%
-    host:       %mailer_host%
-    username:   %mailer_user%
-    password:   %mailer_password%
+    transport:  "%mailer_transport%"
+    host:       "%mailer_host%"
+    username:   "%mailer_user%"
+    password:   "%mailer_password%"
     logging:    true
     spool:      { type: memory }
 
@@ -282,7 +276,7 @@ stof_doctrine_extensions:
     uploadable:
 
         # Default file path: This is one of the three ways you can configure the path for the Uploadable extension
-        default_file_path:          %kernel.root_dir%/../web/uploads
+        default_file_path:          "%kernel.root_dir%/../web/uploads"
 
         # Mime type guesser class: Optional. By default, we provide an adapter for the one present in the HttpFoundation component of Symfony
         mime_type_guesser_class:    Stof\DoctrineExtensionsBundle\Uploadable\MimeTypeGuesserAdapter

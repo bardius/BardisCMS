@@ -17,7 +17,7 @@ Manage the extended Sonata User entity with extra information for the users
                     <label for="username" class="required">
                         {{ 'resetting.request.username'|trans({}, 'SonataUserBundle') }}
                     </label>
-                    <div class="formFieldContainer">
+                    <div class="field-container">
                         <input type="text" maxlength="50" id="sonata_user_resetting_request_username" name="username" placeholder="" required="required" />
                     </div>
                 </div>
@@ -25,14 +25,14 @@ Manage the extended Sonata User entity with extra information for the users
                 {% if formMessage is defined or invalid_username is defined %}
                 <div class="large-12 small-12 columns">
                     {% if formMessage is defined %}
-                        <small class="form-message formError alert-box alert">
+                        <span class="form-message error form-error is-visible callout {% if form.vars.valid == true %}success{% else %}alert{% endif %}">
                             {{ formMessage }}
-                        </small>
+                        </span>
                     {% endif %}
                     {% if invalid_username is defined %}
-                        <small class="form-message formError alert-box alert">
+                        <span class="form-message error form-error is-visible callout alert">
                             {{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}, 'SonataUserBundle') }}
-                        </small>
+                        </span>
                     {% endif %}
                 </div>
                 {% endif %}

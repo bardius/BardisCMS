@@ -1,33 +1,33 @@
-<div class="large-12 small-12 columns smoIcons">
-    <ul class="smo-share inline-list">
+<div class="large-12 small-12 columns smo-icons">
+    <ul class="menu-smo menu simple">
         <li>
-            <a class="smo-menu-item fbIcon" href="https://www.facebook.com/sharer.php?m2w&amp;s=100&amp;p[title]={{ page.title|url_encode() }}%20-%20BardisCMS%20BardisCMS&amp;p[summary]=&amp;p[url]={{ app.request.uri|url_encode() }}&amp;p[images][0]=" title="Share on Facebook" rel="external" target="_blank">
-                <span class="inv">Share on Facebook</span>
+            <a class="badge button fbIcon" href="https://www.facebook.com/sharer.php?m2w&amp;s=100&amp;p[title]={{ page.title|url_encode() }}%20-%20BardisCMS%20BardisCMS&amp;p[summary]=&amp;p[url]={{ app.request.uri|url_encode() }}&amp;p[images][0]=" title="Share on Facebook" rel="external" target="_blank">
+                <i class="fi-social-facebook"></i><span class="show-for-sr">Share on Facebook</span>
             </a>
         </li>
         <li>
-            <a class="smo-menu-item tweetIcon" href="https://twitter.com/share?text={{ page.title|url_encode() }}%20-%20BardisCMS%20BardisCMS&amp;url={{ app.request.uri|url_encode() }}" title="Share on Twitter" rel="external" target="_blank">
-                <span class="inv">Share on Twitter</span>
+            <a class="badge button tweetIcon" href="https://twitter.com/share?text={{ page.title|url_encode() }}%20-%20BardisCMS%20BardisCMS&amp;url={{ app.request.uri|url_encode() }}" title="Share on Twitter" rel="external" target="_blank">
+                <i class="fi-social-twitter"></i><span class="show-for-sr">Share on Twitter</span>
             </a>
         </li>
         <li>
-            <a class="smo-menu-item pinterestIcon" href="//pinterest.com/pin/create/button/?url={{ app.request.uri|url_encode() }}&amp;description={{ page.title|url_encode() }}%20-%20BardisCMS%20BardisCMS&amp;media={{ app.request.uri|url_encode() }}" title="Share on Pinterest" rel="external" target="_blank">
-                <span class="inv">Share on Pinterest</span>
+            <a class="badge button pinterestIcon" href="//pinterest.com/pin/create/button/?url={{ app.request.uri|url_encode() }}&amp;description={{ page.title|url_encode() }}%20-%20BardisCMS%20BardisCMS&amp;media={{ app.request.uri|url_encode() }}" title="Share on Pinterest" rel="external" target="_blank">
+                <i class="fi-social-pinterest"></i><span class="show-for-sr">Share on Pinterest</span>
             </a>
         </li>
         <li>
-            <a class="smo-menu-item linkedinIcon" href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ app.request.uri|url_encode() }}&amp;title={{ page.title|url_encode() }}%20-%20BardisCMS%20BardisCMS&amp;source={{ app.request.uri|url_encode() }}" title="Share This on LinkedIn" rel="external" target="_blank">
-                <span class="inv">Share This on LinkedIn</span>
+            <a class="badge button linkedinIcon" href="http://www.linkedin.com/shareArticle?mini=true&amp;url={{ app.request.uri|url_encode() }}&amp;title={{ page.title|url_encode() }}%20-%20BardisCMS%20BardisCMS&amp;source={{ app.request.uri|url_encode() }}" title="Share This on LinkedIn" rel="external" target="_blank">
+                <i class="fi-social-linkedin"></i><span class="show-for-sr">Share This on LinkedIn</span>
             </a>
         </li>
         <li>
-            <a class="smo-menu-item gplusIcon" href="https://plus.google.com/share?url={{ app.request.uri|url_encode() }}" title="Share This on Google+" rel="external" target="_blank">
-                <span class="inv">Share This on Google+</span>
+            <a class="badge button gplusIcon" href="https://plus.google.com/share?url={{ app.request.uri|url_encode() }}" title="Share This on Google+" rel="external" target="_blank">
+                <i class="fi-social-google-plus"></i><span class="show-for-sr">Share This on Google+</span>
             </a>
         </li>
         <li>
-            <a class="smo-menu-item emailMenuItem" href="mailto:?subject={{ page.title|url_encode() }}%20-%20BardisCMS%20BardisCMS&amp;body={{ page.title|url_encode() }}%20-%20BardisCMS%20BardisCMS%0D%0A{{ app.request.uri|url_encode() }}%0D%0A%0D%0A" title="Share by Email" rel="external">
-                <span class="inv">Share by Email</span>
+            <a class="badge button emailItem" href="mailto:?subject={{ page.title|url_encode() }}%20-%20BardisCMS%20BardisCMS&amp;body={{ page.title|url_encode() }}%20-%20BardisCMS%20BardisCMS%0D%0A{{ app.request.uri|url_encode() }}%0D%0A%0D%0A" title="Share by Email" rel="external">
+                <i class="fi-mail"></i><span class="show-for-sr">Share by Email</span>
             </a>
         </li>
     </ul>

@@ -101,18 +101,17 @@ sonata_media:
 
     cdn:
         server:
-            path: /uploads/media
-            #path: 'https://s3-%s3_region%.amazonaws.com/%s3_bucket_name%/%s3_subfolder%/'
+            path: '%cdn_server_path%'
 
     filesystem:
         local:
             directory:      '%kernel.root_dir%/../web/uploads/media'
-            create:         false
+            create:         true
         s3:
             bucket:         '%s3_bucket_name%'
             accessKey:      '%s3_access_key%'
             secretKey:      '%s3_secret_key%'
-            region:         's3-%s3_region%.amazonaws.com'
+            region:         '%s3_region%'
             directory:      '%s3_subfolder%'
             create:         true
             storage:        standard
@@ -121,14 +120,13 @@ sonata_media:
             #meta:
             #    Content-Type:   image/jpeg
         #replicate:
-        #    master:     sonata.media.adapter.filesystem.s3
-        #    slave:      sonata.media.adapter.filesystem.local
+            #master:     sonata.media.adapter.filesystem.s3
+            #slave:      sonata.media.adapter.filesystem.local
 
     providers:
         file:
             resizer:    false
-            filesystem: sonata.media.filesystem.local
-            #filesystem: sonata.media.filesystem.s3
+            filesystem: '%media_providers_filesystem%'
             cdn:        sonata.media.cdn.server
             generator:  sonata.media.generator.default
             thumbnail:  sonata.media.thumbnail.format
@@ -136,8 +134,7 @@ sonata_media:
         image:
             service:    sonata.media.provider.image
             resizer:    sonata.media.resizer.bardiscms # sonata.media.resizer.square # sonata.media.resizer.simple
-            filesystem: sonata.media.filesystem.local
-            #filesystem: sonata.media.filesystem.s3
+            filesystem: '%media_providers_filesystem%'
             cdn:        sonata.media.cdn.server
             generator:  sonata.media.generator.default
             thumbnail:  sonata.media.thumbnail.format
@@ -147,8 +144,7 @@ sonata_media:
         youtube:
             service:    sonata.media.provider.youtube
             resizer:    sonata.media.resizer.bardiscms # sonata.media.resizer.square # sonata.media.resizer.simple
-            filesystem: sonata.media.filesystem.local
-            #filesystem: sonata.media.filesystem.s3
+            filesystem: '%media_providers_filesystem%'
             cdn:        sonata.media.cdn.server
             generator:  sonata.media.generator.default
             thumbnail:  sonata.media.thumbnail.format
@@ -157,8 +153,7 @@ sonata_media:
         vimeo:
             service:    sonata.media.provider.vimeo
             resizer:    sonata.media.resizer.bardiscms # sonata.media.resizer.square # sonata.media.resizer.simple
-            filesystem: sonata.media.filesystem.local
-            #filesystem: sonata.media.filesystem.s3
+            filesystem: '%media_providers_filesystem%'
             cdn:        sonata.media.cdn.server
             generator:  sonata.media.generator.default
             thumbnail:  sonata.media.thumbnail.format

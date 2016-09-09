@@ -1,0 +1,264 @@
+/*
+Sonata admin overrides
+*/
+
+footer {
+    background: transparent;
+    color: #222d32;
+    padding: 3px 15px;
+    height: 26px;
+}
+
+footer a {
+    color: #222d32;
+    text-decoration: none;
+}
+
+.sonata-ba-field-standard-natural select,
+.sonata-ba-field-standard-natural ul,
+.sonata-ba-field-standard-natural input[type="text"],
+.sonata-ba-field-standard-natural input[type="number"],
+.sonata-ba-field-standard-natural input[type="email"],
+.sonata-ba-field-standard-natural input[type="url"] {
+    width: 294px !important;
+}
+
+.sonata-ba-field-standard-natural input[type="radio"],
+.sonata-ba-field-standard-natural input[type="checkbox"] {
+    margin-right: 6px !important;
+}
+
+.sonata-ba-field-standard-natural select {
+    padding: 5px 0 5px 10px !important;
+}
+
+.sonata-ba-field-standard-natural ul {
+    padding: 5px 10px !important;
+    margin: 0 !important;
+}
+
+.sonata-ba-field-standard-natural ul.list-unstyled {
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.sonata-ba-field-standard-natural textarea,
+.sonata-ba-field-standard-natural .mce-panel {
+    max-width: 600px !important;
+}
+
+.sonata-ba-field-help {
+    clear: both;
+}
+
+.sonata-collection-add,
+.sonata-collection-delete {
+    color: #FFF !important;
+    text-decoration: none !important;
+}
+
+.btn-default .sonata-collection-add,
+.btn-default .sonata-collection-delete {
+    color: #666666 !important;
+}
+
+.sonata-bc input.btn {
+    height: 30px;
+}
+
+label {
+    cursor: pointer;
+}
+
+/*
+Bootstrap UI Overrides for Sonata Admin
+*/
+
+.select2-drop,
+.select2-choice {
+    max-width: 294px !important;
+}
+
+.bootstrap-datetimepicker-widget {
+    width: 294px !important;
+}
+
+.ui-combobox {
+    position: relative;
+    display: inline-block;
+}
+
+.ui-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+}
+
+.ui-combobox-input {
+    margin: 0;
+    padding: 0.3em;
+}
+
+.sonata-ba-field-standard-natural .ui-combobox input {
+    width: 294px !important;
+    border: 1px solid #999;
+    padding: 0 10px;
+    border-radius: 3px;
+    line-height: 20px;
+    height: 30px !important;
+}
+
+.ui-autocomplete {
+    list-style: none !important;
+    font-size: 12px !important;
+    margin: 0 !important;
+}
+
+.ui-autocomplete a {
+    color: #333 !important;
+}
+
+.ui-autocomplete a:hover {
+    text-decoration: none !important;
+    cursor: pointer !important;
+}
+
+.ui-autocomplete-input {
+    line-height: 20px;
+    height: 30px !important;
+    width: 294px !important;
+    border: 1px solid #999;
+    padding: 0 10px;
+    border-radius: 3px;
+}
+
+.autoCompleteItems {
+    float: left;
+}
+
+.ui-sortable fieldset {
+    width: 740px !important;
+}
+
+.ui-sortable fieldset fieldset {
+    width: auto !important;
+}
+
+.sonata-bc .form-horizontal .ui-sortable .sonata-collection-row {
+    margin: 0 !important;
+    min-height: 44px;
+}
+
+.sonata-bc .form-horizontal .ui-sortable .control-group {
+    margin-bottom: 6px !important;
+}
+
+.ui-dialog {
+    z-index: 9999;
+}
+
+.ui-sortable fieldset.sonata-ba-collapsed-fields-close:hover,
+.sonata-ba-fielset-collapsed .sonata-ba-collapsed {
+    cursor: pointer;
+}
+
+ a.sonata-ba-collapsed {
+     text-decoration: none !important;
+ }
+
+/* symbol for "opening" panels */
+.panel-heading .accordion-toggle:after {
+    font-family: 'Glyphicons Halflings';
+    content: "\e114";
+    float: right;
+    color: grey;
+}
+
+/* symbol for "collapsed" panels */
+.panel-heading .accordion-toggle.collapsed:after {
+    content: "\e080";
+}
+
+/*
+Sonata Media fields
+*/
+
+.mediaContentRow {
+    margin: 0;
+}
+
+.mediaPreviewHolder {
+    background-color: #F5F5F5;
+    border: 1px solid #999;
+    border-radius: 3px;
+    clear: left;
+    float: left;
+    margin: 10px 0;
+    padding: 10px;
+    max-width: 600px !important;
+}
+
+.sonata-ba-collapsed-fields .ui-sortable .mediaPreviewHolder {
+    width: auto !important;
+}
+
+.mediaPreviewHolder h4 {
+    margin-bottom: 10px !important;
+}
+
+.mediaPreviewHolder label {
+    padding: 0 15px !important;
+    text-align: left !important;
+}
+
+.imagefield,
+.filefield,
+.videofield {
+    width: 294px !important;
+}
+
+.imagefield .form-control,
+.filefield .form-control,
+.videofield .form-control {
+    max-width: 196px !important;
+}
+
+.filefield .controls,
+.imagefield .controls,
+.videofield .controls {
+    margin: 0 !important;
+}
+
+.filefield label,
+.imagefield label,
+.videofield label {
+    text-align: left !important;
+}
+
+.videoPreview iframe {
+    max-width: 100%;
+}
+
+.sonata-bc .form-horizontal .controls .imagefield .controls,
+.sonata-bc .form-horizontal .controls .videofield .controls {
+    margin-left: 0 !important;
+}
+
+.mediaPreviewHolder .imagefield .form-group:first-child,
+.mediaPreviewHolder .videofield .form-group:first-child,
+.mediaPreviewHolder .filefield .form-group:first-child {
+    display: none;
+}
+
+.mediaPreviewHolder .newMediaPreview + .videofield .form-group:first-child,
+.mediaPreviewHolder .newMediaPreview + .filefield .form-group:first-child {
+    display: block;
+}
+
+#dialogPreview {
+    text-align: center;
+    background: #EEE;
+}

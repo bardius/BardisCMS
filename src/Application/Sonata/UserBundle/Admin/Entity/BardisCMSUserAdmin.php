@@ -74,6 +74,7 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
             ->add('enabled', null, array('editable' => true))
             ->add('confirmed', null, array('editable' => false))
             ->add('locked', null, array('editable' => true))
+            ->add('isSystemUser', null, array('editable' => true))
             ->add('createdAt')
             ->add('groups')
             ->add('roles', null, array('editable' => true), array('translation_domain' => 'SonataUserBundle'))
@@ -97,6 +98,7 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
             ->add('enabled')
             ->add('confirmed')
             ->add('locked')
+            ->add('isSystemUser')
             ->add('groups')
             ->add('roles')
         ;
@@ -492,6 +494,11 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
             $formMapper
                 ->tab('User Management')
                     ->with('User Management', array('collapsed' => true))
+                        ->add('isSystemUser', null, array(
+                            'label' => 'form.isSystemUser',
+                            'translation_domain' => 'SonataUserBundle',
+                            'required' => false
+                        ))
                         ->add('locked', null, array(
                             'label' => 'form.locked',
                             'translation_domain' => 'SonataUserBundle',
@@ -522,6 +529,44 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
                             'translation_domain' => 'SonataUserBundle',
                             'expanded' => true,
                             'multiple' => true,
+                            'required' => false
+                        ))
+                    ->end()
+                ->end()
+            ;
+        }
+        else {
+            $formMapper
+                ->tab('User Management')
+                    ->with('User Management', array('collapsed' => true))
+                        ->add('isSystemUser', null, array(
+                            'label' => 'form.isSystemUser',
+                            'translation_domain' => 'SonataUserBundle',
+                            'required' => false
+                        ))
+                        ->add('locked', null, array(
+                            'label' => 'form.locked',
+                            'translation_domain' => 'SonataUserBundle',
+                            'required' => false
+                        ))
+                        ->add('confirmed', null, array(
+                            'label' => 'form.confirmed',
+                            'translation_domain' => 'SonataUserBundle',
+                            'required' => false
+                        ))
+                        ->add('expired', null, array(
+                            'label' => 'form.expired',
+                            'translation_domain' => 'SonataUserBundle',
+                            'required' => false
+                        ))
+                        ->add('enabled', null, array(
+                            'label' => 'form.enabled',
+                            'translation_domain' => 'SonataUserBundle',
+                            'required' => false
+                        ))
+                        ->add('credentialsExpired', null, array(
+                            'label' => 'form.credentialsExpired',
+                            'translation_domain' => 'SonataUserBundle',
                             'required' => false
                         ))
                     ->end()

@@ -20,7 +20,7 @@ services:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
         factory_service: bardiscms_menu.menu_builder
         factory_method: createMenu
-        arguments: ["@request", "Main Menu","menu left","main"]
+        arguments: ["@request", "Main Menu", "menu left", "main", "drilldown large-dropdown"]
         scope: request # needed as we have the request as a dependency here
         tags:
             - { name: knp_menu.menu, alias: main } # The alias is what is used to retrieve the menu
@@ -29,7 +29,7 @@ services:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
         factory_service: bardiscms_menu.menu_builder
         factory_method: createMenu
-        arguments: ["@request", "Footer Menu", "footer-menu menu inline-list center", "simple"]
+        arguments: ["@request", "Footer Menu", "footer-menu vertical medium-horizontal menu", "simple", "false"]
         scope: request # needed as we have the request as a dependency here
         tags:
             - { name: knp_menu.menu, alias: footer } # The alias is what is used to retrieve the menu
@@ -38,7 +38,7 @@ services:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
         factory_service: bardiscms_menu.menu_builder
         factory_method: createMenu
-        arguments: ["@request", "Main Menu", "sitemapList side-nav", "simple"]
+        arguments: ["@request", "Main Menu", "sitemap-list side-nav", "simple", "false"]
         scope: request # needed as we have the request as a dependency here
         tags:
             - { name: knp_menu.menu, alias: mainsitemap } # The alias is what is used to retrieve the menu
@@ -47,7 +47,7 @@ services:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
         factory_service: bardiscms_menu.menu_builder
         factory_method: createMenu
-        arguments: ["@request", "Footer Menu", "sitemapList side-nav", "simple"]
+        arguments: ["@request", "Footer Menu", "sitemap-list side-nav", "simple", "false"]
         scope: request # needed as we have the request as a dependency here
         tags:
             - { name: knp_menu.menu, alias: footersitemap } # The alias is what is used to retrieve the menu

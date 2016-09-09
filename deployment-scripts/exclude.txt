@@ -19,9 +19,9 @@ nbproject/
 node_modules/
 
 /conf
-/build
+/deployment-scripts
 /database_dump
-/legacy_bash_scripts
+/ui-src
 
 /.bowerrc
 /phpunit.xml.dist
@@ -31,23 +31,33 @@ node_modules/
 /.gitconfig
 /Gruntfile.js
 /.jshintrc
+/.babelignore
+/.babelrc
+/.eslintignore
+/.eslintrc
 /.jscs.json
 /bower.json
-/composer.json
 /package.json
+/composer.json.jenkins
 /composer.lock
 /README.md
 /build.xml
 /phpunit.xml
 /.insight.yml
 /.travis.yml
+/*.sample
+/update-release-version.sh
 
+/app/logs
 /app/logs/*
+/app/sessions
 /app/sessions/*
+/app/cache
 /app/cache/*
 
-/grunt
-
-/app/config/parameters.yml
+/app/config/parameters.yml.dev
+/app/config/parameters.yml.uat
+/app/config/parameters.yml.test
+/app/config/parameters.yml.prod
 /app/config/parameters.yml.dist
 /web/.htaccess

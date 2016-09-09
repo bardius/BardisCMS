@@ -313,7 +313,9 @@ class SkeletonRepository extends EntityRepository {
         // Get paginated results
         $pages = $qb->getQuery()->getResult();
         // Get the total pagination pages
-        $totalPages = ceil($totalResultsCount / $totalPageItems);
+        if($totalPageItems > 0){
+            $totalPages = ceil($totalResultsCount / $totalPageItems);
+        }
         // Set the page items and pagination to be returned
         $pageList = array('pages' => $pages, 'totalPages' => $totalPages);
 

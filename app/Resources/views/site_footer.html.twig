@@ -1,12 +1,16 @@
-<div id="footerNav" class="large-12 small-12 columns">
-    {{ knp_menu_render('footer', {'currentClass': 'active current'}) }}
+<div id="footer-nav" class="large-12 small-12 columns">
+    <div class="menu-centered">
+        {{ knp_menu_render('footer', {'template': 'MenuBundle:Menu:knp_header_menu.html.twig', 'depth': null, 'currentAsLink': true, 'currentClass': 'active', 'ancestorClass': 'active active_ancestor', 'compressed': false, 'allow_safe_labels': false}) }}
+    </div>
 </div>
 
-<div id="copyrights" class="large-12 small-12 columns">
-    {% include '::smo_links.html.twig' %}
+<div id="smoLinks" class="large-12 small-12 columns">
+    <div class="menu-centered">
+        {% include '::smo_links.html.twig' %}
+    </div>
 </div>
 
-<div id="copyrights" class="large-12 small-12 columns">
+<div id="copyrights" class="large-12 small-12 columns text-center large-text-left">
     <p>Copyrights &copy; {{"now"|date('Y')}}</p>
 </div>
 

@@ -1,13 +1,9 @@
-<nav class="top-bar contain-to-grid" data-topbar>
-    <ul class="title-area">
-        <li class="name"></li>
-        <li class="toggle-topbar menu-icon">
-            <a href="#">
-                <span>Menu</span>
-            </a>
-        </li>
-    </ul>
-    <section class="top-bar-section">	
-        {{ knp_menu_render('main', {'template': 'MenuBundle:Menu:knp_menu.html.twig', 'depth': null, 'currentAsLink': true, 'currentClass': 'active', 'ancestorClass': 'active active_ancestor', 'compressed': false, 'allow_safe_labels': false }) }}
+<nav class="top-bar">
+    <div class="title-bar text-right hide-for-large" data-responsive-toggle="main-menu" data-hide-for="large" style="display: none;">
+        <div class="title-bar-title">Menu</div>
+        <button class="menu-icon" type="button" data-toggle></button>
+    </div>
+    <section class="top-bar-section" id="main-menu">
+        {{ knp_menu_render('main', {'template': 'MenuBundle:Menu:knp_header_menu.html.twig', 'depth': null, 'currentAsLink': true, 'currentClass': 'active', 'ancestorClass': 'active active_ancestor', 'compressed': false, 'allow_safe_labels': false}) }}
     </section>
 </nav>

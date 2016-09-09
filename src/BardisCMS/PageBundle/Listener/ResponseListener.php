@@ -43,7 +43,7 @@ class ResponseListener {
         }
         */
         /*
-        $headers->set('X-UA-Compatible', 'IE=Edge,chrome=1');
+        $headers->set('X-UA-Compatible', 'IE=Edge');
         $headers->set('P3P', 'cp=BardisCMS');
         $headers->set('X-Frame-Options', 'deny');
         $headers->set('X-XSS-Protection', '1; mode=block');
@@ -52,7 +52,7 @@ class ResponseListener {
         $headers->set('ServerTokens', 'Prod');
         $headers->set('Content-Language', 'en');
         $headers->set('X-Created-By', 'George Bardis - george@bardis.info');
-        $headers->set('X-Version', '0.0.1');
+        $headers->set('X-Version', '2.8.10');
         */
     }
 }

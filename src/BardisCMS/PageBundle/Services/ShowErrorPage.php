@@ -21,6 +21,7 @@ class ShowErrorPage
     private $conn;
     private $container;
     private $enableHTTPCache;
+    private $settings;
 
     public function __construct(EntityManager $em, ContainerInterface $container)
     {
@@ -28,8 +29,16 @@ class ShowErrorPage
         $this->conn = $em->getConnection();
         $this->container = $container;
 
+        // Get the settings from setting bundle
+        $this->settings = $this->container->get('bardiscms_settings.load_settings')->loadSettings();
+
         // Set the flag for allowing HTTP cache
-        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+        if($this->settings){
+            $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+        }
+        else {
+            $this->enableHTTPCache = false;
+        }
     }
 
     public function errorPageAction($statusCode = null){

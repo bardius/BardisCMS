@@ -1,55 +1,60 @@
 <div class="large-12 small-12 columns {{ pageItem.pagetype }}Item {% if pageItem.introclass is not null %}{{ pageItem.introclass }}{% endif %}">
     <div class="row">
+
+        {% if pageItem.alias is not null %}
+            {% set readMoreUrl = app.request.getBaseURL() ~ '/blog/' ~ pageItem.alias %}
+        {% else %}
+            {% set readMoreUrl = url('BlogBundle_showPage', { 'id': pageItem.id }) %}
+        {% endif %}
+
         {% if pageItem.introimage.id is defined %}
-            <div class="columns large-5 small-12">
-                {% if pageItem.alias is not null %}
-                    <a href="{{ app.request.getBaseURL() }}/blog/{{ pageItem.alias }}" title="{{ pageItem.title }}" class="readMoreImage">
-                    {% else %}
-                        <a href="{{ url('BlogBundle_showPage', { 'id': pageItem.id }) }}" title="{{ pageItem.title }}" class="readMoreImage">
-                        {% endif %}
-                        {% media pageItem.introimage.id, 'blog' with {'alt': pageItem.title, 'title': ''} %}
-                    </a>
+            {% set itemClassList = 'columns large-7 small-12 introItemText' %}
+
+            <div class="columns large-5 small-12 hide-for-small-only">
+                <a href="{{ readMoreUrl }}" title="{{ pageItem.title }}" class="thumbnail thumbnail-read-more">
+                    {% media pageItem.introimage.id, 'blog' with {'alt': pageItem.title, 'title': ''} %}
+                </a>
             </div>
-            <div class="columns large-7 small-12 introItemText">
-            {% else %}
-                <div class="large-12 small-12 columns introItemText">
-                {% endif %}
-                <h3>
-                    {% if pageItem.alias is not null %}
-                        <a href="{{ app.request.getBaseURL() }}/blog/{{ pageItem.alias }}" title="{{ pageItem.title }}">
-                        {% else %}
-                            <a href="{{ url('BlogBundle_showPage', { 'id': pageItem.id }) }}" title="{{ pageItem.title }}">
-                            {% endif %}
-                            {{ pageItem.title }}
-                        </a>
-                </h3>
-                <p class="date">
-                    <span class="day">{{ pageItem.date|date("d") }}</span>
-                    <span class="month">{{ pageItem.date|date("M") }}</span>
-                    <span class="year">{{ pageItem.date|date("Y") }}</span>
-                </p>
-                {% if pageItem.tags is not null %}
-                    <p class="tagList">
-                        Tags:
-                        {% for title in pageItem.tags %}
-                            <a class="tag" href="{{ app.request.getBaseURL() }}/blog/tagged/{{ title|url_encode() }}" title="{{ title }}">
+        {% else %}
+            {% set itemClassList = 'columns large-12 small-12 introItemText' %}
+        {% endif %}
+
+        <div class="{{ itemClassList }}">
+            <h3>
+                <a href="{{ readMoreUrl }}" title="{{ pageItem.title }}">
+                    {{ pageItem.title }}
+                </a>
+            </h3>
+
+            <p class="date">
+                <span class="day">{{ pageItem.date|date("d") }}</span>
+                <span class="month">{{ pageItem.date|date("M") }}</span>
+                <span class="year">{{ pageItem.date|date("Y") }}</span>
+            </p>
+
+            {% if pageItem.introtext is not null %}
+                <p>{{ pageItem.introtext|striptags }}</p>
+            {% endif %}
+
+            {% if pageItem.tags is not null %}
+                <ul class="menu simple menu-tags">
+                    <li class="menu-text no-padding">Tags:</li>
+                    {% for title in pageItem.tags %}
+                        {% set tagUrl = app.request.getBaseURL() ~ '/blog/tagged/' ~ title|url_encode|replace({'%20': '+'}) %}
+                        <li>
+                            <a class="tag" href="{{ tagUrl }}" title="{{ title }}">
                                 {{ title }}
                             </a>
-                        {% endfor %}
-                    </p>
-                {% endif %}
-                {% if pageItem.introtext is not null %}
-                    <p>{{ pageItem.introtext|raw }}</p>
-                {% endif %}
-                <p class="readMore">
-                    {% if pageItem.alias is not null %}
-                        <a href="{{ app.request.getBaseURL() }}/blog/{{ pageItem.alias }}" title="Read more">
-                        {% else %}
-                            <a href="{{ url('BlogBundle_showPage', { 'id': pageItem.id }) }}" title="Read more">
-                            {% endif %}
-                            <span class="hasArrow">Read more</span>
-                        </a>
-                </p>
-            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <p>
+                <a class="button button-read-more" href="{{ readMoreUrl }}" title="Read more">
+                    Read more <i class="fi-play"></i>
+                </a>
+            </p>
         </div>
     </div>
+</div>

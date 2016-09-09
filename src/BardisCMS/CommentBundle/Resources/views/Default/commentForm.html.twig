@@ -2,7 +2,7 @@
     {{ form_start(form, {'method': 'POST', 'attr': {'id': 'commentform_form', 'novalidate': 'novalidate'} }) }}
     <div class="row">
         <div class="large-12 small-12 columns">
-            <small class="right">{{ 'comment.form.mandatory_fields'|trans({}, 'BardisCMSCommentBundle') }}</small>
+            <small class="text-right">{{ 'comment.form.mandatory_fields'|trans({}, 'BardisCMSCommentBundle') }}</small>
         </div>
         {{ form_row(form.title) }}
         {{ form_row(form.username) }}

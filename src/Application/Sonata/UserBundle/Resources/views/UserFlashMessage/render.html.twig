@@ -13,9 +13,24 @@ Manage the extended Sonata User entity with extra information for the users
 {% for type in sonata_flashmessages_types() %}
     {% set domain = domain is defined ? domain : null %}
     {% for message in sonata_flashmessages_get(type, domain) %}
-        <div class="alert-box {{ type|sonata_status_class }}" data-alert="">
-            {{ message|raw }}
-            <a class="close" href="#" title="dismiss" aria-hidden="true">&times;</a>
+
+        {% if type|sonata_status_class == "success" %}
+            {% set calloutClass = "success" %}
+        {% elseif type|sonata_status_class == "info" %}
+            {% set calloutClass = "secondary" %}
+        {% elseif type|sonata_status_class == "warning" %}
+            {% set calloutClass = "warning" %}
+        {% elseif type|sonata_status_class == "danger" %}
+            {% set calloutClass = "alert" %}
+        {% else %}
+            {% set calloutClass = "" %}
+        {% endif %}
+
+        <div class="callout {{ calloutClass }}" data-closable>
+            <span>{{ message|raw }}</span>
+            <button class="close close-button" aria-label="Dismiss" title="Dismiss" type="button" data-close>
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
     {% endfor %}
 {% endfor %}

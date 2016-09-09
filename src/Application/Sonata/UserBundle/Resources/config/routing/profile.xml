@@ -4,13 +4,51 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="sonata_user_profile_show" pattern="/{userName}">
-        <default key="_controller">SonataUserBundle:ProfileFOSUser1:show</default>
-        <default key="alias">profile</default>
-        <default key="userName">username</default>
+    <route id="sonata_user_profile_list_noslash" path="/list/{currentpage}/{totalpageitems}/{extraParams}">
+        <default key="_controller">SonataUserBundle:ProfileList:show</default>
+        <default key="alias">profile/list</default>
+        <default key="currentpage">0</default>
+        <default key="totalpageitems">0</default>
+        <default key="extraParams"></default>
+        <requirement key="currentpage">\d+</requirement>
+        <requirement key="totalpageitems">\d+</requirement>
     </route>
 
-    <route id="sonata_user_profile_show" pattern="/">
+    <route id="sonata_user_profile_list_only_pagin" path="/list/{currentpage}/{totalpageitems}">
+        <default key="_controller">SonataUserBundle:ProfileList:show</default>
+        <default key="alias">profile/list</default>
+        <default key="currentpage">0</default>
+        <default key="totalpageitems">0</default>
+        <default key="extraParams"></default>
+        <requirement key="currentpage">\d+</requirement>
+        <requirement key="totalpageitems">\d+</requirement>
+    </route>
+
+    <route id="sonata_user_profile_list_only_page" path="/list/{currentpage}">
+        <default key="_controller">SonataUserBundle:ProfileList:show</default>
+        <default key="alias">profile/list</default>
+        <default key="currentpage">0</default>
+        <default key="totalpageitems">0</default>
+        <default key="extraParams"></default>
+        <requirement key="currentpage">.*</requirement>
+    </route>
+
+    <route id="sonata_user_profile_list" path="/list">
+        <default key="_controller">SonataUserBundle:ProfileList:show</default>
+        <default key="alias">profile/list</default>
+        <default key="currentpage">0</default>
+        <default key="totalpageitems">0</default>
+        <default key="extraParams"></default>
+    </route>
+
+    <route id="sonata_user_public_profile_show" path="/{userName}">
+        <default key="_controller">SonataUserBundle:ProfileFOSUser1:show</default>
+        <default key="alias">profile</default>
+        <default key="userName">none</default>
+        <requirement key="username">.*</requirement>
+    </route>
+
+    <route id="sonata_user_profile_show" path="/">
         <default key="_controller">SonataUserBundle:ProfileFOSUser1:show</default>
         <default key="alias">profile</default>
     </route>

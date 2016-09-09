@@ -9,10 +9,26 @@ Manage the extended Sonata User entity with extra information for the users
 
 #}
 
-{% if page_user.getUserAvatar is not null %}
-    <p>{% media page_user.getUserAvatar.id, 'big' with {'alt': page_user.getUsername, 'title': '' } %}</p>
+{% if page_user is not null and page_user.getUserHeroImage is not null %}
+    <p>
+        {% media page_user.getUserHeroImage.id, 'big' with {'alt': page_user.getUsername, 'title': '' } %}
+    </p>
 {% endif %}
-{% if page_user.getUserHeroImage is not null %}
-    <p>{% media page_user.getUserHeroImage.id, 'big' with {'alt': page_user.getUsername, 'title': '' } %}</p>
-{% endif %}
-<p>{{ page_user.getFullName }} owner</p>
+
+<div class="media-object">
+    <div class="media-object-section">
+        {% if page_user is not null and page_user.getUserAvatar is not null %}
+            <div class="thumbnail">
+                {% media page_user.getUserAvatar.id, 'big' with {'alt': page_user.getUsername, 'title': '' } %}
+            </div>
+        {% endif %}
+    </div>
+    <div class="media-object-section">
+        {% if page_user is not null and page_user.getFullName is not null %}
+            <h4>{{ page_user.getFullName }}</h4>
+        {% endif %}
+        <p>
+            owner
+        </p>
+    </div>
+</div>

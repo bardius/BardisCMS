@@ -554,4 +554,33 @@
 
     </class>
 
+    <class name="Application\Sonata\UserBundle\Form\Model\UserFilters">
+
+        <!-- User Search Term Constraints -->
+        <property name="username">
+            <constraint name="NotBlank">
+                <option name="message">sonata_user.username.blank</option>
+                <option name="groups">UserSearch</option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="minMessage">sonata_user.username.short</option>
+                <option name="max">20</option>
+                <option name="maxMessage">sonata_user.username.long</option>
+                <option name="groups">
+                    <value>UserSearch</value>
+                </option>
+            </constraint>
+            <constraint name="Regex">
+                <option name="pattern">/^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{1,20}$/</option>
+                <option name="match">true</option>
+                <option name="message">sonata_user.username.invalid_chars</option>
+                <option name="groups">
+                    <value>UserSearch</value>
+                </option>
+            </constraint>
+        </property>
+
+    </class>
+
 </constraint-mapping>

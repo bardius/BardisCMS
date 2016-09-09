@@ -18,7 +18,7 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
         '::1',
     ))
 	|| !in_array(@$_SERVER['HTTP_HOST'], array(
-        'bardiscms.dev'
+        'domain-name.dev'
     ))
 ) {
     header('HTTP/1.0 403 Forbidden');

@@ -47,10 +47,11 @@ class MenuBuilder {
      * @param String $menuGroup
      * @param String $cssClass
      * @param String $menuItemDecorator
+     * @param String $f6Menu
      *
      * @return menu
      */
-    public function createMenu(Request $request, $menuGroup, $cssClass, $menuItemDecorator) {
+    public function createMenu(Request $request, $menuGroup, $cssClass, $menuItemDecorator, $f6Menu) {
 
         $repo = $this->em->getRepository('MenuBundle:Menu');
         $menuData = $repo->findBy(array("menuGroup" => $menuGroup), array("ordering" => "ASC"));
@@ -60,6 +61,9 @@ class MenuBuilder {
 
         $menu = $this->factory->createItem($menuGroup);
         $menu->setChildrenAttribute('class', $cssClass);
+        if($f6Menu !== "false"){
+            $menu->setChildrenAttribute('data-responsive-menu', $f6Menu);
+        }
 
         $matcher = $this->container->get('knp_menu.matcher');
         $voter = $this->container->get('bardiscms_menu.voter.request');
@@ -205,15 +209,10 @@ class MenuBuilder {
                 $menu[$menuItem->getTitle()]->setLinkAttribute('title', $menuItem->getTitle());
 
                 if ($menuItemDecorator == 'main') {
-                    if ($menuItem->getMenuImage() !== null) {
-                        $menu[$menuItem->getTitle()]->setLabelAttribute('style', 'background-image:url("' . $menuItem->getMenuImage() . '");');
-                    }
-
                     if ($menuItem->children !== null) {
-                        $menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemLevel . ' has-dropdown not-click');
+                        $menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemLevel . ' has-submenu');
                         $this->menuItemLevel = $this->menuItemLevel + 1;
-                        //$menu[$menuItem->getTitle()]->setAttribute('flyout-toggle', true);
-                        $menu[$menuItem->getTitle()]->setChildrenAttribute('class', 'dropdown level' . $this->menuItemLevel);
+                        $menu[$menuItem->getTitle()]->setChildrenAttribute('class', 'menu level' . $this->menuItemLevel);
                         $this->setupMenuItem($menu[$menuItem->getTitle()], $menuItem->children, $menuItemDecorator);
                         $this->menuItemLevel = $this->menuItemLevel - 1;
                     }
@@ -224,6 +223,11 @@ class MenuBuilder {
                         $this->setupMenuItem($menu[$menuItem->getTitle()], $menuItem->children, $menuItemDecorator);
                         $this->menuItemLevel = $this->menuItemLevel - 1;
                     }
+                }
+
+                if ($menuItem->getMenuImage() !== null) {
+                    //$menu[$menuItem->getTitle()]->setLabelAttribute('style', 'background-image:url("' . $menuItem->getMenuImage() . '");');
+                    $menu[$menuItem->getTitle()]->setAttribute('menuImage', $menuItem->getMenuImage());
                 }
             }
         }

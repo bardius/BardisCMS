@@ -1,11 +1,39 @@
 <div id="homeSlideshow" class="slideshow large-12 small-12 columns">
-    <ul data-orbit>
-        {% for contentBlock in page.maincontentblocks|sort_by_attribute('ordering') if contentBlock.contentType == 'slide' %}
-            {% if contentBlock.publishedState == 1 %}
-                <li class="slide {% if contentBlock.className is not null %}{{ contentBlock.className }}{% endif %} large-12 small-12"{% if contentBlock.idName is not null %} id="{{ contentBlock.idName }}"{% endif %}>
-                    <a href="{{ contentBlock.slide.imageLinkURL }}" title="{{ contentBlock.slide.imageLinkTitle }}">{% media contentBlock.slide.imageFile.id, 'slide'  with {'alt': contentBlock.slide.imageLinkTitle, 'title': '' } %}</a>
-                </li>
-            {% endif %}
+
+    <div class="orbit" role="region" aria-label="{{ contentBlock.title }}" data-orbit>
+        <ul class="orbit-container">
+            {% for contentBlock in page.maincontentblocks|sort_by_attribute('ordering') if contentBlock.publishedState == 1 and contentBlock.contentType == 'slide' %}
+                    <li
+                        class="slide {% if contentBlock.className is not null %}{{ contentBlock.className }}{% endif %} large-12 small-12 orbit-slide {% if loop.index0 == 0 %}is-active{% endif %}"
+                        {% if contentBlock.idName is not null %} id="{{ contentBlock.idName }}"{% endif %}
+                        >
+
+                        <a href="{{ contentBlock.slide.imageLinkURL }}" title="{{ contentBlock.slide.imageLinkTitle }}">
+                            {% media contentBlock.slide.imageFile.id, 'slide'  with {'alt': contentBlock.slide.imageLinkTitle, 'title': '' } %}
+
+                            {% if contentBlock.slide.imageFile.id is defined %}
+                                {% media contentBlock.slide.imageFile.id, 'slide' with {'alt': contentBlock.slide.imageLinkTitle, 'title': '', 'class': 'orbit-image' } %}
+                            {% else %}
+                                <img src="/images/site_assets/defaultTopBanner.jpg" alt="{{ contentBlock.slide.imageLinkTitle }}" />
+                            {% endif %}
+                            {% if contentBlock.slide.imageLinkTitle is not empty %}
+                                <figcaption class="orbit-caption">{{ contentBlock.slide.imageLinkTitle }}</figcaption>
+                            {% endif %}
+                        </a>
+                    </li>
+            {% endfor %}
         </ul>
-    {% endfor %}
+
+        <button class="orbit-previous"><span class="show-for-sr">Previous Slide</span> &#9664;&#xFE0E;</button>
+        <button class="orbit-next"><span class="show-for-sr">Next Slide</span> &#9654;&#xFE0E;</button>
+
+        <nav class="orbit-bullets">
+            {% for contentBlock in page.maincontentblocks|sort_by_attribute('ordering') if contentBlock.publishedState == 1 and contentBlock.contentType == 'slide' %}
+                <button {% if loop.index0 == 0 %}class="is-active"{% endif %} data-slide="{{ loop.index0 }}">
+                    <span class="show-for-sr">Slide {{ loop.index0 }} details</span>
+                    {% if loop.index0 == 0 %}<span class="show-for-sr">Current Slide</span>{% endif %}
+                </button>
+            {% endfor %}
+        </nav>
+    </div>
 </div>

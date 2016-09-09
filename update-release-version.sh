@@ -52,8 +52,8 @@ done
 
 echo "******************************************"
 echo "Updating BardisCMS Release Version"
-echo "OLD_VERSION: $OLD_VERSION"
-echo "NEW_VERSION: $NEW_VERSION"
+echo "OLD RELEASE VERSION: $OLD_VERSION"
+echo "NEW RELEASE VERSION: $NEW_VERSION"
 echo "******************************************"
 
 # function to bunp release version numbers
@@ -74,10 +74,12 @@ function bumpVersions() {
     fi
 
     # updating release version in required files
-    sed -i'' -e "s/$oldversion/$newversion/g" nextBuildNumber
+    sed -i'' -e "s/$oldversion/$newversion/g" README.md
+    sed -i'' -e "s/$oldversion/$newversion/g" src/BardisCMS/PageBundle/Listener/ResponseListener.php
     sed -i'' -e "s/$oldversion/$newversion/g" bower.json
     sed -i'' -e "s/$oldversion/$newversion/g" package.json
-    sed -i'' -e "s/$oldversion/$newversion/g" README.md
+    sed -i'' -e "s/$oldversion/$newversion/g" app/config/config.yml
+    sed -i'' -e "s/$oldversion/$newversion/g" web/.htaccess
 
     echo "Release Version is now updated to version $newversion"
 

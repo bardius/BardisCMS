@@ -138,7 +138,7 @@ class BlogRepository extends EntityRepository {
                     ->setParameter('currentPage', $currentPageId)
             ;
 
-            // The query to get the total blog post items count  
+            // The query to get the total blog post items count
             $countqb->select('COUNT(DISTINCT p.id)')
                     ->from('BlogBundle:Blog', 'p')
                     ->innerJoin('p.tags', 't')
@@ -259,7 +259,9 @@ class BlogRepository extends EntityRepository {
         // Get paginated results
         $blogPosts = $qb->getQuery()->getResult();
         // Get the total pagination pages
-        $totalPages = ceil($totalResultsCount / $totalblogposts);
+        if($totalblogposts > 0){
+            $totalPages = ceil($totalResultsCount / $totalblogposts);
+        }
         // Set the blog post items and pagination to be returned
         $blogPostList = array('pages' => $blogPosts, 'totalPages' => $totalPages);
 
@@ -285,7 +287,7 @@ class BlogRepository extends EntityRepository {
                 ->setParameter('currentPage', $currentPageId)
         ;
 
-        // The query to get the total blog post items count 
+        // The query to get the total blog post items count
         $countqb->select('COUNT(DISTINCT p.id)')
                 ->from('BlogBundle:Blog', 'p')
                 ->where($countqb->expr()->andX(

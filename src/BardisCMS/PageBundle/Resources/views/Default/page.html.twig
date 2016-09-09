@@ -159,13 +159,13 @@
                         </div>
                     </div>
                 {% endif %}
-                <div class="large-12 small-12 columns {{ page.pagetype }}List">
-                    <div class="row homepageListing">
-                        {% if pages %}
+                {% if pages %}
+                    <div class="large-12 small-12 columns {{ page.pagetype }}List">
+                        <div class="row homepageListing">
                             {% include 'PageBundle:Contents:homepage-list.html.twig' with {'pages': pages, 'mobile': mobile} %}
-                        {% endif %}
+                        </div>
                     </div>
-                </div>
+                {% endif %}
                 {% if page.secondarycontentblocks is not empty %}
                     <div class="large-12 small-12 columns pageText">
                         <div class="row collapse">
@@ -207,6 +207,8 @@
                                             {% endif %}
                                         </div>
                                     {% endfor %}
+                                {% else %}
+                                    {% include 'PageBundle:Contents:no-results.html.twig' %}
                                 {% endif %}
                             </div>
                         </div>

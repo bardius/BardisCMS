@@ -9,21 +9,23 @@ Manage the extended Sonata User entity with extra information for the users
 
 #}
 
-    {% form_theme form with ['Form/fields.html.twig'] %}
-
     {{ form_start(form, {'action': path('sonata_user_registration_register'), 'method': 'POST', 'attr': {'id': 'sonata_user_custom_user_registration_form', 'novalidate': 'novalidate'} }) }}
         <div class="row">
             <div class="large-12 small-12 columns">
-                <small class="right">{{ 'form.mandatory_fields'|trans({}, 'SonataUserBundle') }}</small>
+                <small class="text-right">{{ 'form.mandatory_fields'|trans({}, 'SonataUserBundle') }}</small>
             </div>
-            {{ form_widget(form) }}
+            <div class="large-12 small-12 columns">
+                {{ form_widget(form) }}
+            </div>
             <div class="large-12 small-12 columns">
                 {% if formMessage is defined %}
-                    <small class="form-message error">
+                    <span class="form-message error form-error is-visible callout {% if form.vars.valid == true %}success{% else %}alert{% endif %}">
                         {{ formMessage }}
-                    </small>
+                    </span>
                 {% endif %}
-                <button type="submit" name="submit" id="userRegisterFormBtn" class="button">{{ 'registration.submit'|trans({}, 'SonataUserBundle') }}</button>
+                <button type="submit" name="submit" id="userRegisterFormBtn" class="button">
+                    {{ 'registration.submit'|trans({}, 'SonataUserBundle') }}
+                </button>
             </div>
         </div>
     {{ form_end(form) }}

@@ -1,0 +1,36 @@
+{#
+
+Sonata User Bundle Overrides
+
+This file is part of the BardisCMS.
+Manage the extended Sonata User entity with extra information for the users
+
+(c) George Bardis <george@bardis.info>
+
+#}
+
+                {% block sonata_profile_menu %}
+                    {% set currentRoute = app.request.attributes.get('_route') %}
+                    <div class="callout secondary">
+                        <ul class="menu">
+                            <li class="menu-text">
+                                {{ 'profile_menu.title' | trans({}, "SonataUserBundle") }}
+                            </li>
+                            <li {{ currentRoute ==  'sonata_user_profile_show' ? 'class="active"' }}>
+                                <a href="{{ path('sonata_user_profile_show') }}" title="{{ 'profile_menu.show' | trans({}, "SonataUserBundle") }}">
+                                    <i class="fi-layout"></i> <span>{{ 'profile_menu.show' | trans({}, "SonataUserBundle") }}</span>
+                                </a>
+                            </li>
+                            <li {{ currentRoute ==  'sonata_user_profile_edit' ? 'class="active"' }}>
+                                <a href="{{ path('sonata_user_profile_edit') }}" title="{{ 'profile_menu.edit' | trans({}, "SonataUserBundle") }}">
+                                    <i class="fi-pencil"></i> <span>{{ 'profile_menu.edit' | trans({}, "SonataUserBundle") }}</span>
+                                </a>
+                            </li>
+                            <li {{ currentRoute ==  'fos_user_security_logout' ? 'class="active"' }}>
+                                <a href="{{ path('fos_user_security_logout') }}" title="{{ 'profile_menu.logout' | trans({}, "SonataUserBundle") }}">
+                                    <i class="fi-unlock"></i> <span>{{ 'profile_menu.logout' | trans({}, "SonataUserBundle") }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                {% endblock %}

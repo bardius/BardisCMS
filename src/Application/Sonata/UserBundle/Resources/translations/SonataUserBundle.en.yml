@@ -34,6 +34,11 @@ profile:
         submit: Update
         intro_title: Profile details & account settings
         intro_copy: Edit your profile details & account settings
+        generic: Generic Details
+        contact: Contact Details
+        preferences: Account Preferences
+        media: Manage Profile Media
+        change_pass: Change Password
     flash:
         updated: The profile details have been updated successfully
     responses:
@@ -105,6 +110,8 @@ layout:
 
 # Profile menu items
 profile_menu:
+    title: User menu
+    list: User profile list
     show: View Profile
     edit: Manage Profile
     logout: Logout
@@ -163,9 +170,24 @@ form:
     roles:                          Roles
     userAvatar:                     User Avatar
     userHeroImage:                  User Hero Image
+    isSystemUser:                   System User
+    search:
+        username:                   Username Filter
+        submit:                     Search
+        error:                      There was an error using your search term. Please try again.
+        no_results:                 No user profiles were found matching the provided search criteria.
+        is_private_only:            Login or register to be able to browse & search the existing user profiles.
+        goto_profile:               See profile
+        pagin_first:                First Page
+        pagin_last:                 Last Page
+        pagin_next:                 Next Page
+        pagin_previous:             Previous Page
+        search_intro:               Search user profiles
+        results_title:              User profiles
+        results_intro:              The below profiles were matched based on your search criteria
 
 widget_label_binary_content:        Select Image
-widget_label_unlink:        Remove Image
+widget_label_unlink:                Remove Image
 
 # Change Password
 password:
@@ -193,6 +215,7 @@ gender_female:                  Female
 list:
     label_confirmed:            Confirmed email
     label_id:                   Id
+    label_is_system_user:       System User
 
 # Sonata User Roles
 ROLE_SONATA_ADMIN_PAGES_GUEST:              ADMIN_PAGES_GUEST

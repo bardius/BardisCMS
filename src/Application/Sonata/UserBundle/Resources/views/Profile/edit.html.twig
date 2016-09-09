@@ -16,15 +16,14 @@ Manage the extended Sonata User entity with extra information for the users
         <div class="row">
 
             <div class="large-12 small-12 columns">
-                <h3>
-                    {% block sonata_profile_title %}
-                        {% trans from 'SonataUserBundle' %}sonata_profile_title{% endtrans %}
-                    {% endblock %}
-                </h3>
 
-                {% block sonata_profile_menu %}
-                    {{ sonata_block_render({'type': 'sonata.user.block.menu'}, {'current_uri': app.request.requestUri}) }}
-                {% endblock %}
+                {% include "SonataUserBundle:Profile:user_menu.html.twig" %}
+
+                <h2>
+                    {% block sonata_profile_title %}
+                        {% trans from 'SonataUserBundle' %}profile_menu.edit{% endtrans %}
+                    {% endblock %}
+                </h2>
 
                 {% block sonata_profile_content '' %}
 

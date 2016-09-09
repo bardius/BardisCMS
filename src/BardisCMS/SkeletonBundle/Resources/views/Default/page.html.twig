@@ -77,6 +77,8 @@
                                             {% include 'SkeletonBundle:Contents:page-list-item.html.twig' %}
                                         </div>
                                     {% endfor %}
+                                {% else %}
+                                    {% include 'SkeletonBundle:Contents:no-results.html.twig' %}
                                 {% endif %}
                             </div>
                         </div>

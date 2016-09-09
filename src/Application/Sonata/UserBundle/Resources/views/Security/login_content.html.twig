@@ -19,7 +19,7 @@ Manage the extended Sonata User entity with extra information for the users
                             <label for="username" class="required">
                                 {{ 'security.login.username'|trans({}, 'SonataUserBundle') }}
                             </label>
-                            <div class="formFieldContainer">
+                            <div class="field-container">
                                 <input type="text" maxlength="50" id="username" name="_username" value="{{ last_username }}" placeholder="" required="required" />
                             </div>
                         </div>
@@ -28,7 +28,7 @@ Manage the extended Sonata User entity with extra information for the users
                             <label for="password" class="required">
                                 {{ 'security.login.password'|trans({}, 'SonataUserBundle') }}
                             </label>
-                            <div class="formFieldContainer">
+                            <div class="field-container">
                                 <input type="password" maxlength="50" id="password" name="_password" placeholder="" required="required" />
                             </div>
                         </div>
@@ -50,9 +50,9 @@ Manage the extended Sonata User entity with extra information for the users
                         {% block sonata_user_login_error %}
                             {% if error %}
                             <div class="large-12 small-12 columns">
-                                <small class="form-message formError alert-box alert">
+                                <span class="form-message error form-error is-visible callout alert">
                                     {{ error|trans({}, 'SonataUserBundle') }}
-                                </small>
+                                </span>
                             </div>
                             {% endif %}
                         {% endblock %}

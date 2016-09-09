@@ -1,47 +1,75 @@
 {% if contentblocks is not null %}
-    {% for contentBlock in contentblocks|sort_by_attribute('ordering') %}
-        {% if contentBlock.publishedState == 1 %}
-            <div class="reveal-modal contentBlock {% if contentBlock.className is not null %}{{ contentBlock.className }}{% endif %} small-12 {% if contentBlock.sizeClass is null %}large-12{% else %}{{ contentBlock.sizeClass }}{% endif %} columns {% if contentBlock.contentType == 'contact' %}{{ contentBlock.contentType }}{% endif %}" {% if contentBlock.idName is not null %}id="{{ contentBlock.idName }}"{% endif %} data-reveal>
-                {% if contentBlock.showTitle == 1 %}
-                    <h3>{{ contentBlock.title }}</h3>
-                {% endif %}
-                {% if contentBlock.contentType == 'html' %}
-                    {{ contentBlock.htmlText|raw }}
-                {% elseif contentBlock.contentType == 'image' %}
-                    {% if contentBlock.imageFiles|length > 1 %}
-                        <div id="slideshow_{{ contentBlock.id}}" class="slideshow large-12 small-12">
-                            <ul data-orbit>
-                                {% for imageBlock in contentBlock.imageFiles|sort_by_attribute('imageOrder') %}
-                                    {% if imageBlock.imageFile.id is defined %}
-                                        <li>{% media imageBlock.imageFile.id, contentBlock.mediaSize with {'alt': contentBlock.title, 'title': '' } %}</li>
-                                        {% endif %}
-                                    {% endfor %}
+    {% for contentBlock in contentblocks|sort_by_attribute('ordering') if contentBlock.publishedState == 1 %}
+        <div
+            class="reveal contentBlock {% if contentBlock.className is not null %}{{ contentBlock.className }}{% endif %} {% if contentBlock.sizeClass == 'large-12' %}full{% elseif contentBlock.sizeClass == 'large-6' %}small{% elseif contentBlock.sizeClass == 'large-3' %}tiny{% else %}large{% endif %}"
+            {% if contentBlock.idName is not null %}id="{{ contentBlock.idName }}"{% endif %}
+            data-reveal
+            data-animation-in="fade-in"
+            data-animation-out="fade-out"
+            >
+            {% if contentBlock.showTitle == 1 %}
+                <h3>{{ contentBlock.title }}</h3>
+            {% endif %}
+            {% if contentBlock.contentType == 'html' %}
+                {{ contentBlock.htmlText|raw }}
+            {% elseif contentBlock.contentType == 'image' %}
+                {% if contentBlock.imageFiles|length > 1 %}
+                    <div id="slideshow_{{ contentBlock.id}}" class="slideshow large-12 small-12">
+                        <div class="orbit" role="region" aria-label="Slideshow {{ contentBlock.title }}" data-orbit>
+                            <ul class="orbit-container">
+                                {% for imageBlock in contentBlock.imageFiles|sort_by_attribute('imageOrder') if imageBlock.imageFile.id is defined %}
+                                    <li
+                                        class="orbit-slide {% if loop.index0 == 0 %}is-active{% endif %}"
+                                        {% if contentBlock.idName is not null %}id="{{ contentBlock.idName }}"{% endif %}
+                                        >
+                                        {% media imageBlock.imageFile.id, contentBlock.mediaSize with {'alt': contentBlock.title, 'title': '' } %}
+                                    </li>
+                                {% endfor %}
                             </ul>
+
+                            <button class="orbit-previous"><span class="show-for-sr">Previous Slide</span> &#9664;&#xFE0E;</button>
+                            <button class="orbit-next"><span class="show-for-sr">Next Slide</span> &#9654;&#xFE0E;</button>
+
+                            <nav class="orbit-bullets">
+                                {% for imageBlock in contentBlock.imageFiles|sort_by_attribute('imageOrder') if imageBlock.imageFile.id is defined %}
+                                    <button {% if loop.index0 == 0 %}class="is-active"{% endif %} data-slide="{{ loop.index0 }}">
+                                        <span class="show-for-sr">Slide {{ loop.index0 }} details</span>
+                                        {% if loop.index0 == 0 %}<span class="show-for-sr">Current Slide</span>{% endif %}
+                                    </button>
+                                {% endfor %}
+                            </nav>
                         </div>
-                    {% else %}
-                        {% for imageBlock in contentBlock.imageFiles|sort_by_attribute('imageOrder') %}
-                            {% if imageBlock.imageFile.id is defined %}
-                                {% media imageBlock.imageFile.id, contentBlock.mediaSize with {'alt': contentBlock.title, 'title': '' } %}
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                {% elseif contentBlock.contentType == 'file' and contentBlock.fileFile.id is defined %}
-                    Download file: <a class="fileLink" href="{{ path('sonata_media_download', {'id': contentBlock.fileFile.id}) }}" target="_blank">{{ contentBlock.fileFile.name }}</a>
-                {% elseif contentBlock.contentType == 'youtube' and contentBlock.youtube.id is defined %}
-                    <div class="flex-video">
-                        {% media contentBlock.youtube.id, contentBlock.mediaSize %}
                     </div>
-                {% elseif contentBlock.contentType == 'vimeo'  and contentBlock.vimeo.id is defined %}
-                    <div class="flex-video vimeo">
-                        {% media contentBlock.vimeo.id, contentBlock.mediaSize %}
-                    </div>
-                {% elseif contentBlock.contentType == 'contact' %}
-                    {% include 'SkeletonBundle:Contents:contactFormHolder.html.twig' %}
                 {% else %}
-                    <p class="error">No content yet. Please Add content from the administation panel.</p>
+                    {% for imageBlock in contentBlock.imageFiles|sort_by_attribute('imageOrder') %}
+                        {% if imageBlock.imageFile.id is defined %}
+                            {% media imageBlock.imageFile.id, contentBlock.mediaSize with {'alt': contentBlock.title, 'title': '' } %}
+                        {% endif %}
+                    {% endfor %}
                 {% endif %}
-            <a class="close-reveal-modal">&#215;</a>
+            {% elseif contentBlock.contentType == 'file' and contentBlock.fileFile.id is defined %}
+                <p>
+                    <a class="button button-file" href="{{ path('sonata_media_download', {'id': contentBlock.fileFile.id}) }}" target="_blank" title="Download {{ contentBlock.fileFile.name }}">
+                        Download {{ contentBlock.fileFile.name }}
+                    </a>
+                </p>
+            {% elseif contentBlock.contentType == 'youtube' and contentBlock.youtube.id is defined %}
+                <div class="flex-video">
+                    {% media contentBlock.youtube.id, contentBlock.mediaSize %}
+                </div>
+            {% elseif contentBlock.contentType == 'vimeo'  and contentBlock.vimeo.id is defined %}
+                <div class="flex-video vimeo">
+                    {% media contentBlock.vimeo.id, contentBlock.mediaSize %}
+                </div>
+            {% elseif contentBlock.contentType == 'contact' %}
+                {% include 'SkeletonBundle:Contents:contactFormHolder.html.twig' %}
+            {% else %}
+                <p class="error">No content yet. Please Add content from the administration panel.</p>
+            {% endif %}
+
+            <button class="close-reveal-modal close-button" data-close aria-label="Close modal" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-    {% endif %}
-{% endfor %}
+    {% endfor %}
 {% endif %}

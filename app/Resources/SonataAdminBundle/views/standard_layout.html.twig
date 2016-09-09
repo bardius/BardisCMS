@@ -34,10 +34,6 @@ file that was distributed with this source code.
             {% for stylesheet in sonata_admin.adminPool.getOption('stylesheets', []) %}
                 <link rel="stylesheet" href="{{ asset(stylesheet) }}">
             {% endfor %}
-
-            <link rel="stylesheet" href="{{ asset('stylesheets/smoothness/jquery-ui-1.10.4.custom.css') }}" type="text/css" media="all" />
-            <link rel="stylesheet" href="{{ asset('stylesheets/AdminStyles.css') }}" type="text/css" media="all" />
-
         {% endblock %}
 
         {% block javascripts %}
@@ -80,7 +76,6 @@ file that was distributed with this source code.
                 {% endif %}
             {% endif %}
 
-            <script src="{{ asset('js/customAdmin.js') }}" type="text/javascript"></script>
             {{ tinymce_init() }}
         {% endblock %}
 
@@ -335,7 +330,10 @@ file that was distributed with this source code.
 
             {% block footer %}
             <footer>
-                <p class="text-right"><a href="http://sonata-project.org" rel="noreferrer">Powered by the Sonata Project</a> setup by <a href="http://www.bardis.info" rel="noreferrer" style="text-decoration: none; color: black">George Bardis</a></p>
+                <p class="text-right">
+                    <a href="https://github.com/bardius/BardisCMS" rel="noreferrer">BardisCMS distribution</a> by
+                    <a href="http://www.bardis.info" rel="noreferrer">George Bardis</a>
+                </p>
             </footer>
             {% endblock footer %}
 

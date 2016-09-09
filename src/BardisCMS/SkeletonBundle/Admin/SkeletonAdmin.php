@@ -159,6 +159,7 @@ class SkeletonAdmin extends AbstractAdmin {
     // Using sonata admin to generate th page listing grid and the grid item actions
     protected function configureListFields(ListMapper $listMapper) {
         $listMapper
+                ->addIdentifier('id')
                 ->addIdentifier('title')
                 ->addIdentifier('alias')
                 ->addIdentifier('publishStateAsString', null, array('sortable' => false, 'label' => 'Publish State'))

@@ -102,6 +102,18 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuContactPage->setOrdering(7);
         $manager->persist($menuContactPage);
 
+        $menuProfileListPage = new Menu();
+        $menuProfileListPage->setPage($manager->merge($this->getReference('pageuser_profile_list')));
+        $menuProfileListPage->setTitle('Browse Profiles');
+        $menuProfileListPage->setMenuType(Menu::TYPE_PAGE);
+        $menuProfileListPage->setRoute(Menu::ROUTE_SHOWPAGE);
+        $menuProfileListPage->setAccessLevel(Menu::STATUS_PUBLIC);
+        $menuProfileListPage->setParent(0);
+        $menuProfileListPage->setMenuGroup(Menu::GROUP_MAIN);
+        $menuProfileListPage->setPublishState(Menu::STATE_PUBLISHED);
+        $menuProfileListPage->setOrdering(8);
+        $manager->persist($menuProfileListPage);
+
         $menuLoginPage = new Menu();
         $menuLoginPage->setPage($manager->merge($this->getReference('pageuser_login')));
         $menuLoginPage->setTitle('Login');
@@ -111,7 +123,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuLoginPage->setParent(0);
         $menuLoginPage->setMenuGroup(Menu::GROUP_MAIN);
         $menuLoginPage->setPublishState(Menu::STATE_PUBLISHED);
-        $menuLoginPage->setOrdering(8);
+        $menuLoginPage->setOrdering(9);
         $manager->persist($menuLoginPage);
 
         $menuProfilePage = new Menu();
@@ -123,7 +135,7 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuProfilePage->setParent(0);
         $menuProfilePage->setMenuGroup(Menu::GROUP_MAIN);
         $menuProfilePage->setPublishState(Menu::STATE_PUBLISHED);
-        $menuProfilePage->setOrdering(8);
+        $menuProfilePage->setOrdering(9);
         $manager->persist($menuProfilePage);
 
         $menuSitemapPage = new Menu();
@@ -138,6 +150,30 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $menuSitemapPage->setOrdering(0);
         $manager->persist($menuSitemapPage);
 
+        $menuTncPage = new Menu();
+        $menuTncPage->setPage($manager->merge($this->getReference('pageTnc')));
+        $menuTncPage->setTitle('Terms & Conditions');
+        $menuTncPage->setMenuType(Menu::TYPE_PAGE);
+        $menuTncPage->setRoute(Menu::ROUTE_SHOWPAGE);
+        $menuTncPage->setAccessLevel(Menu::STATUS_PUBLIC);
+        $menuTncPage->setParent(0);
+        $menuTncPage->setMenuGroup(Menu::GROUP_FOOTER);
+        $menuTncPage->setPublishState(Menu::STATE_PUBLISHED);
+        $menuTncPage->setOrdering(1);
+        $manager->persist($menuTncPage);
+
+        $menuTop = new Menu();
+        $menuTop->setExternalUrl('#wrapper');
+        $menuTop->setTitle('Top');
+        $menuTop->setMenuType(Menu::TYPE_INTERNAL_URL);
+        $menuTop->setRoute(Menu::ROUTE_NONE);
+        $menuTop->setAccessLevel(Menu::STATUS_PUBLIC);
+        $menuTop->setParent(0);
+        $menuTop->setMenuGroup(Menu::GROUP_FOOTER);
+        $menuTop->setPublishState(Menu::STATE_PUBLISHED);
+        $menuTop->setOrdering(2);
+        $manager->persist($menuTop);
+
         $manager->flush();
 
         $this->addReference('menuHome', $menuHome);
@@ -147,9 +183,12 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $this->addReference('menuNews', $menuNews);
         $this->addReference('menuEvents', $menuEvents);
         $this->addReference('menuContactPage', $menuContactPage);
+        $this->addReference('menuProfileListPage', $menuProfileListPage);
         $this->addReference('menuLoginPage', $menuLoginPage);
         $this->addReference('menuProfilePage', $menuProfilePage);
         $this->addReference('menuSitemapPage', $menuSitemapPage);
+        $this->addReference('menuTncPage', $menuTncPage);
+        $this->addReference('menuTop', $menuTop);
     }
 
     public function getOrder() {

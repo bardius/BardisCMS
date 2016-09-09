@@ -24,47 +24,52 @@
 {% endblock %}
 
 {% block content %}
+
     {% if page.bannercontentblocks|length > 0 %}
         {% include 'BlogBundle:Contents:bannercontentblocks.html.twig' with {contentblocks: page.bannercontentblocks} %}
     {% endif %}
+
     <div class="large-12 small-12 columns blogPage blogArticlePage{% if page.pageclass is not null %}{{ page.pageclass }}{% endif %}">
         {% if page.pagetype == 'blog_article' %}
             <div class="row">
-                {% include 'BlogBundle:Contents:blog-article.html.twig' %}            
+                {% include 'BlogBundle:Contents:blog-article.html.twig' %}
             </div>
-        {% elseif page.pagetype == 'blog_cat_page' or page.pagetype == 'blog_filtered_list' or  page.pagetype == 'blog_home' %} 
+        {% elseif page.pagetype == 'blog_cat_page' or page.pagetype == 'blog_filtered_list' or  page.pagetype == 'blog_home' %}
             <div class="row blogContent contentRow">
                 <div class="large-12 small-12 columns">
                     <h2>{{ page.title }}</h2>
-                </div>			
+                </div>
                 {% if page.maincontentblocks is not empty %}
                     <div class="large-12 small-12 columns">
                         {% include 'BlogBundle:Contents:maincontentblocks.html.twig' with {contentblocks: page.maincontentblocks} %}
                     </div>
                 {% endif %}
-                {% if page.pagetype == 'blog_filtered_list' %} 
-                    <div class="row"> 
+                {% if page.pagetype == 'blog_filtered_list' %}
+                    <div class="row">
                         {% include 'BlogBundle:Contents:filterBlogPostsFormHolder.html.twig' %}
                     </div>
                 {% endif %}
             </div>
-            <div class="row {{ page.pagetype }} itemsList categoryListing"> 
-                {% if pages %}
-                    {% for pageItem in pages %}				
-                        <div class="large-6 small-12 columns categoryListingItem categoryListingItem{{ loop.index0 }} {% if loop.index0 is odd %}{% endif %}">
-                            <div class="row">
-                                {% include 'BlogBundle:Contents:page-list-item.html.twig' %}
-                            </div>
+
+            <div class="row {{ page.pagetype }} itemsList categoryListing">
+            {% if pages %}
+                {% for pageItem in pages %}
+                    <div class="large-6 medium-6 small-12 columns categoryListingItem categoryListingItem{{ loop.index0 }} {% if loop.index0 is odd %}{% endif %}">
+                        <div class="row">
+                            {% include 'BlogBundle:Contents:page-list-item.html.twig' %}
                         </div>
-                    {% endfor %}
-                {% endif %}				
+                    </div>
+                {% endfor %}
+            {% else %}
+                {% include 'BlogBundle:Contents:no-results.html.twig' %}
+            {% endif %}
             </div>
 
-            {% if page.pagetype == 'blog_filtered_list' %} 
+            {% if page.pagetype == 'blog_filtered_list' %}
                 {% include 'BlogBundle:Contents:tags-pagination.html.twig' %}
-            {% else %} 
-                {% include 'BlogBundle:Contents:pagination.html.twig' %}            
-            {% endif %}		
+            {% else %}
+                {% include 'BlogBundle:Contents:pagination.html.twig' %}
+            {% endif %}
 
         {% endif %}
 

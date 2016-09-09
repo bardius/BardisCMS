@@ -23,6 +23,7 @@ class SettingsAdmin extends AbstractAdmin {
                 ->add('websiteTitle', null, array('attr' => array(), 'label' => 'Website Title', 'required' => true))
                 ->add('itemsPerPage', null, array('attr' => array(), 'label' => 'Pagination item per Page', 'required' => true))
                 ->add('blogItemsPerPage', null, array('attr' => array(), 'label' => 'Pagination item per Blog Page', 'required' => true))
+                ->add('usersPerPage', null, array('attr' => array(), 'label' => 'Pagination item per User List Page', 'required' => true))
                 ->add('metaDescription', null, array('attr' => array(), 'label' => 'Default Meta Description', 'required' => false))
                 ->add('metaKeywords', null, array('attr' => array(), 'label' => 'Default Meta Keywords', 'required' => false))
                 ->add('fromTitle', null, array('attr' => array(), 'label' => 'Meta Description Owner', 'required' => false))
@@ -33,6 +34,7 @@ class SettingsAdmin extends AbstractAdmin {
                 ->add('enableGoogleAnalytics', null, array('attr' => array(), 'label' => 'Enable Google Analytics', 'required' => false))
                 ->add('emailRecepient', null, array('attr' => array(), 'label' => 'Recepient Email', 'required' => true))
                 ->add('emailSender', null, array('attr' => array(), 'label' => 'Senders Email', 'required' => false))
+                ->add('isPublicProfilesAllowed', null, array('attr' => array(), 'label' => 'Allow Public Profile Listing', 'required' => false))
                 ->add('activateHttpCache', null, array('attr' => array(), 'label' => 'Activate HTTP Cache', 'required' => false))
                 ->add('activateSettings', null, array('attr' => array(), 'label' => 'Activate Settings', 'required' => false))
                 ->setHelps(array(
@@ -46,6 +48,7 @@ class SettingsAdmin extends AbstractAdmin {
                 ->addIdentifier('websiteTitle')
                 ->addIdentifier('itemsPerPage')
                 ->addIdentifier('blogItemsPerPage')
+                ->addIdentifier('usersPerPage')
                 ->addIdentifier('metaDescription')
                 ->addIdentifier('metaKeywords')
                 ->addIdentifier('fromTitle')
@@ -55,6 +58,7 @@ class SettingsAdmin extends AbstractAdmin {
                 ->addIdentifier('enableGoogleAnalytics')
                 ->addIdentifier('emailRecepient')
                 ->addIdentifier('emailSender')
+                ->addIdentifier('isPublicProfilesAllowed')
                 ->addIdentifier('activateHttpCache')
                 ->addIdentifier('activateSettings')
                 ->add('_action', 'actions', array(

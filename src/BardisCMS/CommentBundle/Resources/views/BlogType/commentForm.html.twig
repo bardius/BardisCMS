@@ -2,22 +2,26 @@
     {{ form_start(form, {'method': 'POST', 'attr': {'id': 'commentform_form', 'novalidate': 'novalidate'} }) }}
     <div class="row">
         <div class="large-12 small-12 columns">
-            <small class="right">{{ 'comment.form.mandatory_fields'|trans({}, 'BardisCMSCommentBundle') }}</small>
+            <small class="text-right">{{ 'comment.form.mandatory_fields'|trans({}, 'BardisCMSCommentBundle') }}</small>
         </div>
-        {{ form_row(form.title) }}
-        {{ form_row(form.username) }}
-        {{ form_row(form.comment) }}
+        <div class="large-12 small-12 columns">
+            {{ form_row(form.title) }}
+            {{ form_row(form.username) }}
+            {{ form_row(form.comment) }}
+        </div>
         <div class="large-12 small-12 columns hidden">
             {{ form_row(form.bottrap) }}
             {{ form_row(form._token) }}
         </div>
         {{ form_rest(form) }}
         <div class="large-12 small-12 columns">
-            <button type="submit" name="submit" id="submitCommentBtn" class="button">{{ 'comment.form.submit'|trans({}, 'BardisCMSCommentBundle') }}</button>
-            {% if formMessage is defined %}
-                <small class="form-message error">
+            <button type="submit" name="submit" id="submitCommentBtn" class="button">
+                {{ 'comment.form.submit'|trans({}, 'BardisCMSCommentBundle') }}
+            </button>
+            {% if formMessage is defined and formMessage is not empty %}
+                <span class="form-message error form-error is-visible callout {% if form.vars.valid == true %}success{% else %}alert{% endif %}">
                     {{ formMessage }}
-                </small>
+                </span>
             {% endif %}
         </div>
     </div>
@@ -25,7 +29,7 @@
 {% else %}
     <div class="row">
         <div class="large-12 small-12 columns">
-            <p>Login to be able to add new comments</p>
+            <p class="callout is-visible secondary">Login or register to be able to add new comments</p>
             <p>
                 <a class="button" href="{{ url('sonata_user_security_login') }}" title="{{ 'layout.link.login'|trans({}, 'SonataUserBundle') }}">
                     {{ 'layout.link.login'|trans({}, 'SonataUserBundle') }}

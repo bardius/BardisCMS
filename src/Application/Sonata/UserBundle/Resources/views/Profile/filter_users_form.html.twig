@@ -1,0 +1,36 @@
+{#
+
+Sonata User Bundle Overrides
+
+This file is part of the BardisCMS.
+Manage the extended Sonata User entity with extra information for the users
+
+(c) George Bardis <george@bardis.info>
+
+#}
+
+    <div class="large-12 small-12 columns">
+        <div class="column callout secondary form-filter-results">
+            <p>
+                {{ 'form.search.search_intro'|trans({}, 'SonataUserBundle') }}
+            </p>
+            {{ form_start(filterUsersForm, {'action': path('sonata_user_profile_list'), 'method': 'POST', 'attr': {'id': 'sonata_user_filter_users_form', 'novalidate': 'novalidate'} }) }}
+            <div class="row">
+                <div class="large-12 small-12 columns">
+                    {{ form_widget(filterUsersForm) }}
+                </div>
+
+                <div class="large-12 small-12 columns">
+                    <button type="submit" name="submit" id="filterResultsBtn" class="button float-left">
+                        {{ 'form.search.submit'|trans({}, 'SonataUserBundle') }}
+                    </button>
+                    {% if formMessage is defined and formMessage is not empty %}
+                        <span class="form-message error form-error is-visible callout {% if form.vars.valid == true %}success{% else %}alert{% endif %}">
+                            {{ formMessage }}
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+            {{ form_end(filterUsersForm) }}
+        </div>
+    </div>

@@ -48,11 +48,11 @@
             </trans-unit>
             <trans-unit id="contact_form.response.error">
                 <source>contact_form.response.error</source>
-                <target>there was an error sending your comment / question. Please try again</target>
+                <target>There was an error sending your comment / question. Please try again.</target>
             </trans-unit>
             <trans-unit id="contact_form.response.success">
                 <source>contact_form.response.success</source>
-                <target>Your comment / question has been successfully sent</target>
+                <target>Your comment / question has been successfully sent.</target>
             </trans-unit>
         </body>
     </file>

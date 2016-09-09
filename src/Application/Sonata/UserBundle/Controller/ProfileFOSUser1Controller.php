@@ -85,15 +85,20 @@ class ProfileFOSUser1Controller extends Controller
      *
      * @return Response response
      */
-    public function showAction($alias = 'profile', $userName = null)
+    public function showAction($alias = 'profile', $userName = 'none')
     {
         $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($alias);
 
-        if($userName === null){
+        if($userName == 'none' && $this->userName === null){
+            return $this->redirect($this->generateUrl('sonata_user_profile_list'));
+        }
+        elseif($userName == 'none'){
             $userName = $this->userName;
         }
 
-        if (!$this->page) {
+        $page_user = $this->container->get('sonata_user.services.helpers')->getUserByUsername($userName);
+
+        if (!$this->page || !$page_user) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
 
@@ -113,17 +118,12 @@ class ProfileFOSUser1Controller extends Controller
         $pageData = array(
             'page' => $this->page,
             'mobile' => $this->serveMobile,
-            'profile_owner' => false,
+            'profile_owner' => $userName === $this->userName ? true : false,
             'page_username' => $userName,
             'logged_username' => $this->userName,
-            'page_user' => $this->container->get('sonata_user.services.helpers')->getUserByUsername($userName),
+            'page_user' => $page_user,
             'blocks' => $this->container->getParameter('sonata.user.configuration.profile_blocks'),
         );
-
-        // Owner user private profile
-        if ($userName === $this->userName) {
-            $pageData['profile_owner'] = true;
-        }
 
         // Render profile page
         $response = $this->render('SonataUserBundle:Profile:show.html.twig', $pageData);

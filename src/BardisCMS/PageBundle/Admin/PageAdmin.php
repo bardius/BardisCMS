@@ -220,28 +220,29 @@ class PageAdmin extends AbstractAdmin {
     // Using sonata admin to generate th page listing grid and the grid item actions
     protected function configureListFields(ListMapper $listMapper) {
         $listMapper
-                ->addIdentifier('title')
-                ->addIdentifier('alias')
-                ->addIdentifier('publishStateAsString', null, array('sortable' => false, 'label' => 'Publish State'))
-                ->addIdentifier('pagetypeAsString', null, array('sortable' => false, 'label' => 'Page Type'))
-                ->addIdentifier('categories')
-                ->addIdentifier('tags')
-                ->addIdentifier('pageOrder')
-                ->addIdentifier('author')
-                ->addIdentifier('date')
-                ->add('_action', 'actions', array(
-                    'actions' => array(
-                        'duplicate' => array(
-                            'template' => 'PageBundle:Admin:duplicate.html.twig'
-                        ),
-                        'edit' => array(
-                            'template' => 'PageBundle:Admin:edit.html.twig'
-                        ),
-                        'delete' => array(
-                            'template' => 'PageBundle:Admin:delete.html.twig'
-                        )
+            ->addIdentifier('id')
+            ->addIdentifier('title')
+            ->addIdentifier('alias')
+            ->addIdentifier('publishStateAsString', null, array('sortable' => false, 'label' => 'Publish State'))
+            ->addIdentifier('pagetypeAsString', null, array('sortable' => false, 'label' => 'Page Type'))
+            ->addIdentifier('categories')
+            ->addIdentifier('tags')
+            ->addIdentifier('pageOrder')
+            ->addIdentifier('author')
+            ->addIdentifier('date')
+            ->add('_action', 'actions', array(
+                'actions' => array(
+                    'duplicate' => array(
+                        'template' => 'PageBundle:Admin:duplicate.html.twig'
+                    ),
+                    'edit' => array(
+                        'template' => 'PageBundle:Admin:edit.html.twig'
+                    ),
+                    'delete' => array(
+                        'template' => 'PageBundle:Admin:delete.html.twig'
                     )
-                ))
+                )
+            ))
         ;
     }
 

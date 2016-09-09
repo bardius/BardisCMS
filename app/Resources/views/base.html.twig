@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en-GB"><![endif]-->
-<!--[if gt IE 8]><!--><html class="no-js" lang="en-GB"><!--<![endif]-->
+<html class="no-js" lang="en-GB">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
 
         <title>{% block title %}Page Title{% endblock %}</title>
         <meta name="description" content="{% block metaDescription %}Page Description{% endblock %}">
@@ -35,21 +36,17 @@
         <link rel="icon" type="image/png" href="{{ app.request.uriForPath('/images/favicons/favicon-32x32.png') }}" sizes="32x32">
 
         <!-- Styles -->
-        {% stylesheets 'css/styles_bundle_1.css' output="css/deployed/styles_bundle_1.css" %}
+        {% stylesheets 'css/styles.css' output="css/release-styles.css" package='css' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
 
         {% block stylesheets %}{% endblock %}
 
-        {% javascripts 'js/release/modernizr.min.js' filter="minifier_js" output="js/deployed/modernizr.min.js" %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-
         <!--[if !IE]><!-->
         <script>
-            if (/*@cc_on!@*/false) {
-                document.documentElement.className += ' is-ie';
-            }
+            if("ActiveXObject" in window){ document.documentElement.className += ' is-ie'; }
+            if(/*@cc_on!@*/false) { document.documentElement.className += ' is-ie10'; }
+            if(!(window.ActiveXObject) && "ActiveXObject" in window){ document.documentElement.className += ' is-ie11'; }
         </script>
         <!--<![endif]-->
 
@@ -68,80 +65,74 @@
         <meta property="og:description" content="{% block metaOgDescription %}Page Description{% endblock %}" />
 
         <meta name="author" content="{% block metaAuthor %}George Bardis{% endblock %}">
-
-        <!--[if lt IE 9]>
-        <script src="{{ app.request.uriForPath('/js/polyfills/rem.min.js') }}"></script>
-        <![endif]-->
-
     </head>
 
     {% flush %}
 
     <body>
-        <div class="superWrapper">
-            <div class="wrapper">
+        <div class="super-wrapper">
+            <div id="wrapper" class="wrapper">
                 {% block body_start %}{% endblock %}
-                <header class="row header collapse">
-                    <div id="logo" class="columns small-12 large-3">
-                        <h1 class="logo">
-                            <a href="{{ url('PageBundle_index', { 'alias': 'index' }) }}" title="{% block siteLogoTitle %}Page Title{% endblock %}">
-                                <img src="{% block sitelogoImage %}{{ app.request.uriForPath('/images/site_assets/siteLogo.png') }}{% endblock %}" alt="{% block siteLogoKeywords %}Site Keywords{% endblock %}" />
-                                <span class="inv">{% block siteLogoDescription %}Page Description{% endblock %}</span>
-                            </a>
-                        </h1>
+                <div class="row expanded header-sticky-container" data-sticky-container>
+                    <div class="header-wrapper row column is-anchored" data-options="marginTop:0;" data-sticky="" data-stick-to="top" data-sticky-on="small" data-check-every="25">
+                        <header class="header row contain-to-grid">
+                            <div id="cookie-acceptance" class="callout secondary is-hidden" data-closable>
+                                <p>
+                                    <small>
+                                        We use cookies to personalise content and ads, to provide social media features and to analyse our traffic.
+                                        We also share information about your use of our site with our social media, advertising and analytics partners
+                                        who may combine it with other information you’ve provided to them or they’ve collected from your use of their
+                                        services. <a href="/tnc#cookies" title="See details">See details</a>
+                                    </small>
+                                </p>
+                                <button class="btn button accept accept-button" aria-label="Accept" title="Accept" type="button" data-close>
+                                    <span aria-hidden="true">Accept</span>
+                                </button>
+                                <button class="close close-button" aria-label="Dismiss" title="Dismiss" type="button" data-close>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div id="logo" class="columns small-3 large-3">
+                                <h1 class="logo">
+                                    <a href="{{ url('PageBundle_index', { 'alias': 'index' }) }}" title="{% block siteLogoTitle %}Page Title{% endblock %}">
+                                        <img src="{% block sitelogoImage %}{{ app.request.uriForPath('/images/site_assets/siteLogo.png') }}{% endblock %}" alt="{% block siteLogoKeywords %}Site Keywords{% endblock %}" />
+                                        <span class="inv">{% block siteLogoDescription %}Page Description{% endblock %}</span>
+                                    </a>
+                                </h1>
+                            </div>
+                            <div class="columns small-12 large-9">
+                                {% include '::site_top_nav.html.twig' %}
+                            </div>
+                            {% if logged_username is defined and logged_username is not null %}
+                                <div class="columns small-12 large-9 float-right text-right">
+                                    {% include '::user_header_nav.html.twig' %}
+                                </div>
+                            {% endif %}
+                        </header>
                     </div>
-                    <div class="columns small-12 large-9">
-                        {% include '::site_top_nav.html.twig' %}
-                    </div>
-                    {% if logged_username is defined and logged_username is not null %}
-                        <div class="columns small-12 large-12">
-                            {% include '::user_header_nav.html.twig' %}
-                        </div>
-                    {% endif %}
-                </header>
+                </div>
 
-                <div class="row pageContents">
+                <div class="row page-contents">
                     {% block content %}{% endblock %}
                 </div>
 
-                <footer class="row footer">
-                    {% include '::site_footer.html.twig' %}
-                </footer>
+                <div class="footer-wrapper row expanded">
+                    <footer class="footer row contain-to-grid">
+                        {% include '::site_footer.html.twig' %}
+                    </footer>
+                </div>
 
                 {% block modal %}
                 {% endblock %}
             </div>
         </div>
 
-        {% javascripts 'js/release/scripts.min.js' output="js/deployed/scripts.min.js" %}
-
+        {% javascripts 'js/scripts.min.js' output="js/release-scripts.min.js" package='js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
-
-        <!-- Proper defer loading of javascript
-        (Source: http://www.feedthebot.com/pagespeed/defer-loading-javascript.html)
-        -->
-        <!--
-        <script type="text/javascript">
-                function downloadJSAtOnload() {
-                        var element = document.createElement("script");
-                        element.src = '{{ asset_url }}';
-                        document.body.appendChild(element);
-                }
-
-                if (window.addEventListener){
-                        window.addEventListener("load", downloadJSAtOnload, false);
-                }
-                else if (window.attachEvent){
-                        window.attachEvent("onload", downloadJSAtOnload);
-                }
-                else {
-                        window.onload = downloadJSAtOnload;
-                }
-        </script>
-        -->
         {% endjavascripts %}
 
         {% block javascripts %}{% endblock %}
+
         {% block gAnalytics %}{% endblock %}
 
     </body>

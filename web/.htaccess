@@ -4,11 +4,11 @@
 
     # set some environment variables depending on host
     RewriteRule .* - [E=ENVIRONMENT:prod]
-    RewriteCond %{HTTP_HOST} ^bardiscms.prod [NC]
+    RewriteCond %{HTTP_HOST} ^domain-name.prod [NC]
     RewriteRule .* - [E=ENVIRONMENT:prod]
-    RewriteCond %{HTTP_HOST} ^bardiscms.dev [NC]
+    RewriteCond %{HTTP_HOST} ^domain-name.dev [NC]
     RewriteRule .* - [E=ENVIRONMENT:dev]
-    RewriteCond %{HTTP_HOST} ^bardiscms.test [NC]
+    RewriteCond %{HTTP_HOST} ^domain-name.test [NC]
     RewriteRule .* - [E=ENVIRONMENT:test]
 
     # Use authorization headers for user context
@@ -123,7 +123,7 @@ AddType application/octet-stream .zip
 #### Set headers
 <ifModule mod_headers.c>
     #### IE
-    Header append X-UA-Compatible "IE=Edge,chrome=1"
+    Header append X-UA-Compatible "IE=Edge"
 
     #### P3P Header of IE issues with 3rd party coockies
     Header append P3P: "cp=BardisCMS"
@@ -151,7 +151,7 @@ AddType application/octet-stream .zip
     Header append X-Created-By "George Bardis - george@bardis.info"
 
     #### Set the Version
-    Header append X-Version "0.0.1"
+    Header append X-Version "2.8.10"
 
     Header always unset link
     Header always unset Server

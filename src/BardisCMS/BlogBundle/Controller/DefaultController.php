@@ -175,9 +175,9 @@ class DefaultController extends Controller {
             if (!$this->totalpageitems) {
                 $this->totalpageitems = $this->settings->getItemsPerPage();
             }
-        } else {
-            $this->totalpageitems = 10;
         }
+
+        $this->totalpageitems = $this->totalpageitems > 0 ? $this->totalpageitems : 20;
 
         return $this->renderPage();
     }

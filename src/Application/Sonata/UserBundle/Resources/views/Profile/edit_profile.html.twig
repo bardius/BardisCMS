@@ -33,15 +33,19 @@ file that was distributed with this source code.
 
     {% form_theme form _self %}
 
-    <div class="panel panel-info">
+    <div class="column callout primary">
         <div class="panel-heading">
-            <h3 class="panel-title">{{ "title_user_account" | trans({}, 'SonataUserBundle')}}</h3>
+            <h2 class="panel-title">
+                {{ "title_user_account" | trans({}, 'SonataUserBundle')}}
+            </h2>
         </div>
         <div class="panel-body">
             {{ form_start(form, {'action': path('sonata_user_profile_edit'), 'method': 'POST', 'attr': {'novalidate': 'novalidate'} }) }}
                 {{ form_widget(form) }}
                 <div class="form-actions">
-                    <button type="submit" name="submit"  class="btn btn-primary pull-right">{{ 'sonata_user_submit'|trans({}, 'SonataUserBundle') }}</button>
+                    <button type="submit" name="submit"  class="btn btn-primary pull-right">
+                        {{ 'sonata_user_submit'|trans({}, 'SonataUserBundle') }}
+                    </button>
                 </div>
             {{ form_end(form) }}
         </div>

@@ -1,0 +1,678 @@
+//-------------------------------------------
+//   Foundation Styles Overrides
+//-------------------------------------------
+
+header, nav, article, footer, address,
+section, aside, hgroup, figure {
+    display: block;
+}
+
+body, div, dl, dt, dd, ul, ol, li, pre,
+form, fieldset, p, blockquote, th, td {
+}
+
+h1, h2, h3, h4, h5, h6 {
+}
+
+iframe {
+    border: 0 !important;
+    left: 0;
+}
+
+a {
+}
+
+a:hover, a:focus {
+    color: $dark-gray;
+}
+
+.inv {
+    display: inline-block;
+    font-size: 1px;
+    overflow: hidden;
+    text-indent: -100%;
+}
+
+.hidden {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+img {
+    border: 0;
+}
+
+strong {
+    font-size: inherit;
+    font-weight: bold;
+    line-height: inherit;
+}
+
+table {
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+    float: left;
+    font-size: inherit;
+}
+
+td {
+    padding: 5px;
+    text-align: center;
+}
+
+.clear-both {
+    clear: both;
+}
+
+[class*="column"] + [class*="column"]:last-child {
+    float: left;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+//-------------------------------------------
+//    Website Body / Backgrounds
+// ------------------------------------------
+
+body {
+    min-height: 100%;
+    width: 100%;
+}
+
+.super-wrapper {
+    min-height: 100%;
+    min-width: 320px;
+    width: 100%;
+}
+
+.wrapper {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.page-contents {
+    min-height: 300px;
+}
+
+.contain-to-grid {
+    max-width: $global-width !important;
+
+    &.is-stuck {
+        left: 0 !important;
+        right: 0 !important;
+    }
+}
+
+//-------------------------------------------
+//    Website Logo / Header
+//-------------------------------------------
+
+.header-wrapper {
+    background-color: $medium-gray;
+}
+
+header {
+    background-color: $medium-gray;
+    overflow: visible;
+    position: relative;
+
+    .logo {
+        display: block;
+        float: left;
+        font-size: 1rem;
+        margin: 0;
+        position: relative;
+        z-index: 98;
+
+        a {
+            display: block;
+            float: left;
+            width: 100%;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+        }
+
+        .inv {
+            position: absolute;
+        }
+    }
+}
+
+//-------------------------------------------
+//   Cookies Notification
+//-------------------------------------------
+
+#cookie-acceptance {
+
+    button {
+        margin-bottom: 0;
+    }
+}
+
+//-------------------------------------------
+//    Navigation Menu Styles
+//-------------------------------------------
+
+.top-bar {
+    margin: 10px 0;
+
+    a {
+        color: $white;
+        transition: background-color 0.25s ease-out 0s, color 0.25s ease-out 0s;
+
+        &:hover,
+        &:focus {
+            background-color: lighten($primary-color, 30%);
+            color: $white;
+        }
+    }
+
+    .menu .active > a {
+        background-color: $primary-color;
+        color: darken($white, 30%);
+
+        &:hover,
+        &:focus {
+            background-color: $primary-color;
+            color: darken($white, 30%);
+        }
+    }
+}
+
+.sticky-container {
+    z-index: 11;
+}
+
+.header-sticky-container {
+    margin-bottom: rem-calc(30);
+
+    .sticky {
+
+        &.is-anchored {
+            position: relative;
+        }
+
+        .is-drilldown {
+            max-width: 100% !important;
+        }
+    }
+
+    .is-stuck {
+    }
+}
+
+//-------------------------------------------
+//    Homepage Page styles
+//-------------------------------------------
+
+.homepage-item {
+    margin: 10px 0;
+
+    img {
+        width: 100%;
+    }
+}
+
+//-------------------------------------------
+//    Generic Page styles
+//-------------------------------------------
+
+.button-read-more {
+
+    i {
+        margin-left: 8px;
+    }
+}
+
+.smo-icons {
+    margin-bottom: $paragraph-margin-bottom;
+}
+
+.menu.menu-smo > li {
+    margin-right: 0.2rem;
+
+    a {
+        border: 0;
+        border-radius: 0;
+        font-size: inherit;
+        padding: 0.35rem 0.5rem;
+    }
+
+    i {
+        font-size: 1.3em;
+        margin: 0;
+    }
+}
+
+.thumbnail-read-more {
+    display: block;
+    width: 100%;
+
+    img {
+        width: 100%;
+    }
+}
+
+.menu-tags {
+    margin-bottom: $paragraph-margin-bottom;
+}
+
+//-------------------------------------------
+//    Orbit Slideshow
+//-------------------------------------------
+
+.banner-slide {
+    z-index: 1;
+
+    &.active {
+        z-index: 2;
+    }
+}
+
+.orbit-previous,
+.orbit-next {
+    color: $primary-color;
+}
+
+.reveal {
+
+    .orbit {
+        min-height: 300px;
+    }
+}
+
+//-------------------------------------------
+//    Accordion styles
+//-------------------------------------------
+
+.accordion-title {
+    background-color: $button-background;
+    color: $button-color;
+    font-size: 1rem;
+    transition: background-color 0.25s ease-out 0s, color 0.25s ease-out 0s;
+
+    &::before {
+        content: '\25BC';
+        font-size: 0.8rem;
+    }
+
+    &:hover,
+    &:focus {
+        background-color: $button-background-hover;
+        color: $button-color;
+    }
+}
+
+.is-active {
+
+    > .accordion-title {
+        background-color: $button-background-hover;
+        color: $button-color;
+
+        &::before {
+            content: '\25B2';
+        }
+    }
+}
+
+//-------------------------------------------
+//    Form styles
+//-------------------------------------------
+
+form {
+
+    // Buttons with loading Animation
+    button {
+        position: relative;
+
+        &::before {
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+            animation-name: rotatingLoader;
+            animation-timing-function: linear;
+            border: 4px solid;
+            border-left-color: transparent;
+            border-radius: 50%;
+            content: '';
+            height: 20px;
+            margin-top: -11px;
+            opacity: 0;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transition-duration: 0.4s;
+            transition-property: opacity;
+            width: 20px;
+        }
+
+        &::after {
+            content: '';
+            display: inline-block;
+            height: 100%;
+            transition-delay: 0.5s;
+            transition-duration: 0.75s;
+            transition-property: width;
+            width: 0;
+        }
+
+        &.button-loading {
+            cursor: not-allowed;
+            pointer-events: none;
+
+            &:not(.expand) {
+                text-align: left;
+            }
+
+            &::before {
+                opacity: 1;
+                transition-delay: 0.5s;
+                transition-duration: 1s;
+            }
+
+            &::after {
+                transition-delay: 0s;
+                width: 20px;
+            }
+        }
+    }
+
+    .button.disabled,
+    .button[disabled] {
+        opacity: 0.7;
+    }
+
+    small {
+        display: inline-block;
+        width: 100%;
+    }
+
+    .button > [type="checkbox"],
+    label > [type="radio"] {
+        margin-bottom: 0;
+        margin-right: 0.5rem;
+    }
+
+    .form-error {
+        font-weight: normal;
+    }
+}
+
+.field-container {
+    position: relative;
+}
+
+.form-filter-results {
+
+    fieldset {
+        margin-bottom: rem-calc(16px);
+    }
+
+    legend {
+
+        label {
+            color: $secondary-color;
+            font-weight: bold;
+            line-height: inherit;
+        }
+    }
+
+    button {
+        margin-bottom: 0;
+    }
+}
+
+//-------------------------------------------
+//   Animations
+//-------------------------------------------
+
+// Button loading Animation
+@keyframes rotatingLoader {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+//-------------------------------------------
+//   Custom Checkbox styles
+//-------------------------------------------
+
+.custom-checkbox {
+
+    input {
+        display: none;
+
+        + label {
+            clear: both;
+            float: left;
+            line-height: rem-calc(22px);
+            margin-bottom: 3px;
+            margin-top: 3px;
+            padding: 0 0 0 rem-calc(26px);
+            position: relative;
+
+            &::after {
+                background-color: $primary-color;
+                content: '\00a0';
+                height: rem-calc(22px);
+                left: 0;
+                line-height: rem-calc(22px);
+                position: absolute;
+                text-align: center;
+                top: 0;
+                width: rem-calc(22px);
+            }
+        }
+
+        &:checked {
+
+            + label {
+
+                &::after {
+                    background-color: $primary-color;
+                    color: $white;
+                    content: '\2714';
+                }
+            }
+        }
+    }
+}
+
+//-------------------------------------------
+//    Pagination
+//-------------------------------------------
+
+.pagination {
+
+    li {
+        background: none transparent;
+
+        a {
+            background: none $medium-gray;
+            color: $black;
+
+            &:hover, &:focus {
+                background: none $primary-color;
+                color: $white;
+            }
+        }
+
+        &.current {
+            background: none transparent;
+            padding: 0;
+
+            a {
+                background: none $primary-color;
+                color: $white;
+                font-weight: normal;
+
+                &:hover, &:focus {
+                    background: none $dark-gray;
+                    color: $white;
+                    cursor: default;
+                }
+            }
+        }
+    }
+}
+
+//-------------------------------------------
+//   Sitemap styles
+//-------------------------------------------
+
+.sitemap-list {
+
+    ul {
+
+        ul li a {
+
+        }
+    }
+
+    li {
+
+    }
+
+    a,
+    .separator {
+
+    }
+}
+
+//-------------------------------------------
+//   Google Map styles
+//-------------------------------------------
+
+.map-canvas {
+    float: left;
+    height: 100%;
+    width: 95%;
+}
+
+//-------------------------------------------
+//   Footer styles
+//-------------------------------------------
+
+.footer-wrapper {
+    background: $medium-gray;
+    margin-top: rem-calc(30);
+}
+
+footer {
+    background: $medium-gray;
+
+    &.row {
+        margin-top: rem-calc(16);
+    }
+}
+
+#footer-nav {
+    margin-bottom: $paragraph-margin-bottom;
+}
+
+//-------------------------------------------
+//   Media Queries for mobile / tablets responsiveness
+//-------------------------------------------
+
+@include breakpoint(small only) {
+
+    .pagination li:nth-child(2),
+    .pagination li:nth-last-child(2) {
+        display: inline-block;
+    }
+}
+
+@include breakpoint(small up) {
+
+    html {
+        font-size: 14px !important;
+    }
+}
+
+@include breakpoint(medium down) {
+
+    #logo {
+        margin: 10px 0;
+        position: absolute;
+        width: auto !important;
+        z-index: 98;
+
+        a {
+            background-color: $medium-gray;
+            padding: 0 10px;
+        }
+
+        img {
+            height: 3.6rem;
+        }
+    }
+
+    .top-bar {
+
+        .drilldown,
+        .is-drilldown-submenu {
+            padding-top: 14px;
+        }
+
+        .menu > li {
+            display: block;
+            width: 100%;
+        }
+    }
+
+    .homepage-item {
+
+        &:nth-child(odd) {
+            clear: both;
+        }
+    }
+
+}
+
+@include breakpoint(medium only) {
+
+}
+
+@include breakpoint(medium up) {
+
+    html {
+        font-size: 16px !important;
+    }
+}
+
+@include breakpoint(large up) {
+
+    html {
+        font-size: 16px !important;
+    }
+
+    .large {
+
+        &-float {
+
+            &-right {
+                float: right !important;
+            }
+
+            &-left {
+                float: left !important;
+            }
+        }
+    }
+}
+
+@media print {
+
+    div:not(.reveal-modal) {
+        display: inherit !important;
+    }
+}

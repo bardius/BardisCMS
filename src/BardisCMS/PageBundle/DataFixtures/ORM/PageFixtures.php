@@ -115,21 +115,32 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
         $pageuser_profile = new Page();
         $pageuser_profile->setDate(new \DateTime());
-        $pageuser_profile->setTitle('User Profile Page');
+        $pageuser_profile->setTitle('User Profile');
         $pageuser_profile->setAuthor($manager->merge($this->getReference('admin')));
         $pageuser_profile->setAlias('profile');
-        $pageuser_profile->setShowPageTitle(1);
+        $pageuser_profile->setShowPageTitle(0);
         $pageuser_profile->setPublishState(1);
         $pageuser_profile->setIntrotext('');
         $pageuser_profile->setPagetype('user_profile');
         $manager->persist($pageuser_profile);
 
+        $pageuser_profile_list = new Page();
+        $pageuser_profile_list->setDate(new \DateTime());
+        $pageuser_profile_list->setTitle('User Profile Listing');
+        $pageuser_profile_list->setAuthor($manager->merge($this->getReference('admin')));
+        $pageuser_profile_list->setAlias('profile/list');
+        $pageuser_profile_list->setShowPageTitle(0);
+        $pageuser_profile_list->setPublishState(1);
+        $pageuser_profile_list->setIntrotext('');
+        $pageuser_profile_list->setPagetype('user_profile');
+        $manager->persist($pageuser_profile_list);
+
         $pageuser_edit_profile = new Page();
         $pageuser_edit_profile->setDate(new \DateTime());
-        $pageuser_edit_profile->setTitle('Edit User Profile Page');
+        $pageuser_edit_profile->setTitle('Edit User Profile');
         $pageuser_edit_profile->setAuthor($manager->merge($this->getReference('admin')));
         $pageuser_edit_profile->setAlias('edit-profile');
-        $pageuser_edit_profile->setShowPageTitle(1);
+        $pageuser_edit_profile->setShowPageTitle(0);
         $pageuser_edit_profile->setPublishState(1);
         $pageuser_edit_profile->setIntrotext('');
         $pageuser_edit_profile->setPagetype('user_profile');
@@ -137,10 +148,10 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
         $pageuser_edit_auth = new Page();
         $pageuser_edit_auth->setDate(new \DateTime());
-        $pageuser_edit_auth->setTitle('Edit User Authentication Page');
+        $pageuser_edit_auth->setTitle('Edit User Authentication');
         $pageuser_edit_auth->setAuthor($manager->merge($this->getReference('admin')));
         $pageuser_edit_auth->setAlias('edit-authentication');
-        $pageuser_edit_auth->setShowPageTitle(1);
+        $pageuser_edit_auth->setShowPageTitle(0);
         $pageuser_edit_auth->setPublishState(1);
         $pageuser_edit_auth->setIntrotext('');
         $pageuser_edit_auth->setPagetype('user_profile');
@@ -148,7 +159,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
         $pageuser_login = new Page();
         $pageuser_login->setDate(new \DateTime());
-        $pageuser_login->setTitle('User Login Page');
+        $pageuser_login->setTitle('User Login');
         $pageuser_login->setAuthor($manager->merge($this->getReference('admin')));
         $pageuser_login->setAlias('login');
         $pageuser_login->setShowPageTitle(1);
@@ -159,7 +170,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
         $pagepass_reset = new Page();
         $pagepass_reset->setDate(new \DateTime());
-        $pagepass_reset->setTitle('Password Reset Page');
+        $pagepass_reset->setTitle('Password Reset');
         $pagepass_reset->setAuthor($manager->merge($this->getReference('admin')));
         $pagepass_reset->setAlias('resetting/request');
         $pagepass_reset->setShowPageTitle(1);
@@ -170,7 +181,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
         $pageresetting_send = new Page();
         $pageresetting_send->setDate(new \DateTime());
-        $pageresetting_send->setTitle('Password Reset Email Already Send Page');
+        $pageresetting_send->setTitle('Password Reset Email Already Send');
         $pageresetting_send->setAuthor($manager->merge($this->getReference('admin')));
         $pageresetting_send->setAlias('resetting/send-email');
         $pageresetting_send->setShowPageTitle(1);
@@ -181,7 +192,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
         $pageresetting_check = new Page();
         $pageresetting_check->setDate(new \DateTime());
-        $pageresetting_check->setTitle('Password Reset Email Send Page');
+        $pageresetting_check->setTitle('Password Reset Email Send');
         $pageresetting_check->setAuthor($manager->merge($this->getReference('admin')));
         $pageresetting_check->setAlias('resetting/check-email');
         $pageresetting_check->setShowPageTitle(1);
@@ -192,7 +203,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
         $pageresetting_reset = new Page();
         $pageresetting_reset->setDate(new \DateTime());
-        $pageresetting_reset->setTitle('Password has been Reset Page');
+        $pageresetting_reset->setTitle('Password has been Reset');
         $pageresetting_reset->setAuthor($manager->merge($this->getReference('admin')));
         $pageresetting_reset->setAlias('resetting/reset');
         $pageresetting_reset->setShowPageTitle(1);
@@ -203,7 +214,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
         $page_register = new Page();
         $page_register->setDate(new \DateTime());
-        $page_register->setTitle('User Registration Page');
+        $page_register->setTitle('New User Registration');
         $page_register->setAuthor($manager->merge($this->getReference('admin')));
         $page_register->setAlias('register');
         $page_register->setShowPageTitle(1);
@@ -214,7 +225,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
         $page_register_confirmed = new Page();
         $page_register_confirmed->setDate(new \DateTime());
-        $page_register_confirmed->setTitle('Registration Complete Page');
+        $page_register_confirmed->setTitle('Registration Complete');
         $page_register_confirmed->setAuthor($manager->merge($this->getReference('admin')));
         $page_register_confirmed->setAlias('register/confirmed');
         $page_register_confirmed->setShowPageTitle(1);
@@ -225,7 +236,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
 
         $page_pass_change = new Page();
         $page_pass_change->setDate(new \DateTime());
-        $page_pass_change->setTitle('User Password Change Page');
+        $page_pass_change->setTitle('Password Change');
         $page_pass_change->setAuthor($manager->merge($this->getReference('admin')));
         $page_pass_change->setAlias('user/password-change');
         $page_pass_change->setShowPageTitle(1);
@@ -233,6 +244,18 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $page_pass_change->setIntrotext('');
         $page_pass_change->setPagetype('system_page');
         $manager->persist($page_pass_change);
+
+        $pageTnc = new Page();
+        $pageTnc->setDate(new \DateTime());
+        $pageTnc->setTitle('Terms & Conditions');
+        $pageTnc->setAuthor($manager->merge($this->getReference('admin')));
+        $pageTnc->setAlias('tnc');
+        $pageTnc->setShowPageTitle(1);
+        $pageTnc->setPublishState(1);
+        $pageTnc->setIntrotext('');
+        $pageTnc->setPagetype('one_columned');
+        $pageTnc->addMaincontentblock($manager->merge($this->getReference('contentTnc')));
+        $manager->persist($pageTnc);
 
         $page1 = new Page();
         $page1->setDate(new \DateTime());
@@ -303,8 +326,10 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $this->addReference('page401', $page401);
         $this->addReference('pagecontact', $pagecontact);
         $this->addReference('pageuser_profile', $pageuser_profile);
+        $this->addReference('pageuser_profile_list', $pageuser_profile_list);
         $this->addReference('pagesitemap', $pagesitemap);
         $this->addReference('pagefiltered', $pagefiltered);
+        $this->addReference('pageTnc', $pageTnc);
         $this->addReference('page1', $page1);
         $this->addReference('page2', $page2);
         $this->addReference('page3', $page3);

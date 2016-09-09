@@ -1,13 +1,41 @@
-{% if pageItem.introimage.id is defined %}
-    <a href="{{ app.request.getBaseURL() }}/{{ vars.urlPart }}{{ pageItem.alias }}" title="{{ pageItem.title }}" class="readMoreImage">
-        {% media pageItem.introimage.id, 'small' with {'alt': pageItem.title, 'title': ''} %}
-    </a>
-{% endif %}
+<div class="row">
+    {% if pageItem.alias is not null %}
+        {% set readMoreUrl = app.request.getBaseURL() ~ '/' ~ vars.urlPart ~ pageItem.alias %}
+    {% else %}
+        {% set readMoreUrl = '#' %}
+    {% endif %}
 
-<div class="introItemTitle">
-    <h4><a href="{{ app.request.getBaseURL() }}/{{ vars.urlPart }}{{ pageItem.alias }}" title="{{ pageItem.title }}" class="readMore">{{ pageItem.title }}</a></h4>            
-</div>
+    {% if pageItem.introvideo.id is defined %}
+        <div class="columns large-12 small-12">
+            <div class="flex-video">
+                {% media pageItem.introvideo.id, 'small' %}
+            </div>
+        </div>
+    {% elseif pageItem.introimage.id is defined %}
+        <div class="columns large-12 small-12">
+            <p>
+                <a href="{{ readMoreUrl }}" title="{{ pageItem.title }}" class="thumbnail thumbnail-read-more">
+                    {% media pageItem.introimage.id, 'medium' with {'alt': pageItem.title, 'title': pageItem.title} %}
+                </a>
+            </p>
+        </div>
+    {% endif %}
 
-<div class="introItemText">
-    <a href="{{ app.request.getBaseURL() }}/{{ vars.urlPart }}{{ pageItem.alias }}" title="{{ pageItem.introtext|striptags }}" class="readMore">{{ pageItem.introtext|striptags }}</a>          
+    <div class="columns large-12 small-12 introItemText">
+        <h4>
+            <a href="{{ readMoreUrl }}" title="{{ pageItem.title }}">
+                {{ pageItem.title }}
+            </a>
+        </h4>
+
+        {% if pageItem.introtext is not null %}
+            <p>{{ pageItem.introtext|striptags }}</p>
+        {% endif %}
+
+        <p>
+            <a class="button button-read-more" href="{{ readMoreUrl }}" title="Read more">
+                Read more <i class="fi-play"></i>
+            </a>
+        </p>
+    </div>
 </div>

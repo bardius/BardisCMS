@@ -26,6 +26,11 @@
         <parameter key="sonata_user.change_password.form.class">Symfony\Component\Form\Form</parameter>
         <parameter key="sonata_user.change_password.form.type.class">Application\Sonata\UserBundle\Form\Type\ChangePasswordFormType</parameter>
         <parameter key="sonata_user.change_password.form.handler.class">Application\Sonata\UserBundle\Form\Handler\ChangePasswordFormHandler</parameter>
+        <parameter key="sonata_user.filter_users.form.class">Symfony\Component\Form\Form</parameter>
+        <parameter key="sonata_user.filter_users.form.type.class">Application\Sonata\UserBundle\Form\Type\FilterUsersFormType</parameter>
+        <parameter key="sonata_user.filter_users.form.handler.class">Application\Sonata\UserBundle\Form\Handler\FilterUsersFormHandler</parameter>
+        <parameter key="sonata_user.filter_users.form.model.class">Application\Sonata\UserBundle\Form\Model\UserFilters</parameter>
+        <parameter key="sonata_user.user_manager.bardiscms.class">Application\Sonata\UserBundle\Entity\UserManager</parameter>
     </parameters>
 
     <services>
@@ -194,6 +199,36 @@
             <argument type="service" id="request" />
             <argument type="service" id="fos_user.user_manager" />
             <argument type="service" id="service_container" />
+        </service>
+
+        <!-- Filter Users Form -->
+        <service id="sonata_user.filter_users.form" factory-method="createNamed" factory-service="form.factory" class="%sonata_user.filter_users.form.class%">
+            <argument>sonata_user_filter_users_form</argument>
+            <argument>sonata_user_filter_users</argument>
+            <argument>null</argument>
+            <argument type="collection">
+                <argument key="validation_groups">UserSearch</argument>
+            </argument>
+        </service>
+
+        <service id="sonata_user.filter_users.form.type" class="%sonata_user.filter_users.form.type.class%">
+            <tag name="form.type" alias="sonata_user_filter_users" />
+            <argument>%sonata_user.filter_users.form.model.class%</argument>
+        </service>
+
+        <service id="sonata_user.filter_users.form.handler" class="%sonata_user.filter_users.form.handler.class%" scope="request">
+            <argument type="service" id="sonata_user.filter_users.form" />
+            <argument type="service" id="request" />
+            <argument type="service" id="service_container" />
+        </service>
+
+        <!-- Enhanced User Manager with search capabilities -->
+        <service id="sonata.user.orm.user_manager.bardiscms" class="%sonata_user.user_manager.bardiscms.class%" public="false">
+            <argument type="service" id="security.encoder_factory" />
+            <argument type="service" id="fos_user.util.username_canonicalizer" />
+            <argument type="service" id="fos_user.util.email_canonicalizer" />
+            <argument type="service" id="fos_user.entity_manager" />
+            <argument>%fos_user.model.user.class%</argument>
         </service>
 
     </services>

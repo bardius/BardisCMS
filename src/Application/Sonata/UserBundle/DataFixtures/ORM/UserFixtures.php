@@ -32,7 +32,8 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $admin->setEmail('admin@domain.com');
         $admin->setEmailCanonical('admin@domain.com');
         $admin->setEnabled(1);
-        $admin->setPlainPassword('Admin1');
+        $admin->setIsSystemUser(1);
+        $admin->setPlainPassword('Admin1234');
         $admin->setConfirmed(true);
         $admin->setTermsAccepted(true);
         $admin->setSuperAdmin(true);
@@ -47,6 +48,7 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $test01->setEmail('test01@domain.com');
         $test01->setEmailCanonical('test01@domain.com');
         $test01->setEnabled(1);
+        $test01->setIsSystemUser(0);
         $test01->setPlainPassword('Test1234');
         $test01->setConfirmed(true);
         $test01->setTermsAccepted(true);
@@ -54,10 +56,44 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
         //$test01->addRole(static::ROLE_USER);
         $manager->persist($test01);
 
+        $test02 = new User();
+        $test02->setCreatedAt(new \DateTime());
+        $test02->setUpdatedAt(new \DateTime());
+        $test02->setUsername('test02');
+        $test02->setUsernameCanonical('test02');
+        $test02->setEmail('test02@domain.com');
+        $test02->setEmailCanonical('test02@domain.com');
+        $test02->setEnabled(1);
+        $test02->setIsSystemUser(0);
+        $test02->setPlainPassword('Test1234');
+        $test02->setConfirmed(true);
+        $test02->setTermsAccepted(true);
+        $test02->setSuperAdmin(false);
+        //$test02->addRole(static::ROLE_USER);
+        $manager->persist($test02);
+
+        $test03 = new User();
+        $test03->setCreatedAt(new \DateTime());
+        $test03->setUpdatedAt(new \DateTime());
+        $test03->setUsername('test03');
+        $test03->setUsernameCanonical('test03');
+        $test03->setEmail('test03@domain.com');
+        $test03->setEmailCanonical('test03@domain.com');
+        $test03->setEnabled(1);
+        $test03->setIsSystemUser(0);
+        $test03->setPlainPassword('Test1234');
+        $test03->setConfirmed(true);
+        $test03->setTermsAccepted(true);
+        $test03->setSuperAdmin(false);
+        //$test03->addRole(static::ROLE_USER);
+        $manager->persist($test03);
+
         $manager->flush();
 
         $this->addReference('admin', $admin);
         $this->addReference('test01', $test01);
+        $this->addReference('test02', $test02);
+        $this->addReference('test03', $test03);
     }
 
     public function getOrder() {

@@ -1,0 +1,33 @@
+parameters:
+    database_driver:    pdo_mysql
+    database_host:      localhost
+    database_port:      3306
+    database_name:      bardiscms
+    database_user:      root
+    database_password:  ~
+
+    pdo_service_dsn:    "mysql:host=%database_host%;port=%database_port%;dbname=%database_name%"
+
+    mailer_transport:	smtp
+    mailer_host:	    localhost
+    mailer_user:	    ~
+    mailer_password:	~
+    mailer_encryption:	~
+    mailer_port:	    ~
+
+    locale:             en
+    secret:             2WYgMKzMLqEVFNU245fLqEVFNvprjmRy0I4Q
+
+    unix_socket:        ~ #/tmp/mysql.sock #for mac/linux environment
+
+    userpass:           userpass
+    adminpass:          adminpass
+
+    s3_bucket_name:     s3_bucket_name
+    s3_region:          s3_region
+    s3_access_key:      s3_access_key
+    s3_secret_key:      s3_secret_key
+    s3_subfolder:       s3_subfolder
+
+    cdn_server_path:    /uploads/media
+    media_providers_filesystem: 'sonata.media.filesystem.local'

@@ -178,6 +178,11 @@ class User extends BaseUser
     protected $campaign = User::CAMPAIGN_REGISTER;
 
     /**
+     * @var boolean
+     */
+    protected $isSystemUser;
+
+    /**
      * @ORM\OneToOne(targetEntity="\Application\Sonata\MediaBundle\Entity\Media", orphanRemoval=true, cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="userAvatar", referencedColumnName="id",  nullable=true, onDelete="SET NULL")
      */
@@ -507,6 +512,22 @@ class User extends BaseUser
     public function setCampaign($campaign)
     {
         $this->campaign = $campaign;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isIsSystemUser()
+    {
+        return $this->isSystemUser;
+    }
+
+    /**
+     * @param boolean $isSystemUser
+     */
+    public function setIsSystemUser($isSystemUser)
+    {
+        $this->isSystemUser = $isSystemUser;
     }
 
     /**

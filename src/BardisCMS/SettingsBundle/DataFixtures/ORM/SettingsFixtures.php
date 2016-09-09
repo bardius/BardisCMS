@@ -31,7 +31,9 @@ class SettingsFixtures extends AbstractFixture implements OrderedFixtureInterfac
         $settings->setEmailRecepient('george@bardis.info');
         $settings->setItemsPerPage(2);
         $settings->setBlogItemsPerPage(2);
+        $settings->setusersPerPage(20);
         $settings->setActivateSettings(1);
+        $settings->getIsPublicProfilesAllowed(0);
         $manager->persist($settings);
 
         $manager->flush();

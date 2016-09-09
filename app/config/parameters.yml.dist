@@ -28,3 +28,6 @@ parameters:
     s3_access_key:      s3_access_key
     s3_secret_key:      s3_secret_key
     s3_subfolder:       s3_subfolder
+
+    cdn_server_path:    /uploads/media #for amazon S3 use 'https://s3-%s3_region%.amazonaws.com/%s3_bucket_name%/%s3_subfolder%/'
+    media_providers_filesystem: 'sonata.media.filesystem.local' #for amazon S3 use 'sonata.media.filesystem.s3'

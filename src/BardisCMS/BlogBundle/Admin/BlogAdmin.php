@@ -161,29 +161,29 @@ class BlogAdmin extends AbstractAdmin {
 
     protected function configureListFields(ListMapper $listMapper) {
         $listMapper
-                ->addIdentifier('title')
-                ->addIdentifier('alias')
-                ->addIdentifier('publishStateAsString', null, array('sortable' => false, 'label' => 'Publish State'))
-                ->addIdentifier('pagetypeAsString', null, array('sortable' => false, 'label' => 'Page Type'))
-                ->addIdentifier('categories')
-                ->addIdentifier('tags')
-                ->addIdentifier('pageOrder')
-                ->addIdentifier('author')
-                ->addIdentifier('date')
-                ->add('_action', 'actions', array(
-                    'actions' => array(
-                        'duplicate' => array(
-                            'template' => 'BlogBundle:Admin:duplicate.html.twig'
-                        ),
-                        'edit' => array(
-                            'template' => 'BlogBundle:Admin:edit.html.twig'
-                        ),
-                        'delete' => array(
-                            'template' => 'BlogBundle:Admin:delete.html.twig'
-                        )
+            ->addIdentifier('id')
+            ->addIdentifier('title')
+            ->addIdentifier('alias')
+            ->addIdentifier('publishStateAsString', null, array('sortable' => false, 'label' => 'Publish State'))
+            ->addIdentifier('pagetypeAsString', null, array('sortable' => false, 'label' => 'Page Type'))
+            ->addIdentifier('categories')
+            ->addIdentifier('tags')
+            ->addIdentifier('pageOrder')
+            ->addIdentifier('author')
+            ->addIdentifier('date')
+            ->add('_action', 'actions', array(
+                'actions' => array(
+                    'duplicate' => array(
+                        'template' => 'BlogBundle:Admin:duplicate.html.twig'
+                    ),
+                    'edit' => array(
+                        'template' => 'BlogBundle:Admin:edit.html.twig'
+                    ),
+                    'delete' => array(
+                        'template' => 'BlogBundle:Admin:delete.html.twig'
                     )
-                ))
-        ;
+                )
+            ));
     }
 
     public function validate(ErrorElement $errorElement, $object) {

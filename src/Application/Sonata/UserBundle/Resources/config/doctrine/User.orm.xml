@@ -64,6 +64,7 @@
         <field name="mobile"        type="string"       column="mobile"         length="18"     nullable="true" />
         <field name="campaign"      type="string"       column="campaign"       length="255"    nullable="true" />
         <field name="termsAccepted" type="boolean"      column="terms_accepted"                 nullable="false" />
+        <field name="isSystemUser"  type="boolean"      column="system_user"                    nullable="false" />
 
         <!-- security fields -->
         <field name="confirmed"                 type="boolean"  column="confirmed"                                  nullable="false" />

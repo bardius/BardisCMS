@@ -9,13 +9,30 @@
             {% elseif contentBlock.contentType == 'image' %}
                 {% if contentBlock.imageFiles|length > 1 %}
                     <div id="slideshow_{{ contentBlock.id}}" class="slideshow large-12 small-12">
-                        <ul data-orbit>
-                            {% for imageBlock in contentBlock.imageFiles|sort_by_attribute('imageOrder') %}
-                                {% if imageBlock.imageFile.id is defined %}
-                                    <li>{% media imageBlock.imageFile.id, contentBlock.mediaSize with {'alt': contentBlock.title, 'title': '' } %}</li>
-                                    {% endif %}
+                        <div class="orbit" role="region" aria-label="Slideshow {{ contentBlock.title }}" data-orbit>
+                            <ul class="orbit-container">
+                                {% for imageBlock in contentBlock.imageFiles|sort_by_attribute('imageOrder') if imageBlock.imageFile.id is defined %}
+                                    <li
+                                        class="orbit-slide {% if loop.index0 == 0 %}is-active{% endif %}"
+                                        {% if contentBlock.idName is not null %}id="{{ contentBlock.idName }}"{% endif %}
+                                        >
+                                        {% media imageBlock.imageFile.id, contentBlock.mediaSize with {'alt': contentBlock.title, 'title': '' } %}
+                                    </li>
                                 {% endfor %}
-                        </ul>
+                            </ul>
+
+                            <button class="orbit-previous"><span class="show-for-sr">Previous Slide</span> &#9664;&#xFE0E;</button>
+                            <button class="orbit-next"><span class="show-for-sr">Next Slide</span> &#9654;&#xFE0E;</button>
+
+                            <nav class="orbit-bullets">
+                                {% for imageBlock in contentBlock.imageFiles|sort_by_attribute('imageOrder') if imageBlock.imageFile.id is defined %}
+                                    <button {% if loop.index0 == 0 %}class="is-active"{% endif %} data-slide="{{ loop.index0 }}">
+                                        <span class="show-for-sr">Slide {{ loop.index0 }} details</span>
+                                        {% if loop.index0 == 0 %}<span class="show-for-sr">Current Slide</span>{% endif %}
+                                    </button>
+                                {% endfor %}
+                            </nav>
+                        </div>
                     </div>
                 {% else %}
                     {% for imageBlock in contentBlock.imageFiles|sort_by_attribute('imageOrder') %}
@@ -25,7 +42,11 @@
                     {% endfor %}
                 {% endif %}
             {% elseif contentBlock.contentType == 'file' and contentBlock.fileFile.id is defined %}
-                Download file: <a class="fileLink" href="{{ path('sonata_media_download', {'id': contentBlock.fileFile.id}) }}" target="_blank">{{ contentBlock.fileFile.name }}</a>
+                <p>
+                    <a class="button button-file" href="{{ path('sonata_media_download', {'id': contentBlock.fileFile.id}) }}" target="_blank" title="Download {{ contentBlock.fileFile.name }}">
+                        Download {{ contentBlock.fileFile.name }}
+                    </a>
+                </p>
             {% elseif contentBlock.contentType == 'youtube' and contentBlock.youtube.id is defined %}
                 <div class="flex-video">
                     {% media contentBlock.youtube.id, contentBlock.mediaSize %}

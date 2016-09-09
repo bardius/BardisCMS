@@ -4,16 +4,20 @@ fos_user:
 
     db_driver:          orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name:      main
+    model_manager_name: ~
     user_class:         Application\Sonata\UserBundle\Entity\User
+
+    service:
 
     group:
         group_class:    Application\Sonata\UserBundle\Entity\Group
 
     from_email:
-        address:        info@domain.com
+        address:        info@domain-name.com
         sender_name:    BardisCMS
 
     service:
+        user_manager:   sonata.user.orm.user_manager.bardiscms
         mailer:         fos_user.mailer.twig_swift
 
     registration:
