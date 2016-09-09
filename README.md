@@ -1,3 +1,16 @@
+[![Build Status](https://travis-ci.org/bardius/BardisCMS.svg?branch=master)](https://travis-ci.org/bardius/BardisCMS)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/493afa2c-bd25-4c8a-ae92-a3a596dfb042/mini.png)](https://insight.sensiolabs.com/projects/493afa2c-bd25-4c8a-ae92-a3a596dfb042)
+[![Dependency Status](https://www.versioneye.com/user/projects/535c8e24fe0d073b48000126/badge.png)](https://www.versioneye.com/user/projects/535c8e24fe0d073b48000126)
+[![Dependency Status](https://www.versioneye.com/user/projects/535c8e18fe0d073b4800011c/badge.png)](https://www.versioneye.com/user/projects/535c8e18fe0d073b4800011c)
+[![Code Climate](https://codeclimate.com/github/bardius/BardisCMS/badges/gpa.svg)](https://codeclimate.com/github/bardius/BardisCMS)
+[![Latest Stable Version](https://poser.pugx.org/bardis/cms-symfony2/v/stable.png)](https://packagist.org/packages/bardis/cms-symfony2)
+[![Total Downloads](https://poser.pugx.org/bardis/cms-symfony2/downloads.png)](https://packagist.org/packages/bardis/cms-symfony2)
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+[![Gitter chat](https://badges.gitter.im/bardius/BardisCMS.png)](https://gitter.im/bardius/BardisCMS)
+[![License](https://poser.pugx.org/bardis/cms-symfony2/license.png)](https://packagist.org/packages/bardis/cms-symfony2)
+
+![](http://www.bardis.info/bardisCMS.png)
+
 Symfony2 (v2.8.10) distribution with integrated Zurb Foundation 6 (v6.2)
 ============================================================================
 
