@@ -26,6 +26,9 @@ before_install:
   - sudo add-apt-repository -y ppa:chris-lea/node.js
   - sudo apt-get -y update
   - sudo apt-get -y install nodejs
+  - sudo apt-get install npm
+  - sudo npm install n -g
+  - sudo n latest
   - npm install -g grunt-cli
 
 before_script:
