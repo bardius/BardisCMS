@@ -52,6 +52,6 @@
     "keywords": [],
     "scripts": {
         "test": "grunt travis --verbose",
-        "setup": "npm install babel-eslint && bower install && gem install scss_lint"
+        "setup": "npm install grunt babel-eslint && bower install && gem install scss_lint"
     }
 }
