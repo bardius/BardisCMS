@@ -185,6 +185,7 @@ form:
         search_intro:               Search user profiles
         results_title:              User profiles
         results_intro:              The below profiles were matched based on your search criteria
+        see_all:                    See all users
 
 widget_label_binary_content:        Select Image
 widget_label_unlink:                Remove Image

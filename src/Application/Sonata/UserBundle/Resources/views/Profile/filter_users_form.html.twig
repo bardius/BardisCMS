@@ -24,6 +24,9 @@ Manage the extended Sonata User entity with extra information for the users
                     <button type="submit" name="submit" id="filterResultsBtn" class="button float-left">
                         {{ 'form.search.submit'|trans({}, 'SonataUserBundle') }}
                     </button>
+                    <a class="button alert float-left large-float-right" href="{{ path('sonata_user_profile_list') }}" title="{{ 'form.search.see_all'|trans({}, 'SonataUserBundle') }}">
+                        {{ 'form.search.see_all'|trans({}, 'SonataUserBundle') }}
+                    </a>
                     {% if formMessage is defined and formMessage is not empty %}
                         <span class="form-message error form-error is-visible callout {% if form.vars.valid == true %}success{% else %}alert{% endif %}">
                             {{ formMessage }}
