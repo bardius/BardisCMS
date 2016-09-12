@@ -4,9 +4,9 @@ read -r -d '' usage <<EOF
 
 Usage: ./$0 options
 
-	-ov, --old-version        old version to update from e.g. 2.7.5
-	-nv, --new-version        old version to update to e.g. 2.7.6
-	--usage                   show usage
+	-c, --cur-version           current version to update from e.g. 2.7.5
+	-n, --new-version           version to update to e.g. 2.7.6
+	--usage                     show usage
 EOF
 
 # function to print errors
@@ -30,18 +30,18 @@ if [ "$#" -lt 1 ]; then
 fi
 
 # read the options
-OPTIONS=$(getopt -o ov:nv: -l old-version::,new-version:: -- "$@")
+OPTIONS=$(getopt -o c:n: -l cur-version::,new-version::,usage:: -- "$@")
 eval set -- "$OPTIONS"
 
 # extract options and their arguments into variables.
 while true; do
     case "$1" in
-	-ov|--old-version)
-	    OLD_VERSION=$2; shift ;;
-	-nv|--new-version)
+	-c|--cur-version)
+	    CUR_VERSION=$2; shift ;;
+	-n|--new-version)
 	    NEW_VERSION=$2; shift ;;
 	--usage)
-	    echo "$USAGE"; exit 0 ;;
+	    echo "$usage"; exit 0 ;;
 	--)
 	    shift; break ;;
 	*)
@@ -51,9 +51,9 @@ while true; do
 done
 
 echo "******************************************"
-echo "Updating BardisCMS Release Version"
-echo "OLD RELEASE VERSION: $OLD_VERSION"
-echo "NEW RELEASE VERSION: $NEW_VERSION"
+echo "Updating Livin Circle website Release Version"
+echo "Current Version: $CUR_VERSION"
+echo "New Version: $NEW_VERSION"
 echo "******************************************"
 
 # function to bunp release version numbers
@@ -74,21 +74,21 @@ function bumpVersions() {
     fi
 
     # updating release version in required files
-    sed -i'' -e "s/$oldversion/$newversion/g" README.md
-    sed -i'' -e "s/$oldversion/$newversion/g" src/BardisCMS/PageBundle/Listener/ResponseListener.php
-    sed -i'' -e "s/$oldversion/$newversion/g" bower.json
-    sed -i'' -e "s/$oldversion/$newversion/g" package.json
-    sed -i'' -e "s/$oldversion/$newversion/g" app/config/config.yml
-    sed -i'' -e "s/$oldversion/$newversion/g" web/.htaccess
+    sed -i'' -e "s/$oldversion/$newversion/g" ../README.md
+    sed -i'' -e "s/$oldversion/$newversion/g" ../bower.json
+    sed -i'' -e "s/$oldversion/$newversion/g" ../package.json
+    sed -i'' -e "s/$oldversion/$newversion/g" ../app/config/config.yml
+    sed -i'' -e "s/$oldversion/$newversion/g" ../src/BardisCMS/PageBundle/Listener/ResponseListener.php
+    sed -i'' -e "s/$oldversion/$newversion/g" ../web/.htaccess
 
     echo "Release Version is now updated to version $newversion"
 
     return 0
 }
 
-if [ -z "OLD_VERSION" ] || [ -z "NEW_VERSION" ]; then
-    echoerr "Release Versions must be specified. Arguments missing."
+if [ -z "CUR_VERSION" ] || [ -z "NEW_VERSION" ]; then
+    echoerr "Current & target Release Versions must be specified. Arguments missing."
     exit 1
 fi
 
-bumpVersions $OLD_VERSION $NEW_VERSION;
+bumpVersions $CUR_VERSION $NEW_VERSION;
