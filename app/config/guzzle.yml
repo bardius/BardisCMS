@@ -4,7 +4,7 @@ csa_guzzle:
         max_body_size:  65536 # The maximum size of the body which should be stored in the profiler (in bytes)
 
     logger:
-        enabled:        true
+        enabled:        "%kernel.debug%"
         service:        ~ # my_logger_service
         format:         '{hostname} {req_header_User-Agent} - [{date_common_log}] "{method} {target} HTTP/{version}" {code} {res_header_Content-Length}'
         level:          debug #[clf, debug, short]

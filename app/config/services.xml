@@ -87,7 +87,7 @@
             <argument type="service" id="guzzle.client.cache.service" />
         </service>
         <service id="guzzle.client.cache.service" class="Doctrine\Common\Cache\FilesystemCache">
-            <argument>"%kernel.root_dir%/cache/data/guzzle_cache"</argument>
+            <argument>%kernel.cache_dir%/data/guzzle_cache"</argument>
             <argument>7200</argument>
         </service>
     </services>

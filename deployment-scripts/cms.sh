@@ -4,7 +4,7 @@ read -r -d '' usage <<EOF
 
 Usage: ./$0 options
 
-	-a, --action            action to execute [reset]
+	-a, --action            action to execute [reset,version]
 	--usage                 show usage
 EOF
 

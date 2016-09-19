@@ -78,17 +78,17 @@ framework:
 
         loaders:                []
 
-        assets_version:             'v2.8.10'
+        assets_version:             'v2.8.11'
         assets_version_format:      "%%s?%%s"
         assets_base_urls:
             http:               []
             ssl:                []
         packages:
             css:
-                version:            'v2.8.10'
+                version:            'v2.8.11'
                 version_format:     "%%s?%%s"
             js:
-                version:            'v2.8.10'
+                version:            'v2.8.11'
                 version_format:     "%%s?%%s"
 
         hinclude_default_template:  ~
@@ -214,13 +214,6 @@ twig:
         - 'ContentBlockBundle:Form:fields.html.twig'
 
 # Assetic Configuration
-minifier:
-
-    filter:
-        name:
-            css:        minifier_css
-            js:         minifier_js
-
 assetic:
 
     debug:              "%kernel.debug%"
@@ -241,17 +234,17 @@ assetic:
 
     filters:
 
-        cssrewrite:		~
-        #jsminplus:		~
+        cssrewrite:		    ~
+        #jsminplus:		    ~
         #    apply_to:		"\.js"
-        #cssmin:				~
+        #cssmin:			~
         #    apply_to:		"\.css$"
 
-        scss:					~
+        scss:			    ~
         #scssphp:
-        #  apply_to: "\.scss$"
-        #  import_paths: [ "%kernel.root_dir%/../web/bower_components/foundation/scss" ]
-        #  compass: true
+        #  apply_to:        "\.scss$"
+        #  import_paths:    [ "%kernel.root_dir%/../web/bower_components/foundation/scss" ]
+        #  compass:         true
 
 # Swiftmailer Configuration
 swiftmailer:

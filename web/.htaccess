@@ -151,7 +151,7 @@ AddType application/octet-stream .zip
     Header append X-Created-By "George Bardis - george@bardis.info"
 
     #### Set the Version
-    Header append X-Version "2.8.10"
+    Header append X-Version "2.8.11"
 
     Header always unset link
     Header always unset Server
