@@ -83,13 +83,12 @@ class SecurityFOSUser1Controller extends Controller
      *
      * @return Response
      */
-    public function loginAction()
-    {
+    public function loginAction() {
 
         $user = $this->get('sonata_user.services.helpers')->getLoggedUser();
 
         if ($user instanceof UserInterface) {
-            $this->container->get('session')->getFlashBag()->set('sonata_user_error', 'sonata_user_already_authenticated');
+            //$this->container->get('session')->getFlashBag()->set('sonata_user_error', 'sonata_user_already_authenticated');
             $url = $this->container->get('router')->generate('sonata_user_profile_show');
 
             if($this->isAjaxRequest) {

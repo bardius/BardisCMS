@@ -1,0 +1,83 @@
+nelmio_security:
+    # path:     /nelmio/csp/report
+    # defaults: { _controller: nelmio_security.csp_reporter_controller:indexAction }
+    # methods:  [POST]
+
+    forced_ssl:
+        enabled: false # force your entire site to use SSL (set session.cookie_secure and remember_me cookies to secure & uncomment flexible_ssl)
+        whitelist:
+            - ^/unsecure/
+
+    # signs/verifies all cookies
+    #signed_cookie:
+    #    hash_algo: sha512
+    #    names: ['*']
+
+    # prevents framing of the entire site
+    clickjacking:
+        paths:
+            '^/.*': DENY
+
+    # prevents redirections outside the website's domain
+    external_redirects:
+        abort: true
+        log: true
+        whitelist:
+            - 'self'
+            - '*.youtube.com'
+            - '*.facebook.com'
+            - '*.twitter.com'
+            - '*.google.com'
+            - '*.googleapis.com'
+            - '*.gstatic.com'
+            - '*.google-analytics.com'
+
+    # prevents inline scripts, unsafe eval, external scripts/images/styles/frames, etc
+    csp:
+        report_logger_service: monolog.logger.security
+        compat_headers: true # avoid sending X-Content-Security-Policy (IE10, IE11, Firefox < 23)
+
+        hosts: []
+        content_types: []
+        enforce:
+            level1_fallback: false
+            browser_adaptive:
+                enabled: false
+            report-uri: %router.request_context.base_url%/nelmio/csp/report
+            default-src:
+                - 'self'
+                - '*.youtube.com'
+                - '*.facebook.com'
+                - '*.twitter.com'
+                - '*.google.com'
+                - '*.googleapis.com'
+                - '*.gstatic.com'
+                - '*.google-analytics.com'
+                - 'unsafe-inline' # allow inline scripts or eval()
+                # - 'unsafe-eval' # allow inline scripts or eval()
+            # script-src:
+            #     - 'self'
+            block-all-mixed-content: false # Default to false, blocks http content over https transport
+            upgrade-insecure-requests: false # Default to false, upgrades http requests to https transport
+
+    # disables content type sniffing for script resources
+    content_type:
+        nosniff: true
+
+    # Forces Microsoft's XSS-Protection with
+    # its block mode
+    xss_protection:
+        enabled: true
+        mode_block: true
+
+    # forced HTTPS handling, don't combine with flexible mode
+    # and make sure you have SSL working on your site before enabling this
+    # forced_ssl:
+    #   hsts_max_age: 2592000 # 30 days
+    #   hsts_subdomains: true
+
+    # flexible HTTPS handling, read the detailed config info
+    # and make sure you have SSL working on your site before enabling this
+    # flexible_ssl:
+    #     cookie_name: auth
+    #     unsecured_logout: false

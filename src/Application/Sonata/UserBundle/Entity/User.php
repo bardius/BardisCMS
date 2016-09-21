@@ -183,6 +183,11 @@ class User extends BaseUser
     protected $isSystemUser;
 
     /**
+     * @var int
+     */
+    protected $failedAttempts;
+
+    /**
      * @ORM\OneToOne(targetEntity="\Application\Sonata\MediaBundle\Entity\Media", orphanRemoval=true, cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="userAvatar", referencedColumnName="id",  nullable=true, onDelete="SET NULL")
      */
@@ -531,6 +536,24 @@ class User extends BaseUser
     }
 
     /**
+     * @return int
+     */
+    public function getFailedAttempts()
+    {
+        return $this->failedAttempts;
+    }
+
+    /**
+     * @param int $failedAttempts
+     */
+    public function setFailedAttempts($failedAttempts)
+    {
+        $this->failedAttempts = $failedAttempts;
+    }
+
+
+
+    /**
      * Set userAvatar
      *
      * @param \Application\Sonata\MediaBundle\Entity\Media $userAvatar
@@ -573,6 +596,8 @@ class User extends BaseUser
 
     /**
      * @param string $email
+     *
+     * @return User
      */
     public function setEmail($email)
     {
@@ -585,6 +610,8 @@ class User extends BaseUser
             $this->plainPassword = $email;
         }
         */
+
+        return this;
     }
 
     /**

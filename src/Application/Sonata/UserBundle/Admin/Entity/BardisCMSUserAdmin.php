@@ -226,6 +226,10 @@ class BardisCMSUserAdmin extends BaseUserAdmin {
                     'label' => 'form.secretQuestionResponse',
                     'translation_domain' => 'SonataUserBundle',
                 ))
+                ->add('failedAttempts',null, array(
+                    'label' => 'form.failedAttempts',
+                    'translation_domain' => 'SonataUserBundle',
+                ))
             ->end()
             ->with('Groups')
                 ->add('groups')

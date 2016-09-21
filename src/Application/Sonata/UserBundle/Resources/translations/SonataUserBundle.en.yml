@@ -167,6 +167,7 @@ form:
     expired:                        Expired
     enabled:                        Enabled
     credentialsExpired:             Credentials expired
+    failedAttempts:                 Failed Login Attempts
     roles:                          Roles
     userAvatar:                     User Avatar
     userHeroImage:                  User Hero Image

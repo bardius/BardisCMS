@@ -33,6 +33,11 @@ security:
     firewalls:
         # -> custom firewall for the admin area of the URL
         admin:
+            remember_me:
+                secret:         '%secret%'
+                lifetime:       604800 # 1 week in seconds
+                secure:         ~
+                path:           /admin
             switch_user:        true
             context:            user
             pattern:            /admin(.*)
@@ -54,6 +59,11 @@ security:
 
         # defaut login area for standard users
         main:
+            remember_me:
+                secret:         '%secret%'
+                lifetime:       604800 # 1 week in seconds
+                secure:         ~
+                path:           /
             switch_user:        true
             context:            user
             pattern:            .*
@@ -66,7 +76,6 @@ security:
                 use_referer:                    true
                 default_target_path:            /login
                 always_use_default_target_path: true
-            # logout:             true
             logout:
                 path:           /logout
                 target:         /login

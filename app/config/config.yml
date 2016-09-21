@@ -1,6 +1,7 @@
 imports:
 
     - { resource: parameters.yml }
+    - { resource: nelmio_security.yml }
     - { resource: security.yml }
     - { resource: services.xml }
     - { resource: sonata_cache.yml }
