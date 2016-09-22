@@ -16,9 +16,9 @@ post_composer_script: |
     #!/bin/bash
 
     # Do what you need to configure your project
-    #./app/console doctrine:database:create --no-interaction
-    #./app/console doctrine:schema:create --no-interaction
-    #./app/console doctrine:fixtures:load --no-interaction
+    #./app/console doctrine:database:create --force --no-interaction
+    #./app/console doctrine:schema:create --force --no-interaction
+    #./app/console doctrine:fixtures:load --force --no-interaction
 
 global_exclude_dirs:
     - vendor
@@ -58,7 +58,7 @@ rules:
     doctrine.use_flush_in_loop:
         enabled: true
     git.user_specific_ignored_file:
-        enabled: true
+        enabled: false
     html.html_link_contains_javascript:
         enabled: true
     php.absolute_path_present:
@@ -136,14 +136,14 @@ rules:
         enabled: true
     symfony.controller.action_method_too_long:
         enabled: true
-        max_length: 20
+        max_length: 50
         threshold: 10
     symfony.controller.get_action_mutates_resource:
         enabled: true
     symfony.controller.missing_redirect_after_post:
         enabled: true
     symfony.controller.non_action_public_method_in_controller_class:
-        enabled: true
+        enabled: false
     symfony.controller.too_many_actions_per_controller:
         enabled: true
         max_count: 10
