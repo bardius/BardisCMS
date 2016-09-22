@@ -1,22 +1,23 @@
 <?php
 
 /*
- * Page Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\PageBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class PageRepository extends EntityRepository {
-
+class PageRepository extends EntityRepository
+{
     // Function to retrieve the pages of a category with pagination
-    public function getCategoryItems($categoryIds, $currentPageId, $publishStates, $currentPage, $totalPageItems) {
-
+    public function getCategoryItems($categoryIds, $currentPageId, $publishStates, $currentPage, $totalPageItems)
+    {
         $pageList = null;
 
         if (!empty($categoryIds)) {
@@ -77,8 +78,8 @@ class PageRepository extends EntityRepository {
     }
 
     // Function to retrieve the pages of tag/category combination with pagination
-    public function getTaggedCategoryItems($categoryIds, $currentPageId, $publishStates, $currentPage, $totalPageItems, $tagIds) {
-
+    public function getTaggedCategoryItems($categoryIds, $currentPageId, $publishStates, $currentPage, $totalPageItems, $tagIds)
+    {
         $pageList = null;
 
         if (!empty($categoryIds)) {
@@ -144,8 +145,8 @@ class PageRepository extends EntityRepository {
     }
 
     // Function to retrieve the pages of a tag with pagination
-    public function getTaggedItems($tagIds, $currentPageId, $publishStates, $currentPage, $totalPageItems) {
-
+    public function getTaggedItems($tagIds, $currentPageId, $publishStates, $currentPage, $totalPageItems)
+    {
         $pageList = null;
 
         if (!empty($tagIds)) {
@@ -206,8 +207,8 @@ class PageRepository extends EntityRepository {
     }
 
     // Function to retrieve the pages of the homepage category
-    public function getHomepageItems($categoryIds, $currentPageId, $publishStates) {
-
+    public function getHomepageItems($categoryIds, $currentPageId, $publishStates)
+    {
         $pageList = null;
 
         if (!empty($categoryIds)) {
@@ -240,7 +241,8 @@ class PageRepository extends EntityRepository {
     }
 
     // Function to retrieve a page list for sitemap
-    public function getSitemapList($publishStates) {
+    public function getSitemapList($publishStates)
+    {
 
         // Initialize the query builder variables
         $qb = $this->_em->createQueryBuilder();
@@ -256,7 +258,7 @@ class PageRepository extends EntityRepository {
             )
             ->orderBy('p.id', 'ASC')
             ->setParameter('publishState', $publishStates)
-            ->setParameter('systemPageType', "system_page")
+            ->setParameter('systemPageType', 'system_page')
         ;
 
         // Get the results
@@ -266,8 +268,8 @@ class PageRepository extends EntityRepository {
     }
 
     // Function to define what page items will be returned for each paginated listing page
-    public function getPaginatedResults($qb, $totalResultsCount, $currentPage, $totalPageItems) {
-
+    public function getPaginatedResults($qb, $totalResultsCount, $currentPage, $totalPageItems)
+    {
         $pages = null;
         $totalPages = 1;
 
@@ -283,7 +285,7 @@ class PageRepository extends EntityRepository {
         // Get paginated results
         $pages = $qb->getQuery()->getResult();
         // Get the total pagination pages
-        if($totalPageItems > 0){
+        if ($totalPageItems > 0) {
             $totalPages = ceil($totalResultsCount / $totalPageItems);
         }
         // Set the page items and pagination to be returned

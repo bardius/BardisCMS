@@ -1,39 +1,38 @@
 <?php
 
 /*
- * Page Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\PageBundle\Services;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
-
 use BardisCMS\PageBundle\Entity\Page as Page;
-
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use Symfony\Component\Form\Form;
 
-class Helpers {
-
+class Helpers
+{
     private $em;
     private $conn;
     private $container;
 
-    public function __construct(EntityManager $em, ContainerInterface $container) {
+    public function __construct(EntityManager $em, ContainerInterface $container)
+    {
         $this->em = $em;
         $this->conn = $em->getConnection();
         $this->container = $container;
     }
 
     // Get the error messages of the contact form associated with their fields in an array
-    public function getFormErrorMessages(Form $form) {
-
+    public function getFormErrorMessages(Form $form)
+    {
         $errors = array();
         $formErrors = iterator_to_array($form->getErrors(false, true));
 
@@ -45,7 +44,7 @@ class Helpers {
                 $template = str_replace($var, $value, $template);
             }
 
-            if($error->getMessagePluralization() !== null) {
+            if ($error->getMessagePluralization() !== null) {
                 $errors[$key] = $this->container->get('translator')->transChoice(
                     $error->getMessage(),
                     $error->getMessagePluralization(),
@@ -75,14 +74,15 @@ class Helpers {
     // filters are like: tag1,tag2|category1,category1 and each argument
     // is url encoded.
     // If 'all' is passed as argument value, everything is fetched
-    public function getRequestedFilters($params = null) {
+    public function getRequestedFilters($params = null)
+    {
         $selectedTags = array();
         $selectedCategories = array();
         $extraParams = explode('|', urldecode($params));
 
         // Getting the tags from the params
         if (isset($extraParams[0])) {
-            if ($extraParams[0] == 'all') {
+            if ($extraParams[0] === 'all') {
                 $selectedTags[] = null;
             } else {
                 $tags = explode(',', $extraParams[0]);
@@ -96,7 +96,7 @@ class Helpers {
 
         // Getting the categories from the params
         if (isset($extraParams[1])) {
-            if ($extraParams[1] == 'all') {
+            if ($extraParams[1] === 'all') {
                 $selectedCategories[] = null;
             } else {
                 $categories = explode(',', $extraParams[1]);
@@ -115,8 +115,8 @@ class Helpers {
     }
 
     // Get the ids of the filter categories
-    public function getCategoryFilterIds($selectedCategoriesArray) {
-
+    public function getCategoryFilterIds($selectedCategoriesArray)
+    {
         $categoryIds = array();
 
         if (empty($selectedCategoriesArray[0])) {
@@ -131,8 +131,8 @@ class Helpers {
     }
 
     // Get the ids of the filter tags
-    public function getTagFilterIds($selectedTagsArray) {
-
+    public function getTagFilterIds($selectedTagsArray)
+    {
         $tagIds = array();
 
         if (empty($selectedTagsArray[0])) {
@@ -147,8 +147,8 @@ class Helpers {
     }
 
     // Get the titles of the filter categories
-    public function getCategoryFilterTitles($selectedCategoriesArray) {
-
+    public function getCategoryFilterTitles($selectedCategoriesArray)
+    {
         $categories = array();
 
         if (!empty($selectedCategoriesArray)) {
@@ -167,7 +167,8 @@ class Helpers {
     }
 
     // Get the titles of the filter tags
-    public function getTagFilterTitles($selectedTagsArray) {
+    public function getTagFilterTitles($selectedTagsArray)
+    {
         $tags = array();
 
         if (!empty($selectedTagsArray)) {
@@ -186,32 +187,32 @@ class Helpers {
     }
 
     // Get the publishStates that are allowed for the user
-    public function getAllowedPublishStates($userHighestRole) {
-
+    public function getAllowedPublishStates($userHighestRole)
+    {
         $publishStates = array();
 
         // Setting ROLE_ANONYMOUS role for brevity
-        if ($userHighestRole == "") {
-            $userHighestRole = "ROLE_ANONYMOUS";
+        if ($userHighestRole === '') {
+            $userHighestRole = 'ROLE_ANONYMOUS';
         }
 
         // Very basic ACL permission check
         switch ($userHighestRole) {
-            case "ROLE_ANONYMOUS":
+            case 'ROLE_ANONYMOUS':
                 array_push(
                     $publishStates,
                     Page::STATUS_PUBLISHED,
                     Page::STATUS_NONAUTHONLY
                 );
                 break;
-            case "ROLE_USER":
+            case 'ROLE_USER':
                 array_push(
                     $publishStates,
                     Page::STATUS_PUBLISHED,
                     Page::STATUS_AUTHONLY
                 );
                 break;
-            case "ROLE_SUPER_ADMIN":
+            case 'ROLE_SUPER_ADMIN':
                 array_push(
                     $publishStates,
                     Page::STATUS_PUBLISHED,
@@ -231,11 +232,11 @@ class Helpers {
     }
 
     // Simple publishing ACL based on publish state and user Allowed Publish States
-    public function isUserAccessAllowedByRole($publishState, $userAllowedPublishStates) {
-
+    public function isUserAccessAllowedByRole($publishState, $userAllowedPublishStates)
+    {
         $accessAllowedForUserRole = false;
 
-        if(in_array($publishState, $userAllowedPublishStates)){
+        if (in_array($publishState, $userAllowedPublishStates, true)) {
             $accessAllowedForUserRole = true;
         }
 

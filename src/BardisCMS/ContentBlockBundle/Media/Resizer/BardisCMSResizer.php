@@ -1,24 +1,25 @@
 <?php
 
 /*
- * ContentBlock Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\ContentBlockBundle\Media\Resizer;
 
-use Imagine\Image\ImagineInterface;
-use Imagine\Image\Box;
 use Gaufrette\File;
+use Imagine\Image\Box;
+use Imagine\Image\ImagineInterface;
+use Imagine\Image\Point;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Sonata\MediaBundle\Resizer\ResizerInterface;
-use Imagine\Image\Point;
 
-class BardisCMSResizer implements ResizerInterface {
-
+class BardisCMSResizer implements ResizerInterface
+{
     protected $adapter;
     protected $mode;
 
@@ -26,7 +27,8 @@ class BardisCMSResizer implements ResizerInterface {
      * @param ImagineInterface $adapter
      * @param string           $mode
      */
-    public function __construct(ImagineInterface $adapter, $mode = 'inset') {
+    public function __construct(ImagineInterface $adapter, $mode = 'inset')
+    {
         $this->adapter = $adapter;
         $this->mode = $mode;
     }
@@ -34,8 +36,8 @@ class BardisCMSResizer implements ResizerInterface {
     /**
      * {@inheritdoc}
      */
-    public function resize(MediaInterface $media, File $in, File $out, $format, array $settings) {
-
+    public function resize(MediaInterface $media, File $in, File $out, $format, array $settings)
+    {
         $image = $this->adapter->load($in->getContent());
         $size = $image->getSize();
         $originalRatio = $size->getWidth() / $size->getHeight();
@@ -114,7 +116,7 @@ class BardisCMSResizer implements ResizerInterface {
             if ($crop > 0) {
                 $point = new Point($crop, 0);
                 $image->crop($point, new Box($newWidth, $lower));
-            } else if($crop < 0) {
+            } elseif ($crop < 0) {
                 $cropLower = -($crop / $thRatio);
                 $point = new Point(0, $cropLower);
                 $image->crop($point, new Box($higher, $newHeight));
@@ -132,7 +134,8 @@ class BardisCMSResizer implements ResizerInterface {
     /**
      * {@inheritdoc}
      */
-    public function getBox(MediaInterface $media, array $settings) {
+    public function getBox(MediaInterface $media, array $settings)
+    {
         $size = $media->getBox();
 
         if (($settings['width'] === null && $settings['height'] === null) || ($settings['width'] === false && $settings['height'] === false)) {
@@ -150,5 +153,4 @@ class BardisCMSResizer implements ResizerInterface {
 
         return new Box($settings['width'], $settings['height']);
     }
-
 }

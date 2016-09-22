@@ -1,21 +1,28 @@
 <?php
 
+/*
+ * This file is part of BardisCMS.
+ *
+ * (c) George Bardis <george@bardis.info>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace BardisCMS\CategoryBundle\Entity;
 
+use BardisCMS\BlogBundle\Entity\Blog;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use BardisCMS\PageBundle\Entity\Page;
-use BardisCMS\BlogBundle\Entity\Blog;
-use Application\Sonata\MediaBundle\Entity\Media;
 
 /**
- * BardisCMS\CategoryBundle\Entity\Category
+ * BardisCMS\CategoryBundle\Entity\Category.
  *
  * @ORM\Table(name="categories")
  * @ORM\Entity
  */
-class Category {
-
+class Category
+{
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -55,158 +62,183 @@ class Category {
      */
     private $dateLastModified;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->pages = new \Doctrine\Common\Collections\ArrayCollection();
         $this->blogs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
+     *
      * @return Category
      */
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
+
         return $this;
     }
 
     /**
-     * Get title
+     * Get title.
      *
-     * @return string 
+     * @return string
      */
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
     }
 
     /**
-     * Set categoryClass
+     * Set categoryClass.
      *
      * @param string $categoryClass
+     *
      * @return Category
      */
-    public function setCategoryClass($categoryClass) {
+    public function setCategoryClass($categoryClass)
+    {
         $this->categoryClass = $categoryClass;
+
         return $this;
     }
 
     /**
-     * Get categoryClass
+     * Get categoryClass.
      *
-     * @return string 
+     * @return string
      */
-    public function getCategoryClass() {
+    public function getCategoryClass()
+    {
         return $this->categoryClass;
     }
 
     /**
-     * Set categoryIcon
+     * Set categoryIcon.
      *
      * @param Application\Sonata\MediaBundle\Entity\Media $categoryIcon
+     *
      * @return Category
      */
-    public function setCategoryIcon(\Application\Sonata\MediaBundle\Entity\Media $categoryIcon = null) {
+    public function setCategoryIcon(\Application\Sonata\MediaBundle\Entity\Media $categoryIcon = null)
+    {
         $this->categoryIcon = $categoryIcon;
+
         return $this;
     }
 
     /**
-     * Get categoryIcon
+     * Get categoryIcon.
      *
-     * @return Application\Sonata\MediaBundle\Entity\Media 
+     * @return Application\Sonata\MediaBundle\Entity\Media
      */
-    public function getCategoryIcon() {
+    public function getCategoryIcon()
+    {
         return $this->categoryIcon;
     }
 
     /**
-     * Add blogs
+     * Add blogs.
      *
      * @param BardisCMS\BlogBundle\Entity\Blog $blogs
+     *
      * @return Category
      */
-    public function addBlog(\BardisCMS\BlogBundle\Entity\Blog $blogs) {
+    public function addBlog(\BardisCMS\BlogBundle\Entity\Blog $blogs)
+    {
         $this->blogs[] = $blogs;
+
         return $this;
     }
 
     /**
-     * Remove blogs
+     * Remove blogs.
      *
      * @param BardisCMS\BlogBundle\Entity\Blog $blogs
      */
-    public function removeBlog(\BardisCMS\BlogBundle\Entity\Blog $blogs) {
+    public function removeBlog(\BardisCMS\BlogBundle\Entity\Blog $blogs)
+    {
         $this->blogs->removeElement($blogs);
     }
 
     /**
-     * Get Blog
+     * Get Blog.
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
-    public function getBlogs() {
+    public function getBlogs()
+    {
         return $this->blogs;
     }
 
     /**
-     * Add pages
+     * Add pages.
      *
      * @param BardisCMS\PageBundle\Entity\Page $pages
+     *
      * @return Category
      */
-    public function addPage(\BardisCMS\PageBundle\Entity\Page $pages) {
+    public function addPage(\BardisCMS\PageBundle\Entity\Page $pages)
+    {
         $this->pages[] = $pages;
+
         return $this;
     }
 
     /**
-     * Remove pages
+     * Remove pages.
      *
      * @param BardisCMS\PageBundle\Entity\Page $pages
      */
-    public function removePage(\BardisCMS\PageBundle\Entity\Page $pages) {
+    public function removePage(\BardisCMS\PageBundle\Entity\Page $pages)
+    {
         $this->pages->removeElement($pages);
     }
 
     /**
-     * Get pages
+     * Get pages.
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
-    public function getPages() {
+    public function getPages()
+    {
         return $this->pages;
     }
 
     /**
-     * Get dateLastModified
+     * Get dateLastModified.
      *
-     * @return integer 
+     * @return int
      */
-    public function getDateLastModified() {
+    public function getDateLastModified()
+    {
         return $this->dateLastModified;
     }
 
     /**
-     * toString Title
+     * toString Title.
      *
-     * @return string 
+     * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         if ($this->getTitle()) {
             return (string) $this->getTitle();
-        } else {
-            return (string) 'New Category';
         }
-    }
 
+        return (string) 'New Category';
+    }
 }

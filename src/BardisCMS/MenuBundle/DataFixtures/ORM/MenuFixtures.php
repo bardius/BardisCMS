@@ -1,23 +1,25 @@
 <?php
 
 /*
- * Menu Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\MenuBundle\DataFixtures\ORM;
 
+use BardisCMS\MenuBundle\Entity\Menu;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use BardisCMS\MenuBundle\Entity\Menu;
 
-class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
-
-    public function load(ObjectManager $manager) {
+class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
+    public function load(ObjectManager $manager)
+    {
         $menuHome = new Menu();
         $menuHome->setPage($manager->merge($this->getReference('homepage')));
         $menuHome->setTitle('Homepage');
@@ -191,8 +193,8 @@ class MenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $this->addReference('menuTop', $menuTop);
     }
 
-    public function getOrder() {
+    public function getOrder()
+    {
         return 16;
     }
-
 }

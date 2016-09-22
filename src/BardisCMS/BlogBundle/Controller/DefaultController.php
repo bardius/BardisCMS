@@ -1,32 +1,28 @@
 <?php
 
 /*
- * Blog Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\BlogBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
-use FOS\UserBundle\Model\UserInterface;
-
-use BardisCMS\PageBundle\Entity\Page as Page;
 use BardisCMS\BlogBundle\Entity\Blog as Blog;
-
 use BardisCMS\BlogBundle\Form\Type\FilterBlogPostsFormType;
-
 use BardisCMS\CommentBundle\Entity\Comment;
-use BardisCMS\CommentBundle\Form\Type\CommentFormType;
+use BardisCMS\PageBundle\Entity\Page as Page;
+use FOS\UserBundle\Model\UserInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-class DefaultController extends Controller {
-
+class DefaultController extends Controller
+{
     // Adding variables required for the rendering of pages
     protected $container;
     private $pageRequest;
@@ -48,7 +44,8 @@ class DefaultController extends Controller {
     private $eTagHash;
 
     // Override the ContainerAware setContainer to accommodate the extra variables
-    public function setContainer(ContainerInterface $container = null) {
+    public function setContainer(ContainerInterface $container = null)
+    {
         $this->container = $container;
 
         // Setting the scoped variables required for the rendering of the page
@@ -71,7 +68,7 @@ class DefaultController extends Controller {
         $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 
         // Set the flag for allowing HTTP cache
-        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') === 'prod' && $this->settings->getActivateHttpCache();
 
         // Check if request was Ajax based
         $this->isAjaxRequest = $this->get('bardiscms_page.services.ajax_detection')->isAjaxRequest();
@@ -87,8 +84,8 @@ class DefaultController extends Controller {
     }
 
     // Get the blog page id based on alias from route
-    public function aliasAction($alias, $extraParams = null, $currentpage = 0, $totalpageitems = 0, Request $request) {
-
+    public function aliasAction($alias, $extraParams, $currentpage, $totalpageitems, Request $request)
+    {
         $this->pageRequest = $request;
         $this->alias = $alias;
         $this->extraParams = $extraParams;
@@ -105,7 +102,7 @@ class DefaultController extends Controller {
         // Calculate the ETag hash that will be used for the HTTP Headers of the response
         // TODO: calculate the getDateLastModified properly based on the contents of  the page
         $this->eTagHash = $this->get('bardiscms_page.services.etag_header_hash_provider')->getETagHash(
-            $this->alias . '?' . $this->extraParams,
+            $this->alias.'?'.$this->extraParams,
             $this->page->getPublishState(),
             $this->page->getDateLastModified(),
             $this->userName
@@ -119,11 +116,12 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Render a page based on the id and the render variables from the settings and the routing
+     * Render a page based on the id and the render variables from the settings and the routing.
      *
      * @return Response
      */
-    public function showPageAction() {
+    public function showPageAction()
+    {
 
         // Simple publishing ACL based on publish state and user Allowed Publish States
         $accessAllowedForUserRole = $this->get('bardiscms_page.services.helpers')->isUserAccessAllowedByRole(
@@ -131,7 +129,7 @@ class DefaultController extends Controller {
             $this->publishStates
         );
 
-        if(!$accessAllowedForUserRole){
+        if (!$accessAllowedForUserRole) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
@@ -154,7 +152,7 @@ class DefaultController extends Controller {
                     $invalidationResponse->setNotModified();
 
                     return $invalidationResponse;
-                } else if (!$this->pageRequest->headers->get('if_none_match')) {
+                } elseif (!$this->pageRequest->headers->get('if_none_match')) {
                     // Return the 304 Status Response (with empty content) immediately
                     $invalidationResponse->setNotModified();
 
@@ -183,12 +181,12 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Render the proper action/view depending on page type
+     * Render the proper action/view depending on page type.
      *
      * @return Response
      */
-    protected function renderPage() {
-
+    protected function renderPage()
+    {
         switch ($this->page->getPagetype()) {
 
             case 'blog_home':
@@ -229,7 +227,7 @@ class DefaultController extends Controller {
                     $template = $this->renderView('BlogBundle:Default:page.html.twig', array(
                         'page' => $this->page,
                         'logged_username' => $this->userName,
-                        'mobile' => $this->serveMobile
+                        'mobile' => $this->serveMobile,
                     ), $response);
 
                     $response->setContent($template);
@@ -240,11 +238,12 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Render the blog home page page type
+     * Render the blog home page page type.
      *
      * @return Response
      */
-    protected function renderBlogHomePage() {
+    protected function renderBlogHomePage()
+    {
         // get all blog pages
         $pageList = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getAllItems(
             $this->id,
@@ -271,7 +270,7 @@ class DefaultController extends Controller {
         $response->setETag($this->eTagHash);
         $response->sendHeaders();
 
-        $template  = $this->renderView('BlogBundle:Default:page.html.twig', array(
+        $template = $this->renderView('BlogBundle:Default:page.html.twig', array(
             'page' => $this->page,
             'pages' => $pages,
             'totalPages' => $totalPages,
@@ -280,7 +279,7 @@ class DefaultController extends Controller {
             'linkUrlParams' => $this->linkUrlParams,
             'totalpageitems' => $this->totalpageitems,
             'logged_username' => $this->userName,
-            'mobile' => $this->serveMobile
+            'mobile' => $this->serveMobile,
         ), $response);
 
         $response->setContent($template);
@@ -289,8 +288,8 @@ class DefaultController extends Controller {
     }
 
     // Render tag list page type
-    protected function renderBlogTagListPage() {
-
+    protected function renderBlogTagListPage()
+    {
         $filterForm = $this->createForm(new FilterBlogPostsFormType($this->getDoctrine()->getManager()));
         $filterData = $this->get('bardiscms_page.services.helpers')->getRequestedFilters($this->extraParams);
         $tagIds = $this->get('bardiscms_page.services.helpers')->getTagFilterIds($filterData['tags']->toArray());
@@ -335,7 +334,7 @@ class DefaultController extends Controller {
         $response->setETag($this->eTagHash);
         $response->sendHeaders();
 
-        $template  = $this->renderView('BlogBundle:Default:page.html.twig', array(
+        $template = $this->renderView('BlogBundle:Default:page.html.twig', array(
             'page' => $this->page,
             'pages' => $pages,
             'totalPages' => $totalPages,
@@ -345,7 +344,7 @@ class DefaultController extends Controller {
             'totalpageitems' => $this->totalpageitems,
             'filterForm' => $filterForm->createView(),
             'logged_username' => $this->userName,
-            'mobile' => $this->serveMobile
+            'mobile' => $this->serveMobile,
         ), $response);
 
         $response->setContent($template);
@@ -354,7 +353,8 @@ class DefaultController extends Controller {
     }
 
     // Render category list page type
-    protected function renderBlogCategoryPage() {
+    protected function renderBlogCategoryPage()
+    {
         $tagIds = $this->get('bardiscms_page.services.helpers')->getTagFilterIds($this->page->getTags()->toArray());
         $categoryIds = $this->get('bardiscms_page.services.helpers')->getCategoryFilterIds($this->page->getCategories()->toArray());
 
@@ -395,7 +395,7 @@ class DefaultController extends Controller {
         $response->setETag($this->eTagHash);
         $response->sendHeaders();
 
-        $template  = $this->renderView('BlogBundle:Default:page.html.twig', array(
+        $template = $this->renderView('BlogBundle:Default:page.html.twig', array(
             'page' => $this->page,
             'pages' => $pages,
             'totalPages' => $totalPages,
@@ -404,7 +404,7 @@ class DefaultController extends Controller {
             'linkUrlParams' => $this->linkUrlParams,
             'totalpageitems' => $this->totalpageitems,
             'logged_username' => $this->userName,
-            'mobile' => $this->serveMobile
+            'mobile' => $this->serveMobile,
         ), $response);
 
         $response->setContent($template);
@@ -413,8 +413,8 @@ class DefaultController extends Controller {
     }
 
     // Get and format the filtering arguments to use with the actions
-    public function filterBlogPostsAction(Request $request) {
-
+    public function filterBlogPostsAction(Request $request)
+    {
         $filterTags = 'all';
         $filterCategories = 'all';
 
@@ -423,7 +423,7 @@ class DefaultController extends Controller {
         $filterData = null;
 
         // If the filter form has been submitted
-        if ($request->getMethod() == 'POST') {
+        if ($request->getMethod() === 'POST') {
 
             // Bind the data with the form
             $filterForm->handleRequest($request);
@@ -437,7 +437,7 @@ class DefaultController extends Controller {
         }
 
         // Use the filters based on the routing structure
-        $this->extraParams = urlencode($filterTags) . '|' . urlencode($filterCategories);
+        $this->extraParams = urlencode($filterTags).'|'.urlencode($filterCategories);
 
         // Generate the proper route for the required results
         $url = $this->get('router')->generate(
@@ -466,7 +466,7 @@ class DefaultController extends Controller {
             'form' => $form->createView(),
             'comments' => $postComments,
             'logged_username' => $this->userName,
-            'mobile' => $this->serveMobile
+            'mobile' => $this->serveMobile,
         );
 
         // If the Comment Form has been submitted

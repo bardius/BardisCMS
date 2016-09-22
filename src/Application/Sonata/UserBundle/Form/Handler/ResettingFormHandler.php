@@ -1,35 +1,33 @@
 <?php
 
 /*
- * Sonata User Bundle Overrides
- * This file is part of the BardisCMS.
- * Manage the extended Sonata User entity with extra information for the users
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\UserBundle\Form\Handler;
 
+use FOS\UserBundle\Form\Handler\ResettingFormHandler as BaseHandler;
 use FOS\UserBundle\Model\UserManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-
-use FOS\UserBundle\Form\Handler\ResettingFormHandler as BaseHandler;
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class ResettingFormHandler extends BaseHandler
 {
     private $container;
 
     /**
-     * Construct handler for ResettingFormHandler
+     * Construct handler for ResettingFormHandler.
      *
-     * @param FormInterface $form
-     * @param Request $request
+     * @param FormInterface        $form
+     * @param Request              $request
      * @param UserManagerInterface $userManager
-     * @param Container $container
-     *
+     * @param Container            $container
      */
     public function __construct(FormInterface $form, Request $request, UserManagerInterface $userManager, Container $container)
     {
@@ -38,9 +36,9 @@ class ResettingFormHandler extends BaseHandler
     }
 
     /**
-     * Extend with a method that returns the errors of the process
+     * Extend with a method that returns the errors of the process.
      *
-     * @return Array
+     * @return array
      */
     public function getErrors()
     {

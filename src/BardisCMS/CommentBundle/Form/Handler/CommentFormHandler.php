@@ -1,21 +1,21 @@
 <?php
 
 /*
- * Comment Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\CommentBundle\Form\Handler;
 
 use BardisCMS\CommentBundle\Entity\Comment;
-
+use Doctrine\ORM\EntityManager as EntityManager;
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
-use Doctrine\ORM\EntityManager as EntityManager;
 
 class CommentFormHandler
 {
@@ -24,15 +24,15 @@ class CommentFormHandler
     private $container;
 
     /**
-     * Construct handler for CommentFormHandler
+     * Construct handler for CommentFormHandler.
      *
      * @param FormInterface $form
-     * @param Request $request
-     * @param Container $container
+     * @param Request       $request
+     * @param Container     $container
      * @param EntityManager $em
-     *
      */
-    public function __construct(FormInterface $form, Request $request, Container $container, EntityManager $em) {
+    public function __construct(FormInterface $form, Request $request, Container $container, EntityManager $em)
+    {
         $this->form = $form;
         $this->request = $request;
         $this->container = $container;
@@ -40,18 +40,17 @@ class CommentFormHandler
     }
 
     /**
-     * Process the form for CommentForm
+     * Process the form for CommentForm.
      *
      * @param Comment $comment
      *
-     * @return integer
+     * @return int
      */
     public function process(Comment $comment)
     {
         $this->form->setData($comment);
 
         if ('POST' === $this->request->getMethod() && $this->request->request->has('commentform_form')) {
-
             $this->form->bind($this->request);
 
             if ($this->form->isValid()) {
@@ -65,12 +64,11 @@ class CommentFormHandler
     }
 
     /**
-     * onSuccess after processing the form for CommentForm
+     * onSuccess after processing the form for CommentForm.
      *
      * @param Comment $comment
      *
-     * @return integer
-     *
+     * @return int
      */
     protected function onSuccess(Comment $comment)
     {
@@ -82,9 +80,9 @@ class CommentFormHandler
     }
 
     /**
-     * Extend with a method that returns the errors of the process
+     * Extend with a method that returns the errors of the process.
      *
-     * @return Array
+     * @return array
      */
     public function getErrors()
     {

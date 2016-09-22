@@ -1,40 +1,38 @@
 <?php
 
 /*
- * Sonata User Bundle Overrides
- * This file is part of the BardisCMS.
- * Manage the extended Sonata User entity with extra information for the users
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\UserBundle\Form\Handler;
 
-use FOS\UserBundle\Model\UserManagerInterface;
-use FOS\UserBundle\Model\UserInterface;
+use FOS\UserBundle\Form\Handler\RegistrationFormHandler as BaseHandler;
 use FOS\UserBundle\Mailer\MailerInterface;
+use FOS\UserBundle\Model\UserInterface;
+use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-
-use FOS\UserBundle\Form\Handler\RegistrationFormHandler as BaseHandler;
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class RegistrationFormHandler extends BaseHandler
 {
     private $container;
 
     /**
-     * Construct handler for RegistrationFormHandler
+     * Construct handler for RegistrationFormHandler.
      *
-     * @param FormInterface $form
-     * @param Request $request
-     * @param UserManagerInterface $userManager
-     * @param MailerInterface $mailer
+     * @param FormInterface           $form
+     * @param Request                 $request
+     * @param UserManagerInterface    $userManager
+     * @param MailerInterface         $mailer
      * @param TokenGeneratorInterface $tokenGenerator
-     * @param Container $container
-     *
+     * @param Container               $container
      */
     public function __construct(
         FormInterface $form,
@@ -43,18 +41,17 @@ class RegistrationFormHandler extends BaseHandler
         MailerInterface $mailer,
         TokenGeneratorInterface $tokenGenerator,
         Container $container
-    )
-    {
+    ) {
         parent::__construct($form, $request, $userManager, $mailer, $tokenGenerator);
         $this->container = $container;
     }
 
     /**
-     * Override to add two stage register process with user email verification
+     * Override to add two stage register process with user email verification.
      *
-     * @param boolean $confirmation
+     * @param bool $confirmation
      *
-     * @return boolean
+     * @return bool
      */
     public function process($confirmation = false)
     {
@@ -75,10 +72,10 @@ class RegistrationFormHandler extends BaseHandler
     }
 
     /**
-     * Override onSuccess to add two stage register process with user email verification
+     * Override onSuccess to add two stage register process with user email verification.
      *
      * @param UserInterface $user
-     * @param boolean $confirmation
+     * @param bool          $confirmation
      */
     protected function onSuccess(UserInterface $user, $confirmation)
     {
@@ -103,9 +100,9 @@ class RegistrationFormHandler extends BaseHandler
     }
 
     /**
-     * Extend with a method that returns the errors of the process
+     * Extend with a method that returns the errors of the process.
      *
-     * @return Array
+     * @return array
      */
     public function getErrors()
     {

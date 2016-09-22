@@ -1,27 +1,26 @@
 <?php
 
 /*
- * ContentBlock Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\ContentBlockBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Application\Sonata\MediaBundle\Entity\Media;
-use BardisCMS\ContentBlockBundle\Entity\ContentBlock;
 
 /**
- * BardisCMS\ContentBlockBundle\Entity\ContentImage
+ * BardisCMS\ContentBlockBundle\Entity\ContentImage.
  *
  * @ORM\Table(name="content_images")
  * @ORM\Entity
  */
-class ContentImage {
-
+class ContentImage
+{
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -45,127 +44,148 @@ class ContentImage {
      */
     protected $contentblocks;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->contentblocks = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * Set imagefile
+     * Set imagefile.
      *
      * @param Application\Sonata\MediaBundle\Entity\Media $imagefile
+     *
      * @return ContentImage
      */
-    public function setImagefile(\Application\Sonata\MediaBundle\Entity\Media $imagefile = null) {
+    public function setImagefile(\Application\Sonata\MediaBundle\Entity\Media $imagefile = null)
+    {
         $this->imagefile = $imagefile;
+
         return $this;
     }
 
     /**
-     * Get imagefile
+     * Get imagefile.
      *
-     * @return Application\Sonata\MediaBundle\Entity\Media 
+     * @return Application\Sonata\MediaBundle\Entity\Media
      */
-    public function getImagefile() {
+    public function getImagefile()
+    {
         return $this->imagefile;
     }
 
     /**
-     * Set contentblock
+     * Set contentblock.
      *
      * @param BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblock
+     *
      * @return ContentImage
      */
-    public function setContentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblock = null) {
+    public function setContentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblock = null)
+    {
         $this->contentblock = $contentblock;
+
         return $this;
     }
 
     /**
-     * Get contentblock
+     * Get contentblock.
      *
-     * @return BardisCMS\ContentBlockBundle\Entity\ContentBlock 
+     * @return BardisCMS\ContentBlockBundle\Entity\ContentBlock
      */
-    public function getContentblock() {
+    public function getContentblock()
+    {
         return $this->contentblock;
     }
 
     /**
-     * Set contentblock_id
+     * Set contentblock_id.
      *
      * @param BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblockId
+     *
      * @return ContentImage
      */
-    public function setContentblockId(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblockId = null) {
+    public function setContentblockId(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblockId = null)
+    {
         $this->contentblock_id = $contentblockId;
+
         return $this;
     }
 
     /**
-     * Get contentblock_id
+     * Get contentblock_id.
      *
-     * @return BardisCMS\ContentBlockBundle\Entity\ContentBlock 
+     * @return BardisCMS\ContentBlockBundle\Entity\ContentBlock
      */
-    public function getContentblockId() {
+    public function getContentblockId()
+    {
         return $this->contentblock_id;
     }
 
     /**
-     * Add contentblocks
+     * Add contentblocks.
      *
      * @param BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblocks
+     *
      * @return ContentImage
      */
-    public function addContentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblocks) {
+    public function addContentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblocks)
+    {
         $this->contentblocks[] = $contentblocks;
+
         return $this;
     }
 
     /**
-     * Remove contentblocks
+     * Remove contentblocks.
      *
      * @param BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblocks
      */
-    public function removeContentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblocks) {
+    public function removeContentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblocks)
+    {
         $this->contentblocks->removeElement($contentblocks);
     }
 
     /**
-     * Get contentblocks
+     * Get contentblocks.
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
-    public function getContentblocks() {
+    public function getContentblocks()
+    {
         return $this->contentblocks;
     }
 
     /**
-     * Set imageOrder
+     * Set imageOrder.
      *
-     * @param integer $imageOrder
+     * @param int $imageOrder
+     *
      * @return ContentImage
      */
-    public function setImageOrder($imageOrder) {
+    public function setImageOrder($imageOrder)
+    {
         $this->imageOrder = $imageOrder;
 
         return $this;
     }
 
     /**
-     * Get imageOrder
+     * Get imageOrder.
      *
-     * @return integer 
+     * @return int
      */
-    public function getImageOrder() {
+    public function getImageOrder()
+    {
         return $this->imageOrder;
     }
-
 }

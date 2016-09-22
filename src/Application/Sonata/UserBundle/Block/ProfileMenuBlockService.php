@@ -1,12 +1,12 @@
 <?php
 
 /*
- * Sonata User Bundle Overrides
- * This file is part of the BardisCMS.
- * Manage the extended Sonata User entity with extra information for the users
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\UserBundle\Block;
@@ -19,7 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Render the user profile menu
+ * Render the user profile menu.
  */
 class ProfileMenuBlockService extends MenuBlockService
 {
@@ -59,7 +59,7 @@ class ProfileMenuBlockService extends MenuBlockService
         parent::configureSettings($resolver);
 
         $resolver->setDefaults(array(
-            'cache_policy'  => 'private',
+            'cache_policy' => 'private',
             'menu_template' => 'SonataBlockBundle:Block:block_side_menu_template.html.twig',
         ));
     }
@@ -77,7 +77,7 @@ class ProfileMenuBlockService extends MenuBlockService
             $menu = $this->menuBuilder->createProfileMenu(
                 array(
                     'childrenAttributes' => array('class' => $settings['menu_class']),
-                    'attributes'         => array('class' => $settings['children_class']),
+                    'attributes' => array('class' => $settings['children_class']),
                 )
             );
 

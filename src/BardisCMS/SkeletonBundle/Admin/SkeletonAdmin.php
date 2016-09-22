@@ -1,27 +1,28 @@
 <?php
 
 /*
- * Skeleton Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\SkeletonBundle\Admin;
 
+use BardisCMS\SkeletonBundle\Entity\Skeleton as Skeleton;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
-use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Sonata\CoreBundle\Validator\ErrorElement;
+use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\CoreBundle\Validator\ErrorElement;
 
-use BardisCMS\SkeletonBundle\Entity\Skeleton as Skeleton;
-
-class SkeletonAdmin extends AbstractAdmin {
-
-    protected function configureFormFields(FormMapper $formMapper) {
+class SkeletonAdmin extends AbstractAdmin
+{
+    protected function configureFormFields(FormMapper $formMapper)
+    {
         // Getting the container parameters set in the config file that exist
         $skeletonSettings = $this->getConfigurationPool()->getContainer()->getParameter('skeleton_settings');
 
@@ -57,7 +58,7 @@ class SkeletonAdmin extends AbstractAdmin {
                         'author' => 'The Author of the skeleton page',
                         'alias' => 'Set the URL alias of the Skeleton Page',
                         'pagetype' => 'Select the type of the Skeleton Page (Skeleton Page template)',
-                        'pageclass' => 'Set the CSS class that wraps Skeleton Page'
+                        'pageclass' => 'Set the CSS class that wraps Skeleton Page',
                     ))
                     ->end()
                 ->end()
@@ -67,7 +68,7 @@ class SkeletonAdmin extends AbstractAdmin {
                         ->add('tags', 'entity', array('class' => 'BardisCMS\TagBundle\Entity\Tag', 'choice_label' => 'title', 'expanded' => true, 'multiple' => true, 'label' => 'Associated Tags', 'required' => false))
                     ->setHelps(array(
                         'tags' => 'Select the associated tags',
-                        'categories' => 'Select the associated categories'
+                        'categories' => 'Select the associated categories',
                     ))
                     ->end()
                 ->end()
@@ -83,7 +84,7 @@ class SkeletonAdmin extends AbstractAdmin {
                         'introimage' => 'Set the Image content to display for intro listing items',
                         'introvideo' => 'Set the video content to display for intro listing items',
                         'pageOrder' => 'Set the order of this Skeleton page intro for the homepage',
-                        'introclass' => 'Set the CSS class that wraps content to display for intro listing items'
+                        'introclass' => 'Set the CSS class that wraps content to display for intro listing items',
                     ))
                     ->end()
                 ->end()
@@ -93,7 +94,7 @@ class SkeletonAdmin extends AbstractAdmin {
                         ->add('description', null, array('label' => 'Meta Description', 'required' => false))
                     ->setHelps(array(
                         'keywords' => 'Set the keyword metadata of the page of leave empty to autogenerate',
-                        'description' => 'Set the description metadata of the page of leave empty to autogenerate'
+                        'description' => 'Set the description metadata of the page of leave empty to autogenerate',
                     ))
                     ->end()
                 ->end()
@@ -113,7 +114,7 @@ class SkeletonAdmin extends AbstractAdmin {
                                 ->setHelps(array(
                                     'bannercontentblocks' => 'Select the top contents in the order you want them to appear in the Skeleton Page',
                                     'maincontentblocks' => 'Select the main contents in the order you want them to appear in the Skeleton Page',
-                                    'modalcontentblocks' => 'Select the contents in the order you want them to appear in the modal windows'
+                                    'modalcontentblocks' => 'Select the contents in the order you want them to appear in the modal windows',
                                 ))
                                 ->end()
                             ->end()
@@ -127,7 +128,7 @@ class SkeletonAdmin extends AbstractAdmin {
                                     ->add('modalcontentblocks', 'contentblockcollection', array('attr' => array('class' => 'modalcontentblocks'), 'label' => 'Modal Windows Contents'))
                                 ->setHelps(array(
                                     'maincontentblocks' => 'Select the contents in the order you want them to appear in the Skeleton Page',
-                                    'modalcontentblocks' => 'Select the contents in the order you want them to appear in the modal windows'
+                                    'modalcontentblocks' => 'Select the contents in the order you want them to appear in the modal windows',
                                 ))
                                 ->end()
                             ->end()
@@ -137,7 +138,8 @@ class SkeletonAdmin extends AbstractAdmin {
     }
 
     // Using sonata admin to generate the page listing grid filters
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    {
 
         // Getting the container parameters set in the config file that exist
         $skeletonSettings = $this->getConfigurationPool()->getContainer()->getParameter('skeleton_settings');
@@ -157,7 +159,8 @@ class SkeletonAdmin extends AbstractAdmin {
     }
 
     // Using sonata admin to generate th page listing grid and the grid item actions
-    protected function configureListFields(ListMapper $listMapper) {
+    protected function configureListFields(ListMapper $listMapper)
+    {
         $listMapper
                 ->addIdentifier('id')
                 ->addIdentifier('title')
@@ -172,21 +175,22 @@ class SkeletonAdmin extends AbstractAdmin {
                 ->add('_action', 'actions', array(
                     'actions' => array(
                         'duplicate' => array(
-                            'template' => 'SkeletonBundle:Admin:duplicate.html.twig'
+                            'template' => 'SkeletonBundle:Admin:duplicate.html.twig',
                         ),
                         'edit' => array(
-                            'template' => 'SkeletonBundle:Admin:edit.html.twig'
+                            'template' => 'SkeletonBundle:Admin:edit.html.twig',
                         ),
                         'delete' => array(
-                            'template' => 'SkeletonBundle:Admin:delete.html.twig'
-                        )
-                    )
+                            'template' => 'SkeletonBundle:Admin:delete.html.twig',
+                        ),
+                    ),
                 ))
         ;
     }
 
     // Adding the validation rules for the page form
-    public function validate(ErrorElement $errorElement, $object) {
+    public function validate(ErrorElement $errorElement, $object)
+    {
         $errorElement
                 ->with('title')
                 ->assertLength(array('max' => 255))
@@ -202,10 +206,10 @@ class SkeletonAdmin extends AbstractAdmin {
     }
 
     // Adding the route names for the page actions
-    protected function configureRoutes(RouteCollection $collection) {
-        $collection->add('duplicate', $this->getRouterIdParameter() . '/duplicate');
-        $collection->add('edit', $this->getRouterIdParameter() . '/edit');
-        $collection->add('delete', $this->getRouterIdParameter() . '/delete');
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('duplicate', $this->getRouterIdParameter().'/duplicate');
+        $collection->add('edit', $this->getRouterIdParameter().'/edit');
+        $collection->add('delete', $this->getRouterIdParameter().'/delete');
     }
-
 }

@@ -1,29 +1,30 @@
 <?php
 
 /*
- * Sonata User Bundle Overrides
- * This file is part of the BardisCMS.
- * Manage the extended Sonata User entity with extra information for the users
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\UserBundle\DataFixtures\ORM;
 
+use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Application\Sonata\UserBundle\Entity\User;
 
-class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
-
+class UserFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
     /*
      * The sample Fixtures for the Sonata User bundle
      * A SuperAdmin user and a test user are created
      *
      */
-    public function load(ObjectManager $manager) {
+    public function load(ObjectManager $manager)
+    {
         $admin = new User();
         $admin->setCreatedAt(new \DateTime());
         $admin->setUpdatedAt(new \DateTime());
@@ -96,8 +97,8 @@ class UserFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $this->addReference('test03', $test03);
     }
 
-    public function getOrder() {
+    public function getOrder()
+    {
         return 0;
     }
-
 }

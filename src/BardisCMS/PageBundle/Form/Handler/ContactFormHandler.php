@@ -1,18 +1,19 @@
 <?php
 
 /*
- * Page Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\PageBundle\Form\Handler;
 
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class ContactFormHandler
 {
@@ -23,12 +24,11 @@ class ContactFormHandler
     private $settings;
 
     /**
-     * Construct handler for ContactFormHandler
+     * Construct handler for ContactFormHandler.
      *
      * @param FormInterface $form
-     * @param Request $request
-     * @param Container $container
-     *
+     * @param Request       $request
+     * @param Container     $container
      */
     public function __construct(FormInterface $form, Request $request, Container $container)
     {
@@ -41,9 +41,9 @@ class ContactFormHandler
     }
 
     /**
-     * Process the form for ContactForm
+     * Process the form for ContactForm.
      *
-     * @return boolean
+     * @return bool
      */
     public function process()
     {
@@ -64,12 +64,11 @@ class ContactFormHandler
     }
 
     /**
-     * onSuccess after processing the form for ContactForm
+     * onSuccess after processing the form for ContactForm.
      *
      * @param $emailData
      *
-     * @return boolean
-     *
+     * @return bool
      */
     protected function onSuccess($emailData)
     {
@@ -77,9 +76,9 @@ class ContactFormHandler
     }
 
     /**
-     * Extend with a method that returns the errors of the process
+     * Extend with a method that returns the errors of the process.
      *
-     * @return Array
+     * @return array
      */
     public function getErrors()
     {

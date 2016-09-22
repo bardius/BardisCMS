@@ -46,7 +46,8 @@ node_modules/
 /.insight.yml
 /.travis.yml
 /*.sample
-/update-release-version.sh
+/php-cs-fixer.phar
+/.php_cs
 
 /app/logs
 /app/logs/*

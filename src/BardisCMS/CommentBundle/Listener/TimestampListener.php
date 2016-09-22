@@ -1,20 +1,22 @@
 <?php
 
 /*
- * Comment Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\CommentBundle\Listener;
 
 use Doctrine\ORM\Event\OnFlushEventArgs;
 
-class TimestampListener {
-
-    public function onFlush(OnFlushEventArgs $args) {
+class TimestampListener
+{
+    public function onFlush(OnFlushEventArgs $args)
+    {
         $em = $args->getEntityManager();
         $uow = $em->getUnitOfWork();
 
@@ -23,17 +25,15 @@ class TimestampListener {
         );
 
         foreach ($entities as $entity) {
-            if (!(get_class($entity) == 'BardisCMS\CommentBundle\Entity\Comment')) {
+            if (!(get_class($entity) === 'BardisCMS\CommentBundle\Entity\Comment')) {
                 continue;
             }
 
             $commentedEntities = array(
-                array('commentedPage' => $entity->getBlogPost(), 'classMetadata' => 'BardisCMS\BlogBundle\Entity\Blog')
+                array('commentedPage' => $entity->getBlogPost(), 'classMetadata' => 'BardisCMS\BlogBundle\Entity\Blog'),
             );
 
-
             foreach ($commentedEntities as $commentedEntity) {
-
                 $commentedEntity['commentedPage']->setDateLastModified($entity->getDateLastModified());
 
                 $em->persist($commentedEntity['commentedPage']);
@@ -42,5 +42,4 @@ class TimestampListener {
             }
         }
     }
-
 }

@@ -1,42 +1,44 @@
 <?php
 
 /*
- * PageBundle Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\PageBundle\Services;
 
 use Symfony\Component\HttpFoundation\Response;
 
-class HttpCacheHeadersHandler {
-
+class HttpCacheHeadersHandler
+{
     /**
-     * Set custom HTTP Header Cache-Control directives
+     * Set custom HTTP Header Cache-Control directives.
      *
      * To better understand the caching strategy read the resources
      * https://devcenter.heroku.com/articles/increasing-application-performance-with-http-cache-headers
      * https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching?hl=en
      * https://www.keycdn.com/blog/http-cache-headers/
      *
-     * @param Response|null $response       The response that will be returned
-     * @param \DateTime $dateLastModified   The last modified datetime of the page in CMS
-     * @param string $eTagHash              The ETag Http Header
-     * @param bool $isPrivate               If the response is public or private
-     * @param int $maxAge                   The SharedMaxAge/MaxAge of the response eg. 3600s
-     * @param bool $disallowCache           If the response should never be cached
+     * @param Response|null $response         The response that will be returned
+     * @param \DateTime     $dateLastModified The last modified datetime of the page in CMS
+     * @param string        $eTagHash         The ETag Http Header
+     * @param bool          $isPrivate        If the response is public or private
+     * @param int           $maxAge           The SharedMaxAge/MaxAge of the response eg. 3600s
+     * @param bool          $disallowCache    If the response should never be cached
      *
      * @return Response
      */
-    public function setResponseCacheHeaders($response, \DateTime $dateLastModified , $eTagHash, $isPrivate = true, $maxAge = 3600, $disallowCache = false) {
-        if($response === null){
+    public function setResponseCacheHeaders($response, \DateTime $dateLastModified, $eTagHash, $isPrivate = true, $maxAge = 3600, $disallowCache = false)
+    {
+        if ($response === null) {
             $response = new Response();
         }
 
-        if($isPrivate){
+        if ($isPrivate) {
             $response->setPrivate();
             $response->setMaxAge(0);
             $response->headers->set('X-User-Context-Hash', $eTagHash);
@@ -44,8 +46,7 @@ class HttpCacheHeadersHandler {
             $response->headers->addCacheControlDirective('no-store', true);
             $response->headers->addCacheControlDirective('no-cache', true);
             $response->headers->set('Expires', '-1');
-        }
-        else {
+        } else {
             // Set Cache header to public to allow caching on reverse proxy servers
             $response->setPublic();
             $response->setSharedMaxAge($maxAge);
@@ -63,7 +64,7 @@ class HttpCacheHeadersHandler {
         $response->headers->addCacheControlDirective('proxy-revalidate', true);
 
         // To disallow proxies storing any cached response
-        if($disallowCache){
+        if ($disallowCache) {
             $response->setPrivate();
             $response->headers->addCacheControlDirective('no-store', true);
             $response->headers->addCacheControlDirective('no-cache', true);

@@ -1,25 +1,26 @@
 <?php
 
 /*
- * MobileDetect Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\MobileDetectBundle\Services;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class DeviceDetection {
-
+class DeviceDetection
+{
     private $useragent;
     private $mobile_ua;
     private $mobile_agents;
 
-    public function __construct(RequestStack $requestStack) {
-
+    public function __construct(RequestStack $requestStack)
+    {
         $this->requestStack = $requestStack;
 
         $this->mobile_agents = array(
@@ -31,12 +32,12 @@ class DeviceDetection {
             'qwap', 'sage', 'sams', 'sany', 'sch-', 'sec-', 'send', 'seri', 'sgh-', 'shar',
             'sie-', 'siem', 'smal', 'smar', 'sony', 'sph-', 'symb', 't-mo', 'teli', 'tim-',
             'tosh', 'tsm-', 'upg1', 'upsi', 'vk-v', 'voda', 'wap-', 'wapa', 'wapi', 'wapp',
-            'wapr', 'webc', 'winw', 'winw', 'xda ', 'xda-');
+            'wapr', 'webc', 'winw', 'winw', 'xda ', 'xda-', );
     }
 
     // Test if device is mobile
-    public function testMobile() {
-
+    public function testMobile()
+    {
         $request = $this->requestStack->getMasterRequest();
 
         $this->useragent = strtolower($request->server->get('HTTP_USER_AGENT'));
@@ -53,43 +54,43 @@ class DeviceDetection {
         $mobile_browser = 0;
 
         // Start the testing
-        if (in_array($this->mobile_ua, $this->mobile_agents)) {
-            $mobile_browser++;
+        if (in_array($this->mobile_ua, $this->mobile_agents, true)) {
+            ++$mobile_browser;
         }
 
         if (preg_match('/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', $this->useragent)) {
-            $tablet_browser++;
+            ++$tablet_browser;
         }
 
         if (preg_match('/(up.browser|up.link|mmp|symbian|smartphone|midp|wap|phone|android|iemobile)/i', $this->useragent)) {
-            $mobile_browser++;
+            ++$mobile_browser;
         }
 
         if ((strpos(strtolower($HTTP_ACCEPT), 'application/vnd.wap.xhtml+xml') > 0) || ((!empty($HTTP_X_WAP_PROFILE) || !empty($HTTP_PROFILE)))) {
-            $mobile_browser++;
+            ++$mobile_browser;
         }
 
         if (strpos($this->useragent, 'opera mini') > 0) {
-            $mobile_browser++;
+            ++$mobile_browser;
 
             //Check for tablets on opera mini alternative headers
             $stock_ua = strtolower(!empty($HTTP_X_OPERAMINI_PHONE_UA) ? $HTTP_X_OPERAMINI_PHONE_UA : (!empty($HTTP_DEVICE_STOCK_UA) ? $HTTP_DEVICE_STOCK_UA : ''));
             if (preg_match('/(tablet|ipad|playbook)|(android(?!.*mobile))/i', $stock_ua)) {
-                $tablet_browser++;
+                ++$tablet_browser;
             }
         }
         // For tablet and mobile detections use the line below
         // if ($tablet_browser > 0 || $mobile_browser > 0) {
         if ($mobile_browser > 0) {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     // Test if device is tablet
-    public function testTablet() {
-
+    public function testTablet()
+    {
         $request = $this->requestStack->getMasterRequest();
 
         $this->useragent = strtolower($request->server->get('HTTP_USER_AGENT'));
@@ -102,22 +103,21 @@ class DeviceDetection {
         $tablet_browser = 0;
 
         if (preg_match('/(tablet|ipad|playbook)|(android(?!.*(mobi|opera mini)))/i', $this->useragent)) {
-            $tablet_browser++;
+            ++$tablet_browser;
         }
 
         if (strpos($this->useragent, 'opera mini') > 0) {
             //Check for tablets on opera mini alternative headers
             $stock_ua = strtolower(!empty($HTTP_X_OPERAMINI_PHONE_UA) ? $HTTP_X_OPERAMINI_PHONE_UA : (!empty($HTTP_DEVICE_STOCK_UA) ? $HTTP_DEVICE_STOCK_UA : ''));
             if (preg_match('/(tablet|ipad|playbook)|(android(?!.*mobile))/i', $stock_ua)) {
-                $tablet_browser++;
+                ++$tablet_browser;
             }
         }
         // For tablet and mobile detections use the line below
         if ($tablet_browser > 0) {
             return true;
-        } else {
-            return false;
         }
-    }
 
+        return false;
+    }
 }

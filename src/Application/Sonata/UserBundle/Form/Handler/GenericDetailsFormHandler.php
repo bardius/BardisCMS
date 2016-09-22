@@ -1,22 +1,21 @@
 <?php
 
 /*
- * Sonata User Bundle Overrides
- * This file is part of the BardisCMS.
- * Manage the extended Sonata User entity with extra information for the users
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\UserBundle\Form\Handler;
 
-use Application\Sonata\UserBundle\Entity\User;
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class GenericDetailsFormHandler
 {
@@ -26,13 +25,12 @@ class GenericDetailsFormHandler
     private $container;
 
     /**
-     * Construct handler for GenericDetailsFormHandler
+     * Construct handler for GenericDetailsFormHandler.
      *
-     * @param FormInterface $form
-     * @param Request $request
+     * @param FormInterface        $form
+     * @param Request              $request
      * @param UserManagerInterface $userManager
-     * @param Container $container
-     *
+     * @param Container            $container
      */
     public function __construct(FormInterface $form, Request $request, UserManagerInterface $userManager, Container $container)
     {
@@ -43,18 +41,17 @@ class GenericDetailsFormHandler
     }
 
     /**
-     * Process the form for GenericDetailsForm
+     * Process the form for GenericDetailsForm.
      *
      * @param UserInterface $user
      *
-     * @return boolean
+     * @return bool
      */
     public function process(UserInterface $user)
     {
         $this->form->setData($user);
 
         if ('POST' === $this->request->getMethod() && $this->request->request->has('sonata_user_generic_details_form')) {
-
             $this->form->bind($this->request);
 
             if ($this->form->isValid()) {
@@ -70,10 +67,9 @@ class GenericDetailsFormHandler
     }
 
     /**
-     * onSuccess after processing the form for GenericDetailsForm
+     * onSuccess after processing the form for GenericDetailsForm.
      *
      * @param UserInterface $user
-     *
      */
     protected function onSuccess(UserInterface $user)
     {
@@ -81,9 +77,9 @@ class GenericDetailsFormHandler
     }
 
     /**
-     * Extend with a method that returns the errors of the process
+     * Extend with a method that returns the errors of the process.
      *
-     * @return Array
+     * @return array
      */
     public function getErrors()
     {

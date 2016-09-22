@@ -1,11 +1,12 @@
 <?php
 
 /*
- * Page Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\PageBundle\Entity;
@@ -13,13 +14,13 @@ namespace BardisCMS\PageBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * BardisCMS\PageBundle\Entity\Session
+ * BardisCMS\PageBundle\Entity\Session.
  *
  * @ORM\Table(name="session")
  * @ORM\Entity
  */
-class Session {
-
+class Session
+{
     /**
      * @ORM\Column(type="string", length=255)
      * @ORM\Id
@@ -41,71 +42,75 @@ class Session {
      */
     protected $sess_lifetime;
 
-
     /**
-     * Set session_id
+     * Set session_id.
      *
      * @param string $sessionId
      *
      * @return Session
      */
-    public function setSessionId($sessionId) {
+    public function setSessionId($sessionId)
+    {
         $this->session_id = $sessionId;
 
         return $this;
     }
 
     /**
-     * Get session_id
+     * Get session_id.
      *
      * @return string
      */
-    public function getSessionId() {
+    public function getSessionId()
+    {
         return $this->session_id;
     }
 
     /**
-     * Set session_value
+     * Set session_value.
      *
      * @param string $sessionValue
      *
      * @return Session
      */
-    public function setSessionValue($sessionValue) {
+    public function setSessionValue($sessionValue)
+    {
         $this->session_value = $sessionValue;
 
         return $this;
     }
 
     /**
-     * Get session_value
+     * Get session_value.
      *
      * @return string
      */
-    public function getSessionValue() {
+    public function getSessionValue()
+    {
         return $this->session_value;
     }
 
     /**
-     * Set session_lifetime
+     * Set session_lifetime.
      *
-     * @param integer $sessionLifetime
+     * @param int $sessionLifetime
      *
      * @return Session
      */
-    public function setSessionLifetimeime($sessionLifetime) {
+    public function setSessionLifetimeime($sessionLifetime)
+    {
         $this->session_time = $sessionLifetime;
 
         return $this;
     }
 
     /**
-     * Get session_lifetime
+     * Get session_lifetime.
      *
-     * @return integer
+     * @return int
      */
-    public function getSessionLifetime() {
+    public function getSessionLifetime()
+    {
         return $this->session_lifetime;
     }
-
 }

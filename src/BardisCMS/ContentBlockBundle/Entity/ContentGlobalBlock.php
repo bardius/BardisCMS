@@ -1,11 +1,12 @@
 <?php
 
 /*
- * ContentBlock Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\ContentBlockBundle\Entity;
@@ -13,13 +14,13 @@ namespace BardisCMS\ContentBlockBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * BardisCMS\ContentBlockBundle\Entity\ContentGlobalBlock
+ * BardisCMS\ContentBlockBundle\Entity\ContentGlobalBlock.
  *
  * @ORM\Table(name="content_globalblock")
  * @ORM\Entity
  */
-class ContentGlobalBlock {
-
+class ContentGlobalBlock
+{
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -34,31 +35,36 @@ class ContentGlobalBlock {
     protected $contentblock;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * Set contentblock
+     * Set contentblock.
      *
      * @param BardisCMS\ContentBlockBundle\Entity\ContentBlock contentblock
+     *
      * @return ContentBlock
      */
-    public function setContentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblock = null) {
+    public function setContentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $contentblock = null)
+    {
         $this->contentblock = $contentblock;
+
         return $this;
     }
 
     /**
-     * Get contentblock
+     * Get contentblock.
      *
      * @return BardisCMS\ContentBlockBundle\Entity\ContentBlock
      */
-    public function getContentblock() {
+    public function getContentblock()
+    {
         return $this->contentblock;
     }
 }

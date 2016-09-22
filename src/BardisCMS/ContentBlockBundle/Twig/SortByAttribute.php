@@ -1,38 +1,41 @@
 <?php
 
 /*
- * ContentBlock Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\ContentBlockBundle\Twig;
 
-class SortByAttribute extends \Twig_Extension {
-
-    public function __construct() {
-
+class SortByAttribute extends \Twig_Extension
+{
+    public function __construct()
+    {
     }
 
     /**
-     * Returns a list of filters
+     * Returns a list of filters.
      *
      * @return array
      */
-    public function getFilters() {
+    public function getFilters()
+    {
         return array(
-            new \Twig_SimpleFilter('sort_by_attribute', array($this, 'twigSortByAttributeFilter'))
+            new \Twig_SimpleFilter('sort_by_attribute', array($this, 'twigSortByAttributeFilter')),
         );
     }
 
     /**
-     * Name of this extension
+     * Name of this extension.
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return 'sort_by_attribute';
     }
 
@@ -40,18 +43,19 @@ class SortByAttribute extends \Twig_Extension {
      * Sorts an array.
      * Allows to sort an array of objects by a specified object property.
      * Allows to sort an array of arrays by a specified index/key.
-     * Allows to sort hybrid arrays of objects, string, numbers
+     * Allows to sort hybrid arrays of objects, string, numbers.
      *
      * $options accepted values:
      * 	'caseSensitive': true|false(default)
      *
-     * @param array $array The array to be sorted
+     * @param array  $array     The array to be sorted
      * @param string $attribute An object property or an array index/key
-     * @param array $options An array of options
+     * @param array  $options   An array of options
      *
      * @return array
      */
-    function twigSortByAttributeFilter($array, $attribute = null, $options = array('caseSensitive' => false)) {
+    public function twigSortByAttributeFilter($array, $attribute = null, $options = array('caseSensitive' => false))
+    {
         // returns the original array if $attribute is not specified
         if (null === $attribute) {
             return $array;
@@ -59,7 +63,7 @@ class SortByAttribute extends \Twig_Extension {
 
         $isInForm = false;
 
-        if (substr($attribute, 0, 5) == 'form.') {
+        if (substr($attribute, 0, 5) === 'form.') {
             $isInForm = true;
             $attribute = substr($attribute, 5);
         }
@@ -81,8 +85,8 @@ class SortByAttribute extends \Twig_Extension {
                 $v = $v[$attribute];
                 // $v is an object
             } elseif (is_object($v)) {
-                $getter = preg_replace("/[^a-zA-Z0-9]/", "", "get" . $attribute);
-                $isser = preg_replace("/[^a-zA-Z0-9]/", "", "is" . $attribute);
+                $getter = preg_replace('/[^a-zA-Z0-9]/', '', 'get'.$attribute);
+                $isser = preg_replace('/[^a-zA-Z0-9]/', '', 'is'.$attribute);
 
                 if (method_exists($v, $getter)) {
                     $v = $v->$getter();
@@ -131,5 +135,4 @@ class SortByAttribute extends \Twig_Extension {
         // returns the sorted portion of the original $array merged with the items excluded from sorting
         return array_merge($arrItemsToSort, $arrExcludedItemsFromSorting);
     }
-
 }

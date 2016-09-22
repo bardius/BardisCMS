@@ -1,25 +1,27 @@
 <?php
 
 /*
- * Tag Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\TagBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
-use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Sonata\CoreBundle\Validator\ErrorElement;
+use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\CoreBundle\Validator\ErrorElement;
 
-class TagAdmin extends AbstractAdmin {
-
-    protected function configureFormFields(FormMapper $formMapper) {
+class TagAdmin extends AbstractAdmin
+{
+    protected function configureFormFields(FormMapper $formMapper)
+    {
 
         // Getting the container parameters set in the config file that exist
         $tagSettings = $this->getConfigurationPool()->getContainer()->getParameter('tag_settings');
@@ -35,13 +37,14 @@ class TagAdmin extends AbstractAdmin {
                 ->setHelps(array(
                     'title' => 'Set the title of the tag',
                     'tagCategory' => 'Set the category of the tag',
-                    'tagIcon' => 'Set the icon of the of the tag'
+                    'tagIcon' => 'Set the icon of the of the tag',
                 ))
                 ->end()
         ;
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    {
 
         // Getting the container parameters set in the config file that exist
         $tagSettings = $this->getConfigurationPool()->getContainer()->getParameter('tag_settings');
@@ -55,7 +58,8 @@ class TagAdmin extends AbstractAdmin {
         ;
     }
 
-    protected function configureListFields(ListMapper $listMapper) {
+    protected function configureListFields(ListMapper $listMapper)
+    {
         $listMapper
                 ->addIdentifier('title')
                 ->addIdentifier('tagCategoryAsString', null, array('sortable' => false, 'label' => 'Tag Category'))
@@ -63,17 +67,18 @@ class TagAdmin extends AbstractAdmin {
                 ->add('_action', 'actions', array(
                     'actions' => array(
                         'edit' => array(
-                            'template' => 'TagBundle:Admin:edit.html.twig'
+                            'template' => 'TagBundle:Admin:edit.html.twig',
                         ),
                         'delete' => array(
-                            'template' => 'TagBundle:Admin:delete.html.twig'
-                        )
-                    )
+                            'template' => 'TagBundle:Admin:delete.html.twig',
+                        ),
+                    ),
                 ))
         ;
     }
 
-    public function validate(ErrorElement $errorElement, $object) {
+    public function validate(ErrorElement $errorElement, $object)
+    {
         $errorElement
                 ->with('title')
                 ->assertLength(array('max' => 255))
@@ -83,9 +88,9 @@ class TagAdmin extends AbstractAdmin {
         ;
     }
 
-    protected function configureRoutes(RouteCollection $collection) {
-        $collection->add('edit', $this->getRouterIdParameter() . '/edit');
-        $collection->add('delete', $this->getRouterIdParameter() . '/delete');
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('edit', $this->getRouterIdParameter().'/edit');
+        $collection->add('delete', $this->getRouterIdParameter().'/delete');
     }
-
 }

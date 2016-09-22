@@ -1,23 +1,25 @@
 <?php
 
 /*
- * Tag Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\TagBundle\DataFixtures\ORM;
 
+use BardisCMS\TagBundle\Entity\Tag;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use BardisCMS\TagBundle\Entity\Tag;
 
-class TagFixtures extends AbstractFixture implements OrderedFixtureInterface {
-
-    public function load(ObjectManager $manager) {
+class TagFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
+    public function load(ObjectManager $manager)
+    {
         $tagSample1 = new Tag();
         $tagSample1->setTitle('Sample Tag 1');
         $manager->persist($tagSample1);
@@ -33,8 +35,8 @@ class TagFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $this->addReference('tagSample2', $tagSample2);
     }
 
-    public function getOrder() {
+    public function getOrder()
+    {
         return 3;
     }
-
 }

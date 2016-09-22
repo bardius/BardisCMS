@@ -1,12 +1,13 @@
 <?php
 
-require_once __DIR__ . '/AppKernel.php';
+require_once __DIR__.'/AppKernel.php';
 
 use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
 
-class AppCache extends HttpCache {
-
-    protected function getOptions() {
+class AppCache extends HttpCache
+{
+    protected function getOptions()
+    {
         return array(
             'debug' => false,
             'default_ttl' => 0,
@@ -17,5 +18,4 @@ class AppCache extends HttpCache {
             'stale_if_error' => 60,
         );
     }
-
 }

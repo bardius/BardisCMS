@@ -1,12 +1,12 @@
 <?php
 
 /*
- * Sonata User Bundle Overrides
- * This file is part of the BardisCMS.
- * Manage the extended Sonata User entity with extra information for the users
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\UserBundle\Form\Handler;
@@ -14,9 +14,9 @@ namespace Application\Sonata\UserBundle\Form\Handler;
 use FOS\UserBundle\Form\Model\ChangePassword;
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class ChangePasswordFormHandler
 {
@@ -26,13 +26,12 @@ class ChangePasswordFormHandler
     private $container;
 
     /**
-     * Construct handler for ChangePasswordFormHandler
+     * Construct handler for ChangePasswordFormHandler.
      *
-     * @param FormInterface $form
-     * @param Request $request
+     * @param FormInterface        $form
+     * @param Request              $request
      * @param UserManagerInterface $userManager
-     * @param Container $container
-     *
+     * @param Container            $container
      */
     public function __construct(FormInterface $form, Request $request, UserManagerInterface $userManager, Container $container)
     {
@@ -51,11 +50,11 @@ class ChangePasswordFormHandler
     }
 
     /**
-     * Process the form for ChangePasswordForm
+     * Process the form for ChangePasswordForm.
      *
      * @param UserInterface $user
      *
-     * @return boolean
+     * @return bool
      */
     public function process(UserInterface $user)
     {
@@ -75,10 +74,9 @@ class ChangePasswordFormHandler
     }
 
     /**
-     * onSuccess after processing the form for ChangePasswordForm
+     * onSuccess after processing the form for ChangePasswordForm.
      *
      * @param UserInterface $user
-     *
      */
     protected function onSuccess(UserInterface $user)
     {
@@ -87,9 +85,9 @@ class ChangePasswordFormHandler
     }
 
     /**
-     * Extend with a method that returns the errors of the process
+     * Extend with a method that returns the errors of the process.
      *
-     * @return Array
+     * @return array
      */
     public function getErrors()
     {

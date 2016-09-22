@@ -1,21 +1,23 @@
 <?php
 
 /*
- * ContentBlock Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\ContentBlockBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class ContentBlockRepository extends EntityRepository {
-
+class ContentBlockRepository extends EntityRepository
+{
     // Function to retrieve the content blocks that are globally available
-    public function getGlobalBlocks() {
+    public function getGlobalBlocks()
+    {
 
         // Initalize the query builder variables
         $qb = $this->_em->createQueryBuilder();
@@ -36,5 +38,4 @@ class ContentBlockRepository extends EntityRepository {
 
         return $globalContentBlocks;
     }
-
 }

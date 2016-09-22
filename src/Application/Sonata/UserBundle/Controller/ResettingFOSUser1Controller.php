@@ -1,29 +1,27 @@
 <?php
 
 /*
- * Sonata User Bundle Overrides
- * This file is part of the BardisCMS.
- * Manage the extended Sonata User entity with extra information for the users
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\UserBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
+use BardisCMS\PageBundle\Entity\Page as Page;
+use FOS\UserBundle\Model\UserInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
-use FOS\UserBundle\Model\UserInterface;
-
-use BardisCMS\PageBundle\Entity\Page as Page;
-
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * Controller managing the resetting of the password
+ * Controller managing the resetting of the password.
  */
 class ResettingFOSUser1Controller extends Controller
 {
@@ -40,17 +38,18 @@ class ResettingFOSUser1Controller extends Controller
 
     const RESET_REQUEST_PAGE_ALIAS = 'resetting/request';
     const RESET_SEND_EMAIL_ALIAS = 'resetting/send-email';
-    const RESET_CHECK_EMAIL_PAGE_ALIAS = "resetting/check-email";
-    const RESET_PASSWORD_PAGE_ALIAS = "resetting/reset";
+    const RESET_CHECK_EMAIL_PAGE_ALIAS = 'resetting/check-email';
+    const RESET_PASSWORD_PAGE_ALIAS = 'resetting/reset';
 
     const SESSION_EMAIL = 'fos_user_send_resetting_email/email';
 
     /**
-     * Override the ContainerAware setContainer to accommodate the extra variables
+     * Override the ContainerAware setContainer to accommodate the extra variables.
      *
      * @param ContainerInterface $container
      */
-    public function setContainer(ContainerInterface $container = null) {
+    public function setContainer(ContainerInterface $container = null)
+    {
         $this->container = $container;
 
         // Setting the scoped variables required for the rendering of the page
@@ -67,7 +66,7 @@ class ResettingFOSUser1Controller extends Controller
         $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 
         // Set the flag for allowing HTTP cache
-        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') === 'prod' && $this->settings->getActivateHttpCache();
 
         // Check if request was Ajax based
         $this->isAjaxRequest = $this->get('bardiscms_page.services.ajax_detection')->isAjaxRequest();
@@ -83,7 +82,7 @@ class ResettingFOSUser1Controller extends Controller
     }
 
     /**
-     * Rendering of the Request user password reset page
+     * Rendering of the Request user password reset page.
      *
      * @return Response
      */
@@ -101,7 +100,7 @@ class ResettingFOSUser1Controller extends Controller
             $this->publishStates
         );
 
-        if(!$accessAllowedForUserRole){
+        if (!$accessAllowedForUserRole) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
@@ -110,7 +109,7 @@ class ResettingFOSUser1Controller extends Controller
         $pageData = array(
             'page' => $this->page,
             'mobile' => $this->serveMobile,
-            'logged_username' => $this->userName
+            'logged_username' => $this->userName,
         );
 
         // Render Request user password reset page
@@ -121,7 +120,7 @@ class ResettingFOSUser1Controller extends Controller
 
     /**
      * Submit the Request user password reset form and send email
-     * before redirecting to the next user journey page
+     * before redirecting to the next user journey page.
      *
      * @return RedirectResponse
      */
@@ -139,7 +138,7 @@ class ResettingFOSUser1Controller extends Controller
             $this->publishStates
         );
 
-        if(!$accessAllowedForUserRole){
+        if (!$accessAllowedForUserRole) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
@@ -150,20 +149,19 @@ class ResettingFOSUser1Controller extends Controller
         // If user does not exist
         if (null === $user) {
             // If the request was Ajax based
-            if($this->isAjaxRequest){
-                if($username){
+            if ($this->isAjaxRequest) {
+                if ($username) {
                     return $this->onAjaxError($this->container->get('translator')->trans('resetting.request.invalid_username', array('%username%' => $username), 'SonataUserBundle'));
                 }
-                else {
-                    return $this->onAjaxError($this->container->get('translator')->trans('resetting.request.empty_username', array(), 'SonataUserBundle'));
-                }
+
+                return $this->onAjaxError($this->container->get('translator')->trans('resetting.request.empty_username', array(), 'SonataUserBundle'));
             }
 
             $pageData = array(
                 'invalid_username' => $username,
                 'page' => $this->page,
                 'mobile' => $this->serveMobile,
-                'logged_username' => $this->userName
+                'logged_username' => $this->userName,
             );
 
             // Render reset request page
@@ -175,14 +173,14 @@ class ResettingFOSUser1Controller extends Controller
         // If user password request token has not been expired
         if ($user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
             // If the request was Ajax based
-            if($this->isAjaxRequest){
+            if ($this->isAjaxRequest) {
                 return $this->onAjaxError($this->container->get('translator')->trans('resetting.password_already_requested', array(), 'SonataUserBundle'));
             }
 
             $pageData = array(
                 'page' => $this->page,
                 'mobile' => $this->serveMobile,
-                'logged_username' => $this->userName
+                'logged_username' => $this->userName,
             );
 
             // Render passwordAlreadyRequested page
@@ -196,7 +194,7 @@ class ResettingFOSUser1Controller extends Controller
             $user->setConfirmationToken($tokenGenerator->generateToken());
         }
 
-        $this->container->get('session')->set(static::SESSION_EMAIL, $user->getEmail() );
+        $this->container->get('session')->set(static::SESSION_EMAIL, $user->getEmail());
         $this->container->get('fos_user.mailer')->sendResettingEmailMessage($user);
 
         // Disable user until password reset process is completed
@@ -207,7 +205,7 @@ class ResettingFOSUser1Controller extends Controller
         $responseURL = $this->container->get('router')->generate('sonata_user_resetting_check_email');
 
         // If the request was Ajax based
-        if($this->isAjaxRequest){
+        if ($this->isAjaxRequest) {
             return $this->onAjaxSuccess($responseURL);
         }
 
@@ -215,7 +213,7 @@ class ResettingFOSUser1Controller extends Controller
     }
 
     /**
-     * Tell the user to check his email provider after successful password reset
+     * Tell the user to check his email provider after successful password reset.
      *
      * @return Response
      */
@@ -233,7 +231,7 @@ class ResettingFOSUser1Controller extends Controller
             $this->publishStates
         );
 
-        if(!$accessAllowedForUserRole){
+        if (!$accessAllowedForUserRole) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
@@ -252,7 +250,7 @@ class ResettingFOSUser1Controller extends Controller
             'email' => $email,
             'page' => $this->page,
             'mobile' => $this->serveMobile,
-            'logged_username' => $this->userName
+            'logged_username' => $this->userName,
         );
 
         // Render check email page
@@ -262,7 +260,7 @@ class ResettingFOSUser1Controller extends Controller
     }
 
     /**
-     * Password Reset with success user password page
+     * Password Reset with success user password page.
      *
      * @return Response
      */
@@ -281,7 +279,7 @@ class ResettingFOSUser1Controller extends Controller
             $this->publishStates
         );
 
-        if(!$accessAllowedForUserRole){
+        if (!$accessAllowedForUserRole) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
@@ -291,23 +289,21 @@ class ResettingFOSUser1Controller extends Controller
 
         if (null === $user) {
             // If the request was Ajax based
-            if($this->isAjaxRequest){
+            if ($this->isAjaxRequest) {
                 return $this->onAjaxError($this->container->get('translator')->trans('resetting.reset.invalid_user', array('token' => $token), 'SonataUserBundle'));
             }
-            else {
-                return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
+
+            return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
                 //throw new NotFoundHttpException(sprintf('The user with "confirmation token" does not exist for value "%s"', $token));
-            }
         }
 
         if (!$user->isPasswordRequestNonExpired($this->container->getParameter('fos_user.resetting.token_ttl'))) {
             // If the request was Ajax based
-            if($this->isAjaxRequest){
+            if ($this->isAjaxRequest) {
                 return $this->onAjaxError($this->container->get('translator')->trans('resetting.reset.token_expired', array('token' => $token), 'SonataUserBundle'));
             }
-            else {
-                return new RedirectResponse($this->container->get('router')->generate('sonata_user_resetting_request'));
-            }
+
+            return new RedirectResponse($this->container->get('router')->generate('sonata_user_resetting_request'));
         }
 
         $form = $this->container->get('sonata_user.resetting.form');
@@ -324,14 +320,14 @@ class ResettingFOSUser1Controller extends Controller
             $this->authenticateUser($user, $response);
 
             // If the request was Ajax based
-            if($this->isAjaxRequest){
+            if ($this->isAjaxRequest) {
                 return $this->onAjaxSuccess($responseURL);
             }
 
             return $response;
         }
 
-        if(!$process && $this->isAjaxRequest){
+        if (!$process && $this->isAjaxRequest) {
             return $this->onAjaxFieldsError($formHandler);
         }
 
@@ -340,7 +336,7 @@ class ResettingFOSUser1Controller extends Controller
             'form' => $form->createView(),
             'page' => $this->page,
             'mobile' => $this->serveMobile,
-            'logged_username' => $this->userName
+            'logged_username' => $this->userName,
         );
 
         // Render Password Reset with success user password page
@@ -350,7 +346,7 @@ class ResettingFOSUser1Controller extends Controller
     }
 
     /**
-     * Authenticate a user with Symfony Security
+     * Authenticate a user with Symfony Security.
      *
      * @param \FOS\UserBundle\Model\UserInterface        $user
      * @param \Symfony\Component\HttpFoundation\Response $response
@@ -394,7 +390,7 @@ class ResettingFOSUser1Controller extends Controller
     {
         $email = $user->getEmail();
         if (false !== $pos = strpos($email, '@')) {
-            $email = '...' . substr($email, $pos);
+            $email = '...'.substr($email, $pos);
         }
 
         return $email;
@@ -410,7 +406,7 @@ class ResettingFOSUser1Controller extends Controller
     }
 
     /**
-     * Extend with new method to handle Ajax response with errors
+     * Extend with new method to handle Ajax response with errors.
      *
      * @param $formHandler
      *
@@ -425,7 +421,7 @@ class ResettingFOSUser1Controller extends Controller
         $ajaxFormData = array(
             'errors' => $errorList,
             'formMessage' => $this->container->get('translator')->trans($formMessage, array(), 'SonataUserBundle'),
-            'hasErrors' => $formHasErrors
+            'hasErrors' => $formHasErrors,
         );
 
         $ajaxFormResponse = new Response(json_encode($ajaxFormData));
@@ -435,7 +431,7 @@ class ResettingFOSUser1Controller extends Controller
     }
 
     /**
-     * Extend with new method to handle Ajax response with errors
+     * Extend with new method to handle Ajax response with errors.
      *
      * @param $formMessage
      *
@@ -449,7 +445,7 @@ class ResettingFOSUser1Controller extends Controller
         $ajaxFormData = array(
             'errors' => $errorList,
             'formMessage' => $formMessage,
-            'hasErrors' => $formHasErrors
+            'hasErrors' => $formHasErrors,
         );
 
         $ajaxFormResponse = new Response(json_encode($ajaxFormData));
@@ -459,9 +455,9 @@ class ResettingFOSUser1Controller extends Controller
     }
 
     /**
-     * Extend with new method to handle Ajax response with success
+     * Extend with new method to handle Ajax response with success.
      *
-     * @param String $redirectURL
+     * @param string $redirectURL
      *
      * @return Response
      */
@@ -475,7 +471,7 @@ class ResettingFOSUser1Controller extends Controller
             'errors' => $errorList,
             'formMessage' => $formMessage,
             'hasErrors' => $formHasErrors,
-            'redirectURL' => $redirectURL
+            'redirectURL' => $redirectURL,
         );
 
         $ajaxFormResponse = new Response(json_encode($ajaxFormData));

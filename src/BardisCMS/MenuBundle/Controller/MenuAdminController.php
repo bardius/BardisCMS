@@ -1,11 +1,12 @@
 <?php
 
 /*
- * Menu Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\MenuBundle\Controller;
@@ -14,16 +15,17 @@ use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class MenuAdminController extends Controller {
-
-    public function duplicateAction($id = null) {
+class MenuAdminController extends Controller
+{
+    public function duplicateAction($id = null)
+    {
         // the key used to lookup the template
         $templateKey = 'edit';
 
         $id = $this->get('request')->get($this->admin->getIdParameter());
 
         $clonedObject = $this->admin->getObject($id);
-        $clonedObject->setTitle($clonedObject->getTitle() . ' Clone');
+        $clonedObject->setTitle($clonedObject->getTitle().' Clone');
 
         $object = $this->admin->getNewInstance();
 
@@ -49,7 +51,7 @@ class MenuAdminController extends Controller {
         $menuUrlExtras = $form->getData()->getMenuUrlExtras();
         unset($menuUrlExtras);
 
-        if ($this->get('request')->getMethod() == 'POST') {
+        if ($this->get('request')->getMethod() === 'POST') {
             $form->handleRequest($this->get('request'));
 
             $isFormValid = $form->isValid();
@@ -61,7 +63,7 @@ class MenuAdminController extends Controller {
                 if ($this->isXmlHttpRequest()) {
                     return $this->renderJson(array(
                                 'result' => 'ok',
-                                'objectId' => $this->admin->getNormalizedIdentifier($object)
+                                'objectId' => $this->admin->getNormalizedIdentifier($object),
                     ));
                 }
 
@@ -90,5 +92,4 @@ class MenuAdminController extends Controller {
                     'object' => $object,
         ));
     }
-
 }

@@ -1,32 +1,29 @@
 <?php
 
 /*
- * Sonata User Bundle Overrides
- * This file is part of the BardisCMS.
- * Manage the extended Sonata User entity with extra information for the users
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\UserBundle\Controller;
 
+use BardisCMS\PageBundle\Entity\Page as Page;
+use FOS\UserBundle\Form\Handler\RegistrationFormHandler;
 use FOS\UserBundle\Model\UserInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
 
-use FOS\UserBundle\Form\Handler\RegistrationFormHandler;
-
-use BardisCMS\PageBundle\Entity\Page as Page;
-
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 /**
- * Controller managing the registration
+ * Controller managing the registration.
  */
 class RegistrationFOSUser1Controller extends Controller
 {
@@ -41,15 +38,16 @@ class RegistrationFOSUser1Controller extends Controller
     private $enableHTTPCache;
     private $isAjaxRequest;
 
-    const REGISTER_PAGE_ALIAS = "register";
-    const REGISTER_SUCCESS_PAGE_ALIAS = "register/confirmed";
+    const REGISTER_PAGE_ALIAS = 'register';
+    const REGISTER_SUCCESS_PAGE_ALIAS = 'register/confirmed';
 
     /**
-     * Override the ContainerAware setContainer to accommodate the extra variables
+     * Override the ContainerAware setContainer to accommodate the extra variables.
      *
      * @param ContainerInterface $container
      */
-    public function setContainer(ContainerInterface $container = null) {
+    public function setContainer(ContainerInterface $container = null)
+    {
         $this->container = $container;
 
         // Setting the scoped variables required for the rendering of the page
@@ -66,7 +64,7 @@ class RegistrationFOSUser1Controller extends Controller
         $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 
         // Set the flag for allowing HTTP cache
-        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') === 'prod' && $this->settings->getActivateHttpCache();
 
         // Check if request was Ajax based
         $this->isAjaxRequest = $this->get('bardiscms_page.services.ajax_detection')->isAjaxRequest();
@@ -82,7 +80,7 @@ class RegistrationFOSUser1Controller extends Controller
     }
 
     /**
-     * Render the registration page
+     * Render the registration page.
      *
      * @return RedirectResponse
      */
@@ -108,7 +106,7 @@ class RegistrationFOSUser1Controller extends Controller
             $this->publishStates
         );
 
-        if(!$accessAllowedForUserRole){
+        if (!$accessAllowedForUserRole) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
@@ -153,18 +151,16 @@ class RegistrationFOSUser1Controller extends Controller
             }
 
             // If the request was Ajax based and the registration was successful
-            if($this->isAjaxRequest){
+            if ($this->isAjaxRequest) {
                 return $this->onAjaxSuccess($url);
             }
 
             return $response;
         }
-        else {
             // If the request was Ajax based and the registration was not successful
-            if($this->isAjaxRequest){
+            if ($this->isAjaxRequest) {
                 return $this->onAjaxError($formHandler);
             }
-        }
 
         $this->container->get('session')->set('sonata_user_redirect_url', $this->container->get('request')->headers->get('referer'));
 
@@ -172,7 +168,7 @@ class RegistrationFOSUser1Controller extends Controller
             'form' => $form->createView(),
             'page' => $this->page,
             'mobile' => $this->serveMobile,
-            'logged_username' => $this->userName
+            'logged_username' => $this->userName,
         );
 
         // Render register page
@@ -202,7 +198,7 @@ class RegistrationFOSUser1Controller extends Controller
             $this->publishStates
         );
 
-        if(!$accessAllowedForUserRole){
+        if (!$accessAllowedForUserRole) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
@@ -221,7 +217,7 @@ class RegistrationFOSUser1Controller extends Controller
             'user' => $user,
             'page' => $this->page,
             'mobile' => $this->serveMobile,
-            'logged_username' => $this->userName
+            'logged_username' => $this->userName,
         );
 
         // Render register check email page
@@ -291,7 +287,7 @@ class RegistrationFOSUser1Controller extends Controller
             $this->publishStates
         );
 
-        if(!$accessAllowedForUserRole){
+        if (!$accessAllowedForUserRole) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
@@ -301,7 +297,7 @@ class RegistrationFOSUser1Controller extends Controller
             'user' => $user,
             'page' => $this->page,
             'mobile' => $this->serveMobile,
-            'logged_username' => $this->userName
+            'logged_username' => $this->userName,
         );
 
         // Render register page
@@ -340,7 +336,7 @@ class RegistrationFOSUser1Controller extends Controller
     }
 
     /**
-     * Extend with new method to handle Ajax response with errors
+     * Extend with new method to handle Ajax response with errors.
      *
      * @param RegistrationFormHandler $formHandler
      *
@@ -355,7 +351,7 @@ class RegistrationFOSUser1Controller extends Controller
         $ajaxFormData = array(
             'errors' => $errorList,
             'formMessage' => $formMessage,
-            'hasErrors' => $formHasErrors
+            'hasErrors' => $formHasErrors,
         );
 
         $ajaxFormResponse = new Response(json_encode($ajaxFormData));
@@ -365,9 +361,9 @@ class RegistrationFOSUser1Controller extends Controller
     }
 
     /**
-     * Extend with new method to handle Ajax response with success
+     * Extend with new method to handle Ajax response with success.
      *
-     * @param String $url
+     * @param string $url
      *
      * @return Response
      */
@@ -382,7 +378,7 @@ class RegistrationFOSUser1Controller extends Controller
             'errors' => $errorList,
             'formMessage' => $formMessage,
             'hasErrors' => $formHasErrors,
-            'redirectURL' => $redirectURL
+            'redirectURL' => $redirectURL,
         );
 
         $ajaxFormResponse = new Response(json_encode($ajaxFormData));

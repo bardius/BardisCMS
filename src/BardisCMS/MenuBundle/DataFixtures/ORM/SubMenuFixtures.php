@@ -1,24 +1,25 @@
 <?php
 
 /*
- * Menu Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\MenuBundle\DataFixtures\ORM;
 
+use BardisCMS\MenuBundle\Entity\Menu;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use BardisCMS\MenuBundle\Entity\Menu;
 
-class SubMenuFixtures extends AbstractFixture implements OrderedFixtureInterface {
-
-    public function load(ObjectManager $manager) {
-
+class SubMenuFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
+    public function load(ObjectManager $manager)
+    {
         $menuProfileEditPage = new Menu();
         $menuProfileEditPage->setPage($manager->merge($this->getReference('pageuser_edit_profile')));
         $menuProfileEditPage->setTitle('Manage Profile');
@@ -49,8 +50,8 @@ class SubMenuFixtures extends AbstractFixture implements OrderedFixtureInterface
         $this->addReference('menuLogoutPage', $menuLogoutPage);
     }
 
-    public function getOrder() {
+    public function getOrder()
+    {
         return 17;
     }
-
 }

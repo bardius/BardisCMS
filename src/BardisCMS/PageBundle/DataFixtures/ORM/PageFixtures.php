@@ -1,23 +1,25 @@
 <?php
 
 /*
- * Page Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\PageBundle\DataFixtures\ORM;
 
+use BardisCMS\PageBundle\Entity\Page;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use BardisCMS\PageBundle\Entity\Page;
 
-class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
-
-    public function load(ObjectManager $manager) {
+class PageFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
+    public function load(ObjectManager $manager)
+    {
         $pagehome = new Page();
         $pagehome->setDate(new \DateTime());
         $pagehome->setTitle('Home');
@@ -346,8 +348,8 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $this->addReference('pageuser_edit_auth', $pageuser_edit_auth);
     }
 
-    public function getOrder() {
+    public function getOrder()
+    {
         return 9;
     }
-
 }

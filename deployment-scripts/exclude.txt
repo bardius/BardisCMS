@@ -43,10 +43,12 @@ node_modules/
 /README.md
 /build.xml
 /phpunit.xml
+/phpunit.xml
 /.insight.yml
 /.travis.yml
 /*.sample
-/update-release-version.sh
+/php-cs-fixer.phar
+/.php_cs
 
 /app/logs
 /app/logs/*

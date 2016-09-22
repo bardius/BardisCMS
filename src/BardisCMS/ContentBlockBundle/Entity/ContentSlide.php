@@ -1,26 +1,26 @@
 <?php
 
 /*
- * ContentBlock Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\ContentBlockBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Application\Sonata\MediaBundle\Entity\Media;
 
 /**
- * BardisCMS\ContentBlockBundle\Entity\ContentSlide
+ * BardisCMS\ContentBlockBundle\Entity\ContentSlide.
  *
  * @ORM\Table(name="content_slides")
  * @ORM\Entity
  */
-class ContentSlide {
-
+class ContentSlide
+{
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -45,73 +45,82 @@ class ContentSlide {
     protected $imageLinkURL = null;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * Set imagefile
+     * Set imagefile.
      *
      * @param Application\Sonata\MediaBundle\Entity\Media $imagefile
+     *
      * @return ContentImage
      */
-    public function setImagefile(\Application\Sonata\MediaBundle\Entity\Media $imagefile = null) {
+    public function setImagefile(\Application\Sonata\MediaBundle\Entity\Media $imagefile = null)
+    {
         $this->imagefile = $imagefile;
+
         return $this;
     }
 
     /**
-     * Get imagefile
+     * Get imagefile.
      *
-     * @return Application\Sonata\MediaBundle\Entity\Media 
+     * @return Application\Sonata\MediaBundle\Entity\Media
      */
-    public function getImagefile() {
+    public function getImagefile()
+    {
         return $this->imagefile;
     }
 
     /**
-     * Set imageLinkTitle
+     * Set imageLinkTitle.
      *
      * @param string $imageLinkTitle
      */
-    public function setImageLinkTitle($imageLinkTitle) {
+    public function setImageLinkTitle($imageLinkTitle)
+    {
         $this->imageLinkTitle = $imageLinkTitle;
 
         return $this;
     }
 
     /**
-     * Get imageLinkTitle
+     * Get imageLinkTitle.
      *
-     * @return string 
+     * @return string
      */
-    public function getImageLinkTitle() {
+    public function getImageLinkTitle()
+    {
         return $this->imageLinkTitle;
     }
 
     /**
-     * Set imageLinkURL
+     * Set imageLinkURL.
      *
-     * @param integer $imageLinkURL
+     * @param int $imageLinkURL
+     *
      * @return ContentImage
      */
-    public function setImageLinkURL($imageLinkURL) {
+    public function setImageLinkURL($imageLinkURL)
+    {
         $this->imageLinkURL = $imageLinkURL;
 
         return $this;
     }
 
     /**
-     * Get imageLinkURL
+     * Get imageLinkURL.
      *
-     * @return integer 
+     * @return int
      */
-    public function getImageLinkURL() {
+    public function getImageLinkURL()
+    {
         return $this->imageLinkURL;
     }
-
 }

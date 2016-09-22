@@ -1,21 +1,20 @@
 <?php
 
 /*
- * Sonata User Bundle Overrides
- * This file is part of the BardisCMS.
- * Manage the extended Sonata User entity with extra information for the users
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\UserBundle\Form\Handler;
 
 use Application\Sonata\UserBundle\Form\Model\UserFilters;
-
+use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\DependencyInjection\ContainerInterface as Container;
 
 class FilterUsersFormHandler
 {
@@ -23,12 +22,11 @@ class FilterUsersFormHandler
     protected $form;
 
     /**
-     * Construct handler for FilterUsersFormHandler
+     * Construct handler for FilterUsersFormHandler.
      *
      * @param FormInterface $form
-     * @param Request $request
-     * @param Container $container
-     *
+     * @param Request       $request
+     * @param Container     $container
      */
     public function __construct(FormInterface $form, Request $request, Container $container)
     {
@@ -37,7 +35,8 @@ class FilterUsersFormHandler
         $this->container = $container;
     }
 
-    public function process() {
+    public function process()
+    {
         $this->form->setData(new UserFilters());
 
         if ('POST' === $this->request->getMethod()) {
@@ -59,9 +58,9 @@ class FilterUsersFormHandler
     }
 
     /**
-     * Extend with a method that returns the errors of the process
+     * Extend with a method that returns the errors of the process.
      *
-     * @return Array
+     * @return array
      */
     public function getErrors()
     {

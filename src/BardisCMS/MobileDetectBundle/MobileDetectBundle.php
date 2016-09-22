@@ -1,17 +1,18 @@
 <?php
 
 /*
- * MobileDetect Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\MobileDetectBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class MobileDetectBundle extends Bundle {
-    
+class MobileDetectBundle extends Bundle
+{
 }

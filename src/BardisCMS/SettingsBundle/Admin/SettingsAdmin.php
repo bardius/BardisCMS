@@ -1,11 +1,12 @@
 <?php
 
 /*
- * Settings Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\SettingsBundle\Admin;
@@ -13,11 +14,11 @@ namespace BardisCMS\SettingsBundle\Admin;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
-use Sonata\CoreBundle\Validator\ErrorElement;
 
-class SettingsAdmin extends AbstractAdmin {
-
-    protected function configureFormFields(FormMapper $formMapper) {
+class SettingsAdmin extends AbstractAdmin
+{
+    protected function configureFormFields(FormMapper $formMapper)
+    {
         $formMapper
                 ->with('Website Settings and Global Variables', array('collapsed' => false))
                 ->add('websiteTitle', null, array('attr' => array(), 'label' => 'Website Title', 'required' => true))
@@ -43,7 +44,8 @@ class SettingsAdmin extends AbstractAdmin {
         ;
     }
 
-    protected function configureListFields(ListMapper $listMapper) {
+    protected function configureListFields(ListMapper $listMapper)
+    {
         $listMapper
                 ->addIdentifier('websiteTitle')
                 ->addIdentifier('itemsPerPage')
@@ -64,11 +66,10 @@ class SettingsAdmin extends AbstractAdmin {
                 ->add('_action', 'actions', array(
                     'actions' => array(
                         'edit' => array(
-                            'template' => 'SettingsBundle:Admin:edit.html.twig'
-                        )
-                    )
+                            'template' => 'SettingsBundle:Admin:edit.html.twig',
+                        ),
+                    ),
                 )
         );
     }
-
 }

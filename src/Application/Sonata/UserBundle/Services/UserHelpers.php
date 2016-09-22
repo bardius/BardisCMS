@@ -1,28 +1,29 @@
 <?php
 
 /*
- * Sonata User Bundle Overrides
- * This file is part of the BardisCMS.
- * Manage the extended Sonata User entity with extra information for the users
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\UserBundle\Services;
 
-use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
+use Symfony\Component\Security\Core\SecurityContext;
 
-class UserHelpers {
-
+class UserHelpers
+{
     private $securityContext;
 
     private $em;
     private $conn;
 
-    public function __construct(SecurityContext $securityContext, EntityManager $em) {
+    public function __construct(SecurityContext $securityContext, EntityManager $em)
+    {
         $this->securityContext = $securityContext;
         $this->em = $em;
         $this->conn = $em->getConnection();
@@ -31,18 +32,18 @@ class UserHelpers {
     /**
      * Get the Logged User Highest Role.
      * Currently three user roles are user for simple ACL
-     * ROLE_SUPER_ADMIN, ROLE_USER, ROLE_ANONYMOUS
+     * ROLE_SUPER_ADMIN, ROLE_USER, ROLE_ANONYMOUS.
      *
-     * @return String
+     * @return string
      */
-    public function getLoggedUserHighestRole() {
-
+    public function getLoggedUserHighestRole()
+    {
         $userRole = 'ROLE_ANONYMOUS';
 
         if ($this->securityContext && $this->securityContext->getToken()) {
             if ($this->securityContext->isGranted('ROLE_SUPER_ADMIN')) {
                 $userRole = 'ROLE_SUPER_ADMIN';
-            } else if ($this->securityContext->isGranted('ROLE_USER')) {
+            } elseif ($this->securityContext->isGranted('ROLE_USER')) {
                 $userRole = 'ROLE_USER';
             }
         }
@@ -51,11 +52,12 @@ class UserHelpers {
     }
 
     /**
-     * Get the logged user
+     * Get the logged user.
      *
      * @return User
      */
-    public function getLoggedUser() {
+    public function getLoggedUser()
+    {
         // Getting the logged in user
         //$user = $this->container->get('security.context')->getToken()->getUser();
         $user = $this->securityContext->getToken()->getUser();
@@ -64,11 +66,12 @@ class UserHelpers {
     }
 
     /**
-     * Get the logged user username
+     * Get the logged user username.
      *
-     * @return String
+     * @return string
      */
-    public function getLoggedUserUsername() {
+    public function getLoggedUserUsername()
+    {
         // Getting the logged in user
         $username = $this->securityContext->getToken()->getUser()->getUsername();
 
@@ -76,13 +79,14 @@ class UserHelpers {
     }
 
     /**
-     * Find user by username
+     * Find user by username.
      *
      * @param string $userName
      *
      * @return User
      */
-    public function getUserByUsername($userName) {
+    public function getUserByUsername($userName)
+    {
         $user = null;
 
         // Getting user from database
@@ -94,11 +98,12 @@ class UserHelpers {
     }
 
     /**
-     * Retrieving the security identity of the currently logged-in user
+     * Retrieving the security identity of the currently logged-in user.
      *
      * @return UserSecurityIdentity
      */
-    public function getLoggedUserSecurityIdentity() {
+    public function getLoggedUserSecurityIdentity()
+    {
         // Getting the logged in user
         $user = $this->getLoggedUser();
 
@@ -107,5 +112,4 @@ class UserHelpers {
 
         return $securityIdentity;
     }
-
 }

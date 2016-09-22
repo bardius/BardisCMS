@@ -1,25 +1,21 @@
 <?php
 
 /*
- * Sonata User Bundle Overrides
- * This file is part of the BardisCMS.
- * Manage the extended Sonata User entity with extra information for the users
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\UserBundle\Entity;
 
-use Sonata\UserBundle\Entity\BaseUser as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Application\Sonata\MediaBundle\Entity\Media;
-
+use Sonata\UserBundle\Entity\BaseUser as BaseUser;
 
 /**
- * User model and constants definitions to emulate Enum type behaviour
+ * User model and constants definitions to emulate Enum type behaviour.
  */
 class User extends BaseUser
 {
@@ -31,8 +27,8 @@ class User extends BaseUser
     const TITLE_PROF = 'prof';
 
     const GENDER_UNKNOWN = 'gender_unknown';
-    const GENDER_FEMALE  = 'gender_female';
-    const GENDER_MALE    = 'gender_male';
+    const GENDER_FEMALE = 'gender_female';
+    const GENDER_MALE = 'gender_male';
 
     const QUESTION_SPOUSE = 'spouse_name';
     const QUESTION_MAIDEN_NAME = 'maiden_name';
@@ -67,7 +63,7 @@ class User extends BaseUser
     }
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -80,14 +76,14 @@ class User extends BaseUser
      *
      * default to unknown
      */
-    protected $gender = USER::GENDER_UNKNOWN;
+    protected $gender = self::GENDER_UNKNOWN;
 
     /**
      * @var string
      *
      * default to London
      */
-    protected $timezone = User::TIMEZONE_LONDON;
+    protected $timezone = self::TIMEZONE_LONDON;
 
     /**
      * @var string
@@ -104,7 +100,7 @@ class User extends BaseUser
      *
      * default to en
      */
-    protected $language = User::LANGUAGE_EN;
+    protected $language = self::LANGUAGE_EN;
 
     /**
      * @var string
@@ -151,14 +147,14 @@ class User extends BaseUser
      *
      * default to GB
      */
-    protected $countryCode = User::COUNTRY_EN;
+    protected $countryCode = self::COUNTRY_EN;
 
     /**
      * @var string
      *
      * default to GBP
      */
-    protected $currencyCode = User::CURRENCY_POUND;
+    protected $currencyCode = self::CURRENCY_POUND;
 
     /**
      * @var string
@@ -166,7 +162,7 @@ class User extends BaseUser
     protected $mobile;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $termsAccepted;
 
@@ -175,10 +171,10 @@ class User extends BaseUser
      *
      * default to register
      */
-    protected $campaign = User::CAMPAIGN_REGISTER;
+    protected $campaign = self::CAMPAIGN_REGISTER;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $isSystemUser;
 
@@ -488,7 +484,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isTermsAccepted()
     {
@@ -496,7 +492,7 @@ class User extends BaseUser
     }
 
     /**
-     * @param boolean $termsAccepted
+     * @param bool $termsAccepted
      */
     public function setTermsAccepted($termsAccepted)
     {
@@ -520,7 +516,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isIsSystemUser()
     {
@@ -528,7 +524,7 @@ class User extends BaseUser
     }
 
     /**
-     * @param boolean $isSystemUser
+     * @param bool $isSystemUser
      */
     public function setIsSystemUser($isSystemUser)
     {
@@ -551,48 +547,53 @@ class User extends BaseUser
         $this->failedAttempts = $failedAttempts;
     }
 
-
-
     /**
-     * Set userAvatar
+     * Set userAvatar.
      *
      * @param \Application\Sonata\MediaBundle\Entity\Media $userAvatar
+     *
      * @return User
      */
-    public function setUserAvatar(\Application\Sonata\MediaBundle\Entity\Media $userAvatar = null) {
+    public function setUserAvatar(\Application\Sonata\MediaBundle\Entity\Media $userAvatar = null)
+    {
         $this->userAvatar = $userAvatar;
+
         return $this;
     }
 
     /**
-     * Get userAvatar
+     * Get userAvatar.
      *
      * @return \Application\Sonata\MediaBundle\Entity\Media
      */
-    public function getUserAvatar() {
+    public function getUserAvatar()
+    {
         return $this->userAvatar;
     }
 
     /**
-     * Set userHeroImage
+     * Set userHeroImage.
      *
      * @param \Application\Sonata\MediaBundle\Entity\Media $userHeroImage
+     *
      * @return User
      */
-    public function setUserHeroImage(\Application\Sonata\MediaBundle\Entity\Media $userHeroImage = null) {
+    public function setUserHeroImage(\Application\Sonata\MediaBundle\Entity\Media $userHeroImage = null)
+    {
         $this->userHeroImage = $userHeroImage;
+
         return $this;
     }
 
     /**
-     * Get userHeroImage
+     * Get userHeroImage.
      *
      * @return \Application\Sonata\MediaBundle\Entity\Media
      */
-    public function getUserHeroImage() {
+    public function getUserHeroImage()
+    {
         return $this->userHeroImage;
     }
-
 
     /**
      * @param string $email
@@ -630,9 +631,9 @@ class User extends BaseUser
     public static function getGenderList()
     {
         return array(
-            User::GENDER_UNKNOWN => 'gender_unknown',
-            User::GENDER_FEMALE  => 'gender_female',
-            User::GENDER_MALE    => 'gender_male',
+            self::GENDER_UNKNOWN => 'gender_unknown',
+            self::GENDER_FEMALE => 'gender_female',
+            self::GENDER_MALE => 'gender_male',
         );
     }
 
@@ -644,12 +645,12 @@ class User extends BaseUser
     public static function getTitleList()
     {
         return array(
-            User::TITLE_MR      => 'mr',
-            User::TITLE_MS      => 'ms',
-            User::TITLE_MRS     => 'mrs',
-            User::TITLE_MISS    => 'miss',
-            User::TITLE_DR      => 'dr',
-            User::TITLE_PROF    => 'prof',
+            self::TITLE_MR => 'mr',
+            self::TITLE_MS => 'ms',
+            self::TITLE_MRS => 'mrs',
+            self::TITLE_MISS => 'miss',
+            self::TITLE_DR => 'dr',
+            self::TITLE_PROF => 'prof',
         );
     }
 
@@ -661,11 +662,11 @@ class User extends BaseUser
     public static function getSecretQuestionList()
     {
         return array(
-            User::QUESTION_SPOUSE       => 'spouse_name',
-            User::QUESTION_MAIDEN_NAME  => 'maiden_name',
-            User::QUESTION_CAR          => 'first_car',
-            User::QUESTION_PET          => 'first_pet',
-            User::QUESTION_SCHOOL       => 'first_school',
+            self::QUESTION_SPOUSE => 'spouse_name',
+            self::QUESTION_MAIDEN_NAME => 'maiden_name',
+            self::QUESTION_CAR => 'first_car',
+            self::QUESTION_PET => 'first_pet',
+            self::QUESTION_SCHOOL => 'first_school',
         );
     }
 
@@ -677,32 +678,32 @@ class User extends BaseUser
     public static function getCurrencyCodeList()
     {
         return array(
-            User::CURRENCY_POUND    => 'GBP',
-            User::CURRENCY_EURO     => 'EUR',
-            User::CURRENCY_USD      => 'USD',
+            self::CURRENCY_POUND => 'GBP',
+            self::CURRENCY_EURO => 'EUR',
+            self::CURRENCY_USD => 'USD',
         );
     }
 
     /**
      * Returns if Date of birth is valid.
      *
-     * @return boolean
+     * @return bool
      */
     public function isValidDateOfBirth()
     {
         $todaysDate = new \DateTime();
 
-        return ($this->dateOfBirth < $todaysDate);
+        return $this->dateOfBirth < $todaysDate;
     }
 
     /**
      * Returns if password is legal.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSafePassword()
     {
-        return ($this->email != $this->password) && ($this->username != $this->password);
+        return ($this->email !== $this->password) && ($this->username !== $this->password);
     }
 
     /**
@@ -714,5 +715,4 @@ class User extends BaseUser
     {
         return $this->getUsername() ?: '-';
     }
-
 }

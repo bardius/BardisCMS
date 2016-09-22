@@ -1,29 +1,30 @@
 <?php
 
 /*
- * ContentBlock Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\ContentBlockBundle\Admin\Form\Type;
 
-use Symfony\Component\Form\Extension\Core\Type;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\EventListener\ResizeFormListener;
+use Symfony\Component\Form\Extension\Core\Type;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
-
-class ContentImageCollectionType extends CollectionType {
-
+class ContentImageCollectionType extends CollectionType
+{
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
         if ($options['allow_add'] && $options['prototype']) {
             $prototype = $builder->create(
                 $options['prototype_name'],
@@ -54,10 +55,11 @@ class ContentImageCollectionType extends CollectionType {
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver) {
-
+    public function configureOptions(OptionsResolver $resolver)
+    {
         $entryOptionsNormalizer = function (Options $options, $value) {
             $value['block_name'] = 'entry';
+
             return $value;
         };
 
@@ -65,6 +67,7 @@ class ContentImageCollectionType extends CollectionType {
             if (null !== $value) {
                 @trigger_error('The form option "options" is deprecated since version 2.8 and will be removed in 3.0. Use "entry_options" instead.', E_USER_DEPRECATED);
             }
+
             return $entryOptionsNormalizer($options, $value);
         };
 
@@ -72,6 +75,7 @@ class ContentImageCollectionType extends CollectionType {
             if (null !== $value) {
                 @trigger_error('The form option "type" is deprecated since version 2.8 and will be removed in 3.0. Use "entry_type" instead.', E_USER_DEPRECATED);
             }
+
             return $value;
         };
 
@@ -79,6 +83,7 @@ class ContentImageCollectionType extends CollectionType {
             if (null !== $options['type']) {
                 return $options['type'];
             }
+
             return __NAMESPACE__.'\TextType';
         };
 
@@ -86,6 +91,7 @@ class ContentImageCollectionType extends CollectionType {
             if (1 === count($options['options']) && isset($options['block_name'])) {
                 return array();
             }
+
             return $options['options'];
         };
 
@@ -100,7 +106,7 @@ class ContentImageCollectionType extends CollectionType {
             'entry_type' => $entryType,
             'entry_options' => $entryOptions,
             'delete_empty' => false,
-            'required' => false
+            'required' => false,
         ));
 
         $resolver->setNormalizer('type', $typeNormalizer);
@@ -108,12 +114,14 @@ class ContentImageCollectionType extends CollectionType {
         $resolver->setNormalizer('entry_options', $entryOptionsNormalizer);
     }
 
-    public function getName() {
+    public function getName()
+    {
         return $this->getBlockPrefix();
     }
 
     // Define the name of the form to call it for rendering
-    public function getBlockPrefix() {
+    public function getBlockPrefix()
+    {
         return 'contentimagecollection';
     }
 }

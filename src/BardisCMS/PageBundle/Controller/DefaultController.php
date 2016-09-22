@@ -1,28 +1,26 @@
 <?php
 
 /*
- * Page Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\PageBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
-use FOS\UserBundle\Model\UserInterface;
-
 use BardisCMS\PageBundle\Entity\Page as Page;
-
 use BardisCMS\PageBundle\Form\Type\FilterPagesFormType;
+use FOS\UserBundle\Model\UserInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-class DefaultController extends Controller {
-
+class DefaultController extends Controller
+{
     // Adding variables required for the rendering of pages
     protected $container;
     private $pageRequest;
@@ -44,7 +42,8 @@ class DefaultController extends Controller {
     private $eTagHash;
 
     // Override the ContainerAware setContainer to accommodate the extra variables
-    public function setContainer(ContainerInterface $container = null) {
+    public function setContainer(ContainerInterface $container = null)
+    {
         $this->container = $container;
 
         // Setting the scoped variables required for the rendering of the page
@@ -67,7 +66,7 @@ class DefaultController extends Controller {
         $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 
         // Set the flag for allowing HTTP cache
-        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') === 'prod' && $this->settings->getActivateHttpCache();
 
         // Check if request was Ajax based
         $this->isAjaxRequest = $this->get('bardiscms_page.services.ajax_detection')->isAjaxRequest();
@@ -83,8 +82,8 @@ class DefaultController extends Controller {
     }
 
     // Get the page id based on alias from route
-    public function aliasAction($alias = '/', $extraParams = null, $currentpage = 0, $totalpageitems = 0, Request $request) {
-
+    public function aliasAction($alias, $extraParams, $currentpage, $totalpageitems, Request $request)
+    {
         $this->pageRequest = $request;
         $this->alias = $alias;
         $this->extraParams = $extraParams;
@@ -101,7 +100,7 @@ class DefaultController extends Controller {
         // Calculate the ETag hash that will be used for the HTTP Headers of the response
         // TODO: calculate the getDateLastModified properly based on the contents of  the page
         $this->eTagHash = $this->get('bardiscms_page.services.etag_header_hash_provider')->getETagHash(
-            $this->alias . '?' . $this->extraParams,
+            $this->alias.'?'.$this->extraParams,
             $this->page->getPublishState(),
             $this->page->getDateLastModified(),
             $this->userName
@@ -115,11 +114,12 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Render a page based on the id and the render variables from the settings and the routing
+     * Render a page based on the id and the render variables from the settings and the routing.
      *
      * @return Response
      */
-    public function showPageAction() {
+    public function showPageAction()
+    {
 
         // Simple publishing ACL based on publish state and user Allowed Publish States
         $accessAllowedForUserRole = $this->get('bardiscms_page.services.helpers')->isUserAccessAllowedByRole(
@@ -127,7 +127,7 @@ class DefaultController extends Controller {
             $this->publishStates
         );
 
-        if(!$accessAllowedForUserRole){
+        if (!$accessAllowedForUserRole) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
@@ -150,7 +150,7 @@ class DefaultController extends Controller {
                     $invalidationResponse->setNotModified();
 
                     return $invalidationResponse;
-                } else if (!$this->pageRequest->headers->get('if_none_match')) {
+                } elseif (!$this->pageRequest->headers->get('if_none_match')) {
                     // Return the 304 Status Response (with empty content) immediately
                     $invalidationResponse->setNotModified();
 
@@ -179,12 +179,12 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Render the proper action/view depending on page type
+     * Render the proper action/view depending on page type.
      *
      * @return Response
      */
-    protected function renderPage() {
-
+    protected function renderPage()
+    {
         switch ($this->page->getPagetype()) {
 
             case 'category_page':
@@ -224,7 +224,7 @@ class DefaultController extends Controller {
                 $template = $this->renderView('PageBundle:Default:page.html.twig', array(
                     'page' => $this->page,
                     'logged_username' => $this->userName,
-                    'mobile' => $this->serveMobile
+                    'mobile' => $this->serveMobile,
                 ), $response);
 
                 $response->setContent($template);
@@ -234,14 +234,14 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Get and normalise the filtering arguments to use with the actions
+     * Get and normalise the filtering arguments to use with the actions.
      *
      * @param Request $request
      *
      * @return Response
      */
-    public function filterPagesAction(Request $request) {
-
+    public function filterPagesAction(Request $request)
+    {
         $filterTags = 'all';
         $filterCategories = 'all';
 
@@ -250,7 +250,7 @@ class DefaultController extends Controller {
         $filterData = null;
 
         // If the filter form has been submitted
-        if ($request->getMethod() == 'POST') {
+        if ($request->getMethod() === 'POST') {
 
             // Bind the data with the form
             $filterForm->handleRequest($request);
@@ -264,7 +264,7 @@ class DefaultController extends Controller {
         }
 
         // Use the filters based on the routing structure
-        $this->extraParams = urlencode($filterTags) . '|' . urlencode($filterCategories);
+        $this->extraParams = urlencode($filterTags).'|'.urlencode($filterCategories);
 
         // Generate the proper route for the required results
         $url = $this->get('router')->generate(
@@ -278,12 +278,12 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Get and display all items from all bundles in the sitemap xml
+     * Get and display all items from all bundles in the sitemap xml.
      *
      * @return Response
      */
-    public function sitemapAction() {
-
+    public function sitemapAction()
+    {
         $page_pages = $this->getDoctrine()->getRepository('PageBundle:Page')->getSitemapList($this->publishStates);
         $blog_pages = $this->getDoctrine()->getRepository('BlogBundle:Blog')->getSitemapList($this->publishStates);
 
@@ -305,7 +305,7 @@ class DefaultController extends Controller {
         $response->sendHeaders();
 
         $template = $this->renderView('PageBundle:Default:sitemap.xml.twig', array(
-            'sitemapList' => $sitemapList
+            'sitemapList' => $sitemapList,
         ), $response);
 
         $response->setContent($template);
@@ -314,11 +314,12 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Render the sitemap xsl to style the xml of the sitemap
+     * Render the sitemap xsl to style the xml of the sitemap.
      *
      * @return Response
      */
-    public function sitemapxslAction() {
+    public function sitemapxslAction()
+    {
         $response = new Response();
 
         if ($this->enableHTTPCache) {
@@ -342,11 +343,12 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Render the home page page type
+     * Render the home page page type.
      *
      * @return Response
      */
-    protected function renderHomePage() {
+    protected function renderHomePage()
+    {
 
         // Render homepage page type
         $categoryIds = $this->get('bardiscms_page.services.helpers')->getCategoryFilterIds($this->page->getCategories()->toArray());
@@ -359,7 +361,7 @@ class DefaultController extends Controller {
         $pages = array_merge($page_pages, $blog_pages);
 
         // Sort all the items based on custom sorting
-        usort($pages, array("BardisCMS\PageBundle\Controller\DefaultController", "sortHomepageItemsCompare"));
+        usort($pages, array("BardisCMS\PageBundle\Controller\DefaultController", 'sortHomepageItemsCompare'));
 
         $response = new Response();
 
@@ -376,12 +378,12 @@ class DefaultController extends Controller {
         $response->setETag($this->eTagHash);
         $response->sendHeaders();
 
-        $template  = $this->renderView('PageBundle:Default:page.html.twig', array(
+        $template = $this->renderView('PageBundle:Default:page.html.twig', array(
             'page' => $this->page,
             'pages' => $pages,
             'blogs' => $blog_pages,
             'logged_username' => $this->userName,
-            'mobile' => $this->serveMobile
+            'mobile' => $this->serveMobile,
         ), $response);
 
         $response->setContent($template);
@@ -390,12 +392,12 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Render tag list page type
+     * Render tag list page type.
      *
      * @return Response
      */
-    protected function renderTagListPage() {
-
+    protected function renderTagListPage()
+    {
         $filterForm = $this->createForm(new FilterPagesFormType());
         $filterData = $this->get('bardiscms_page.services.helpers')->getRequestedFilters($this->extraParams);
         $tagIds = $this->get('bardiscms_page.services.helpers')->getTagFilterIds($filterData['tags']->toArray());
@@ -450,7 +452,7 @@ class DefaultController extends Controller {
             'totalpageitems' => $this->totalpageitems,
             'filterForm' => $filterForm->createView(),
             'logged_username' => $this->userName,
-            'mobile' => $this->serveMobile
+            'mobile' => $this->serveMobile,
         ), $response);
 
         $response->setContent($template);
@@ -459,11 +461,12 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Render category list page type
+     * Render category list page type.
      *
      * @return Response
      */
-    protected function renderCategoryPage() {
+    protected function renderCategoryPage()
+    {
         $tagIds = $this->get('bardiscms_page.services.helpers')->getTagFilterIds($this->page->getTags()->toArray());
         $categoryIds = $this->get('bardiscms_page.services.helpers')->getCategoryFilterIds($this->page->getCategories()->toArray());
 
@@ -513,7 +516,7 @@ class DefaultController extends Controller {
             'linkUrlParams' => $this->linkUrlParams,
             'totalpageitems' => $this->totalpageitems,
             'logged_username' => $this->userName,
-            'mobile' => $this->serveMobile
+            'mobile' => $this->serveMobile,
         ), $response);
 
         $response->setContent($template);
@@ -522,13 +525,14 @@ class DefaultController extends Controller {
     }
 
     /**
-     * render and handle the contact form page
+     * render and handle the contact form page.
      *
      * @param Request $request
      *
      * @return Response
      */
-    protected function processContactForm(Request $request) {
+    protected function processContactForm(Request $request)
+    {
         $formMessage = null;
         $errorList = null;
         $formHasErrors = false;
@@ -538,7 +542,7 @@ class DefaultController extends Controller {
         $contactFormHandler = $this->container->get('bardiscms_page.contact.form.handler');
 
         // If the Contact Form has been submitted
-        if ($request->getMethod() == 'POST') {
+        if ($request->getMethod() === 'POST') {
             $contactFormProcess = $contactFormHandler->process();
 
             // Validate the data and get errors if any
@@ -546,20 +550,19 @@ class DefaultController extends Controller {
                 $formMessage = $this->container->get('translator')->trans('contact_form.response.success', array(), 'BardisCMSPageBundle');
                 $errorList = array();
                 $formHasErrors = false;
-            }
-            else {
+            } else {
                 $formMessage = $this->container->get('translator')->trans('contact_form.response.error', array(), 'BardisCMSPageBundle');
                 $errorList = $this->get('bardiscms_page.services.helpers')->getFormErrorMessages($contactForm);
                 $formHasErrors = true;
             }
 
             // If the request was Ajax based
-            if($this->isAjaxRequest){
+            if ($this->isAjaxRequest) {
                 if ($contactFormProcess) {
                     return $this->onAjaxSuccess('contact.flash.success');
-                } else {
-                    return $this->onAjaxError($contactFormHandler);
                 }
+
+                return $this->onAjaxError($contactFormHandler);
             }
         }
 
@@ -586,7 +589,7 @@ class DefaultController extends Controller {
             'errorList' => $errorList,
             'formHasErrors' => $formHasErrors,
             'logged_username' => $this->userName,
-            'mobile' => $this->serveMobile
+            'mobile' => $this->serveMobile,
         ), $response);
 
         $response->setContent($template);
@@ -595,22 +598,24 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Sort homepage items by the pageOrder value
+     * Sort homepage items by the pageOrder value.
      *
      * @param $introItemA
      * @param $introItemB
      *
-     * @return integer
+     * @return int
      */
-    protected function sortHomepageItemsCompare($introItemA, $introItemB) {
-        if ($introItemA->getPageOrder() == $introItemB->getPageOrder()) {
+    protected function sortHomepageItemsCompare($introItemA, $introItemB)
+    {
+        if ($introItemA->getPageOrder() === $introItemB->getPageOrder()) {
             return 0;
         }
+
         return ($introItemA->getPageOrder() < $introItemB->getPageOrder()) ? -1 : 1;
     }
 
     /**
-     * Extend with new method to handle Ajax response with errors
+     * Extend with new method to handle Ajax response with errors.
      *
      * @param $formHandler
      *
@@ -625,7 +630,7 @@ class DefaultController extends Controller {
         $ajaxFormData = array(
             'errors' => $errorList,
             'formMessage' => $this->container->get('translator')->trans($formMessage, array(), 'BardisCMSPageBundle'),
-            'hasErrors' => $formHasErrors
+            'hasErrors' => $formHasErrors,
         );
 
         $ajaxFormResponse = new Response(json_encode($ajaxFormData));
@@ -635,7 +640,7 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Extend with new method to handle Ajax response with success
+     * Extend with new method to handle Ajax response with success.
      *
      * @return Response
      */
@@ -648,7 +653,7 @@ class DefaultController extends Controller {
         $ajaxFormData = array(
             'errors' => $errorList,
             'formMessage' => $this->container->get('translator')->trans($formMessage, array(), 'BardisCMSPageBundle'),
-            'hasErrors' => $formHasErrors
+            'hasErrors' => $formHasErrors,
         );
 
         $ajaxFormResponse = new Response(json_encode($ajaxFormData));

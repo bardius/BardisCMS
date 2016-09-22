@@ -1,49 +1,46 @@
 <?php
 
 /*
- * Page Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\PageBundle\Entity;
 
+use BardisCMS\CategoryBundle\Entity\Category;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Application\Sonata\MediaBundle\Entity\Media;
-use Doctrine\Common\Collections\ArrayCollection;
-use BardisCMS\ContentBlockBundle\Entity\ContentBlock;
-use BardisCMS\CategoryBundle\Entity\Category;
-use BardisCMS\TagBundle\Entity\Tag;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 
 /**
- * BardisCMS\PageBundle\Entity\Page
+ * BardisCMS\PageBundle\Entity\Page.
  *
  * @ORM\Table(name="pages")
  * @DoctrineAssert\UniqueEntity(fields="alias", message="Alias must be unique")
  * @ORM\Entity(repositoryClass="BardisCMS\PageBundle\Repository\PageRepository")
  */
-class Page {
-
+class Page
+{
     /*
      * Publish states
      */
-    const STATUS_UNPUBLISHED    = 0;
-    const STATUS_PUBLISHED      = 1;
-    const STATUS_PREVIEW        = 2;
-    const STATUS_NONAUTHONLY    = 3;
-    const STATUS_AUTHONLY       = 4;
+    const STATUS_UNPUBLISHED = 0;
+    const STATUS_PUBLISHED = 1;
+    const STATUS_PREVIEW = 2;
+    const STATUS_NONAUTHONLY = 3;
+    const STATUS_AUTHONLY = 4;
 
     /*
      * Error Page statuses
      */
-    const ERROR_405 = "405";
-    const ERROR_404 = "404";
-    const ERROR_403 = "403";
-    const ERROR_401 = "401";
+    const ERROR_405 = '405';
+    const ERROR_404 = '404';
+    const ERROR_403 = '403';
+    const ERROR_401 = '401';
 
     /**
      * @ORM\Id
@@ -183,7 +180,8 @@ class Page {
      */
     private $dateLastModified;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->modalcontentblocks = new \Doctrine\Common\Collections\ArrayCollection();
         $this->extracontentblocks = new \Doctrine\Common\Collections\ArrayCollection();
         $this->secondarycontentblocks = new \Doctrine\Common\Collections\ArrayCollection();
@@ -193,628 +191,721 @@ class Page {
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param \DateTime $date
+     *
      * @return Page
      */
-    public function setDate($date) {
+    public function setDate($date)
+    {
         $this->date = $date;
 
         return $this;
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime
      */
-    public function getDate() {
+    public function getDate()
+    {
         return $this->date;
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
+     *
      * @return Page
      */
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
     }
 
     /**
-     * Set author
+     * Set author.
      *
      * @param string $author
+     *
      * @return Page
      */
-    public function setAuthor($author) {
+    public function setAuthor($author)
+    {
         $this->author = $author;
 
         return $this;
     }
 
     /**
-     * Get author
+     * Get author.
      *
      * @return string
      */
-    public function getAuthor() {
+    public function getAuthor()
+    {
         return $this->author;
     }
 
     /**
-     * Set pageclass
+     * Set pageclass.
      *
      * @param string $pageclass
+     *
      * @return Page
      */
-    public function setPageclass($pageclass) {
+    public function setPageclass($pageclass)
+    {
         $this->pageclass = $pageclass;
 
         return $this;
     }
 
     /**
-     * Get pageclass
+     * Get pageclass.
      *
      * @return string
      */
-    public function getPageclass() {
+    public function getPageclass()
+    {
         return $this->pageclass;
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
+     *
      * @return Page
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
+
         return $this;
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
     /**
-     * Set keywords
+     * Set keywords.
      *
      * @param string $keywords
+     *
      * @return Page
      */
-    public function setKeywords($keywords) {
+    public function setKeywords($keywords)
+    {
         $this->keywords = $keywords;
+
         return $this;
     }
 
     /**
-     * Get keywords
+     * Get keywords.
      *
      * @return string
      */
-    public function getKeywords() {
+    public function getKeywords()
+    {
         return $this->keywords;
     }
 
     /**
-     * Set introtext
+     * Set introtext.
      *
      * @param string $introtext
+     *
      * @return Page
      */
-    public function setIntrotext($introtext) {
+    public function setIntrotext($introtext)
+    {
         $this->introtext = $introtext;
+
         return $this;
     }
 
     /**
-     * Get introtext
+     * Get introtext.
      *
      * @return string
      */
-    public function getIntrotext() {
+    public function getIntrotext()
+    {
         return $this->introtext;
     }
 
     /**
-     * Set introimage
+     * Set introimage.
      *
      * @param \Application\Sonata\MediaBundle\Entity\Media $introimage
+     *
      * @return Page
      */
-    public function setIntroimage(\Application\Sonata\MediaBundle\Entity\Media $introimage = null) {
+    public function setIntroimage(\Application\Sonata\MediaBundle\Entity\Media $introimage = null)
+    {
         $this->introimage = $introimage;
+
         return $this;
     }
 
     /**
-     * Get introimage
+     * Get introimage.
      *
      * @return \Application\Sonata\MediaBundle\Entity\Media
      */
-    public function getIntroimage() {
+    public function getIntroimage()
+    {
         return $this->introimage;
     }
 
     /**
-     * Add introimage
+     * Add introimage.
      *
      * @param \Application\Sonata\MediaBundle\Entity\Media $introimage
+     *
      * @return Page
      */
-    public function addIntroimage(\Application\Sonata\MediaBundle\Entity\Media $introimage) {
+    public function addIntroimage(\Application\Sonata\MediaBundle\Entity\Media $introimage)
+    {
         $this->introimage[] = $introimage;
+
         return $this;
     }
 
     /**
-     * Remove introimage
+     * Remove introimage.
      *
      * @param \Application\Sonata\MediaBundle\Entity\Media $introimage
      */
-    public function removeIntroimage(\Application\Sonata\MediaBundle\Entity\Media $introimage) {
+    public function removeIntroimage(\Application\Sonata\MediaBundle\Entity\Media $introimage)
+    {
         $this->introimage->removeElement($introimage);
     }
 
     /**
-     * Set bgimage
+     * Set bgimage.
      *
      * @param \Application\Sonata\MediaBundle\Entity\Media $bgimage
+     *
      * @return Page
      */
-    public function setBgimage(\Application\Sonata\MediaBundle\Entity\Media $bgimage = null) {
+    public function setBgimage(\Application\Sonata\MediaBundle\Entity\Media $bgimage = null)
+    {
         $this->bgimage = $bgimage;
 
         return $this;
     }
 
     /**
-     * Get bgimage
+     * Get bgimage.
      *
      * @return \Application\Sonata\MediaBundle\Entity\Media
      */
-    public function getBgimage() {
+    public function getBgimage()
+    {
         return $this->bgimage;
     }
 
     /**
-     * Set introclass
+     * Set introclass.
      *
      * @param string $introclass
+     *
      * @return Page
      */
-    public function setIntroclass($introclass) {
+    public function setIntroclass($introclass)
+    {
         $this->introclass = $introclass;
 
         return $this;
     }
 
     /**
-     * Get introclass
+     * Get introclass.
      *
      * @return string
      */
-    public function getIntroclass() {
+    public function getIntroclass()
+    {
         return $this->introclass;
     }
 
     /**
-     * Set pagetype
+     * Set pagetype.
      *
      * @param string $pagetype
+     *
      * @return Page
      */
-    public function setPagetype($pagetype) {
+    public function setPagetype($pagetype)
+    {
         $this->pagetype = $pagetype;
 
         return $this;
     }
 
     /**
-     * Get pagetype
+     * Get pagetype.
      *
      * @return string
      */
-    public function getPagetype() {
+    public function getPagetype()
+    {
         return $this->pagetype;
     }
 
     /**
-     * Add maincontentblocks
+     * Add maincontentblocks.
      *
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks
+     *
      * @return Page
      */
-    public function addMaincontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks) {
+    public function addMaincontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks)
+    {
         $this->maincontentblocks[] = $maincontentblocks;
 
         return $this;
     }
 
     /**
-     * Remove maincontentblocks
+     * Remove maincontentblocks.
      *
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks
      */
-    public function removeMaincontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks) {
+    public function removeMaincontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks)
+    {
         $this->maincontentblocks->removeElement($maincontentblocks);
     }
 
     /**
-     * Get maincontentblocks
+     * Get maincontentblocks.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getMaincontentblocks() {
+    public function getMaincontentblocks()
+    {
         return $this->maincontentblocks;
     }
 
     /**
-     * Add secondarycontentblocks
+     * Add secondarycontentblocks.
      *
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $secondarycontentblocks
+     *
      * @return Page
      */
-    public function addSecondarycontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $secondarycontentblocks) {
+    public function addSecondarycontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $secondarycontentblocks)
+    {
         $this->secondarycontentblocks[] = $secondarycontentblocks;
 
         return $this;
     }
 
     /**
-     * Remove secondarycontentblocks
+     * Remove secondarycontentblocks.
      *
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $secondarycontentblocks
      */
-    public function removeSecondarycontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $secondarycontentblocks) {
+    public function removeSecondarycontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $secondarycontentblocks)
+    {
         $this->secondarycontentblocks->removeElement($secondarycontentblocks);
     }
 
     /**
-     * Get secondarycontentblocks
+     * Get secondarycontentblocks.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getSecondarycontentblocks() {
+    public function getSecondarycontentblocks()
+    {
         return $this->secondarycontentblocks;
     }
 
     /**
-     * Add extracontentblocks
+     * Add extracontentblocks.
      *
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $extracontentblocks
+     *
      * @return Page
      */
-    public function addExtracontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $extracontentblocks) {
+    public function addExtracontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $extracontentblocks)
+    {
         $this->extracontentblocks[] = $extracontentblocks;
 
         return $this;
     }
 
     /**
-     * Remove extracontentblocks
+     * Remove extracontentblocks.
      *
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $extracontentblocks
      */
-    public function removeExtracontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $extracontentblocks) {
+    public function removeExtracontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $extracontentblocks)
+    {
         $this->extracontentblocks->removeElement($extracontentblocks);
     }
 
     /**
-     * Get extracontentblocks
+     * Get extracontentblocks.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getExtracontentblocks() {
+    public function getExtracontentblocks()
+    {
         return $this->extracontentblocks;
     }
 
     /**
-     * Add modalcontentblocks
+     * Add modalcontentblocks.
      *
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks
+     *
      * @return Page
      */
-    public function addModalcontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks) {
+    public function addModalcontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks)
+    {
         $this->modalcontentblocks[] = $modalcontentblocks;
 
         return $this;
     }
 
     /**
-     * Remove modalcontentblocks
+     * Remove modalcontentblocks.
      *
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks
      */
-    public function removeModalcontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks) {
+    public function removeModalcontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks)
+    {
         $this->modalcontentblocks->removeElement($modalcontentblocks);
     }
 
     /**
-     * Get modalcontentblocks
+     * Get modalcontentblocks.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getModalcontentblocks() {
+    public function getModalcontentblocks()
+    {
         return $this->modalcontentblocks;
     }
 
     /**
-     * Add categories
+     * Add categories.
      *
      * @param \BardisCMS\CategoryBundle\Entity\Category $categories
+     *
      * @return Page
      */
-    public function addCategory(\BardisCMS\CategoryBundle\Entity\Category $categories) {
+    public function addCategory(\BardisCMS\CategoryBundle\Entity\Category $categories)
+    {
         $this->categories[] = $categories;
 
         return $this;
     }
 
     /**
-     * Remove categories
+     * Remove categories.
      *
      * @param \BardisCMS\CategoryBundle\Entity\Category $categories
      */
-    public function removeCategory(\BardisCMS\CategoryBundle\Entity\Category $categories) {
+    public function removeCategory(\BardisCMS\CategoryBundle\Entity\Category $categories)
+    {
         $this->categories->removeElement($categories);
     }
 
     /**
-     * Get categories
+     * Get categories.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCategories() {
+    public function getCategories()
+    {
         return $this->categories;
     }
 
     /**
-     * Add tags
+     * Add tags.
      *
      * @param \BardisCMS\TagBundle\Entity\Tag $tags
+     *
      * @return Page
      */
-    public function addTag(\BardisCMS\TagBundle\Entity\Tag $tags) {
+    public function addTag(\BardisCMS\TagBundle\Entity\Tag $tags)
+    {
         $this->tags[] = $tags;
 
         return $this;
     }
 
     /**
-     * Remove tags
+     * Remove tags.
      *
      * @param \BardisCMS\TagBundle\Entity\Tag $tags
      */
-    public function removeTag(\BardisCMS\TagBundle\Entity\Tag $tags) {
+    public function removeTag(\BardisCMS\TagBundle\Entity\Tag $tags)
+    {
         $this->tags->removeElement($tags);
     }
 
     /**
-     * Get tags
+     * Get tags.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getTags() {
+    public function getTags()
+    {
         return $this->tags;
     }
 
     /**
-     * Add categories
+     * Add categories.
      *
      * @param \BardisCMS\CategoryBundle\Entity\Category $categories
+     *
      * @return Page
      */
-    public function addCategories(\BardisCMS\CategoryBundle\Entity\Category $categories) {
+    public function addCategories(\BardisCMS\CategoryBundle\Entity\Category $categories)
+    {
         $this->categories[] = $categories;
 
         return $this;
     }
 
     /**
-     * Remove categories
+     * Remove categories.
      *
      * @param \BardisCMS\CategoryBundle\Entity\Category $categories
      */
-    public function removeCategories(\BardisCMS\CategoryBundle\Entity\Category $categories) {
+    public function removeCategories(\BardisCMS\CategoryBundle\Entity\Category $categories)
+    {
         $this->categories->removeElement($categories);
     }
 
     /**
-     * Set intromediasize
+     * Set intromediasize.
      *
      * @param string $intromediasize
+     *
      * @return Page
      */
-    public function setIntromediasize($intromediasize) {
+    public function setIntromediasize($intromediasize)
+    {
         $this->intromediasize = $intromediasize;
 
         return $this;
     }
 
     /**
-     * Get intromediasize
+     * Get intromediasize.
      *
      * @return string
      */
-    public function getIntromediasize() {
+    public function getIntromediasize()
+    {
         return $this->intromediasize;
     }
 
     /**
-     * Set alias
+     * Set alias.
      *
      * @param string $alias
+     *
      * @return Page
      */
-    public function setAlias($alias) {
+    public function setAlias($alias)
+    {
         $this->alias = $alias;
 
         return $this;
     }
 
     /**
-     * Get alias
+     * Get alias.
      *
      * @return string
      */
-    public function getAlias() {
+    public function getAlias()
+    {
         return $this->alias;
     }
 
     /**
-     * Set showPageTitle
+     * Set showPageTitle.
      *
-     * @param integer $showPageTitle
+     * @param int $showPageTitle
+     *
      * @return Page
      */
-    public function setShowPageTitle($showPageTitle) {
+    public function setShowPageTitle($showPageTitle)
+    {
         $this->showPageTitle = $showPageTitle;
 
         return $this;
     }
 
     /**
-     * Get showPageTitle
+     * Get showPageTitle.
      *
-     * @return integer
+     * @return int
      */
-    public function getShowPageTitle() {
+    public function getShowPageTitle()
+    {
         return $this->showPageTitle;
     }
 
     /**
-     * Add bannercontentblocks
+     * Add bannercontentblocks.
      *
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks
+     *
      * @return Page
      */
-    public function addBannercontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks) {
+    public function addBannercontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks)
+    {
         $this->bannercontentblocks[] = $bannercontentblocks;
 
         return $this;
     }
 
     /**
-     * Remove bannercontentblocks
+     * Remove bannercontentblocks.
      *
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks
      */
-    public function removeBannercontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks) {
+    public function removeBannercontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks)
+    {
         $this->bannercontentblocks->removeElement($bannercontentblocks);
     }
 
     /**
-     * Get bannercontentblocks
+     * Get bannercontentblocks.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getBannercontentblocks() {
+    public function getBannercontentblocks()
+    {
         return $this->bannercontentblocks;
     }
 
     /**
-     * Set pageOrder
+     * Set pageOrder.
      *
-     * @param integer $pageOrder
+     * @param int $pageOrder
+     *
      * @return Page
      */
-    public function setPageOrder($pageOrder) {
+    public function setPageOrder($pageOrder)
+    {
         $this->pageOrder = $pageOrder;
 
         return $this;
     }
 
     /**
-     * Get pageOrder
+     * Get pageOrder.
      *
-     * @return integer
+     * @return int
      */
-    public function getPageOrder() {
+    public function getPageOrder()
+    {
         return $this->pageOrder;
     }
 
     /**
-     * Set publishState
+     * Set publishState.
      *
-     * @param integer $publishState
+     * @param int $publishState
+     *
      * @return Page
      */
-    public function setPublishState($publishState) {
+    public function setPublishState($publishState)
+    {
         $this->publishState = $publishState;
+
         return $this;
     }
 
     /**
-     * Get publishState
+     * Get publishState.
      *
-     * @return integer
+     * @return int
      */
-    public function getPublishState() {
+    public function getPublishState()
+    {
         return $this->publishState;
     }
 
     /**
-     * Get dateLastModified
+     * Get dateLastModified.
      *
-     * @return integer
+     * @return int
      */
-    public function getDateLastModified() {
+    public function getDateLastModified()
+    {
         return $this->dateLastModified;
     }
 
     /**
-     * Set dateLastModified
+     * Set dateLastModified.
      *
-     * @param integer $dateLastModified
+     * @param int $dateLastModified
+     *
      * @return Page
      */
-    public function setDateLastModified($dateLastModified) {
+    public function setDateLastModified($dateLastModified)
+    {
         $this->dateLastModified = $dateLastModified;
 
         return $this;
     }
 
     /**
-     * toString Title
+     * toString Title.
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         if ($this->getTitle()) {
             return (string) $this->getTitle();
-        } else {
-            return (string) 'New Page';
         }
+
+        return (string) 'New Page';
     }
 
     /**
@@ -825,10 +916,10 @@ class Page {
     public static function getErrorStatusList()
     {
         return array(
-            Page::ERROR_405 => "405",
-            Page::ERROR_404 => "404",
-            Page::ERROR_403 => "403",
-            Page::ERROR_401 => "401",
+            self::ERROR_405 => '405',
+            self::ERROR_404 => '404',
+            self::ERROR_403 => '403',
+            self::ERROR_401 => '401',
         );
     }
 
@@ -840,47 +931,49 @@ class Page {
     public static function getPublishStateList()
     {
         return array(
-            Page::STATUS_UNPUBLISHED    => "Unpublished",
-            Page::STATUS_PUBLISHED      => "Published",
-            Page::STATUS_PREVIEW        => "Preview",
-            Page::STATUS_NONAUTHONLY    => "Anonymous Users Only",
-            Page::STATUS_AUTHONLY       => "Authenticated Users Only",
+            self::STATUS_UNPUBLISHED => 'Unpublished',
+            self::STATUS_PUBLISHED => 'Published',
+            self::STATUS_PREVIEW => 'Preview',
+            self::STATUS_NONAUTHONLY => 'Anonymous Users Only',
+            self::STATUS_AUTHONLY => 'Authenticated Users Only',
         );
     }
 
     /**
-     * toString PublishState
+     * toString PublishState.
      *
      * @return string
      */
-    public function getPublishStateAsString() {
+    public function getPublishStateAsString()
+    {
         // Defining the string values of the publish states
         switch ($this->getPublishState()) {
-            case(Page::STATUS_UNPUBLISHED): return "Unpublished";
-            case(Page::STATUS_PUBLISHED): return "Published";
-            case(Page::STATUS_PREVIEW): return "Preview";
-            case(Page::STATUS_NONAUTHONLY): return "Anonymous Users Only";
-            case(Page::STATUS_AUTHONLY): return "Authenticated Users Only";
+            case self::STATUS_UNPUBLISHED: return 'Unpublished';
+            case self::STATUS_PUBLISHED: return 'Published';
+            case self::STATUS_PREVIEW: return 'Preview';
+            case self::STATUS_NONAUTHONLY: return 'Anonymous Users Only';
+            case self::STATUS_AUTHONLY: return 'Authenticated Users Only';
             default: return $this->getPublishState();
         }
     }
 
     /**
-     * toString Pagetype
+     * toString Pagetype.
      *
      * @return string
      */
-    public function getPagetypeAsString() {
+    public function getPagetypeAsString()
+    {
         // Defining the string values of the page types
         switch ($this->getPagetype()) {
-            case('one_columned'): return "One Column Page";
-            case('two_columned'): return "Two Column Page";
-            case('three_columned'): return "Three Column Page";
-            case('category_page'): return "Category Page";
-            case('page_tag_list'): return "Tagged Page List";
-            case('user_profile'): return "User Profile Page";
-            case('system_page'): return "System Page";
-            case('homepage'): return "Homepage";
+            case 'one_columned': return 'One Column Page';
+            case 'two_columned': return 'Two Column Page';
+            case 'three_columned': return 'Three Column Page';
+            case 'category_page': return 'Category Page';
+            case 'page_tag_list': return 'Tagged Page List';
+            case 'user_profile': return 'User Profile Page';
+            case 'system_page': return 'System Page';
+            case 'homepage': return 'Homepage';
             default: return $this->getPagetype();
         }
     }

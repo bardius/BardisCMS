@@ -1,36 +1,40 @@
 <?php
 
 /*
- * ContentBlock Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\ContentBlockBundle\Admin\Form\EventListener;
 
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormFactoryInterface;
 
-class AddContentTypeFieldSubscriber implements EventSubscriberInterface {
-
+class AddContentTypeFieldSubscriber implements EventSubscriberInterface
+{
     private $factory;
 
-    public function __construct(FormFactoryInterface $factory, array $mediasizes) {
+    public function __construct(FormFactoryInterface $factory, array $mediasizes)
+    {
         $this->factory = $factory;
         $this->mediasizes = $mediasizes;
     }
 
-    public static function getSubscribedEvents() {
+    public static function getSubscribedEvents()
+    {
         // Tells the dispatcher that we want to listen on the form.pre_set_data
         // event and that the preSetData method should be called.
         return array(FormEvents::PRE_SET_DATA => 'preSetData');
     }
 
-    public function preSetData(FormEvent $event) {
+    public function preSetData(FormEvent $event)
+    {
         $data = $event->getData();
         $form = $event->getForm();
 
@@ -77,5 +81,4 @@ class AddContentTypeFieldSubscriber implements EventSubscriberInterface {
             default:
         }
     }
-
 }

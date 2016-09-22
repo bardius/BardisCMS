@@ -1,28 +1,26 @@
 <?php
 
 /*
- * Sonata User Bundle Overrides
- * This file is part of the BardisCMS.
- * Manage the extended Sonata User entity with extra information for the users
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\UserBundle\Controller;
 
+use BardisCMS\PageBundle\Entity\Page as Page;
 use FOS\UserBundle\Model\UserInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-use BardisCMS\PageBundle\Entity\Page as Page;
-
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 /**
- * Controller managing the user profile
+ * Controller managing the user profile.
  */
 class ProfileFOSUser1Controller extends Controller
 {
@@ -37,15 +35,16 @@ class ProfileFOSUser1Controller extends Controller
     private $logged_user;
     private $isAjaxRequest;
 
-    const PROFILE_PAGE_ALIAS = "profile";
-    const PROFILE_EDIT_PAGE_ALIAS = "edit-profile";
+    const PROFILE_PAGE_ALIAS = 'profile';
+    const PROFILE_EDIT_PAGE_ALIAS = 'edit-profile';
 
     /**
-     * Override the ContainerAware setContainer to accommodate the extra variables
+     * Override the ContainerAware setContainer to accommodate the extra variables.
      *
      * @param ContainerInterface $container
      */
-    public function setContainer(ContainerInterface $container = null) {
+    public function setContainer(ContainerInterface $container = null)
+    {
         $this->container = $container;
 
         // Setting the scoped variables required for the rendering of the page
@@ -62,7 +61,7 @@ class ProfileFOSUser1Controller extends Controller
         $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 
         // Set the flag for allowing HTTP cache
-        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') === 'prod' && $this->settings->getActivateHttpCache();
 
         // Check if request was Ajax based
         $this->isAjaxRequest = $this->get('bardiscms_page.services.ajax_detection')->isAjaxRequest();
@@ -78,10 +77,10 @@ class ProfileFOSUser1Controller extends Controller
     }
 
     /**
-     * Show the user profile
+     * Show the user profile.
      *
-     * @param String $alias
-     * @param String $userName
+     * @param string $alias
+     * @param string $userName
      *
      * @return Response response
      */
@@ -89,10 +88,9 @@ class ProfileFOSUser1Controller extends Controller
     {
         $this->page = $this->getDoctrine()->getRepository('PageBundle:Page')->findOneByAlias($alias);
 
-        if($userName == 'none' && $this->userName === null){
+        if ($userName === 'none' && $this->userName === null) {
             return $this->redirect($this->generateUrl('sonata_user_profile_list'));
-        }
-        elseif($userName == 'none'){
+        } elseif ($userName === 'none') {
             $userName = $this->userName;
         }
 
@@ -108,7 +106,7 @@ class ProfileFOSUser1Controller extends Controller
             $this->publishStates
         );
 
-        if(!$accessAllowedForUserRole){
+        if (!$accessAllowedForUserRole) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
@@ -133,11 +131,12 @@ class ProfileFOSUser1Controller extends Controller
 
     /**
      * Render the authentication details edit page
-     * that is not used anymore in BardisCMS
+     * that is not used anymore in BardisCMS.
      *
      * @return Response|RedirectResponse
      *
      * @throws AccessDeniedException
+     *
      * @deprecated
      */
     public function editAuthenticationAction()
@@ -171,7 +170,7 @@ class ProfileFOSUser1Controller extends Controller
             'page' => $this->page,
             'logged_username' => $this->userName,
             'mobile' => $this->serveMobile,
-            'logged_username' => $this->userName
+            'logged_username' => $this->userName,
         );
 
         // Render authentication details edit page
@@ -181,7 +180,7 @@ class ProfileFOSUser1Controller extends Controller
     }
 
     /**
-     * Edit the user profile & authentication details
+     * Edit the user profile & authentication details.
      *
      * @return Response|RedirectResponse
      *
@@ -226,79 +225,79 @@ class ProfileFOSUser1Controller extends Controller
         $formSection = $this->container->get('request')->request->get('form_section');
 
         switch ($formSection) {
-            case "generic_details":
+            case 'generic_details':
                 $genericDetailsProcess = $genericDetailsFormHandler->process($user);
                 if ($genericDetailsProcess) {
                     $this->addFlash('fos_user_success', 'profile.flash.updated');
                 }
 
                 // If the request was Ajax based
-                if($this->isAjaxRequest){
+                if ($this->isAjaxRequest) {
                     if ($genericDetailsProcess) {
                         return $this->onAjaxSuccess('profile.flash.updated');
-                    } else {
-                        return $this->onAjaxError($genericDetailsFormHandler);
                     }
+
+                    return $this->onAjaxError($genericDetailsFormHandler);
                 }
                 break;
-            case "contact":
+            case 'contact':
                 $contactDetailsProcess = $contactDetailsFormHandler->process($user);
                 if ($contactDetailsProcess) {
                     $this->addFlash('fos_user_success', 'profile.flash.updated');
                 }
 
                 // If the request was Ajax based
-                if($this->isAjaxRequest){
+                if ($this->isAjaxRequest) {
                     if ($contactDetailsProcess) {
                         return $this->onAjaxSuccess('profile.flash.updated');
-                    } else {
-                        return $this->onAjaxError($contactDetailsFormHandler);
                     }
+
+                    return $this->onAjaxError($contactDetailsFormHandler);
                 }
                 break;
-            case "preferences":
+            case 'preferences':
                 $accountPreferencesProcess = $accountPreferencesFormHandler->process($user);
                 if ($accountPreferencesProcess) {
                     $this->addFlash('fos_user_success', 'profile.flash.updated');
                 }
 
                 // If the request was Ajax based
-                if($this->isAjaxRequest){
+                if ($this->isAjaxRequest) {
                     if ($accountPreferencesProcess) {
                         return $this->onAjaxSuccess('profile.flash.updated');
-                    } else {
-                        return $this->onAjaxError($accountPreferencesFormHandler);
                     }
+
+                    return $this->onAjaxError($accountPreferencesFormHandler);
                 }
                 break;
-            case "media":
+            case 'media':
                 $accountMediaProcess = $accountMediaFormHandler->process($user);
                 if ($accountMediaProcess) {
                     $this->addFlash('fos_user_success', 'profile.flash.updated');
                 }
 
                 // If the request was Ajax based
-                if($this->isAjaxRequest){
+                if ($this->isAjaxRequest) {
                     if ($accountMediaProcess) {
                         return $this->onAjaxSuccess('profile.flash.updated');
-                    } else {
-                        return $this->onAjaxError($accountMediaFormHandler);
                     }
+
+                    return $this->onAjaxError($accountMediaFormHandler);
                 }
                 break;
-            case "password":
+            case 'password':
                 $passwordProcess = $passwordFormHandler->process($user);
                 if ($passwordProcess) {
                     $this->addFlash('fos_user_success', 'change_password.flash.success');
                 }
 
                 // If the request was Ajax based
-                if($this->isAjaxRequest){
+                if ($this->isAjaxRequest) {
                     if ($passwordProcess) {
                         return $this->onAjaxSuccess('profile.flash.updated');
-                    } else {
-                        return $this->onAjaxError($passwordFormHandler);
                     }
+
+                    return $this->onAjaxError($passwordFormHandler);
                 }
                 break;
         }
@@ -311,7 +310,7 @@ class ProfileFOSUser1Controller extends Controller
             'accountMediaForm' => $accountMediaForm->createView(),
             'page' => $this->page,
             'logged_username' => $this->userName,
-            'mobile' => $this->serveMobile
+            'mobile' => $this->serveMobile,
         );
 
         // Render register page
@@ -330,7 +329,7 @@ class ProfileFOSUser1Controller extends Controller
     }
 
     /**
-     * Extend with new method to handle form processing
+     * Extend with new method to handle form processing.
      *
      * @param $formHandler
      * @param $user
@@ -346,17 +345,17 @@ class ProfileFOSUser1Controller extends Controller
         }
 
         // If the request was Ajax based
-        if($this->isAjaxRequest){
+        if ($this->isAjaxRequest) {
             if ($formProcess) {
                 return $this->onAjaxSuccess($flashSuccessMsg);
-            } else {
-                return $this->onAjaxError($formHandler);
             }
+
+            return $this->onAjaxError($formHandler);
         }
     }
 
     /**
-     * Extend with new method to handle Ajax response with errors
+     * Extend with new method to handle Ajax response with errors.
      *
      * @param $formHandler
      *
@@ -371,7 +370,7 @@ class ProfileFOSUser1Controller extends Controller
         $ajaxFormData = array(
             'errors' => $errorList,
             'formMessage' => $this->container->get('translator')->trans($formMessage, array(), 'SonataUserBundle'),
-            'hasErrors' => $formHasErrors
+            'hasErrors' => $formHasErrors,
         );
 
         $ajaxFormResponse = new Response(json_encode($ajaxFormData));
@@ -381,9 +380,9 @@ class ProfileFOSUser1Controller extends Controller
     }
 
     /**
-     * Extend with new method to handle Ajax response with success
+     * Extend with new method to handle Ajax response with success.
      *
-     * @param String $successMsg
+     * @param string $successMsg
      *
      * @return Response
      */
@@ -396,7 +395,7 @@ class ProfileFOSUser1Controller extends Controller
         $ajaxFormData = array(
             'errors' => $errorList,
             'formMessage' => $this->container->get('translator')->trans($formMessage, array(), 'SonataUserBundle'),
-            'hasErrors' => $formHasErrors
+            'hasErrors' => $formHasErrors,
         );
 
         $ajaxFormResponse = new Response(json_encode($ajaxFormData));

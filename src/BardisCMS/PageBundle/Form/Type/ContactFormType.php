@@ -1,40 +1,38 @@
 <?php
 
 /*
- * Page Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\PageBundle\Form\Type;
 
+use BardisCMS\PageBundle\Form\EventListener\SanitizeFieldSubscriber;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-
 use Symfony\Component\Validator\Constraints as Assert;
-use BardisCMS\PageBundle\Form\EventListener\SanitizeFieldSubscriber;
 
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-
-
-class ContactFormType extends AbstractType {
-
+class ContactFormType extends AbstractType
+{
     /**
-     * Construct form for ContactFormType
-     *
+     * Construct form for ContactFormType.
      */
-    public function __construct() {
+    public function __construct()
+    {
     }
 
     // Creating the contact form and the fields
-    public function buildForm(FormBuilderInterface $builder, array $options) {
-
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
         $builder->add('firstname', TextType::class, array(
             'label' => 'contact_form.firstname',
             'translation_domain' => 'BardisCMSPageBundle',
@@ -42,8 +40,8 @@ class ContactFormType extends AbstractType {
             'attr' => array(
                 'placeholder' => '',
                 'title' => 'Please enter your First Name',
-                'maxLength' => 50
-            ))
+                'maxLength' => 50,
+            ), )
         );
 
         $builder->add('surname', TextType::class, array(
@@ -53,8 +51,8 @@ class ContactFormType extends AbstractType {
             'attr' => array(
                 'placeholder' => '',
                 'title' => 'Please enter your Surname',
-                'maxLength' => 50
-            ))
+                'maxLength' => 50,
+            ), )
         );
 
         $builder->add('email', EmailType::class, array(
@@ -64,8 +62,8 @@ class ContactFormType extends AbstractType {
             'attr' => array(
                 'placeholder' => '',
                 'title' => 'Please enter a valid email address',
-                'maxLength' => 150
-            ))
+                'maxLength' => 150,
+            ), )
         );
 
         $builder->add('comment', TextareaType::class, array(
@@ -78,7 +76,7 @@ class ContactFormType extends AbstractType {
                 'maxLength' => 1000,
                 'cols' => 70,
                 'rows' => 8,
-            ))
+            ), )
         );
 
         $builder->add('bottrap', TextType::class, array(
@@ -87,8 +85,8 @@ class ContactFormType extends AbstractType {
             'required' => false,
             'attr' => array(
                 'placeholder' => '',
-                'maxLength' => 1
-            ))
+                'maxLength' => 1,
+            ), )
         );
 
         // Sanitize data to avoid XSS attacks
@@ -96,33 +94,34 @@ class ContactFormType extends AbstractType {
     }
 
     // Adding field validation constraints
-    public function configureOptions(OptionsResolver $resolver) {
+    public function configureOptions(OptionsResolver $resolver)
+    {
         $contactFormConstraints = new Assert\Collection(array(
             'firstname' => array(
                 new Assert\NotBlank(array('message' => 'contact_form.firstname.blank')),
                 new Assert\Regex(array('pattern' => '/[\p{L}][\p{L}\.\- \'\`]+/u', 'match' => true, 'message' => 'contact_form.firstname.invalid_chars')),
                 new Assert\Regex(array('pattern' => '/[\d\!\"\£\$\%\^\*\(\)\_\=\+\[\]\{\}\;\:\@\|\,]/', 'match' => false, 'message' => 'contact_form.firstname.invalid_chars')),
-                new Assert\Length(array('min' => 2, 'max' => 64, 'minMessage' => 'contact_form.firstname.short', 'maxMessage' => 'contact_form.firstname.long'))
+                new Assert\Length(array('min' => 2, 'max' => 64, 'minMessage' => 'contact_form.firstname.short', 'maxMessage' => 'contact_form.firstname.long')),
             ),
             'surname' => array(
                 new Assert\NotBlank(array('message' => 'contact_form.surname.blank')),
                 new Assert\Regex(array('pattern' => '/[\p{L}][\p{L}\.\- \'\`]+/u', 'match' => true, 'message' => 'contact_form.surname.invalid_chars')),
                 new Assert\Regex(array('pattern' => '/[\d\!\"\£\$\%\^\*\(\)\_\=\+\[\]\{\}\;\:\@\|\,]/', 'match' => false, 'message' => 'contact_form.surname.invalid_chars')),
-                new Assert\Length(array('min' => 2, 'max' => 64, 'minMessage' => 'contact_form.surname.short', 'maxMessage' => 'contact_form.surname.long'))
+                new Assert\Length(array('min' => 2, 'max' => 64, 'minMessage' => 'contact_form.surname.short', 'maxMessage' => 'contact_form.surname.long')),
             ),
             'email' => array(
                 new Assert\NotBlank(array('message' => 'contact_form.email.blank')),
                 new Assert\Length(array('min' => 2, 'max' => 255, 'minMessage' => 'contact_form.email.short', 'maxMessage' => 'contact_form.email.long')),
-                new Assert\Email(array('message' => 'contact_form.email.invalid'))
+                new Assert\Email(array('message' => 'contact_form.email.invalid')),
             ),
             'comment' => array(
                 new Assert\NotBlank(array('message' => 'contact_form.comment.blank')),
-                new Assert\Length(array('min' => 2, 'max' => 1000, 'minMessage' => 'contact_form.comment.short', 'maxMessage' => 'contact_form.comment.long'))
+                new Assert\Length(array('min' => 2, 'max' => 1000, 'minMessage' => 'contact_form.comment.short', 'maxMessage' => 'contact_form.comment.long')),
             ),
             'bottrap' => array(
                 new Assert\Blank(array('message' => 'contact_form.bottrap.not_blank')),
-                new Assert\Length(array('max' => 1, 'maxMessage' => 'contact_form.bottrap.not_blank'))
-            )
+                new Assert\Length(array('max' => 1, 'maxMessage' => 'contact_form.bottrap.not_blank')),
+            ),
         ));
 
         $resolver->setDefaults(array(
@@ -135,21 +134,22 @@ class ContactFormType extends AbstractType {
             // a unique key to help generate the secret token
             'csrf_token_id'   => 'contact_form',
             */
-            'constraints' => $contactFormConstraints
+            'constraints' => $contactFormConstraints,
         ));
     }
 
     /**
-     * Define the name of the form to call it for rendering
+     * Define the name of the form to call it for rendering.
      *
      * @return string
-     *
      */
-    public function getBlockPrefix() {
+    public function getBlockPrefix()
+    {
         return 'contactform';
     }
 
-    public function getName() {
+    public function getName()
+    {
         return $this->getBlockPrefix();
     }
 

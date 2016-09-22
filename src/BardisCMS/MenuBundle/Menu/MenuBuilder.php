@@ -1,24 +1,24 @@
 <?php
 
 /*
- * Menu Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\MenuBundle\Menu;
 
-use Knp\Menu\FactoryInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
 use BardisCMS\MenuBundle\Entity\Menu as Menu;
+use Doctrine\ORM\EntityManager;
+use Knp\Menu\FactoryInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
-class MenuBuilder {
-
+class MenuBuilder
+{
     private $factory;
     private $em;
     private $container;
@@ -26,11 +26,12 @@ class MenuBuilder {
     private $allowedAccessLevels;
 
     /**
-     * @param FactoryInterface $factory
-     * @param EntityManager $em
+     * @param FactoryInterface   $factory
+     * @param EntityManager      $em
      * @param ContainerInterface $container
      */
-    public function __construct(FactoryInterface $factory, EntityManager $em, ContainerInterface $container) {
+    public function __construct(FactoryInterface $factory, EntityManager $em, ContainerInterface $container)
+    {
         $this->factory = $factory;
         $this->em = $em;
         $this->container = $container;
@@ -44,24 +45,24 @@ class MenuBuilder {
 
     /**
      * @param Request $request
-     * @param String $menuGroup
-     * @param String $cssClass
-     * @param String $menuItemDecorator
-     * @param String $f6Menu
+     * @param string  $menuGroup
+     * @param string  $cssClass
+     * @param string  $menuItemDecorator
+     * @param string  $f6Menu
      *
      * @return menu
      */
-    public function createMenu(Request $request, $menuGroup, $cssClass, $menuItemDecorator, $f6Menu) {
-
+    public function createMenu(Request $request, $menuGroup, $cssClass, $menuItemDecorator, $f6Menu)
+    {
         $repo = $this->em->getRepository('MenuBundle:Menu');
-        $menuData = $repo->findBy(array("menuGroup" => $menuGroup), array("ordering" => "ASC"));
+        $menuData = $repo->findBy(array('menuGroup' => $menuGroup), array('ordering' => 'ASC'));
 
         $menuData = array_values($menuData);
         $menuData = $this->buildTree($menuData);
 
         $menu = $this->factory->createItem($menuGroup);
         $menu->setChildrenAttribute('class', $cssClass);
-        if($f6Menu !== "false"){
+        if ($f6Menu !== 'false') {
             $menu->setChildrenAttribute('data-responsive-menu', $f6Menu);
         }
 
@@ -76,16 +77,17 @@ class MenuBuilder {
     }
 
     /**
-     * @param Array $elements
-     * @param String $parent
+     * @param array  $elements
+     * @param string $parent
      *
      * @return array
      * */
-    public function buildTree(array &$elements, $parent = '0') {
+    public function buildTree(array &$elements, $parent = '0')
+    {
         $branch = array();
 
         foreach ($elements as $element) {
-            if ($element->getParent() == $parent) {
+            if ($element->getParent() === $parent) {
                 $children = $this->buildTree($elements, $element->getId());
                 if ($children) {
                     $element->children = $children;
@@ -101,17 +103,18 @@ class MenuBuilder {
 
     /**
      * @param MenuItem $menu
-     * @param Array $menuItemList
-     * @param String $menuItemDecorator
+     * @param array    $menuItemList
+     * @param string   $menuItemDecorator
      * */
-    public function setupMenuItem($menu, $menuItemList, $menuItemDecorator) {
+    public function setupMenuItem($menu, $menuItemList, $menuItemDecorator)
+    {
         $menuItemCounter = 0;
 
         foreach ($menuItemList as $menuItem) {
             $menuType = $menuItem->getMenuType();
-            $getPageFunction = 'get' . ucfirst($menuType);
+            $getPageFunction = 'get'.ucfirst($menuType);
 
-            $menuItemCounter++;
+            ++$menuItemCounter;
 
             // Simple publishing ACL based on AccessLevel and user Allowed Access Levels
             $accessAllowedForUserRole = $this->container->get('bardiscms_menu.services.helpers')->isUserAccessAllowedByRole(
@@ -119,10 +122,10 @@ class MenuBuilder {
                 $this->allowedAccessLevels
             );
 
-            if ($menuItem->getPublishstate() != Menu::STATE_UNPUBLISHED && $accessAllowedForUserRole) {
+            if ($menuItem->getPublishstate() !== Menu::STATE_UNPUBLISHED && $accessAllowedForUserRole) {
                 $urlParams = $menuItem->getMenuUrlExtras();
                 if (!empty($urlParams)) {
-                    $urlParams = '/' . urlencode($urlParams);
+                    $urlParams = '/'.urlencode($urlParams);
                 }
 
                 switch ($menuType) {
@@ -135,7 +138,7 @@ class MenuBuilder {
                         }
 
                         $menu->addChild($menuItem->getTitle(), array(
-                            'uri' => $targetURL
+                            'uri' => $targetURL,
                         ));
                         $menu[$menuItem->getTitle()]->setLinkAttribute('target', '_blank');
                         $menu[$menuItem->getTitle()]->setLinkAttribute('rel', 'nofollow');
@@ -150,7 +153,7 @@ class MenuBuilder {
                         }
 
                         $menu->addChild($menuItem->getTitle(), array(
-                            'uri' => $targetURL
+                            'uri' => $targetURL,
                         ));
 
                         break;
@@ -169,11 +172,11 @@ class MenuBuilder {
                             $alias = $this->getPageAlias($pageFunction, ucfirst($menuType));
 
                             if (null === $alias) {
-                                $menu->addChild($menuItem->getTitle(), array('uri' => '/' . $menuItem->getRoute() . '/' . $pageFunction . $urlParams));
+                                $menu->addChild($menuItem->getTitle(), array('uri' => '/'.$menuItem->getRoute().'/'.$pageFunction.$urlParams));
                             } elseif ('index' === $alias) {
                                 $menu->addChild($menuItem->getTitle(), array('uri' => '/'));
                             } else {
-                                $menu->addChild($menuItem->getTitle(), array('uri' => '/' . $alias . $urlParams));
+                                $menu->addChild($menuItem->getTitle(), array('uri' => '/'.$alias.$urlParams));
                             }
                         } else {
                             $menu->addChild($menuItem->getTitle(), array('uri' => '/'));
@@ -189,9 +192,9 @@ class MenuBuilder {
                             $alias = $this->getPageAlias($pageFunction, ucfirst($menuType));
 
                             if (null === $alias) {
-                                $menu->addChild($menuItem->getTitle(), array('uri' => '/' . $menuType . '/' . $menuItem->getRoute() . '/' . $menuItem->$getPageFunction() . $urlParams));
+                                $menu->addChild($menuItem->getTitle(), array('uri' => '/'.$menuType.'/'.$menuItem->getRoute().'/'.$menuItem->$getPageFunction().$urlParams));
                             } else {
-                                $menu->addChild($menuItem->getTitle(), array('uri' => '/' . $menuType . '/' . $alias . $urlParams));
+                                $menu->addChild($menuItem->getTitle(), array('uri' => '/'.$menuType.'/'.$alias.$urlParams));
                             }
                         } else {
                             $menu->addChild($menuItem->getTitle(), array('uri' => '/'));
@@ -204,22 +207,22 @@ class MenuBuilder {
                         $menu[$menuItem->getTitle()]->setLabelAttribute('class', 'divider');
                 }
 
-                $menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemLevel);
-                $menu[$menuItem->getTitle()]->setLinkAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemLevel);
+                $menu[$menuItem->getTitle()]->setAttribute('class', 'item'.$menuItemCounter.' level'.$this->menuItemLevel);
+                $menu[$menuItem->getTitle()]->setLinkAttribute('class', 'item'.$menuItemCounter.' level'.$this->menuItemLevel);
                 $menu[$menuItem->getTitle()]->setLinkAttribute('title', $menuItem->getTitle());
 
-                if ($menuItemDecorator == 'main') {
+                if ($menuItemDecorator === 'main') {
                     if ($menuItem->children !== null) {
-                        $menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemLevel . ' has-submenu');
+                        $menu[$menuItem->getTitle()]->setAttribute('class', 'item'.$menuItemCounter.' level'.$this->menuItemLevel.' has-submenu');
                         $this->menuItemLevel = $this->menuItemLevel + 1;
-                        $menu[$menuItem->getTitle()]->setChildrenAttribute('class', 'menu level' . $this->menuItemLevel);
+                        $menu[$menuItem->getTitle()]->setChildrenAttribute('class', 'menu level'.$this->menuItemLevel);
                         $this->setupMenuItem($menu[$menuItem->getTitle()], $menuItem->children, $menuItemDecorator);
                         $this->menuItemLevel = $this->menuItemLevel - 1;
                     }
                 } else {
                     if ($menuItem->children !== null) {
                         $this->menuItemLevel = $this->menuItemLevel + 1;
-                        $menu[$menuItem->getTitle()]->setAttribute('class', 'item' . $menuItemCounter . ' level' . $this->menuItemLevel);
+                        $menu[$menuItem->getTitle()]->setAttribute('class', 'item'.$menuItemCounter.' level'.$this->menuItemLevel);
                         $this->setupMenuItem($menu[$menuItem->getTitle()], $menuItem->children, $menuItemDecorator);
                         $this->menuItemLevel = $this->menuItemLevel - 1;
                     }
@@ -234,16 +237,16 @@ class MenuBuilder {
     }
 
     /**
-     * @param Integer $pageId
-     * @param String $menuType
+     * @param int    $pageId
+     * @param string $menuType
      */
-    public function getPageAlias($pageId, $menuType) {
-        $repo = $this->em->getRepository(ucfirst($menuType) . 'Bundle:' . ucfirst($menuType));
+    public function getPageAlias($pageId, $menuType)
+    {
+        $repo = $this->em->getRepository(ucfirst($menuType).'Bundle:'.ucfirst($menuType));
         $page = $repo->findOneById($pageId);
 
         $pageAlias = $page->getAlias();
 
         return $pageAlias;
     }
-
 }

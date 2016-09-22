@@ -1,27 +1,28 @@
 <?php
 
 /*
- * Page Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\PageBundle\Admin;
 
+use BardisCMS\PageBundle\Entity\Page as Page;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
-use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Sonata\CoreBundle\Validator\ErrorElement;
+use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\CoreBundle\Validator\ErrorElement;
 
-use BardisCMS\PageBundle\Entity\Page as Page;
-
-class PageAdmin extends AbstractAdmin {
-
-    protected function configureFormFields(FormMapper $formMapper) {
+class PageAdmin extends AbstractAdmin
+{
+    protected function configureFormFields(FormMapper $formMapper)
+    {
         // Getting the container parameters set in the config file that exist after the dependency injection
         $pageSettings = $this->getConfigurationPool()->getContainer()->getParameter('page_settings');
 
@@ -59,7 +60,7 @@ class PageAdmin extends AbstractAdmin {
                         'alias' => 'Set the URL alias',
                         'pagetype' => 'Select the type of the page (page template)',
                         'pageclass' => 'Set the CSS class that wraps the page',
-                        'bgimage' => 'Set the Top Banner Image of the page'
+                        'bgimage' => 'Set the Top Banner Image of the page',
                     ))
                     ->end()
                 ->end()
@@ -69,7 +70,7 @@ class PageAdmin extends AbstractAdmin {
                         ->add('tags', 'entity', array('class' => 'BardisCMS\TagBundle\Entity\Tag', 'choice_label' => 'title', 'expanded' => true, 'multiple' => true, 'label' => 'Associated Tags', 'required' => false))
                     ->setHelps(array(
                         'tags' => 'Select the associated tags',
-                        'categories' => 'Select the associated categories'
+                        'categories' => 'Select the associated categories',
                     ))
                     ->end()
                 ->end()
@@ -84,7 +85,7 @@ class PageAdmin extends AbstractAdmin {
                         'introtext' => 'Set the Text/HTML content to display for category listing items',
                         'introimage' => 'Set the Image content to display for category listing items',
                         'pageOrder' => 'Set the order of this page for the homepage',
-                        'introclass' => 'Set the CSS class that wraps content to display for category listing items'
+                        'introclass' => 'Set the CSS class that wraps content to display for category listing items',
                     ))
                     ->end()
                 ->end()
@@ -94,7 +95,7 @@ class PageAdmin extends AbstractAdmin {
                         ->add('description', null, array('label' => 'Meta Description', 'required' => false))
                     ->setHelps(array(
                         'keywords' => 'Set the keyword metadata of the page of leave empty to autogenerate',
-                        'description' => 'Set the description metadata of the page of leave empty to autogenerate'
+                        'description' => 'Set the description metadata of the page of leave empty to autogenerate',
                     ))
                     ->end()
                 ->end()
@@ -114,7 +115,7 @@ class PageAdmin extends AbstractAdmin {
                                 ->setHelps(array(
                                     'bannercontentblocks' => 'Enter the contents for the top banner',
                                     'maincontentblocks' => 'Enter the contents for the page',
-                                    'modalcontentblocks' => 'Enter the contents for the modal windows'
+                                    'modalcontentblocks' => 'Enter the contents for the modal windows',
                                 ))
                                 ->end()
                             ->end()
@@ -133,7 +134,7 @@ class PageAdmin extends AbstractAdmin {
                                     'bannercontentblocks' => 'Enter the contents for the top banner',
                                     'maincontentblocks' => 'Enter the contents for the left column',
                                     'secondarycontentblocks' => 'Enter the contents for the right column',
-                                    'modalcontentblocks' => 'Enter the contents for the modal windows'
+                                    'modalcontentblocks' => 'Enter the contents for the modal windows',
                                 ))
                                 ->end()
                             ->end()
@@ -153,7 +154,7 @@ class PageAdmin extends AbstractAdmin {
                                 'maincontentblocks' => 'Enter the contents for the left column',
                                 'secondarycontentblocks' => 'Enter the contents for the middle column',
                                 'extracontentblocks' => 'Enter the contents for the right column',
-                                'modalcontentblocks' => 'Enter the contents for the modal windows'
+                                'modalcontentblocks' => 'Enter the contents for the modal windows',
                             ))
                             ->end()
                             ->end()
@@ -174,7 +175,7 @@ class PageAdmin extends AbstractAdmin {
                             ->setHelps(array(
                                 'bannercontentblocks' => 'Enter the contents for the top banner',
                                 'maincontentblocks' => 'Enter the contents that appear below the items list',
-                                'modalcontentblocks' => 'Enter the contents for the modal windows'
+                                'modalcontentblocks' => 'Enter the contents for the modal windows',
                             ))
                             ->end()
                             ->end()
@@ -188,7 +189,7 @@ class PageAdmin extends AbstractAdmin {
                             ->add('modalcontentblocks', 'contentblockcollection', array('attr' => array('class' => 'modalcontentblocks'), 'label' => 'Modal Windows Contents'))
                             ->setHelps(array(
                                 'maincontentblocks' => 'Enter the contents for the page',
-                                'modalcontentblocks' => 'Enter the contents for the modal windows'
+                                'modalcontentblocks' => 'Enter the contents for the modal windows',
                             ))
                             ->end()
                             ->end()
@@ -198,7 +199,8 @@ class PageAdmin extends AbstractAdmin {
     }
 
     // Using sonata admin to generate the page listing grid filters
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    {
 
         // Getting the container parameters set in the config file that exist after the dependency injection
         $pageSettings = $this->getConfigurationPool()->getContainer()->getParameter('page_settings');
@@ -218,7 +220,8 @@ class PageAdmin extends AbstractAdmin {
     }
 
     // Using sonata admin to generate th page listing grid and the grid item actions
-    protected function configureListFields(ListMapper $listMapper) {
+    protected function configureListFields(ListMapper $listMapper)
+    {
         $listMapper
             ->addIdentifier('id')
             ->addIdentifier('title')
@@ -233,21 +236,22 @@ class PageAdmin extends AbstractAdmin {
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'duplicate' => array(
-                        'template' => 'PageBundle:Admin:duplicate.html.twig'
+                        'template' => 'PageBundle:Admin:duplicate.html.twig',
                     ),
                     'edit' => array(
-                        'template' => 'PageBundle:Admin:edit.html.twig'
+                        'template' => 'PageBundle:Admin:edit.html.twig',
                     ),
                     'delete' => array(
-                        'template' => 'PageBundle:Admin:delete.html.twig'
-                    )
-                )
+                        'template' => 'PageBundle:Admin:delete.html.twig',
+                    ),
+                ),
             ))
         ;
     }
 
     // Adding the validation rules for the page form
-    public function validate(ErrorElement $errorElement, $object) {
+    public function validate(ErrorElement $errorElement, $object)
+    {
         $errorElement
                 ->with('title')
                 ->assertLength(array('max' => 255))
@@ -263,13 +267,13 @@ class PageAdmin extends AbstractAdmin {
     }
 
     // Adding the route names for the page actions
-    protected function configureRoutes(RouteCollection $collection) {
-        $collection->add('duplicate', $this->getRouterIdParameter() . '/duplicate');
-        $collection->add('edit', $this->getRouterIdParameter() . '/edit');
-        $collection->add('delete', $this->getRouterIdParameter() . '/delete');
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('duplicate', $this->getRouterIdParameter().'/duplicate');
+        $collection->add('edit', $this->getRouterIdParameter().'/edit');
+        $collection->add('delete', $this->getRouterIdParameter().'/delete');
         $collection->add('clearCache', 'clearcache');
         $collection->add('clearCacheProd', 'clearcacheprod');
         $collection->add('clearHTTPCache', 'clearhttpcache');
     }
-
 }

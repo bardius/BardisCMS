@@ -12,10 +12,10 @@ namespace BardisCMS\BlogBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerTest extends WebTestCase {
-
-    public function testAliasAction() {
-
+class DefaultControllerTest extends WebTestCase
+{
+    public function testAliasAction()
+    {
         $alias = 'testalias';
 
         $client = static::createClient();
@@ -24,5 +24,4 @@ class DefaultControllerTest extends WebTestCase {
 
         $this->assertTrue($crawler->filter('html:contains("testalias")')->count() > 0);
     }
-
 }

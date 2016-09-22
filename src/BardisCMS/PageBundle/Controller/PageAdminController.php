@@ -1,27 +1,28 @@
 <?php
 
 /*
- * Page Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\PageBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-
-class PageAdminController extends Controller {
-
+class PageAdminController extends Controller
+{
     // Defining the custom sonata admin action for the duplicate page feature
-    public function duplicateAction($id = null) {
+    public function duplicateAction($id = null)
+    {
         // The sonata admin action key used to lookup the template to use for this action
         $templateKey = 'edit';
 
@@ -29,8 +30,8 @@ class PageAdminController extends Controller {
 
         // Using the selected page details to create a copy with no content blocks
         $clonedObject = $this->admin->getObject($id);
-        $clonedObject->setTitle($clonedObject->getTitle() . ' Clone');
-        $clonedObject->setAlias($clonedObject->getAlias() . '-clone');
+        $clonedObject->setTitle($clonedObject->getTitle().' Clone');
+        $clonedObject->setAlias($clonedObject->getAlias().'-clone');
         $date = new \DateTime();
         $clonedObject->setDate($date);
 
@@ -69,7 +70,7 @@ class PageAdminController extends Controller {
             unset($modalcontentblock);
         }
 
-        if ($this->get('request')->getMethod() == 'POST') {
+        if ($this->get('request')->getMethod() === 'POST') {
             $form->handleRequest($this->get('request'));
 
             $isFormValid = $form->isValid();
@@ -81,7 +82,7 @@ class PageAdminController extends Controller {
                 if ($this->isXmlHttpRequest()) {
                     return $this->renderJson(array(
                                 'result' => 'ok',
-                                'objectId' => $this->admin->getNormalizedIdentifier($object)
+                                'objectId' => $this->admin->getNormalizedIdentifier($object),
                     ));
                 }
 
@@ -112,26 +113,25 @@ class PageAdminController extends Controller {
     }
 
     // Defining the custom sonata admin action for the clearing the Symfony2 reverse proxy cache
-    public function clearHTTPCacheAction() {
-
-        $fs = new Filesystem;
+    public function clearHTTPCacheAction()
+    {
+        $fs = new Filesystem();
 
         try {
             $fs->remove(
                     array(
-                        $this->get('kernel')->getRootDir() . '/../app/cache/prod/http_cache',
-                        $this->get('kernel')->getRootDir() . '/../app/cache/test/http_cache',
-                        $this->get('kernel')->getRootDir() . '/../app/cache/dev/http_cache'
+                        $this->get('kernel')->getRootDir().'/../app/cache/prod/http_cache',
+                        $this->get('kernel')->getRootDir().'/../app/cache/test/http_cache',
+                        $this->get('kernel')->getRootDir().'/../app/cache/dev/http_cache',
                     )
             );
             $this->get('session')->getFlashBag()->add('sonata_flash_success', 'HTTP Cache Cleared');
         } catch (IOExceptionInterface $e) {
-            $this->get('session')->getFlashBag()->add('sonata_flash_error', 'An error occurred while deleting your HTTP cache at ' . $e->getPath() . '');
+            $this->get('session')->getFlashBag()->add('sonata_flash_error', 'An error occurred while deleting your HTTP cache at '.$e->getPath().'');
         }
 
         // TODO: find a way to invalidate/clear all varnish cache if any
 
         return new RedirectResponse('/admin/dashboard');
     }
-
 }

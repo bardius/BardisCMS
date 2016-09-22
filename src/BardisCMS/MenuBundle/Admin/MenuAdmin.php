@@ -1,28 +1,29 @@
 <?php
 
 /*
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\MenuBundle\Admin;
 
+use BardisCMS\MenuBundle\Admin\Form\EventListener\AddMenuTypeFieldSubscriber;
+use BardisCMS\MenuBundle\Entity\Menu as Menu;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
-use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Sonata\CoreBundle\Validator\ErrorElement;
+use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
-use BardisCMS\MenuBundle\Admin\Form\EventListener\AddMenuTypeFieldSubscriber;
+use Sonata\CoreBundle\Validator\ErrorElement;
 
-use BardisCMS\MenuBundle\Entity\Menu as Menu;
-
-class MenuAdmin extends AbstractAdmin {
-
-    protected function configureFormFields(FormMapper $formMapper) {
-
+class MenuAdmin extends AbstractAdmin
+{
+    protected function configureFormFields(FormMapper $formMapper)
+    {
         $subscriber = new AddMenuTypeFieldSubscriber($formMapper->getFormBuilder()->getFormFactory());
         $formMapper->getFormBuilder()->addEventSubscriber($subscriber);
 
@@ -37,7 +38,7 @@ class MenuAdmin extends AbstractAdmin {
         $menusChoice['0'] = 'Menu Root';
 
         foreach ($menus as $menu) {
-            $menusChoice[$menu->getId()] = $menu->getTitle() . ' (' . $menu->getMenuGroup() . ')';
+            $menusChoice[$menu->getId()] = $menu->getTitle().' ('.$menu->getMenuGroup().')';
         }
 
         $formMapper
@@ -49,7 +50,7 @@ class MenuAdmin extends AbstractAdmin {
                 ->setHelps(array(
                     'title' => 'Set the title of the menu item (link copy text)',
                     'menuType' => 'Set the type of the menu item linked page',
-                    'route' => 'Select the action of the menu item'
+                    'route' => 'Select the action of the menu item',
                 ))
                 ->end()
                 ->end()
@@ -61,7 +62,7 @@ class MenuAdmin extends AbstractAdmin {
                 ->setHelps(array(
                     'menuGroup' => 'Set the menu group this menu item belongs to',
                     'parent' => 'Select the parent menu item',
-                    'ordering' => 'Set the order of the menu item in accordance to the other menu items of the same menu level'
+                    'ordering' => 'Set the order of the menu item in accordance to the other menu items of the same menu level',
                 ))
                 ->end()
                 ->end()
@@ -71,7 +72,7 @@ class MenuAdmin extends AbstractAdmin {
                 ->add('publishState', 'choice', array('choices' => Menu::getPublishStateList(), 'preferred_choices' => array(Menu::STATE_UNPUBLISHED), 'label' => 'Publish State', 'required' => true))
                 ->setHelps(array(
                     'accessLevel' => 'Set the minimum access level the item is visible to',
-                    'publishState' => 'Set the publish state of this menu item'
+                    'publishState' => 'Set the publish state of this menu item',
                 ))
                 ->end()
                 ->end()
@@ -79,13 +80,14 @@ class MenuAdmin extends AbstractAdmin {
                 ->with('Menu Item Optional Details', array('collapsed' => true))
                 ->add('menuImage', 'sonata_media_type', array('provider' => 'sonata.media.provider.image', 'context' => 'icons', 'attr' => array('class' => 'imagefield'), 'label' => 'Menu Icon Image', 'required' => false))
                 ->setHelps(array(
-                    'menuImage' => 'Set an image as Menu Icon'
+                    'menuImage' => 'Set an image as Menu Icon',
                 ))
                 ->end()
         ;
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    {
 
         // Getting the container parameters set in the config file that exist
         $menuSettings = $this->getConfigurationPool()->getContainer()->getParameter('menu_settings');
@@ -101,7 +103,8 @@ class MenuAdmin extends AbstractAdmin {
         ;
     }
 
-    protected function configureListFields(ListMapper $listMapper) {
+    protected function configureListFields(ListMapper $listMapper)
+    {
         $listMapper
                 ->addIdentifier('title')
                 ->addIdentifier('menuGroup')
@@ -114,20 +117,21 @@ class MenuAdmin extends AbstractAdmin {
                 ->add('_action', 'actions', array(
                     'actions' => array(
                         'duplicate' => array(
-                            'template' => 'MenuBundle:Admin:duplicate.html.twig'
+                            'template' => 'MenuBundle:Admin:duplicate.html.twig',
                         ),
                         'edit' => array(
-                            'template' => 'MenuBundle:Admin:edit.html.twig'
+                            'template' => 'MenuBundle:Admin:edit.html.twig',
                         ),
                         'delete' => array(
-                            'template' => 'MenuBundle:Admin:delete.html.twig'
-                        )
-                    )
+                            'template' => 'MenuBundle:Admin:delete.html.twig',
+                        ),
+                    ),
                 ))
         ;
     }
 
-    public function validate(ErrorElement $errorElement, $object) {
+    public function validate(ErrorElement $errorElement, $object)
+    {
         $errorElement
                 ->with('title')
                 ->assertLength(array('max' => 255))
@@ -135,10 +139,10 @@ class MenuAdmin extends AbstractAdmin {
         ;
     }
 
-    protected function configureRoutes(RouteCollection $collection) {
-        $collection->add('duplicate', $this->getRouterIdParameter() . '/duplicate');
-        $collection->add('edit', $this->getRouterIdParameter() . '/edit');
-        $collection->add('delete', $this->getRouterIdParameter() . '/delete');
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('duplicate', $this->getRouterIdParameter().'/duplicate');
+        $collection->add('edit', $this->getRouterIdParameter().'/edit');
+        $collection->add('delete', $this->getRouterIdParameter().'/delete');
     }
-
 }

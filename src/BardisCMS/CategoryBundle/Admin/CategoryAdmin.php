@@ -1,25 +1,27 @@
 <?php
 
 /*
- * Category Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\CategoryBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
-use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Sonata\CoreBundle\Validator\ErrorElement;
+use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\CoreBundle\Validator\ErrorElement;
 
-class CategoryAdmin extends AbstractAdmin {
-
-    protected function configureFormFields(FormMapper $formMapper) {
+class CategoryAdmin extends AbstractAdmin
+{
+    protected function configureFormFields(FormMapper $formMapper)
+    {
         $formMapper
                 ->with('Category Details', array('collapsed' => false))
                 ->add('title', null, array('label' => 'Category Title', 'required' => true))
@@ -28,19 +30,21 @@ class CategoryAdmin extends AbstractAdmin {
                 ->setHelps(array(
                     'title' => 'Set the title of the category',
                     'categoryClass' => 'Set the css class that applies to the category items',
-                    'categoryIcon' => 'Set the icon of the of the category'
+                    'categoryIcon' => 'Set the icon of the of the category',
                 ))
                 ->end()
         ;
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    {
         $datagridMapper
                 ->add('title')
         ;
     }
 
-    protected function configureListFields(ListMapper $listMapper) {
+    protected function configureListFields(ListMapper $listMapper)
+    {
         $listMapper
                 ->addIdentifier('title')
                 ->addIdentifier('categoryClass')
@@ -48,17 +52,18 @@ class CategoryAdmin extends AbstractAdmin {
                 ->add('_action', 'actions', array(
                     'actions' => array(
                         'edit' => array(
-                            'template' => 'CategoryBundle:Admin:edit.html.twig'
+                            'template' => 'CategoryBundle:Admin:edit.html.twig',
                         ),
                         'delete' => array(
-                            'template' => 'CategoryBundle:Admin:delete.html.twig'
-                        )
-                    )
+                            'template' => 'CategoryBundle:Admin:delete.html.twig',
+                        ),
+                    ),
                 ))
         ;
     }
 
-    public function validate(ErrorElement $errorElement, $object) {
+    public function validate(ErrorElement $errorElement, $object)
+    {
         $errorElement
                 ->with('title')
                 ->assertLength(array('max' => 255))
@@ -68,9 +73,9 @@ class CategoryAdmin extends AbstractAdmin {
         ;
     }
 
-    protected function configureRoutes(RouteCollection $collection) {
-        $collection->add('edit', $this->getRouterIdParameter() . '/edit');
-        $collection->add('delete', $this->getRouterIdParameter() . '/delete');
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('edit', $this->getRouterIdParameter().'/edit');
+        $collection->add('delete', $this->getRouterIdParameter().'/delete');
     }
-
 }

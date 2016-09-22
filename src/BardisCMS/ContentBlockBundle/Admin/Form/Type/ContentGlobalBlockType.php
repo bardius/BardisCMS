@@ -1,33 +1,36 @@
 <?php
 
 /*
- * ContentBlock Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\ContentBlockBundle\Admin\Form\Type;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Doctrine\ORM\EntityManager;
 
-class ContentGlobalBlockType extends AbstractType {
-
+class ContentGlobalBlockType extends AbstractType
+{
     private $entityManager;
 
-    public function __construct(EntityManager $entityManager) {
+    public function __construct(EntityManager $entityManager)
+    {
         $this->entityManager = $entityManager;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $formBuilder, array $options) {
+    public function buildForm(FormBuilderInterface $formBuilder, array $options)
+    {
         $formBuilder
                 ->add('contentblock', 'entity', array(
                     'auto_initialize' => false,
@@ -38,16 +41,17 @@ class ContentGlobalBlockType extends AbstractType {
                     'multiple' => false,
                     'attr' => array(
                         'class' => 'autoCompleteItems autoCompleteGlobalContentBlocks',
-                        'data-sonata-select2' => 'false'
+                        'data-sonata-select2' => 'false',
                     ),
                     'label' => 'Select Content Block',
-                    'required' => true
+                    'required' => true,
                 ))
         ;
     }
 
     // Function to retrieve the content blocks that are globally available
-    public function getGlobalBlocksQueryBuilder() {
+    public function getGlobalBlocksQueryBuilder()
+    {
 
         // Initalize the query builder variables
         $qb = $this->entityManager->createQueryBuilder();
@@ -70,9 +74,10 @@ class ContentGlobalBlockType extends AbstractType {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver) {
+    public function configureOptions(OptionsResolver $resolver)
+    {
         $optionsNormalizer = function (Options $options, $value) {
             $value = 'BardisCMS\ContentBlockBundle\Entity\ContentGlobalBlock';
 
@@ -82,12 +87,14 @@ class ContentGlobalBlockType extends AbstractType {
         $resolver->setNormalizer('data_class', $optionsNormalizer);
     }
 
-    public function getName() {
+    public function getName()
+    {
         return $this->getBlockPrefix();
     }
 
     // Define the name of the form to call it for rendering
-    public function getBlockPrefix() {
+    public function getBlockPrefix()
+    {
         return 'contentglobalblock';
     }
 }

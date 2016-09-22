@@ -1,23 +1,25 @@
 <?php
 
 /*
- * Comment Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\CommentBundle\DataFixtures\ORM;
 
+use BardisCMS\CommentBundle\Entity\Comment;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use BardisCMS\CommentBundle\Entity\Comment;
 
-class CommentFixtures extends AbstractFixture implements OrderedFixtureInterface {
-
-    public function load(ObjectManager $manager) {
+class CommentFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
+    public function load(ObjectManager $manager)
+    {
         $comment1 = new Comment();
         $comment1->setTitle('Sample Comment 1');
         $comment1->setUsername('blogger1');
@@ -51,7 +53,8 @@ class CommentFixtures extends AbstractFixture implements OrderedFixtureInterface
         $manager->flush();
     }
 
-    public function getOrder() {
+    public function getOrder()
+    {
         return 11;
     }
 }

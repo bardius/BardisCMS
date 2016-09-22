@@ -1,11 +1,12 @@
 <?php
 
 /*
- * Skeleton Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\SkeletonBundle\Controller;
@@ -14,18 +15,19 @@ use Sonata\AdminBundle\Controller\CRUDController as Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class SkeletonAdminController extends Controller {
-
+class SkeletonAdminController extends Controller
+{
     // Defining the custom sonata admin action for the duplicate page feature
-    public function duplicateAction($id = null) {
+    public function duplicateAction($id = null)
+    {
         // The sonata admin action key used to lookup the template to use for this action
         $templateKey = 'edit';
 
         $id = $this->get('request')->get($this->admin->getIdParameter());
 
         $clonedObject = $this->admin->getObject($id);
-        $clonedObject->setTitle($clonedObject->getTitle() . ' Clone');
-        $clonedObject->setAlias($clonedObject->getAlias() . '-clone');
+        $clonedObject->setTitle($clonedObject->getTitle().' Clone');
+        $clonedObject->setAlias($clonedObject->getAlias().'-clone');
         $date = new \DateTime();
         $clonedObject->setDate($date);
 
@@ -56,7 +58,7 @@ class SkeletonAdminController extends Controller {
             unset($modalcontentblock);
         }
 
-        if ($this->get('request')->getMethod() == 'POST') {
+        if ($this->get('request')->getMethod() === 'POST') {
             $form->handleRequest($this->get('request'));
 
             $isFormValid = $form->isValid();
@@ -68,7 +70,7 @@ class SkeletonAdminController extends Controller {
                 if ($this->isXmlHttpRequest()) {
                     return $this->renderJson(array(
                                 'result' => 'ok',
-                                'objectId' => $this->admin->getNormalizedIdentifier($object)
+                                'objectId' => $this->admin->getNormalizedIdentifier($object),
                     ));
                 }
 
@@ -97,5 +99,4 @@ class SkeletonAdminController extends Controller {
                     'object' => $object,
         ));
     }
-
 }

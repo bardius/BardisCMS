@@ -1,23 +1,25 @@
 <?php
 
 /*
- * Settings Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\SettingsBundle\DataFixtures\ORM;
 
+use BardisCMS\SettingsBundle\Entity\Settings;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use BardisCMS\SettingsBundle\Entity\Settings;
 
-class SettingsFixtures extends AbstractFixture implements OrderedFixtureInterface {
-
-    public function load(ObjectManager $manager) {
+class SettingsFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
+    public function load(ObjectManager $manager)
+    {
         $settings = new Settings();
         $settings->setMetaDescription('Default Meta Description');
         $settings->setMetaKeywords('Default Meta Keywords');
@@ -41,8 +43,8 @@ class SettingsFixtures extends AbstractFixture implements OrderedFixtureInterfac
         $this->addReference('settings', $settings);
     }
 
-    public function getOrder() {
+    public function getOrder()
+    {
         return 1;
     }
-
 }

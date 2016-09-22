@@ -1,27 +1,28 @@
 <?php
 
 /*
- * Blog Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\BlogBundle\Admin;
 
+use BardisCMS\BlogBundle\Entity\Blog as Blog;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
-use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Sonata\CoreBundle\Validator\ErrorElement;
+use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
+use Sonata\CoreBundle\Validator\ErrorElement;
 
-use BardisCMS\BlogBundle\Entity\Blog as Blog;
-
-class BlogAdmin extends AbstractAdmin {
-
-    protected function configureFormFields(FormMapper $formMapper) {
+class BlogAdmin extends AbstractAdmin
+{
+    protected function configureFormFields(FormMapper $formMapper)
+    {
         // Getting the container parameters set in the config file that exist
         $blogSettings = $this->getConfigurationPool()->getContainer()->getParameter('blog_settings');
 
@@ -59,7 +60,7 @@ class BlogAdmin extends AbstractAdmin {
                         'alias' => 'Set the URL alias',
                         'pagetype' => 'Select the type of the Page (Blog Page template)',
                         'pageclass' => 'Set the CSS class that wraps the Page',
-                        'bgimage' => 'Set the Top Banner Image of the page'
+                        'bgimage' => 'Set the Top Banner Image of the page',
                     ))
                     ->end()
                 ->end()
@@ -69,7 +70,7 @@ class BlogAdmin extends AbstractAdmin {
                         ->add('tags', 'entity', array('class' => 'BardisCMS\TagBundle\Entity\Tag', 'choice_label' => 'title', 'expanded' => true, 'multiple' => true, 'label' => 'Associated Tags', 'required' => false))
                     ->setHelps(array(
                         'tags' => 'Select the associated tags',
-                        'categories' => 'Select the associated categories'
+                        'categories' => 'Select the associated categories',
                     ))
                     ->end()
                 ->end()
@@ -86,7 +87,7 @@ class BlogAdmin extends AbstractAdmin {
                         'introimage' => 'Set the Image content to display for intro listing items',
                         'introvideo' => 'Set the video content to display for intro listing items',
                         'pageOrder' => 'Set the order of this page intro for the homepage',
-                        'introclass' => 'Set the CSS class that wraps content to display for intro listing items'
+                        'introclass' => 'Set the CSS class that wraps content to display for intro listing items',
                     ))
                     ->end()
                 ->end()
@@ -96,7 +97,7 @@ class BlogAdmin extends AbstractAdmin {
                         ->add('description', null, array('label' => 'Meta Description', 'required' => false))
                     ->setHelps(array(
                         'keywords' => 'Set the keyword metadata of the page of leave empty to autogenerate',
-                        'description' => 'Set the description metadata of the page of leave empty to autogenerate'
+                        'description' => 'Set the description metadata of the page of leave empty to autogenerate',
                     ))
                     ->end()
                 ->end()
@@ -116,7 +117,7 @@ class BlogAdmin extends AbstractAdmin {
                                 ->setHelps(array(
                                     'bannercontentblocks' => 'Add an image or a carousel for the top banner',
                                     'maincontentblocks' => 'Select the main contents in the order you want them to appear in the page',
-                                    'modalcontentblocks' => 'Select the contents in the order you want them to appear in the modal windows'
+                                    'modalcontentblocks' => 'Select the contents in the order you want them to appear in the modal windows',
                                 ))
                                 ->end()
                             ->end()
@@ -132,7 +133,7 @@ class BlogAdmin extends AbstractAdmin {
                                 ->setHelps(array(
                                     'maincontentblocks' => 'Select the contents in the order you want them to appear above the blog list',
                                     'extracontentblocks' => 'Select the contents in the order you want them to appear bellow the blog list',
-                                    'modalcontentblocks' => 'Select the contents in the order you want them to appear in the modal windows'
+                                    'modalcontentblocks' => 'Select the contents in the order you want them to appear in the modal windows',
                                 ))
                                 ->end()
                             ->end()
@@ -141,7 +142,8 @@ class BlogAdmin extends AbstractAdmin {
         }
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    {
         // Getting the container parameters set in the config file that exist
         $blogSettings = $this->getConfigurationPool()->getContainer()->getParameter('blog_settings');
 
@@ -159,7 +161,8 @@ class BlogAdmin extends AbstractAdmin {
         ;
     }
 
-    protected function configureListFields(ListMapper $listMapper) {
+    protected function configureListFields(ListMapper $listMapper)
+    {
         $listMapper
             ->addIdentifier('id')
             ->addIdentifier('title')
@@ -174,19 +177,20 @@ class BlogAdmin extends AbstractAdmin {
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'duplicate' => array(
-                        'template' => 'BlogBundle:Admin:duplicate.html.twig'
+                        'template' => 'BlogBundle:Admin:duplicate.html.twig',
                     ),
                     'edit' => array(
-                        'template' => 'BlogBundle:Admin:edit.html.twig'
+                        'template' => 'BlogBundle:Admin:edit.html.twig',
                     ),
                     'delete' => array(
-                        'template' => 'BlogBundle:Admin:delete.html.twig'
-                    )
-                )
+                        'template' => 'BlogBundle:Admin:delete.html.twig',
+                    ),
+                ),
             ));
     }
 
-    public function validate(ErrorElement $errorElement, $object) {
+    public function validate(ErrorElement $errorElement, $object)
+    {
         $errorElement
                 ->with('title')
                 ->assertLength(array('max' => 255))
@@ -201,10 +205,10 @@ class BlogAdmin extends AbstractAdmin {
         ;
     }
 
-    protected function configureRoutes(RouteCollection $collection) {
-        $collection->add('duplicate', $this->getRouterIdParameter() . '/duplicate');
-        $collection->add('edit', $this->getRouterIdParameter() . '/edit');
-        $collection->add('delete', $this->getRouterIdParameter() . '/delete');
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('duplicate', $this->getRouterIdParameter().'/duplicate');
+        $collection->add('edit', $this->getRouterIdParameter().'/edit');
+        $collection->add('delete', $this->getRouterIdParameter().'/delete');
     }
-
 }

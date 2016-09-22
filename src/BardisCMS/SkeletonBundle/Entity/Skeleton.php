@@ -1,41 +1,37 @@
 <?php
 
 /*
- * Skeleton Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\SkeletonBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Application\Sonata\MediaBundle\Entity\Media;
-use Doctrine\Common\Collections\ArrayCollection;
-use BardisCMS\ContentBlockBundle\Entity\ContentBlock;
-use BardisCMS\CategoryBundle\Entity\Category;
-use BardisCMS\TagBundle\Entity\Tag;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 
 /**
- * BardisCMS\SkeletonBundle\Entity\Skeleton
+ * BardisCMS\SkeletonBundle\Entity\Skeleton.
  *
  * @ORM\Table(name="skeletons")
  * @DoctrineAssert\UniqueEntity(fields="alias", message="Alias must be unique")
  * @ORM\Entity(repositoryClass="BardisCMS\SkeletonBundle\Repository\SkeletonRepository")
  */
-class Skeleton {
-
+class Skeleton
+{
     /*
      * Publish states
      */
-    const STATUS_UNPUBLISHED    = 0;
-    const STATUS_PUBLISHED      = 1;
-    const STATUS_PREVIEW        = 2;
-    const STATUS_NONAUTHONLY    = 3;
-    const STATUS_AUTHONLY       = 4;
+    const STATUS_UNPUBLISHED = 0;
+    const STATUS_PUBLISHED = 1;
+    const STATUS_PREVIEW = 2;
+    const STATUS_NONAUTHONLY = 3;
+    const STATUS_AUTHONLY = 4;
 
     /**
      * @ORM\Id
@@ -163,7 +159,8 @@ class Skeleton {
      */
     private $dateLastModified;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->modalcontentblocks = new \Doctrine\Common\Collections\ArrayCollection();
         $this->maincontentblocks = new \Doctrine\Common\Collections\ArrayCollection();
         $this->bannercontentblocks = new \Doctrine\Common\Collections\ArrayCollection();
@@ -171,532 +168,605 @@ class Skeleton {
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * Set date
+     * Set date.
      *
      * @param \DateTime $date
+     *
      * @return Skeleton
      */
-    public function setDate($date) {
+    public function setDate($date)
+    {
         $this->date = $date;
 
         return $this;
     }
 
     /**
-     * Get date
+     * Get date.
      *
      * @return \DateTime
      */
-    public function getDate() {
+    public function getDate()
+    {
         return $this->date;
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
+     *
      * @return Skeleton
      */
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
     }
 
     /**
-     * Set alias
+     * Set alias.
      *
      * @param string $alias
+     *
      * @return Skeleton
      */
-    public function setAlias($alias) {
+    public function setAlias($alias)
+    {
         $this->alias = $alias;
 
         return $this;
     }
 
     /**
-     * Get alias
+     * Get alias.
      *
      * @return string
      */
-    public function getAlias() {
+    public function getAlias()
+    {
         return $this->alias;
     }
 
     /**
-     * Set pageOrder
+     * Set pageOrder.
      *
-     * @param integer $pageOrder
+     * @param int $pageOrder
+     *
      * @return Skeleton
      */
-    public function setPageOrder($pageOrder) {
+    public function setPageOrder($pageOrder)
+    {
         $this->pageOrder = $pageOrder;
 
         return $this;
     }
 
     /**
-     * Get pageOrder
+     * Get pageOrder.
      *
-     * @return integer
+     * @return int
      */
-    public function getPageOrder() {
+    public function getPageOrder()
+    {
         return $this->pageOrder;
     }
 
     /**
-     * Set showPageTitle
+     * Set showPageTitle.
      *
-     * @param integer $showPageTitle
+     * @param int $showPageTitle
+     *
      * @return Skeleton
      */
-    public function setShowPageTitle($showPageTitle) {
+    public function setShowPageTitle($showPageTitle)
+    {
         $this->showPageTitle = $showPageTitle;
 
         return $this;
     }
 
     /**
-     * Get showPageTitle
+     * Get showPageTitle.
      *
-     * @return integer
+     * @return int
      */
-    public function getShowPageTitle() {
+    public function getShowPageTitle()
+    {
         return $this->showPageTitle;
     }
 
     /**
-     * Set publishState
+     * Set publishState.
      *
-     * @param integer $publishState
+     * @param int $publishState
+     *
      * @return Skeleton
      */
-    public function setPublishState($publishState) {
+    public function setPublishState($publishState)
+    {
         $this->publishState = $publishState;
 
         return $this;
     }
 
     /**
-     * Get publishState
+     * Get publishState.
      *
-     * @return integer
+     * @return int
      */
-    public function getPublishState() {
+    public function getPublishState()
+    {
         return $this->publishState;
     }
 
     /**
-     * Set pageclass
+     * Set pageclass.
      *
      * @param string $pageclass
+     *
      * @return Skeleton
      */
-    public function setPageclass($pageclass) {
+    public function setPageclass($pageclass)
+    {
         $this->pageclass = $pageclass;
 
         return $this;
     }
 
     /**
-     * Get pageclass
+     * Get pageclass.
      *
      * @return string
      */
-    public function getPageclass() {
+    public function getPageclass()
+    {
         return $this->pageclass;
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
+     *
      * @return Skeleton
      */
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 
     /**
-     * Set keywords
+     * Set keywords.
      *
      * @param string $keywords
+     *
      * @return Skeleton
      */
-    public function setKeywords($keywords) {
+    public function setKeywords($keywords)
+    {
         $this->keywords = $keywords;
 
         return $this;
     }
 
     /**
-     * Get keywords
+     * Get keywords.
      *
      * @return string
      */
-    public function getKeywords() {
+    public function getKeywords()
+    {
         return $this->keywords;
     }
 
     /**
-     * Set introtext
+     * Set introtext.
      *
      * @param string $introtext
+     *
      * @return Skeleton
      */
-    public function setIntrotext($introtext) {
+    public function setIntrotext($introtext)
+    {
         $this->introtext = $introtext;
 
         return $this;
     }
 
     /**
-     * Get introtext
+     * Get introtext.
      *
      * @return string
      */
-    public function getIntrotext() {
+    public function getIntrotext()
+    {
         return $this->introtext;
     }
 
     /**
-     * Set intromediasize
+     * Set intromediasize.
      *
      * @param string $intromediasize
+     *
      * @return Skeleton
      */
-    public function setIntromediasize($intromediasize) {
+    public function setIntromediasize($intromediasize)
+    {
         $this->intromediasize = $intromediasize;
 
         return $this;
     }
 
     /**
-     * Get intromediasize
+     * Get intromediasize.
      *
      * @return string
      */
-    public function getIntromediasize() {
+    public function getIntromediasize()
+    {
         return $this->intromediasize;
     }
 
     /**
-     * Set introclass
+     * Set introclass.
      *
      * @param string $introclass
+     *
      * @return Skeleton
      */
-    public function setIntroclass($introclass) {
+    public function setIntroclass($introclass)
+    {
         $this->introclass = $introclass;
 
         return $this;
     }
 
     /**
-     * Get introclass
+     * Get introclass.
      *
      * @return string
      */
-    public function getIntroclass() {
+    public function getIntroclass()
+    {
         return $this->introclass;
     }
 
     /**
-     * Set pagetype
+     * Set pagetype.
      *
      * @param string $pagetype
+     *
      * @return Skeleton
      */
-    public function setPagetype($pagetype) {
+    public function setPagetype($pagetype)
+    {
         $this->pagetype = $pagetype;
 
         return $this;
     }
 
     /**
-     * Get pagetype
+     * Get pagetype.
      *
      * @return string
      */
-    public function getPagetype() {
+    public function getPagetype()
+    {
         return $this->pagetype;
     }
 
     /**
-     * Set author
+     * Set author.
      *
      * @param \Application\Sonata\UserBundle\Entity\User $author
+     *
      * @return Skeleton
      */
-    public function setAuthor(\Application\Sonata\UserBundle\Entity\User $author = null) {
+    public function setAuthor(\Application\Sonata\UserBundle\Entity\User $author = null)
+    {
         $this->author = $author;
 
         return $this;
     }
 
     /**
-     * Get author
+     * Get author.
      *
      * @return \Application\Sonata\UserBundle\Entity\User
      */
-    public function getAuthor() {
+    public function getAuthor()
+    {
         return $this->author;
     }
 
     /**
-     * Set introimage
+     * Set introimage.
      *
      * @param \Application\Sonata\MediaBundle\Entity\Media $introimage
+     *
      * @return Skeleton
      */
-    public function setIntroimage(\Application\Sonata\MediaBundle\Entity\Media $introimage = null) {
+    public function setIntroimage(\Application\Sonata\MediaBundle\Entity\Media $introimage = null)
+    {
         $this->introimage = $introimage;
 
         return $this;
     }
 
     /**
-     * Get introimage
+     * Get introimage.
      *
      * @return \Application\Sonata\MediaBundle\Entity\Media
      */
-    public function getIntroimage() {
+    public function getIntroimage()
+    {
         return $this->introimage;
     }
 
     /**
-     * Set introvideo
+     * Set introvideo.
      *
      * @param \Application\Sonata\MediaBundle\Entity\Media $introvideo
+     *
      * @return Skeleton
      */
-    public function setIntrovideo(\Application\Sonata\MediaBundle\Entity\Media $introvideo = null) {
+    public function setIntrovideo(\Application\Sonata\MediaBundle\Entity\Media $introvideo = null)
+    {
         $this->introvideo = $introvideo;
 
         return $this;
     }
 
     /**
-     * Get introvideo
+     * Get introvideo.
      *
      * @return \Application\Sonata\MediaBundle\Entity\Media
      */
-    public function getIntrovideo() {
+    public function getIntrovideo()
+    {
         return $this->introvideo;
     }
 
     /**
-     * Add categories
+     * Add categories.
      *
      * @param \BardisCMS\CategoryBundle\Entity\Category $categories
+     *
      * @return Skeleton
      */
-    public function addCategory(\BardisCMS\CategoryBundle\Entity\Category $categories) {
+    public function addCategory(\BardisCMS\CategoryBundle\Entity\Category $categories)
+    {
         $this->categories[] = $categories;
 
         return $this;
     }
 
     /**
-     * Remove categories
+     * Remove categories.
      *
      * @param \BardisCMS\CategoryBundle\Entity\Category $categories
      */
-    public function removeCategory(\BardisCMS\CategoryBundle\Entity\Category $categories) {
+    public function removeCategory(\BardisCMS\CategoryBundle\Entity\Category $categories)
+    {
         $this->categories->removeElement($categories);
     }
 
     /**
-     * Get categories
+     * Get categories.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCategories() {
+    public function getCategories()
+    {
         return $this->categories;
     }
 
     /**
-     * Add tags
+     * Add tags.
      *
      * @param \BardisCMS\TagBundle\Entity\Tag $tags
+     *
      * @return Skeleton
      */
-    public function addTag(\BardisCMS\TagBundle\Entity\Tag $tags) {
+    public function addTag(\BardisCMS\TagBundle\Entity\Tag $tags)
+    {
         $this->tags[] = $tags;
 
         return $this;
     }
 
     /**
-     * Remove tags
+     * Remove tags.
      *
      * @param \BardisCMS\TagBundle\Entity\Tag $tags
      */
-    public function removeTag(\BardisCMS\TagBundle\Entity\Tag $tags) {
+    public function removeTag(\BardisCMS\TagBundle\Entity\Tag $tags)
+    {
         $this->tags->removeElement($tags);
     }
 
     /**
-     * Get tags
+     * Get tags.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getTags() {
+    public function getTags()
+    {
         return $this->tags;
     }
 
     /**
-     * Add maincontentblocks
+     * Add maincontentblocks.
      *
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks
+     *
      * @return Skeleton
      */
-    public function addMaincontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks) {
+    public function addMaincontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks)
+    {
         $this->maincontentblocks[] = $maincontentblocks;
 
         return $this;
     }
 
     /**
-     * Remove maincontentblocks
+     * Remove maincontentblocks.
      *
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks
      */
-    public function removeMaincontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks) {
+    public function removeMaincontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $maincontentblocks)
+    {
         $this->maincontentblocks->removeElement($maincontentblocks);
     }
 
     /**
-     * Get maincontentblocks
+     * Get maincontentblocks.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getMaincontentblocks() {
+    public function getMaincontentblocks()
+    {
         return $this->maincontentblocks;
     }
 
     /**
-     * Add bannercontentblocks
+     * Add bannercontentblocks.
      *
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks
+     *
      * @return Skeleton
      */
-    public function addBannercontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks) {
+    public function addBannercontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks)
+    {
         $this->bannercontentblocks[] = $bannercontentblocks;
 
         return $this;
     }
 
     /**
-     * Remove bannercontentblocks
+     * Remove bannercontentblocks.
      *
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks
      */
-    public function removeBannercontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks) {
+    public function removeBannercontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $bannercontentblocks)
+    {
         $this->bannercontentblocks->removeElement($bannercontentblocks);
     }
 
     /**
-     * Get bannercontentblocks
+     * Get bannercontentblocks.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getBannercontentblocks() {
+    public function getBannercontentblocks()
+    {
         return $this->bannercontentblocks;
     }
 
     /**
-     * Add modalcontentblocks
+     * Add modalcontentblocks.
      *
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks
+     *
      * @return Skeleton
      */
-    public function addModalcontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks) {
+    public function addModalcontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks)
+    {
         $this->modalcontentblocks[] = $modalcontentblocks;
 
         return $this;
     }
 
     /**
-     * Remove modalcontentblocks
+     * Remove modalcontentblocks.
      *
      * @param \BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks
      */
-    public function removeModalcontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks) {
+    public function removeModalcontentblock(\BardisCMS\ContentBlockBundle\Entity\ContentBlock $modalcontentblocks)
+    {
         $this->modalcontentblocks->removeElement($modalcontentblocks);
     }
 
     /**
-     * Get modalcontentblocks
+     * Get modalcontentblocks.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getModalcontentblocks() {
+    public function getModalcontentblocks()
+    {
         return $this->modalcontentblocks;
     }
 
     /**
-     * Get dateLastModified
+     * Get dateLastModified.
      *
-     * @return integer
+     * @return int
      */
-    public function getDateLastModified() {
+    public function getDateLastModified()
+    {
         return $this->dateLastModified;
     }
 
     /**
-     * Set dateLastModified
+     * Set dateLastModified.
      *
-     * @param integer $dateLastModified
+     * @param int $dateLastModified
+     *
      * @return Skeleton
      */
-    public function setDateLastModified($dateLastModified) {
+    public function setDateLastModified($dateLastModified)
+    {
         $this->dateLastModified = $dateLastModified;
 
         return $this;
     }
 
     /**
-     * toString Title
+     * toString Title.
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         if ($this->getTitle()) {
             return (string) $this->getTitle();
-        } else {
-            return (string) 'New Skeleton Item';
         }
+
+        return (string) 'New Skeleton Item';
     }
 
     /**
@@ -707,42 +777,44 @@ class Skeleton {
     public static function getPublishStateList()
     {
         return array(
-            Skeleton::STATUS_UNPUBLISHED    => "Unpublished",
-            Skeleton::STATUS_PUBLISHED      => "Published",
-            Skeleton::STATUS_PREVIEW        => "Preview",
-            Skeleton::STATUS_NONAUTHONLY    => "Anonymous Users Only",
-            Skeleton::STATUS_AUTHONLY       => "Authenticated Users Only",
+            self::STATUS_UNPUBLISHED => 'Unpublished',
+            self::STATUS_PUBLISHED => 'Published',
+            self::STATUS_PREVIEW => 'Preview',
+            self::STATUS_NONAUTHONLY => 'Anonymous Users Only',
+            self::STATUS_AUTHONLY => 'Authenticated Users Only',
         );
     }
 
     /**
-     * toString PublishState
+     * toString PublishState.
      *
      * @return string
      */
-    public function getPublishStateAsString() {
+    public function getPublishStateAsString()
+    {
         // Defining the string values of the publish states
         switch ($this->getPublishState()) {
-            case(Skeleton::STATUS_UNPUBLISHED): return "Unpublished";
-            case(Skeleton::STATUS_PUBLISHED): return "Published";
-            case(Skeleton::STATUS_PREVIEW): return "Preview";
-            case(Skeleton::STATUS_NONAUTHONLY): return "Anonymous Users Only";
-            case(Skeleton::STATUS_AUTHONLY): return "Authenticated Users Only";
+            case self::STATUS_UNPUBLISHED: return 'Unpublished';
+            case self::STATUS_PUBLISHED: return 'Published';
+            case self::STATUS_PREVIEW: return 'Preview';
+            case self::STATUS_NONAUTHONLY: return 'Anonymous Users Only';
+            case self::STATUS_AUTHONLY: return 'Authenticated Users Only';
             default: return $this->getPublishState();
         }
     }
 
     /**
-     * toString Pagetype
+     * toString Pagetype.
      *
      * @return string
      */
-    public function getPagetypeAsString() {
+    public function getPagetypeAsString()
+    {
         // Defining the string values of the page types
         switch ($this->getPagetype()) {
-            case('skeleton_article'): return "Skeleton Article";
-            case('skeleton_filtered_list'): return "Skeleton Filtered Results";
-            case('skeleton_home'): return "Skeleton Homepage";
+            case 'skeleton_article': return 'Skeleton Article';
+            case 'skeleton_filtered_list': return 'Skeleton Filtered Results';
+            case 'skeleton_home': return 'Skeleton Homepage';
             default: return $this->getPagetype();
         }
     }

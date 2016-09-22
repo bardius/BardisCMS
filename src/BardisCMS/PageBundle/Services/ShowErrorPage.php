@@ -1,19 +1,20 @@
 <?php
 
 /*
- * Page Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\PageBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ShowErrorPage
 {
@@ -33,17 +34,17 @@ class ShowErrorPage
         $this->settings = $this->container->get('bardiscms_settings.load_settings')->loadSettings();
 
         // Set the flag for allowing HTTP cache
-        if($this->settings){
-            $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
-        }
-        else {
+        if ($this->settings) {
+            $this->enableHTTPCache = $this->container->getParameter('kernel.environment') === 'prod' && $this->settings->getActivateHttpCache();
+        } else {
             $this->enableHTTPCache = false;
         }
     }
 
-    public function errorPageAction($statusCode = null){
-        if($statusCode === null){
-            $statusCode = "404";
+    public function errorPageAction($statusCode = null)
+    {
+        if ($statusCode === null) {
+            $statusCode = '404';
         }
 
         // Get the page with alias the status code of the error eg. 404
@@ -51,7 +52,7 @@ class ShowErrorPage
 
         // Check if page exists
         if (!$page) {
-            throw new NotFoundHttpException('No ' . $statusCode . ' error page exists. No page found for with alias ' . $statusCode . '.');
+            throw new NotFoundHttpException('No '.$statusCode.' error page exists. No page found for with alias '.$statusCode.'.');
         }
 
         // Set the website settings and metatags
@@ -95,8 +96,8 @@ class ShowErrorPage
     }
 
     // set a custom Cache-Control directives
-    protected function setResponseCacheHeaders(Response $response, \Datetime $dateLastModified) {
-
+    protected function setResponseCacheHeaders(Response $response, \Datetime $dateLastModified)
+    {
         $response->setPublic();
         $response->setLastModified($dateLastModified);
         $response->setVary(array('Accept-Encoding', 'User-Agent'));

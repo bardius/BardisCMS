@@ -1,173 +1,170 @@
 <?php
 
 /*
- * Sonata User Bundle Overrides
- * This file is part of the BardisCMS.
- * Manage the extended Sonata User entity with extra information for the users
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\UserBundle\Form\Type;
 
+use Application\Sonata\UserBundle\Entity\User;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\DependencyInjection\Container;
 
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\CountryType;
-
-use Application\Sonata\UserBundle\Entity\User;
-
-class ContactDetailsFormType extends AbstractType {
-
-	private $class;
-	private $container;
+class ContactDetailsFormType extends AbstractType
+{
+    private $class;
+    private $container;
 
     /**
-     * Construct form for ContactDetailsFormType
+     * Construct form for ContactDetailsFormType.
      *
-     * @param string $class The User class name
+     * @param string    $class     The User class name
      * @param Container $container
-     *
      */
-	public function __construct($class, Container $container) {
-		$this->class = $class;
-		$this->container = $container;
-	}
+    public function __construct($class, Container $container)
+    {
+        $this->class = $class;
+        $this->container = $container;
+    }
 
     /**
-     * Build form for ContactDetailsFormType
+     * Build form for ContactDetailsFormType.
      *
      * @param FormBuilderInterface $builder
-     * @param array $options
-     *
+     * @param array                $options
      */
-	public function buildForm(FormBuilderInterface $builder, array $options) {
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
         // Set up variable values
-		$user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->container->get('security.context')->getToken()->getUser();
 
         // Load values from persisted User data
-		$defaults = array(
-			'addressLine1' => $user->getAddressLine1(),
-			'addressLine2' => $user->getAddressLine2(),
-			'addressLine3' => $user->getAddressLine3(),
-			'city' => $user->getCity(),
-			'county' => $user->getCounty(),
+        $defaults = array(
+            'addressLine1' => $user->getAddressLine1(),
+            'addressLine2' => $user->getAddressLine2(),
+            'addressLine3' => $user->getAddressLine3(),
+            'city' => $user->getCity(),
+            'county' => $user->getCounty(),
             'postcode' => $user->getPostcode(),
             'countryCode' => $user->getCountryCode(),
             'phone' => $user->getPhone(),
-            'mobile' => $user->getMobile()
-		);
+            'mobile' => $user->getMobile(),
+        );
 
         // Adding custom extra user fields for Contact Details Form
-		$builder
+        $builder
             ->add('addressLine1', TextType::class, array(
                 'label' => 'form.addressLine1',
                 'translation_domain' => 'SonataUserBundle',
-                'data'=> $defaults['addressLine1'],
-                "attr" => [
-                    'placeholder' => "Address Line 1",
+                'data' => $defaults['addressLine1'],
+                'attr' => array(
+                    'placeholder' => 'Address Line 1',
                     'minlength' => 2,
-                    'maxlength' => 100
-                ],
-                'required' => true
+                    'maxlength' => 100,
+                ),
+                'required' => true,
             ))
             ->add('addressLine2', TextType::class, array(
                 'label' => 'form.addressLine2',
                 'translation_domain' => 'SonataUserBundle',
-                'data'=> $defaults['addressLine2'],
-                "attr" => [
-                    'placeholder' => "Address Line 2",
+                'data' => $defaults['addressLine2'],
+                'attr' => array(
+                    'placeholder' => 'Address Line 2',
                     'minlength' => 2,
-                    'maxlength' => 100
-                ],
-                'required' => true
+                    'maxlength' => 100,
+                ),
+                'required' => true,
             ))
             ->add('addressLine3', TextType::class, array(
                 'label' => 'form.addressLine3',
                 'translation_domain' => 'SonataUserBundle',
-                'data'=> $defaults['addressLine3'],
-                "attr" => [
-                    'placeholder' => "Address Line 3",
-                    'maxlength' => 100
-                ],
-                'required' => false
+                'data' => $defaults['addressLine3'],
+                'attr' => array(
+                    'placeholder' => 'Address Line 3',
+                    'maxlength' => 100,
+                ),
+                'required' => false,
             ))
             ->add('city', TextType::class, array(
                 'label' => 'form.city',
                 'translation_domain' => 'SonataUserBundle',
-                'data'=> $defaults['city'],
-                "attr" => [
-                    'placeholder' => "City",
+                'data' => $defaults['city'],
+                'attr' => array(
+                    'placeholder' => 'City',
                     'minlength' => 2,
-                    'maxlength' => 64
-                ],
-                'required' => true
+                    'maxlength' => 64,
+                ),
+                'required' => true,
             ))
             ->add('county', TextType::class, array(
                 'label' => 'form.county',
                 'translation_domain' => 'SonataUserBundle',
-                'data'=> $defaults['county'],
-                "attr" => [
-                    'placeholder' => "County",
+                'data' => $defaults['county'],
+                'attr' => array(
+                    'placeholder' => 'County',
                     'minlength' => 2,
-                    'maxlength' => 64
-                ],
-                'required' => false
+                    'maxlength' => 64,
+                ),
+                'required' => false,
             ))
             ->add('postcode', TextType::class, array(
                 'label' => 'form.postcode',
                 'translation_domain' => 'SonataUserBundle',
-                'data'=> $defaults['postcode'],
-                "attr" => [
-                    'placeholder' => "Postcode",
+                'data' => $defaults['postcode'],
+                'attr' => array(
+                    'placeholder' => 'Postcode',
                     'minlength' => 2,
-                    'maxlength' => 14
-                ],
-                'required' => false
+                    'maxlength' => 14,
+                ),
+                'required' => false,
             ))
             ->add('countryCode', CountryType::class, array(
                 'preferred_choices' => array(
-                    User::COUNTRY_EN
+                    User::COUNTRY_EN,
                 ),
                 'label' => 'form.countryCode',
                 'translation_domain' => 'SonataUserBundle',
-                'data'=> $defaults['countryCode'],
-                'required' => true
+                'data' => $defaults['countryCode'],
+                'required' => true,
             ))
             ->add('phone', TextType::class, array(
                 'label' => 'form.phone',
                 'translation_domain' => 'SonataUserBundle',
-                'data'=> $defaults['phone'],
-                "attr" => [
-                    'placeholder' => "+xx xxxx xxx xxx",
-                    'maxlength' => 18
-                ],
-                'required' => false
+                'data' => $defaults['phone'],
+                'attr' => array(
+                    'placeholder' => '+xx xxxx xxx xxx',
+                    'maxlength' => 18,
+                ),
+                'required' => false,
             ))
             ->add('mobile', TextType::class, array(
                 'label' => 'form.mobile',
                 'translation_domain' => 'SonataUserBundle',
-                'data'=> $defaults['mobile'],
-                "attr" => [
-                    'placeholder' => "+xx xxxx xxx xxx",
-                    'maxlength' => 18
-                ],
-                'required' => false
+                'data' => $defaults['mobile'],
+                'attr' => array(
+                    'placeholder' => '+xx xxxx xxx xxx',
+                    'maxlength' => 18,
+                ),
+                'required' => false,
             ))
         ;
-	}
+    }
 
     /**
      * Configure Options for ContactDetailsFormType
-     * with error mapping for non field errors
+     * with error mapping for non field errors.
      *
      * @param OptionsResolver $resolver
-     *
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -178,16 +175,17 @@ class ContactDetailsFormType extends AbstractType {
     }
 
     /**
-     * Define the name of the form to call it for rendering
+     * Define the name of the form to call it for rendering.
      *
      * @return string
-     *
      */
-    public function getBlockPrefix() {
+    public function getBlockPrefix()
+    {
         return 'sonata_user_contact_details';
     }
 
-    public function getName() {
+    public function getName()
+    {
         return $this->getBlockPrefix();
     }
 
@@ -195,5 +193,4 @@ class ContactDetailsFormType extends AbstractType {
     {
         return method_exists(AbstractType::class, 'getBlockPrefix') ? FormType::class : 'form';
     }
-
 }

@@ -1,30 +1,26 @@
 <?php
 
 /*
- * Sonata User Bundle Extends
- * This file is part of the BardisCMS.
- * List the Sonata User profiles
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\UserBundle\Controller;
 
+use Application\Sonata\UserBundle\Form\Handler\FilterUsersFormHandler;
+use BardisCMS\PageBundle\Entity\Page as Page;
 use FOS\UserBundle\Model\UserInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
-use Application\Sonata\UserBundle\Form\Handler\FilterUsersFormHandler;
-
-use BardisCMS\PageBundle\Entity\Page as Page;
-
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * Controller managing the user profile list and search
+ * Controller managing the user profile list and search.
  */
 class ProfileListController extends Controller
 {
@@ -45,14 +41,15 @@ class ProfileListController extends Controller
     private $userManager;
     private $userSearchTerm;
 
-    const PROFILE_PAGE_LIST_ALIAS = "profile/list";
+    const PROFILE_PAGE_LIST_ALIAS = 'profile/list';
 
     /**
-     * ContainerAware setContainer to accommodate the extra variables
+     * ContainerAware setContainer to accommodate the extra variables.
      *
      * @param ContainerInterface $container
      */
-    public function setContainer(ContainerInterface $container = null) {
+    public function setContainer(ContainerInterface $container = null)
+    {
         $this->container = $container;
 
         // Using custom repository and user entity manager
@@ -77,7 +74,7 @@ class ProfileListController extends Controller
         $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 
         // Set the flag for allowing HTTP cache
-        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') === 'prod' && $this->settings->getActivateHttpCache();
 
         // Check if request was Ajax based
         $this->isAjaxRequest = $this->get('bardiscms_page.services.ajax_detection')->isAjaxRequest();
@@ -93,16 +90,17 @@ class ProfileListController extends Controller
     }
 
     /**
-     * Show the paginated users listing
+     * Show the paginated users listing.
      *
-     * @param String $alias
-     * @param Int $currentpage
-     * @param Int $totalpageitems
-     * @param String $extraParams
+     * @param string $alias
+     * @param int    $currentpage
+     * @param int    $totalpageitems
+     * @param string $extraParams
      *
      * @return Response response
      */
-    public function showAction($alias = PROFILE_PAGE_LIST_ALIAS, $currentpage = 0, $totalpageitems = 0, $extraParams = '') {
+    public function showAction($alias = PROFILE_PAGE_LIST_ALIAS, $currentpage = 0, $totalpageitems = 0, $extraParams = '')
+    {
         $this->extraParams = $extraParams;
         $this->linkUrlParams = $extraParams;
         $this->currentpage = $currentpage;
@@ -121,7 +119,7 @@ class ProfileListController extends Controller
             $this->publishStates
         );
 
-        if(!$accessAllowedForUserRole){
+        if (!$accessAllowedForUserRole) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
@@ -137,14 +135,13 @@ class ProfileListController extends Controller
         $this->totalpageitems = $this->totalpageitems > 0 ? $this->totalpageitems : 20;
 
         // Getting all the users paginated
-        $users = [];
+        $users = array();
         $totalPages = 0;
 
         // Check if public profile listings are allowed
         if (is_object($this->settings)) {
             $isPublicProfilesAllowed = $this->settings->getisPublicProfilesAllowed();
-        }
-        else {
+        } else {
             $isPublicProfilesAllowed = false;
         }
 
@@ -159,11 +156,11 @@ class ProfileListController extends Controller
             $url = $this->container->get('router')->generate('sonata_user_profile_list_noslash', array(
                 'currentpage' => 0,
                 'totalpageitems' => $this->totalpageitems,
-                'extraParams' => $this->userSearchTerm
+                'extraParams' => $this->userSearchTerm,
             ));
 
             // If the request was Ajax based and the search term validated with success
-            if($this->isAjaxRequest){
+            if ($this->isAjaxRequest) {
                 return $this->onAjaxSuccess($url);
             }
 
@@ -171,20 +168,18 @@ class ProfileListController extends Controller
 
             return $response;
         }
-        else {
             // If the request was Ajax based and the search was not successful
-            if($this->isAjaxRequest){
+            if ($this->isAjaxRequest) {
                 return $this->onAjaxError($filterUsersFormHandler);
             }
-        }
 
         // Get the paginated results of the filtered users
-        if($this->userName || $isPublicProfilesAllowed){
+        if ($this->userName || $isPublicProfilesAllowed) {
             $usersList = $this->userManager->getAllUsersPaginated(
                 $this->currentpage,
                 $this->totalpageitems,
                 $this->userSearchTerm,
-                [  $this->userName ? $this->logged_user->getId() : 0 ]
+                array($this->userName ? $this->logged_user->getId() : 0)
             );
 
             $users = $usersList['pages'];
@@ -211,7 +206,7 @@ class ProfileListController extends Controller
             'logged_username' => $this->userName,
             'filterUsersForm' => $filterUsersForm->createView(),
             'isPublicProfilesAllowed' => $isPublicProfilesAllowed,
-            'mobile' => $this->serveMobile
+            'mobile' => $this->serveMobile,
         ), $response);
 
         $response->setContent($template);
@@ -229,7 +224,7 @@ class ProfileListController extends Controller
     }
 
     /**
-     * Extend with new method to handle Ajax response with errors
+     * Extend with new method to handle Ajax response with errors.
      *
      * @param FilterUsersFormHandler $formHandler
      *
@@ -244,7 +239,7 @@ class ProfileListController extends Controller
         $ajaxFormData = array(
             'errors' => $errorList,
             'formMessage' => $formMessage,
-            'hasErrors' => $formHasErrors
+            'hasErrors' => $formHasErrors,
         );
 
         $ajaxFormResponse = new Response(json_encode($ajaxFormData));
@@ -254,9 +249,9 @@ class ProfileListController extends Controller
     }
 
     /**
-     * Extend with new method to handle Ajax response with success
+     * Extend with new method to handle Ajax response with success.
      *
-     * @param String $url
+     * @param string $url
      *
      * @return Response
      */
@@ -271,7 +266,7 @@ class ProfileListController extends Controller
             'errors' => $errorList,
             'formMessage' => $formMessage,
             'hasErrors' => $formHasErrors,
-            'redirectURL' => $redirectURL
+            'redirectURL' => $redirectURL,
         );
 
         $ajaxFormResponse = new Response(json_encode($ajaxFormData));

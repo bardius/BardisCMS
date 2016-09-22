@@ -1,27 +1,28 @@
 <?php
 
 /*
- * Comment Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\CommentBundle\Admin;
 
+use BardisCMS\CommentBundle\Admin\Form\EventListener\AddCommentTypeFieldSubscriber;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
-use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Sonata\CoreBundle\Validator\ErrorElement;
+use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
-use BardisCMS\CommentBundle\Admin\Form\EventListener\AddCommentTypeFieldSubscriber;
+use Sonata\CoreBundle\Validator\ErrorElement;
 
-class CommentAdmin extends AbstractAdmin {
-
-    protected function configureFormFields(FormMapper $formMapper) {
-
+class CommentAdmin extends AbstractAdmin
+{
+    protected function configureFormFields(FormMapper $formMapper)
+    {
         $subscriber = new AddCommentTypeFieldSubscriber($formMapper->getFormBuilder()->getFormFactory());
         $formMapper->getFormBuilder()->addEventSubscriber($subscriber);
 
@@ -47,13 +48,14 @@ class CommentAdmin extends AbstractAdmin {
                     'username' => 'Set username/name of the userer that commented',
                     'created' => 'The comment creation date',
                     'comment' => 'The contents of the comment',
-                    'approved' => 'Aproval Status'
+                    'approved' => 'Aproval Status',
                 ))
                 ->end()
         ;
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    {
         // Getting the container parameters set in the config file that exist
         $commentSettings = $this->getConfigurationPool()->getContainer()->getParameter('comment_settings');
 
@@ -69,7 +71,8 @@ class CommentAdmin extends AbstractAdmin {
         ;
     }
 
-    protected function configureListFields(ListMapper $listMapper) {
+    protected function configureListFields(ListMapper $listMapper)
+    {
         $listMapper
                 ->addIdentifier('title')
                 ->addIdentifier('commentTypeAsString', null, array('sortable' => false, 'label' => 'Comment Type'))
@@ -80,20 +83,21 @@ class CommentAdmin extends AbstractAdmin {
                 ->add('_action', 'actions', array(
                     'actions' => array(
                         'duplicate' => array(
-                            'template' => 'CommentBundle:Admin:duplicate.html.twig'
+                            'template' => 'CommentBundle:Admin:duplicate.html.twig',
                         ),
                         'edit' => array(
-                            'template' => 'CommentBundle:Admin:edit.html.twig'
+                            'template' => 'CommentBundle:Admin:edit.html.twig',
                         ),
                         'delete' => array(
-                            'template' => 'CommentBundle:Admin:delete.html.twig'
-                        )
-                    )
+                            'template' => 'CommentBundle:Admin:delete.html.twig',
+                        ),
+                    ),
                 ))
         ;
     }
 
-    public function validate(ErrorElement $errorElement, $object) {
+    public function validate(ErrorElement $errorElement, $object)
+    {
         $errorElement
                 ->with('title')
                 ->assertLength(array('max' => 255))
@@ -103,10 +107,10 @@ class CommentAdmin extends AbstractAdmin {
         ;
     }
 
-    protected function configureRoutes(RouteCollection $collection) {
-        $collection->add('duplicate', $this->getRouterIdParameter() . '/duplicate');
-        $collection->add('edit', $this->getRouterIdParameter() . '/edit');
-        $collection->add('delete', $this->getRouterIdParameter() . '/delete');
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('duplicate', $this->getRouterIdParameter().'/duplicate');
+        $collection->add('edit', $this->getRouterIdParameter().'/edit');
+        $collection->add('delete', $this->getRouterIdParameter().'/delete');
     }
-
 }

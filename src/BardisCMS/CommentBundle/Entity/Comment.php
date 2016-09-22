@@ -1,32 +1,33 @@
 <?php
 
 /*
- * Comment Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\CommentBundle\Entity;
 
+use BardisCMS\BlogBundle\Entity\Blog;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use BardisCMS\BlogBundle\Entity\Blog;
 
 /**
- * BardisCMS\CommentBundle\Entity\Comment
+ * BardisCMS\CommentBundle\Entity\Comment.
  *
  * @ORM\Table(name="comments")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Entity(repositoryClass="BardisCMS\CommentBundle\Repository\CommentRepository")
  */
-class Comment {
-
+class Comment
+{
     /*
      * Publish states
      */
-    const TYPE_BLOG = "Blog";
+    const TYPE_BLOG = 'Blog';
 
     /**
      * @ORM\Id
@@ -82,236 +83,262 @@ class Comment {
      */
     private $dateLastModified;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->setCreated(new \DateTime());
 
         $this->setApproved(true);
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
      *
      * @return Comment
      */
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->title;
     }
 
     /**
-     * Set username
+     * Set username.
      *
      * @param string $username
      *
      * @return Comment
      */
-    public function setUsername($username) {
+    public function setUsername($username)
+    {
         $this->username = $username;
 
         return $this;
     }
 
     /**
-     * Get username
+     * Get username.
      *
      * @return string
      */
-    public function getUsername() {
+    public function getUsername()
+    {
         return $this->username;
     }
 
     /**
-     * Set comment
+     * Set comment.
      *
      * @param string $comment
      *
      * @return Comment
      */
-    public function setComment($comment) {
+    public function setComment($comment)
+    {
         $this->comment = $comment;
 
         return $this;
     }
 
     /**
-     * Get comment
+     * Get comment.
      *
      * @return string
      */
-    public function getComment() {
+    public function getComment()
+    {
         return $this->comment;
     }
 
     /**
-     * Set approved
+     * Set approved.
      *
-     * @param boolean $approved
+     * @param bool $approved
      *
      * @return Comment
      */
-    public function setApproved($approved) {
+    public function setApproved($approved)
+    {
         $this->approved = $approved;
 
         return $this;
     }
 
     /**
-     * Get approved
+     * Get approved.
      *
-     * @return boolean
+     * @return bool
      */
-    public function getApproved() {
+    public function getApproved()
+    {
         return $this->approved;
     }
 
     /**
-     * Set created
+     * Set created.
      *
      * @param \DateTime $created
      *
      * @return Comment
      */
-    public function setCreated($created) {
+    public function setCreated($created)
+    {
         $this->created = $created;
 
         return $this;
     }
 
     /**
-     * Get created
+     * Get created.
      *
      * @return \DateTime
      */
-    public function getCreated() {
+    public function getCreated()
+    {
         return $this->created;
     }
 
     /**
-     * Set commentType
+     * Set commentType.
      *
      * @param string $commentType
+     *
      * @return Comment
      */
-    public function setCommentType($commentType) {
+    public function setCommentType($commentType)
+    {
         $this->commentType = $commentType;
+
         return $this;
     }
 
     /**
-     * Get commentType
+     * Get commentType.
      *
      * @return string
      */
-    public function getCommentType() {
+    public function getCommentType()
+    {
         return $this->commentType;
     }
 
     /**
-     * Set bottrap
+     * Set bottrap.
      *
      * @param string $bottrap
+     *
      * @return Comment
      */
-    public function setBottrap($bottrap) {
+    public function setBottrap($bottrap)
+    {
         $this->bottrap = $bottrap;
+
         return $this;
     }
 
     /**
-     * Get bottrap
+     * Get bottrap.
      *
      * @return string
      */
-    public function getBottrap() {
+    public function getBottrap()
+    {
         return $this->bottrap;
     }
 
     /**
-     * Set blogPost
+     * Set blogPost.
      *
      * @param \BardisCMS\BlogBundle\Entity\Blog $blogPost
      *
      * @return Comment
      */
-    public function setBlogPost(\BardisCMS\BlogBundle\Entity\Blog $blogPost = null) {
+    public function setBlogPost(\BardisCMS\BlogBundle\Entity\Blog $blogPost = null)
+    {
         $this->blogPost = $blogPost;
 
         return $this;
     }
 
     /**
-     * Get blogPost
+     * Get blogPost.
      *
      * @return \BardisCMS\BlogBundle\Entity\Blog
      */
-    public function getBlogPost() {
+    public function getBlogPost()
+    {
         return $this->blogPost;
     }
 
     /**
-     * Get dateLastModified
+     * Get dateLastModified.
      *
-     * @return integer
+     * @return int
      */
-    public function getDateLastModified() {
+    public function getDateLastModified()
+    {
         return $this->dateLastModified;
     }
 
     /**
-     * toString
+     * toString.
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         if ($this->getTitle()) {
             return (string) $this->getTitle();
-        } else {
-            return (string) 'New Comment';
         }
+
+        return (string) 'New Comment';
     }
 
     /**
-     * toString Approved
+     * toString Approved.
      *
      * @return string
      */
-    public function getApprovedAsString() {
+    public function getApprovedAsString()
+    {
         switch ($this->getApproved()) {
-            case('0'): return "Unpublished";
-            case('1'): return "Approved";
+            case '0': return 'Unpublished';
+            case '1': return 'Approved';
             default: return $this->getApproved();
         }
     }
 
     /**
-     * toString commentType
+     * toString commentType.
      *
      * @return string
      */
-    public function getCommentTypeAsString() {
+    public function getCommentTypeAsString()
+    {
         switch ($this->getCommentType()) {
-            case(Comment::TYPE_BLOG): return "Blog Post";
+            case self::TYPE_BLOG: return 'Blog Post';
             default: return $this->getCommentType();
         }
     }
@@ -324,8 +351,7 @@ class Comment {
     public static function getCommentTypeList()
     {
         return array(
-            Comment::TYPE_BLOG => "Blog Post"
+            self::TYPE_BLOG => 'Blog Post',
         );
     }
-
 }

@@ -1,23 +1,25 @@
 <?php
 
 /*
- * Blog Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\BlogBundle\DataFixtures\ORM;
 
+use BardisCMS\BlogBundle\Entity\Blog;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use BardisCMS\BlogBundle\Entity\Blog;
 
-class BlogFixtures extends AbstractFixture implements OrderedFixtureInterface {
-
-    public function load(ObjectManager $manager) {
+class BlogFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
+    public function load(ObjectManager $manager)
+    {
         $bloghome = new Blog();
         $bloghome->setDate(new \DateTime());
         $bloghome->setTitle('Blog Home');
@@ -131,8 +133,8 @@ class BlogFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $this->addReference('blog4', $blog4);
     }
 
-    public function getOrder() {
+    public function getOrder()
+    {
         return 10;
     }
-
 }

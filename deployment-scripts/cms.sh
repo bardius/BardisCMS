@@ -4,7 +4,7 @@ read -r -d '' usage <<EOF
 
 Usage: ./$0 options
 
-	-a, --action            action to execute [reset,version]
+	-a, --action            action to execute [reset,version,phpcs]
 	--usage                 show usage
 EOF
 
@@ -54,10 +54,26 @@ while true; do
 done
 
 # function to reset the CMS
+function php_cs() {
+
+    echo "******************************************"
+    echo "Starting PHP CS Fixer on BardisCMS website"
+    echo "******************************************"
+
+    php ../php-cs-fixer.phar fix --config-file=../.php_cs --verbose
+
+    echo "******************************************"
+    echo "PHP CS Fixer has finished"
+    echo "******************************************"
+
+    return 0
+}
+
+# function to reset the CMS
 function cms_reset() {
 
     echo "******************************************"
-    echo "Resetting Livin Circle website"
+    echo "Resetting BardisCMS website"
     echo "******************************************"
 
     php ../app/console cache:clear -e=dev --no-debug --no-warmup
@@ -80,7 +96,7 @@ function cms_reset() {
     php ../app/console assetic:dump --env=prod --no-debug
 
     echo "******************************************"
-    echo "Livin Circle website has been reset"
+    echo "BardisCMS website has been reset"
     echo "******************************************"
 
     return 0
@@ -94,6 +110,9 @@ fi
 case "$ACTION" in
 	reset)
             cms_reset
+            ;;
+	phpcs)
+            php_cs
             ;;
 	version)
             ./bump-version.sh --cur-version=$CUR_VERSION --new-version=$NEW_VERSION

@@ -1,30 +1,26 @@
 <?php
 
 /*
- * Sonata User Bundle Overrides
- * This file is part of the BardisCMS.
- * Manage the extended Sonata User entity with extra information for the users
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\UserBundle\Controller;
 
-
+use BardisCMS\PageBundle\Entity\Page as Page;
 use Sonata\UserBundle\Model\UserInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-
 use Symfony\Component\Security\Core\SecurityContext;
 
-use BardisCMS\PageBundle\Entity\Page as Page;
-
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 /**
- * Controller managing the user login
+ * Controller managing the user login.
  */
 class SecurityFOSUser1Controller extends Controller
 {
@@ -42,11 +38,12 @@ class SecurityFOSUser1Controller extends Controller
     const LOGIN_PAGE_ALIAS = 'login';
 
     /**
-     * Override the ContainerAware setContainer to accommodate the extra variables
+     * Override the ContainerAware setContainer to accommodate the extra variables.
      *
      * @param ContainerInterface $container
      */
-    public function setContainer(ContainerInterface $container = null) {
+    public function setContainer(ContainerInterface $container = null)
+    {
         $this->container = $container;
 
         // Setting the scoped variables required for the rendering of the page
@@ -63,7 +60,7 @@ class SecurityFOSUser1Controller extends Controller
         $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 
         // Set the flag for allowing HTTP cache
-        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') === 'prod' && $this->settings->getActivateHttpCache();
 
         // Check if request was Ajax based
         $this->isAjaxRequest = $this->get('bardiscms_page.services.ajax_detection')->isAjaxRequest();
@@ -79,19 +76,19 @@ class SecurityFOSUser1Controller extends Controller
     }
 
     /**
-     * Rendering of the login page
+     * Rendering of the login page.
      *
      * @return Response
      */
-    public function loginAction() {
-
+    public function loginAction()
+    {
         $user = $this->get('sonata_user.services.helpers')->getLoggedUser();
 
         if ($user instanceof UserInterface) {
             //$this->container->get('session')->getFlashBag()->set('sonata_user_error', 'sonata_user_already_authenticated');
             $url = $this->container->get('router')->generate('sonata_user_profile_show');
 
-            if($this->isAjaxRequest) {
+            if ($this->isAjaxRequest) {
                 return $this->onAjaxSuccess($url);
             }
 
@@ -110,7 +107,7 @@ class SecurityFOSUser1Controller extends Controller
             $this->publishStates
         );
 
-        if(!$accessAllowedForUserRole){
+        if (!$accessAllowedForUserRole) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
@@ -150,7 +147,7 @@ class SecurityFOSUser1Controller extends Controller
         // Get the error messages
         if ($error) {
             // If the request was Ajax based and the registration was not successful
-            if($this->isAjaxRequest){
+            if ($this->isAjaxRequest) {
                 return $this->onAjaxError($error);
             }
 
@@ -168,7 +165,7 @@ class SecurityFOSUser1Controller extends Controller
             'csrf_token' => $csrfToken,
             'page' => $this->page,
             'mobile' => $this->serveMobile,
-            'logged_username' => $this->userName
+            'logged_username' => $this->userName,
         );
 
         // Render login page
@@ -196,7 +193,7 @@ class SecurityFOSUser1Controller extends Controller
     }
 
     /**
-     * Extend with new method to handle Ajax response with errors
+     * Extend with new method to handle Ajax response with errors.
      *
      * @param string $error
      *
@@ -208,14 +205,14 @@ class SecurityFOSUser1Controller extends Controller
         $formMessage = $this->get('translator')->trans(
             $error->getMessage(),
             array(),
-            "SonataUserBundle"
+            'SonataUserBundle'
         );
         $formHasErrors = true;
 
         $ajaxFormData = array(
             'errors' => $errorList,
             'formMessage' => $formMessage,
-            'hasErrors' => $formHasErrors
+            'hasErrors' => $formHasErrors,
         );
 
         $ajaxFormResponse = new Response(json_encode($ajaxFormData));
@@ -225,9 +222,9 @@ class SecurityFOSUser1Controller extends Controller
     }
 
     /**
-     * Extend with new method to handle Ajax response with success
+     * Extend with new method to handle Ajax response with success.
      *
-     * @param String $url
+     * @param string $url
      *
      * @return Response
      */
@@ -242,7 +239,7 @@ class SecurityFOSUser1Controller extends Controller
             'errors' => $errorList,
             'formMessage' => $formMessage,
             'hasErrors' => $formHasErrors,
-            'redirectURL' => $redirectURL
+            'redirectURL' => $redirectURL,
         );
 
         $ajaxFormResponse = new Response(json_encode($ajaxFormData));

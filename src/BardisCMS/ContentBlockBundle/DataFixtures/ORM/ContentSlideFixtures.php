@@ -1,24 +1,25 @@
 <?php
 
 /*
- * ContentBlock Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\ContentBlockBundle\DataFixtures\ORM;
 
+use BardisCMS\ContentBlockBundle\Entity\ContentSlide;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use BardisCMS\ContentBlockBundle\Entity\ContentSlide;
 
-class ContentSlideFixtures extends AbstractFixture implements OrderedFixtureInterface {
-
-    public function load(ObjectManager $manager) {
-
+class ContentSlideFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
+    public function load(ObjectManager $manager)
+    {
         $homeSlide1 = new ContentSlide();
         $homeSlide1->setImageLinkTitle('Slide 1');
         $homeSlide1->setImageLinkURL('/blog/events');
@@ -36,8 +37,8 @@ class ContentSlideFixtures extends AbstractFixture implements OrderedFixtureInte
         $this->addReference('homeSlide2', $homeSlide2);
     }
 
-    public function getOrder() {
+    public function getOrder()
+    {
         return 7;
     }
-
 }

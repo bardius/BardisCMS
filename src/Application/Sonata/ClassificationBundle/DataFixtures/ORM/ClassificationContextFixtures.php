@@ -1,24 +1,25 @@
 <?php
 
 /*
- * Classification Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\ClassificationBundle\DataFixtures\ORM;
 
+use Application\Sonata\ClassificationBundle\Entity\Context;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Application\Sonata\ClassificationBundle\Entity\Context;
 
-class ClassificationContextFixtures extends AbstractFixture implements OrderedFixtureInterface {
-
-    public function load(ObjectManager $manager) {
-
+class ClassificationContextFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
+    public function load(ObjectManager $manager)
+    {
         $context0 = new Context();
         $context0->setId('default');
         $context0->setName('default');
@@ -77,8 +78,8 @@ class ClassificationContextFixtures extends AbstractFixture implements OrderedFi
         $this->addReference('context5', $context5);
     }
 
-    public function getOrder() {
+    public function getOrder()
+    {
         return 4;
     }
-
 }

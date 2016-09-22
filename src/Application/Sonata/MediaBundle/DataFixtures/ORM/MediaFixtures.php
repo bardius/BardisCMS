@@ -1,23 +1,25 @@
 <?php
 
 /*
- * Media Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\MediaBundle\DataFixtures\ORM;
 
+use Application\Sonata\MediaBundle\Entity\Media;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Application\Sonata\MediaBundle\Entity\Media;
 
-class MediaFixtures extends AbstractFixture implements OrderedFixtureInterface {
-
-    public function load(ObjectManager $manager) {
+class MediaFixtures extends AbstractFixture implements OrderedFixtureInterface
+{
+    public function load(ObjectManager $manager)
+    {
         $introImage1 = new Media();
         $introImage1->setName('sample_thumb.jpeg');
         $introImage1->setEnabled(0);
@@ -34,7 +36,6 @@ class MediaFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $introImage1->setCreatedAt(new \DateTime());
         $introImage1->setUpdatedAt(new \DateTime());
         $manager->persist($introImage1);
-
 
         $introImage2 = new Media();
         $introImage2->setName('sample_thumb.jpeg');
@@ -53,7 +54,6 @@ class MediaFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $introImage2->setUpdatedAt(new \DateTime());
         $manager->persist($introImage2);
 
-
         $introImage3 = new Media();
         $introImage3->setName('sample_thumb.jpeg');
         $introImage3->setEnabled(0);
@@ -70,7 +70,6 @@ class MediaFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $introImage3->setCreatedAt(new \DateTime());
         $introImage3->setUpdatedAt(new \DateTime());
         $manager->persist($introImage3);
-
 
         $introImage4 = new Media();
         $introImage4->setName('sample_thumb.jpeg');
@@ -89,7 +88,6 @@ class MediaFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $introImage4->setUpdatedAt(new \DateTime());
         $manager->persist($introImage4);
 
-
         $introImage5 = new Media();
         $introImage5->setName('sample_thumb.jpeg');
         $introImage5->setEnabled(0);
@@ -106,7 +104,6 @@ class MediaFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $introImage5->setCreatedAt(new \DateTime());
         $introImage5->setUpdatedAt(new \DateTime());
         $manager->persist($introImage5);
-
 
         $introImage6 = new Media();
         $introImage6->setName('sample_thumb.jpeg');
@@ -125,7 +122,6 @@ class MediaFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $introImage6->setUpdatedAt(new \DateTime());
         $manager->persist($introImage6);
 
-
         $introImage7 = new Media();
         $introImage7->setName('sample_thumb.jpeg');
         $introImage7->setEnabled(0);
@@ -142,7 +138,6 @@ class MediaFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $introImage7->setCreatedAt(new \DateTime());
         $introImage7->setUpdatedAt(new \DateTime());
         $manager->persist($introImage7);
-
 
         $introImage8 = new Media();
         $introImage8->setName('sample_thumb.jpeg');
@@ -161,7 +156,6 @@ class MediaFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $introImage8->setUpdatedAt(new \DateTime());
         $manager->persist($introImage8);
 
-
         $homeBanner1 = new Media();
         $homeBanner1->setName('sample_thumb.jpeg');
         $homeBanner1->setEnabled(0);
@@ -178,7 +172,6 @@ class MediaFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $homeBanner1->setCreatedAt(new \DateTime());
         $homeBanner1->setUpdatedAt(new \DateTime());
         $manager->persist($homeBanner1);
-
 
         $homeBanner2 = new Media();
         $homeBanner2->setName('sample_thumb.jpeg');
@@ -211,8 +204,8 @@ class MediaFixtures extends AbstractFixture implements OrderedFixtureInterface {
         $this->addReference('homeBanner2', $homeBanner2);
     }
 
-    public function getOrder() {
+    public function getOrder()
+    {
         return 6;
     }
-
 }

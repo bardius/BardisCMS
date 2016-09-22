@@ -1,28 +1,26 @@
 <?php
 
 /*
- * Sonata User Bundle Overrides
- * This file is part of the BardisCMS.
- * Manage the extended Sonata User entity with extra information for the users
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\UserBundle\Controller;
 
+use BardisCMS\PageBundle\Entity\Page as Page;
 use FOS\UserBundle\Model\UserInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-use BardisCMS\PageBundle\Entity\Page as Page;
-
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 /**
- * This class is inspired from the FOS Change Password Controller
+ * This class is inspired from the FOS Change Password Controller.
  */
 class ChangePasswordFOSUser1Controller extends Controller
 {
@@ -36,14 +34,15 @@ class ChangePasswordFOSUser1Controller extends Controller
     private $enableHTTPCache;
     private $logged_user;
 
-    const PASSWORD_CHANGE_PAGE_ALIAS = "user/password-change";
+    const PASSWORD_CHANGE_PAGE_ALIAS = 'user/password-change';
 
     /**
-     * Override the ContainerAware setContainer to accommodate the extra variables
+     * Override the ContainerAware setContainer to accommodate the extra variables.
      *
      * @param ContainerInterface $container
      */
-    public function setContainer(ContainerInterface $container = null) {
+    public function setContainer(ContainerInterface $container = null)
+    {
         $this->container = $container;
 
         // Setting the scoped variables required for the rendering of the page
@@ -60,7 +59,7 @@ class ChangePasswordFOSUser1Controller extends Controller
         $this->serveMobile = $this->get('bardiscms_mobile_detect.device_detection')->testMobile();
 
         // Set the flag for allowing HTTP cache
-        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') == 'prod' && $this->settings->getActivateHttpCache();
+        $this->enableHTTPCache = $this->container->getParameter('kernel.environment') === 'prod' && $this->settings->getActivateHttpCache();
 
         // Set the publish statuses that are available for the user
         $this->publishStates = $this->get('bardiscms_page.services.helpers')->getAllowedPublishStates($this->userRole);
@@ -73,7 +72,7 @@ class ChangePasswordFOSUser1Controller extends Controller
     }
 
     /**
-     * Render the Password change page
+     * Render the Password change page.
      *
      * @return Response|RedirectResponse
      *
@@ -98,7 +97,7 @@ class ChangePasswordFOSUser1Controller extends Controller
             $this->publishStates
         );
 
-        if(!$accessAllowedForUserRole){
+        if (!$accessAllowedForUserRole) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_401);
         }
 
@@ -118,7 +117,7 @@ class ChangePasswordFOSUser1Controller extends Controller
             'page' => $this->page,
             'mobile' => $this->serveMobile,
             'logged_username' => $this->userName,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         );
 
         // Render Password change page

@@ -1,39 +1,37 @@
 <?php
 
 /*
- * Sonata User Bundle Overrides
- * This file is part of the BardisCMS.
- * Manage the extended Sonata User entity with extra information for the users
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\UserBundle\Entity;
 
-use Sonata\UserBundle\Entity\UserManager as BaseUserManager;
 use Sonata\CoreBundle\Model\ManagerInterface;
-use Sonata\DatagridBundle\Pager\Doctrine\Pager;
-use Sonata\DatagridBundle\ProxyQuery\Doctrine\ProxyQuery;
+use Sonata\UserBundle\Entity\UserManager as BaseUserManager;
 use Sonata\UserBundle\Model\UserManagerInterface;
 
 /**
  * Class UserManager.
  */
-class UserManager extends BaseUserManager implements UserManagerInterface, ManagerInterface {
-
+class UserManager extends BaseUserManager implements UserManagerInterface, ManagerInterface
+{
     /**
-     * Function to retrieve the users with pagination
+     * Function to retrieve the users with pagination.
      *
-     * @param int|null      $currentPage
-     * @param int|null      $totalPageItems
-     * @param string|null   $userSearchTerm
-     * @param array|null    $currentUserId
+     * @param int|null    $currentPage
+     * @param int|null    $totalPageItems
+     * @param string|null $userSearchTerm
+     * @param array|null  $currentUserId
      *
      * @return array[]
      */
-    public function getAllUsersPaginated($currentPage = 0, $totalPageItems = 20, $userSearchTerm, $currentUserId = []) {
-
+    public function getAllUsersPaginated($currentPage, $totalPageItems, $userSearchTerm, $currentUserId = array())
+    {
         $usernameList = null;
 
         // Initialize the query builder variables
@@ -57,7 +55,7 @@ class UserManager extends BaseUserManager implements UserManagerInterface, Manag
             ->setParameter('confirmedState', true)
             ->setParameter('lockedState', false)
             ->setParameter('isSystemUser', false)
-            ->setParameter('userSearchTerm', '%' . $userSearchTerm . '%')
+            ->setParameter('userSearchTerm', '%'.$userSearchTerm.'%')
             ->setParameter('currentUserId', $currentUserId)
         ;
 
@@ -78,7 +76,7 @@ class UserManager extends BaseUserManager implements UserManagerInterface, Manag
             ->setParameter('confirmedState', true)
             ->setParameter('lockedState', false)
             ->setParameter('isSystemUser', false)
-            ->setParameter('userSearchTerm', '%' . $userSearchTerm . '%')
+            ->setParameter('userSearchTerm', '%'.$userSearchTerm.'%')
             ->setParameter('currentUserId', $currentUserId)
         ;
 
@@ -91,8 +89,8 @@ class UserManager extends BaseUserManager implements UserManagerInterface, Manag
     }
 
     // Function to define what page of user results items will be returned for each paginated listing page
-    public function getPaginatedResults($qb, $totalResultsCount, $currentPage, $totalPageItems) {
-
+    public function getPaginatedResults($qb, $totalResultsCount, $currentPage, $totalPageItems)
+    {
         $pages = null;
         $totalPages = 1;
 
@@ -108,7 +106,7 @@ class UserManager extends BaseUserManager implements UserManagerInterface, Manag
         // Get paginated results
         $pages = $qb->getQuery()->getResult();
         // Get the total pagination pages
-        if($totalPageItems > 0){
+        if ($totalPageItems > 0) {
             $totalPages = ceil($totalResultsCount / $totalPageItems);
         }
         // Set the page items and pagination to be returned

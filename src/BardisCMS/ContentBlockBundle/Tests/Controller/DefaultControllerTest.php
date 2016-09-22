@@ -12,14 +12,14 @@ namespace BardisCMS\ContentBlockBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerTest extends WebTestCase {
-
-    public function testIndex() {
+class DefaultControllerTest extends WebTestCase
+{
+    public function testIndex()
+    {
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/hello/ContentBlock');
 
         $this->assertTrue($crawler->filter('html:contains("Hello ContentBlock")')->count() > 0);
     }
-
 }

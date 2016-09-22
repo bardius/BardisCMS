@@ -1,11 +1,12 @@
 <?php
 
 /*
- * ContentBlock Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\ContentBlockBundle\Admin\Form\Type;
@@ -15,12 +16,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ContentSlideType extends AbstractType {
-
+class ContentSlideType extends AbstractType
+{
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $formBuilder, array $options) {
+    public function buildForm(FormBuilderInterface $formBuilder, array $options)
+    {
         $formBuilder
                 ->add('imageLinkTitle', 'text', array('attr' => array('class' => 'imageLinkTitle'), 'label' => 'Link Title', 'required' => true))
                 ->add('imageLinkURL', 'text', array('attr' => array('class' => 'imageLinkURL'), 'label' => 'Link URL', 'required' => true))
@@ -29,9 +31,10 @@ class ContentSlideType extends AbstractType {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver) {
+    public function configureOptions(OptionsResolver $resolver)
+    {
         $optionsNormalizer = function (Options $options, $value) {
             $value = 'BardisCMS\ContentBlockBundle\Entity\ContentSlide';
 
@@ -41,12 +44,14 @@ class ContentSlideType extends AbstractType {
         $resolver->setNormalizer('data_class', $optionsNormalizer);
     }
 
-    public function getName() {
+    public function getName()
+    {
         return $this->getBlockPrefix();
     }
 
     // Define the name of the form to call it for rendering
-    public function getBlockPrefix() {
+    public function getBlockPrefix()
+    {
         return 'contentslide';
     }
 }

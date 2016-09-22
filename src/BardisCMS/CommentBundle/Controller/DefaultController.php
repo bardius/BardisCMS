@@ -1,28 +1,27 @@
 <?php
 
 /*
- * Comment Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\CommentBundle\Controller;
 
-use BardisCMS\CommentBundle\Entity\Comment;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use FOS\UserBundle\Model\UserInterface;
-
-use BardisCMS\PageBundle\Entity\Page as Page;
 use BardisCMS\BlogBundle\Entity\Blog as Blog;
-
+use BardisCMS\CommentBundle\Entity\Comment;
+use BardisCMS\PageBundle\Entity\Page as Page;
+use FOS\UserBundle\Model\UserInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-class DefaultController extends Controller {
-
+class DefaultController extends Controller
+{
     // Adding variables required for the rendering of pages
     protected $container;
     private $pageRequest;
@@ -68,7 +67,7 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Add a new comment
+     * Add a new comment.
      *
      * @param $commentType
      * @param $associated_object_id
@@ -76,16 +75,17 @@ class DefaultController extends Controller {
      *
      * @return Response
      */
-    public function addCommentAction($commentType, $associated_object_id = null, Request $request) {
+    public function addCommentAction($commentType, $associated_object_id, Request $request)
+    {
         $this->pageRequest = $request;
         $this->commentType = $commentType;
         $this->associated_object_id = $associated_object_id;
 
-        if($this->associated_object_id === null){
+        if ($this->associated_object_id === null) {
             return $this->get('bardiscms_page.services.show_error_page')->errorPageAction(Page::ERROR_404);
         }
 
-        switch($this->commentType){
+        switch ($this->commentType) {
             case Comment::TYPE_BLOG:
                 $this->associated_object = $this->getBlogPost();
 
@@ -104,11 +104,12 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Validate form and store data with proper associations
+     * Validate form and store data with proper associations.
      *
      * @return Response
      */
-    protected function createComment() {
+    protected function createComment()
+    {
         $formMessage = null;
         $errorList = null;
         $formHasErrors = false;
@@ -130,23 +131,22 @@ class DefaultController extends Controller {
             $formMessage = $this->container->get('translator')->trans('comment.form.response.success', array(), 'BardisCMSCommentBundle');
             $errorList = array();
             $formHasErrors = false;
-        }
-        else {
+        } else {
             $formMessage = $this->container->get('translator')->trans('comment.form.response.error', array(), 'BardisCMSCommentBundle');
             $errorList = $this->get('bardiscms_page.services.helpers')->getFormErrorMessages($form);
             $formHasErrors = true;
         }
 
         // If the request was Ajax based
-        if($this->isAjaxRequest){
+        if ($this->isAjaxRequest) {
             if ($process) {
                 return $this->onAjaxSuccess($process);
-            } else {
-                return $this->onAjaxError($formHandler);
             }
+
+            return $this->onAjaxError($formHandler);
         }
 
-        switch($this->commentType){
+        switch ($this->commentType) {
             case Comment::TYPE_BLOG:
                 // Retrieving the comments the view
                 $postComments = $this->getBlogPostComments();
@@ -162,7 +162,7 @@ class DefaultController extends Controller {
                     'errorList' => $errorList,
                     'formHasErrors' => $formHasErrors,
                     'logged_username' => $this->userName,
-                    'mobile' => $this->serveMobile
+                    'mobile' => $this->serveMobile,
                 ));
 
                 return $response;
@@ -174,14 +174,15 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Prepare the comment based on comment type
+     * Prepare the comment based on comment type.
      *
      * @return Comment
      */
-    protected function getInitialisedComment() {
+    protected function getInitialisedComment()
+    {
         $initialisedComment = new Comment();
 
-        switch($this->commentType) {
+        switch ($this->commentType) {
             case Comment::TYPE_BLOG:
                 $initialisedComment->setBlogPost($this->associated_object);
                 $initialisedComment->setCommentType($this->commentType);
@@ -194,11 +195,12 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Check if the associated Blog post exists
+     * Check if the associated Blog post exists.
      *
      * @return Blog
      */
-    protected function getBlogPost() {
+    protected function getBlogPost()
+    {
         $blogPost = $this->getDoctrine()->getRepository('BlogBundle:Blog')->find($this->associated_object_id);
 
         // Set the website settings and metatags
@@ -208,31 +210,33 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Get the associated Blog post comments
+     * Get the associated Blog post comments.
      *
-     * @return Array
+     * @return array
      */
-    protected function getBlogPostComments() {
+    protected function getBlogPostComments()
+    {
         $comments = $this->getDoctrine()->getRepository('CommentBundle:Comment')->getCommentsForBlogPost($this->associated_object_id);
 
         return $comments;
     }
 
     /**
-     * Get the requested Blog post comment
+     * Get the requested Blog post comment.
      *
      * @param $commentId
      *
-     * @return Array
+     * @return array
      */
-    protected function getCommentById($commentId) {
+    protected function getCommentById($commentId)
+    {
         $comment = $this->getDoctrine()->getRepository('CommentBundle:Comment')->getCommentById($commentId);
 
         return $comment;
     }
 
     /**
-     * Handle Ajax response with errors
+     * Handle Ajax response with errors.
      *
      * @param $formHandler
      *
@@ -249,7 +253,7 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Handle Ajax response with success
+     * Handle Ajax response with success.
      *
      * @return Response
      */
@@ -264,7 +268,7 @@ class DefaultController extends Controller {
     }
 
     /**
-     * Return Ajax response
+     * Return Ajax response.
      *
      * @param $errorList
      * @param $formMessage
@@ -273,12 +277,13 @@ class DefaultController extends Controller {
      *
      * @return Response
      */
-    protected function returnAjaxResponse($errorList, $formMessage, $formHasErrors, $newComment) {
+    protected function returnAjaxResponse($errorList, $formMessage, $formHasErrors, $newComment)
+    {
         $ajaxFormData = array(
             'errors' => $errorList,
             'formMessage' => $this->container->get('translator')->trans($formMessage, array(), 'BardisCMSCommentBundle'),
             'hasErrors' => $formHasErrors,
-            'newComment' => $newComment
+            'newComment' => $newComment,
         );
 
         $ajaxFormResponse = new Response(json_encode($ajaxFormData));

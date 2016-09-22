@@ -1,22 +1,23 @@
 <?php
 
 /*
- * Blog Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\BlogBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class BlogRepository extends EntityRepository {
-
+class BlogRepository extends EntityRepository
+{
     // Function to retrieve the blog posts of a category with pagination
-    public function getCategoryItems($categoryIds, $currentPageId, $publishStates, $currentpage, $totalpageitems) {
-
+    public function getCategoryItems($categoryIds, $currentPageId, $publishStates, $currentpage, $totalpageitems)
+    {
         $blogPostList = null;
 
         if (!empty($categoryIds)) {
@@ -63,8 +64,8 @@ class BlogRepository extends EntityRepository {
     }
 
     // Function to retrieve the blog posts of tag/category combination with pagination
-    public function getTaggedCategoryItems($categoryIds, $currentPageId, $publishStates, $currentpage, $totalpageitems, $tagIds) {
-
+    public function getTaggedCategoryItems($categoryIds, $currentPageId, $publishStates, $currentpage, $totalpageitems, $tagIds)
+    {
         $blogPostList = null;
 
         if (!empty($categoryIds)) {
@@ -114,8 +115,8 @@ class BlogRepository extends EntityRepository {
     }
 
     // Function to retrieve the blog posts of a tag with pagination
-    public function getTaggedItems($tagIds, $currentPageId, $publishStates, $currentpage, $totalpageitems) {
-
+    public function getTaggedItems($tagIds, $currentPageId, $publishStates, $currentpage, $totalpageitems)
+    {
         $blogPostList = null;
 
         if (!empty($tagIds)) {
@@ -162,8 +163,8 @@ class BlogRepository extends EntityRepository {
     }
 
     // Function to retrieve the blog posts of the homepage category
-    public function getHomepageItems($categoryIds, $publishStates) {
-
+    public function getHomepageItems($categoryIds, $publishStates)
+    {
         $blogPostList = null;
 
         if (!empty($categoryIds)) {
@@ -190,8 +191,8 @@ class BlogRepository extends EntityRepository {
     }
 
     // Function to retrieve the blog posts of the homepage category
-    public function getFeaturedItems($categoryTitle, $publishStates, $maxResults) {
-
+    public function getFeaturedItems($categoryTitle, $publishStates, $maxResults)
+    {
         $blogPostList = null;
 
         if (!empty($categoryTitle)) {
@@ -220,7 +221,8 @@ class BlogRepository extends EntityRepository {
     }
 
     // Function to retrieve a blog post list for sitemap
-    public function getSitemapList($publishStates) {
+    public function getSitemapList($publishStates)
+    {
 
         // Initalize the query builder variables
         $qb = $this->_em->createQueryBuilder();
@@ -242,8 +244,8 @@ class BlogRepository extends EntityRepository {
     }
 
     // Function to define what blog post items will be returned for each paginated listing page
-    public function getPaginatedResults($qb, $totalResultsCount, $currentpage, $totalblogposts) {
-
+    public function getPaginatedResults($qb, $totalResultsCount, $currentpage, $totalblogposts)
+    {
         $blogPosts = null;
         $totalPages = 1;
 
@@ -259,7 +261,7 @@ class BlogRepository extends EntityRepository {
         // Get paginated results
         $blogPosts = $qb->getQuery()->getResult();
         // Get the total pagination pages
-        if($totalblogposts > 0){
+        if ($totalblogposts > 0) {
             $totalPages = ceil($totalResultsCount / $totalblogposts);
         }
         // Set the blog post items and pagination to be returned
@@ -269,7 +271,8 @@ class BlogRepository extends EntityRepository {
     }
 
     // Function to get all the blog post items
-    public function getAllItems($currentPageId, $publishStates, $currentpage, $totalblogposts) {
+    public function getAllItems($currentPageId, $publishStates, $currentpage, $totalblogposts)
+    {
 
         // Initalize the query builder variables
         $qb = $this->_em->createQueryBuilder();
@@ -306,5 +309,4 @@ class BlogRepository extends EntityRepository {
 
         return $blogPostList;
     }
-
 }

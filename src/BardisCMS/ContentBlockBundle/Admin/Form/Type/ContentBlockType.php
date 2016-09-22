@@ -1,38 +1,41 @@
 <?php
 
 /*
- * ContentBlock Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\ContentBlockBundle\Admin\Form\Type;
 
+use BardisCMS\ContentBlockBundle\Admin\Form\EventListener\AddContentTypeFieldSubscriber;
+use BardisCMS\ContentBlockBundle\Admin\Form\EventListener\AddIdFieldSubscriber;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use BardisCMS\ContentBlockBundle\Admin\Form\EventListener\AddIdFieldSubscriber;
-use BardisCMS\ContentBlockBundle\Admin\Form\EventListener\AddContentTypeFieldSubscriber;
 
-class ContentBlockType extends AbstractType {
-
+class ContentBlockType extends AbstractType
+{
     private $contentTypes;
     private $contentsizes;
     private $mediasizes;
 
-    public function __construct(array $contentTypes, array $contentsizes, array $mediasizes) {
+    public function __construct(array $contentTypes, array $contentsizes, array $mediasizes)
+    {
         $this->contentTypes = $contentTypes;
         $this->contentsizes = $contentsizes;
         $this->mediasizes = $mediasizes;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $formBuilder, array $options) {
+    public function buildForm(FormBuilderInterface $formBuilder, array $options)
+    {
         $subscriber = new AddIdFieldSubscriber($formBuilder->getFormFactory());
         $formBuilder->addEventSubscriber($subscriber);
 
@@ -50,7 +53,7 @@ class ContentBlockType extends AbstractType {
         $formBuilder
                 ->add('title', 'text', array('label' => 'Content Block Title', 'required' => true))
                 ->add('publishedState', 'choice', array('choices' => array('0' => 'Unpublished', '1' => 'Published'), 'preferred_choices' => array('1'), 'label' => 'Publish State', 'required' => true))
-                ->add('availability', 'choice', array('choices'   => array('page' => 'Page Only', 'global' => 'Global'),'preferred_choices' => array('0'), 'label' => 'Available to', 'required' => true))
+                ->add('availability', 'choice', array('choices' => array('page' => 'Page Only', 'global' => 'Global'), 'preferred_choices' => array('0'), 'label' => 'Available to', 'required' => true))
                 ->add('showTitle', 'choice', array('choices' => array('0' => 'Hide Title', '1' => 'Show Title'), 'preferred_choices' => array('1'), 'label' => 'Title Display State', 'required' => true))
                 ->add('ordering', 'hidden', array('attr' => array('class' => 'orderField'), 'label' => 'Content Block Ordering', 'required' => true))
                 ->add('className', 'text', array('label' => 'CSS Class', 'required' => false))
@@ -61,9 +64,10 @@ class ContentBlockType extends AbstractType {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver) {
+    public function configureOptions(OptionsResolver $resolver)
+    {
         $optionsNormalizer = function (Options $options, $value) {
             $value = 'BardisCMS\ContentBlockBundle\Entity\ContentBlock';
 
@@ -73,12 +77,14 @@ class ContentBlockType extends AbstractType {
         $resolver->setNormalizer('data_class', $optionsNormalizer);
     }
 
-    public function getName() {
+    public function getName()
+    {
         return $this->getBlockPrefix();
     }
 
     // Define the name of the form to call it for rendering
-    public function getBlockPrefix() {
+    public function getBlockPrefix()
+    {
         return 'contentblock';
     }
 }

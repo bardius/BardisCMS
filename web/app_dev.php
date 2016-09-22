@@ -17,7 +17,7 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
         '127.0.0.1',
         '::1',
     ))
-	|| !in_array(@$_SERVER['HTTP_HOST'], array(
+    || !in_array(@$_SERVER['HTTP_HOST'], array(
         'domain-name.dev'
     ))
 ) {

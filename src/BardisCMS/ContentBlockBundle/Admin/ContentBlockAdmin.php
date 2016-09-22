@@ -1,26 +1,28 @@
 <?php
 
 /*
- * ContentBlock Bundle
- * This file is part of the BardisCMS.
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace BardisCMS\ContentBlockBundle\Admin;
 
+use BardisCMS\ContentBlockBundle\Admin\Form\EventListener\AddContentTypeFieldSubscriber;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
-use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Sonata\CoreBundle\Validator\ErrorElement;
+use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
-use BardisCMS\ContentBlockBundle\Admin\Form\EventListener\AddContentTypeFieldSubscriber;
+use Sonata\CoreBundle\Validator\ErrorElement;
 
-class ContentBlockAdmin extends AbstractAdmin {
-
-    protected function configureFormFields(FormMapper $formMapper) {
+class ContentBlockAdmin extends AbstractAdmin
+{
+    protected function configureFormFields(FormMapper $formMapper)
+    {
 
         // Getting the container parameters set in the config file that exist
         $contentblockSettings = $this->getConfigurationPool()->getContainer()->getParameter('contentblock_settings');
@@ -44,7 +46,7 @@ class ContentBlockAdmin extends AbstractAdmin {
         $formMapper
                 ->with('Content Block Details', array('collapsed' => false))
                 ->add('title', 'text', array('label' => 'Content Block Title', 'required' => true))
-                ->add('availability', 'choice', array('choices' => array('page' => 'One Page Only', 'global' => 'All Pages'),'preferred_choices' => array('0'), 'label' => 'Available to', 'required' => true))
+                ->add('availability', 'choice', array('choices' => array('page' => 'One Page Only', 'global' => 'All Pages'), 'preferred_choices' => array('0'), 'label' => 'Available to', 'required' => true))
                 ->add('publishedState', 'choice', array('choices' => array('0' => 'Unpublished', '1' => 'Published'), 'preferred_choices' => array('1'), 'label' => 'Publish State', 'required' => true))
                 ->add('showTitle', 'choice', array('choices' => array('0' => 'Hide Title', '1' => 'Show Title'), 'preferred_choices' => array('1'), 'label' => 'Title Display State', 'required' => true))
                 ->add('ordering', 'hidden', array('attr' => array('class' => 'orderField'), 'label' => 'Content Block Ordering', 'required' => true))
@@ -53,13 +55,14 @@ class ContentBlockAdmin extends AbstractAdmin {
                 ->add('sizeclass', 'choice', array('choices' => $sizeclassChoices, 'preferred_choices' => array($prefSizeclassChoice), 'label' => 'Content Block Width', 'required' => true))
                 ->add('contentType', 'choice', array('choices' => $contentTypeChoices, 'preferred_choices' => array($prefContentTypeChoice), 'label' => 'Content Type', 'required' => true))
                 ->setHelps(array(
-                    'title' => 'Set the title of the content block'
+                    'title' => 'Set the title of the content block',
                 ))
                 ->end()
         ;
     }
 
-    protected function configureDatagridFilters(DatagridMapper $datagridMapper) {
+    protected function configureDatagridFilters(DatagridMapper $datagridMapper)
+    {
         // Getting the container parameters set in the config file that exist
         $contentblockSettings = $this->getConfigurationPool()->getContainer()->getParameter('contentblock_settings');
 
@@ -75,7 +78,8 @@ class ContentBlockAdmin extends AbstractAdmin {
         ;
     }
 
-    protected function configureListFields(ListMapper $listMapper) {
+    protected function configureListFields(ListMapper $listMapper)
+    {
         $listMapper
                 ->addIdentifier('title')
                 ->addIdentifier('availability', null, array('sortable' => false, 'label' => 'Availability'))
@@ -86,17 +90,18 @@ class ContentBlockAdmin extends AbstractAdmin {
                 ->add('_action', 'actions', array(
                     'actions' => array(
                         'edit' => array(
-                            'template' => 'ContentBlockBundle:Admin:edit.html.twig'
+                            'template' => 'ContentBlockBundle:Admin:edit.html.twig',
                         ),
                         'delete' => array(
-                            'template' => 'ContentBlockBundle:Admin:delete.html.twig'
-                        )
-                    )
+                            'template' => 'ContentBlockBundle:Admin:delete.html.twig',
+                        ),
+                    ),
                 ))
         ;
     }
 
-    public function validate(ErrorElement $errorElement, $object) {
+    public function validate(ErrorElement $errorElement, $object)
+    {
         $errorElement
                 ->with('title')
                 ->assertLength(array('max' => 255))
@@ -106,9 +111,9 @@ class ContentBlockAdmin extends AbstractAdmin {
         ;
     }
 
-    protected function configureRoutes(RouteCollection $collection) {
-        $collection->add('edit', $this->getRouterIdParameter() . '/edit');
-        $collection->add('delete', $this->getRouterIdParameter() . '/delete');
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->add('edit', $this->getRouterIdParameter().'/edit');
+        $collection->add('delete', $this->getRouterIdParameter().'/delete');
     }
-
 }

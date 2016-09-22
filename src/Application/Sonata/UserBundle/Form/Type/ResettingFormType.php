@@ -1,32 +1,30 @@
 <?php
 
 /*
- * Sonata User Bundle Overrides
- * This file is part of the BardisCMS.
- * Manage the extended Sonata User entity with extra information for the users
+ * This file is part of BardisCMS.
  *
  * (c) George Bardis <george@bardis.info>
  *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Application\Sonata\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ResettingFormType extends AbstractType
 {
     /**
-     * Build form for ResettingFormType
+     * Build form for ResettingFormType.
      *
      * @param FormBuilderInterface $builder
-     * @param array $options
-     *
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -38,21 +36,20 @@ class ResettingFormType extends AbstractType
                     'error_bubbling' => false,
                 ),
                 'first_options' => array(
-                    'label' => 'form.new_password'
+                    'label' => 'form.new_password',
                 ),
                 'second_options' => array(
-                    'label' => 'form.new_password_confirmation'
+                    'label' => 'form.new_password_confirmation',
                 ),
-                'invalid_message' => 'sonata_user.password.mismatch'
+                'invalid_message' => 'sonata_user.password.mismatch',
             ))
         ;
     }
 
     /**
-     * Configure Options for ResettingFormType
+     * Configure Options for ResettingFormType.
      *
      * @param OptionsResolver $resolver
-     *
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -61,21 +58,22 @@ class ResettingFormType extends AbstractType
             'intention' => 'resetting',
             'error_mapping' => array(
                 'safePassword' => 'new',
-            )
+            ),
         ));
     }
 
     /**
-     * Define the name of the form to call it for rendering
+     * Define the name of the form to call it for rendering.
      *
      * @return string
-     *
      */
-    public function getBlockPrefix() {
+    public function getBlockPrefix()
+    {
         return 'sonata_user_resetting';
     }
 
-    public function getName() {
+    public function getName()
+    {
         return $this->getBlockPrefix();
     }
 
