@@ -18,7 +18,7 @@ jQuery(document).ready(function ($) {
         event.preventDefault();
         var realImage = $(this).attr("href");
 
-        if ($("#imagePreview").attr('src') == realImage) {
+        if ($("#imagePreview").attr('src') === realImage) {
             $('#dialogPreview').dialog({
                 modal: true,
                 resizable: false,
@@ -38,17 +38,17 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    // Autocomplete for selectboxes
+    // Autocomplete for selec tboxes
     if ($('.autoCompleteItems').length > 0) {
         $(".autoCompleteItems").combobox();
     }
 
-    // Autocomplete for selectboxes
+    // Autocomplete for select boxes
     if ($('.autoCompleteMenus').length > 0) {
         $(".autoCompleteMenus").combobox();
     }
 
-    // Datepicker
+    // Date picker
     if ($('.datepicker').length > 0) {
         $('.datepicker').datetimepicker({
             locale: 'en',
@@ -56,8 +56,12 @@ jQuery(document).ready(function ($) {
         });
     }
 
-    // Autogenerate alias form title
+    // Auto generate alias form title
+
     if ($(".pageTitleField").length > 0) {
+        var titleVal = '';
+        var aliasVal = '';
+
         $(".pageTitleField").blur(function () {
             titleVal = $(this).val();
             titleVal = trimTitle(titleVal);
@@ -73,7 +77,6 @@ jQuery(document).ready(function ($) {
 
     // Collapse/expand content blocks on click of the legend
     $('.sonata-ba-field-standard-natural').on('click', function (e) {
-
         var target = $(e.target);
 
         if (target.hasClass("sonata-ba-collapsed")) {
