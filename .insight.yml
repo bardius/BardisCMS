@@ -84,7 +84,7 @@ rules:
         enabled: true
     php.method_too_long:
         enabled: true
-        max_length: 50
+        max_length: 75
         threshold: 5
     php.missing_use_statement:
         enabled: true
@@ -136,7 +136,7 @@ rules:
         enabled: true
     symfony.controller.action_method_too_long:
         enabled: true
-        max_length: 50
+        max_length: 75
         threshold: 10
     symfony.controller.get_action_mutates_resource:
         enabled: true
