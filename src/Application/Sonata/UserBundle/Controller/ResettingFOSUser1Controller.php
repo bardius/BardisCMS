@@ -17,7 +17,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
 
 /**
@@ -315,8 +314,12 @@ class ResettingFOSUser1Controller extends Controller
             $this->setFlash('sonata_user_success', 'resetting.flash.success');
             $responseURL = $this->container->get('router')->generate($redirectToRouteNameOnSuccess);
             $response = new RedirectResponse($responseURL);
-            // Enable user again after successful password reset journey
+            // Enable user again after successful password reset journey and reset failed attempts counter/status
+            $user->setFailedAttempts(0);
+            $user->setLocked(false);
             $user->setEnabled(true);
+            $this->container->get('fos_user.user_manager')->updateUser($user);
+
             $this->authenticateUser($user, $response);
 
             // If the request was Ajax based

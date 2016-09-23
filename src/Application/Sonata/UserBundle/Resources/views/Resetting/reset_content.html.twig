@@ -8,18 +8,16 @@ Manage the extended Sonata User entity with extra information for the users
 (c) George Bardis <george@bardis.info>
 
 #}
-
-<div class="row">
-        <div class="large-12 small-12 columns">
         {{ form_start(form, {'action': path('sonata_user_resetting_reset', {'token': token}), 'method': 'POST', 'attr': {'id': 'sonata_user_resetting_form', 'novalidate': 'novalidate'} }) }}
             <div class="row">
-                {{ form_widget(form) }}
-
+                <div class="large-12 small-12 columns">
+                    {{ form_widget(form) }}
+                </div>
                 <div class="large-12 small-12 columns">
                     {% if formMessage is defined %}
-                        <small class="form-message error">
+                        <span class="form-message error form-error is-visible callout {% if form.vars.valid == true %}success{% else %}alert{% endif %}">
                             {{ formMessage }}
-                        </small>
+                        </span>
                     {% endif %}
                     <button type="submit" name="submit" id="userResetFormBtn" class="button">
                         {{ 'resetting.reset.submit'|trans({}, 'SonataUserBundle') }}
@@ -32,5 +30,3 @@ Manage the extended Sonata User entity with extra information for the users
                 </div>
             </div>
         {{ form_end(form) }}
-        </div>
-    </div>

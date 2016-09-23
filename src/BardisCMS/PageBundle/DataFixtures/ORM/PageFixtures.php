@@ -205,7 +205,7 @@ class PageFixtures extends AbstractFixture implements OrderedFixtureInterface
 
         $pageresetting_reset = new Page();
         $pageresetting_reset->setDate(new \DateTime());
-        $pageresetting_reset->setTitle('Password has been Reset');
+        $pageresetting_reset->setTitle('Password Reset');
         $pageresetting_reset->setAuthor($manager->merge($this->getReference('admin')));
         $pageresetting_reset->setAlias('resetting/reset');
         $pageresetting_reset->setShowPageTitle(1);
