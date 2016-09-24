@@ -51,7 +51,7 @@ while true; do
 done
 
 echo "******************************************"
-echo "Updating Livin Circle website Release Version"
+echo "Updating BardisCMS website Release Version"
 echo "Current Version: $CUR_VERSION"
 echo "New Version: $NEW_VERSION"
 echo "******************************************"
