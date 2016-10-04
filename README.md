@@ -11,10 +11,10 @@
 
 ![](http://www.bardis.info/bardisCMS.png?)
 
-Symfony2 (v2.8.11) distribution with integrated Zurb Foundation 6 (v6.2)
+Symfony2 (v2.8.12) distribution with integrated Zurb Foundation 6 (v6.2)
 ============================================================================
 
-BardisCMS is a Symfony2 (v2.8.11) distribution with integrated Zurb Foundation 6 Framework.
+BardisCMS is a Symfony2 (v2.8.12) distribution with integrated Zurb Foundation 6 Framework.
 
 All the major bundles are included and pre-configured (Sonata Admin, Sonata User, Sonata Media, FOSUser, KnpMenu, Guzzle) 
 combined with my own bundles (Page, Settings, ContentBlocks, Blog, Comments, Tags, Categories) and overrides/extends

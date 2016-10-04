@@ -56,7 +56,7 @@ class ResponseListener
         $headers->set('ServerTokens', 'Prod');
         $headers->set('Content-Language', 'en');
         $headers->set('X-Created-By', 'George Bardis - george@bardis.info');
-        $headers->set('X-Version', '2.8.11');
+        $headers->set('X-Version', '2.8.12');
         */
     }
 }
