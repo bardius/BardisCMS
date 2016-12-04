@@ -132,15 +132,15 @@ module.exports = function (grunt) {
     /* ==========================================================================================
      Available tasks:
 
-     * grunt :                      run scsslint, sass, autoprefixer, eslint, concat, babel, symfony2
+     * grunt :                      run sass, autoprefixer, eslint, concat, babel, symfony2
      * grunt jsdev :                run eslint, concat, babel
-     * grunt dev :                  run scsslint, sass, autoprefixer, eslint, concat, babel, symfony2
-     * grunt compileprod :          run scsslint, sass, autoprefixer, csso, concat, babel, uglify
-     * grunt release :              run scsslint, sass, autoprefixer, csso, concat, babel, uglify, symfony2
-     * grunt deploy :               run scsslint, sass, autoprefixer, csso, concat, babel, uglify, symfony2
-     * grunt cms_reset :            run scsslint, sass, autoprefixer, csso, concat, babel, uglify, symfony2
+     * grunt dev :                  run sass, autoprefixer, eslint, concat, babel, symfony2
+     * grunt compileprod :          run sass, autoprefixer, csso, concat, babel, uglify
+     * grunt release :              run sass, autoprefixer, csso, concat, babel, uglify, symfony2
+     * grunt deploy :               run sass, autoprefixer, csso, concat, babel, uglify, symfony2
+     * grunt cms_reset :            run sass, autoprefixer, csso, concat, babel, uglify, symfony2
      * grunt runtests :             run jasmine
-     * grunt travis :               run scsslint, sass, autoprefixer, csso, concat, babel, uglify, symfony2
+     * grunt travis :               run sass, autoprefixer, csso, concat, babel, uglify, symfony2
      ============================================================================================ */
 
     /**
@@ -173,7 +173,6 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('dev', [
         'jsdev',
-        'scsslint',
         'sass:dev',
         'autoprefixer:release',
         'sf2-console:assetic_dump_dev'
@@ -190,7 +189,6 @@ module.exports = function (grunt) {
         'concat:js',
         'babel',
         'uglify:release',
-        'scsslint',
         'sass:release',
         'autoprefixer:release',
         'csso:release'

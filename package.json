@@ -43,7 +43,6 @@
         "grunt-eslint": "^19.0.0",
         "grunt-newer": "~1.2.0",
         "grunt-notify": "~0.4.5",
-        "grunt-scss-lint": "^0.5.0",
         "grunt-symfony2": "~0.5.0",
         "jit-grunt": "~0.10.0",
         "load-grunt-config": "~0.19.0",
@@ -52,6 +51,6 @@
     "keywords": [],
     "scripts": {
         "test": "grunt travis --verbose",
-        "setup": "npm install grunt babel-eslint && npm install && bower install && gem install scss_lint"
+        "setup": "npm install grunt babel-eslint && npm install && bower install"
     }
 }
