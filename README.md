@@ -36,7 +36,7 @@ use freely for your projects.
 
 You can find the requirements for Symfony2 here http://symfony.com/doc/current/reference/requirements.html
 You can find the documentation for Symfony2 here http://symfony.com/doc/current/book/index.html
-You can find the documentation for Zurb Foundation 6 here http://foundation.zurb.com/docs/
+You can find the documentation for Zurb Foundation 6 here http://foundation.zurb.com/sites/docs
 
 Requirements
 
@@ -55,9 +55,9 @@ The fastest way to get everything running is (must have nodejs, ruby and sass ge
 
 	1. git clone https://github.com/bardius/BardisCMS.git
 	2. cd BardisCMS
-	3. create a database
+	3. create a database (bardiscms is the default name)
 	4. composer.phar install -o (set your db details when requested during install)
-	5. npm install -g grunt grunt-cli bower
+	5. npm install -g grunt-cli bower
 	6. npm run setup
 	7. grunt cms_reset
 	8. setup your vhost and access the URL in a browser. To login to the admin (/admin username:administrator, pass: Admin1234)
