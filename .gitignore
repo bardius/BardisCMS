@@ -22,13 +22,14 @@ Thumbs.db
 
 
 # Random #
-#################
+##########
 *.sublime-*
 nbproject/
 node_modules/
 npm-debug.log
 *.iml
 .idea/
+
 
 # Symfony2 #
 #############
@@ -38,3 +39,9 @@ npm-debug.log
 parameters.yml
 /vendor/
 /web/bundles/
+
+
+# Vendor Dependencies #
+#######################
+/vendor/
+/ui-src/bower_components/

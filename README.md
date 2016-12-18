@@ -11,7 +11,7 @@
 
 ![](http://www.bardis.info/bardisCMS.png?)
 
-Symfony2 (v2.8.14) distribution with integrated Zurb Foundation 6 (v6.2)
+Symfony2 (v2.8.14) distribution with integrated Zurb Foundation 6 (v6.3)
 ============================================================================
 
 BardisCMS is a Symfony2 (v2.8.14) distribution with integrated Zurb Foundation 6 Framework.
@@ -99,7 +99,7 @@ Please follow the steps below for a complete new install.
 
 ### Front end Framework Setup ###
 
-Due to the use of the Zurb Foundation Framework 6 (version 6.2) the need for the following steps is unavoidable unless 
+Due to the use of the Zurb Foundation Framework 6 (version 6.3) the need for the following steps is unavoidable unless 
 you do not need the framework at all.
 
 We need to install NodeJs, Node Packaged Modules, Ruby, GIT and bower dependency manager if they are not already 

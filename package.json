@@ -51,6 +51,6 @@
     "keywords": [],
     "scripts": {
         "test": "grunt travis --verbose",
-        "setup": "npm install grunt babel-eslint && npm install && bower install"
+        "setup": "npm install grunt babel-eslint bower && bower install && npm install"
     }
 }

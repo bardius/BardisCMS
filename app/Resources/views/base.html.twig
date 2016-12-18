@@ -74,7 +74,7 @@
             <div id="wrapper" class="wrapper">
                 {% block body_start %}{% endblock %}
                 <div class="row expanded header-sticky-container" data-sticky-container>
-                    <div class="header-wrapper row column is-anchored" data-options="marginTop:0;" data-sticky="" data-stick-to="top" data-sticky-on="small" data-check-every="25">
+                    <div class="header-wrapper column is-anchored" data-options="marginTop:0;" data-sticky="" data-stick-to="top" data-sticky-on="small" data-check-every="25">
                         <header class="header row contain-to-grid">
                             <div id="cookie-acceptance" class="callout secondary is-hidden" data-closable>
                                 <p>
@@ -126,6 +126,10 @@
                 {% endblock %}
             </div>
         </div>
+
+        {% javascripts 'js/vendor-scripts.min.js' output="js/release-vendor-scripts.min.js" package='js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
 
         {% javascripts 'js/scripts.min.js' output="js/release-scripts.min.js" package='js' %}
         <script type="text/javascript" src="{{ asset_url }}"></script>

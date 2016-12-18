@@ -48,11 +48,11 @@
                     </a>
                 </p>
             {% elseif contentBlock.contentType == 'youtube' and contentBlock.youtube.id is defined %}
-                <div class="flex-video">
+                <div class="responsive-embed">
                     {% media contentBlock.youtube.id, contentBlock.mediaSize %}
                 </div>
             {% elseif contentBlock.contentType == 'vimeo'  and contentBlock.vimeo.id is defined %}
-                <div class="flex-video vimeo">
+                <div class="responsive-embed vimeo">
                     {% media contentBlock.vimeo.id, contentBlock.mediaSize %}
                 </div>
             {% elseif contentBlock.contentType == 'contact' %}

@@ -13,7 +13,7 @@ module.exports = {
         tasks: ['sass:dev', 'autoprefixer:release', 'sf2-console:assetic_dump_dev']
     },
     js: {
-        files: ['<%=config.js.scriptFileList%>', 'Gruntfile.js'],
+        files: ['<%=config.js.scriptFileList%>', '<%=config.js.babelScriptFileList%>', 'Gruntfile.js'],
         tasks: ['jsdev', 'sf2-console:assetic_dump_dev']
     },
     livereload: {

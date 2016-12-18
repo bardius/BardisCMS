@@ -41,5 +41,28 @@ module.exports = {
         files: {
             '<%=config.js.releaseDir%><%=config.js.releaseFile%>': ['<%=config.js.releaseDir%><%=config.js.releaseFile%>']
         }
+    },
+    vendor: {
+        options: {
+            mangle: true, // mangle: Turn on or off mangling
+            beautify: false, // beautify: beautify your code for debugging/troubleshooting purposes
+            compress: {
+                sequences: true,
+                dead_code: true,
+                conditionals: true,
+                booleans: true,
+                unused: true,
+                if_return: true,
+                join_vars: true,
+                drop_console: true
+            },
+            screwIE8: true,
+            sourceMap: true,
+            sourceMapIn: '<%=config.js.releaseDir%><%=config.js.vendorReleaseFile%>.map',
+            report: 'none'
+        },
+        files: {
+            '<%=config.js.releaseDir%><%=config.js.vendorReleaseFile%>': ['<%=config.js.releaseDir%><%=config.js.vendorReleaseFile%>']
+        }
     }
 };

@@ -33,8 +33,10 @@ module.exports = function (grunt) {
                     releaseDir: 'web/js/',
                     // <%=config.js.releaseFile%>
                     releaseFile: 'scripts.min.js',
-                    // <%=config.js.scriptFileList%>
-                    scriptFileList: [
+                    // <%=config.js.vendorReleaseFile%>
+                    vendorReleaseFile: 'vendor-scripts.min.js',
+                    // <%=config.js.vendorScriptFileList%>
+                    vendorScriptFileList: [
                         // ES5 Shims for legacy browsers
                         //'ui-src/bower_components/es5-shim/es5-shim.js',
                         //'ui-src/bower_components/es5-shim/es5-sham.js',
@@ -44,7 +46,7 @@ module.exports = function (grunt) {
                         'ui-src/bower_components/what-input/what-input.js',
 
                         // Include full Foundation 6 scripts
-                        'ui-src/bower_components/foundation-sites/dist/foundation.js',
+                        'ui-src/bower_components/foundation-sites/dist/js/foundation.js',
                         'ui-src/bower_components/foundation-datepicker/js/foundation-datepicker.js',
 
                         // Core Foundation files
@@ -72,19 +74,22 @@ module.exports = function (grunt) {
                         //"ui-src/bower_components/foundation-sites/js/foundation.tabs.js",
                         //"ui-src/bower_components/foundation-sites/js/foundation.toggler.js",
                         //"ui-src/bower_components/foundation-sites/js/foundation.tooltip.js",
-
-                        // Include helper scripts
-                        'ui-src/js/helpers/console.js',
-                        'ui-src/js/helpers/environment.js',
-                        'ui-src/js/helpers/notification-dispatcher.js',
-                        'ui-src/js/helpers/supports.js',
-                        'ui-src/js/helpers/cookies.js',
+                        //"ui-src/bower_components/foundation-sites/js/foundation.zf.responsiveAccordionTabs.js",
 
                         // Include infinite scroller pagination scripts
                         //'ui-src/bower_components/jquery-ias/src/jquery-ias.js',
                         //'ui-src/bower_components/jquery-ias/src/callbacks.js',
                         //'ui-src/bower_components/jquery-ias/src/extension/spinner.js',
                         //'ui-src/bower_components/jquery-ias/src/extension/noneleft.js',
+                    ],
+                    // <%=config.js.babelScriptFileList%>
+                    scriptFileList: [
+                        // Include helper scripts
+                        'ui-src/js/helpers/console.js',
+                        'ui-src/js/helpers/environment.js',
+                        'ui-src/js/helpers/notification-dispatcher.js',
+                        'ui-src/js/helpers/supports.js',
+                        'ui-src/js/helpers/cookies.js',
 
                         // Include custom jQuery plugin scripts
                         //'ui-src/js/sample_plugin.js',
@@ -161,6 +166,7 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('jsdev', [
         'eslint',
+        'concat:vendorjs',
         'concat:js',
         'babel'
     ]);
@@ -186,9 +192,11 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('compileprod', [
         'eslint',
+        'concat:vendorjs',
         'concat:js',
         'babel',
         'uglify:release',
+        'uglify:vendor',
         'sass:release',
         'autoprefixer:release',
         'csso:release'
