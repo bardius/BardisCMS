@@ -58,7 +58,7 @@ class MenuBuilder
         $menuData = $repo->findBy(array('menuGroup' => $menuGroup), array('ordering' => 'ASC'));
 
         $menuData = array_values($menuData);
-        $menuData = $this->buildTree($menuData);
+        $menuData = $this->buildTree($menuData, 0);
 
         $menu = $this->factory->createItem($menuGroup);
         $menu->setChildrenAttribute('class', $cssClass);
@@ -78,22 +78,24 @@ class MenuBuilder
 
     /**
      * @param array  $elements
-     * @param string $parent
+     * @param int $parent
      *
      * @return array
      * */
-    public function buildTree(array &$elements, $parent = '0')
+    public function buildTree(array &$elements, $parent = 0)
     {
         $branch = array();
 
         foreach ($elements as $element) {
-            if ($element->getParent() === $parent) {
+            if ((int)$element->getParent() === (int)$parent) {
                 $children = $this->buildTree($elements, $element->getId());
+
                 if ($children) {
                     $element->children = $children;
                 } else {
                     $element->children = null;
                 }
+
                 $branch[$element->getId()] = $element;
             }
         }
