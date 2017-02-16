@@ -43,7 +43,7 @@ module.exports = function (grunt) {
 
                         // Libraries required by Foundation
                         'ui-src/bower_components/jquery/dist/jquery.js',
-                        'ui-src/bower_components/what-input/what-input.js',
+                        'ui-src/bower_components/what-input/dist/what-input.js',
 
                         // Include full Foundation 6 scripts
                         'ui-src/bower_components/foundation-sites/dist/js/foundation.js',
@@ -82,7 +82,7 @@ module.exports = function (grunt) {
                         //'ui-src/bower_components/jquery-ias/src/extension/spinner.js',
                         //'ui-src/bower_components/jquery-ias/src/extension/noneleft.js',
                     ],
-                    // <%=config.js.babelScriptFileList%>
+                    // <%=config.js.scriptFileList%>
                     scriptFileList: [
                         // Include helper scripts
                         'ui-src/js/helpers/console.js',

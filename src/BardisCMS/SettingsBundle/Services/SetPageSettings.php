@@ -56,15 +56,15 @@ class SetPageSettings
 
             // Set the page meta keywords and description basd on user input values if any
             if ($page->getKeywords() === null) {
-                $page->setKeywords($settings->getMetaKeywords().','.$titleKeywords);
+                $page->metaKeywords = $settings->getMetaKeywords().','.$titleKeywords;
             } else {
-                $page->setKeywords($page->getKeywords().','.$titleKeywords);
+                $page->metaKeywords = $page->getKeywords().','.$titleKeywords;
             }
 
             if ($page->getDescription() === null) {
-                $page->setDescription($settings->getMetaDescription().' '.$fromTitle);
+                $page->metaDescription = $settings->getMetaDescription().' '.$fromTitle;
             } else {
-                $page->setDescription($page->getDescription().' '.$fromTitle);
+                $page->metaDescription = $page->getDescription().' '.$fromTitle;
             }
         } else {
             // Set the meta values depending if settings do not exist
@@ -76,8 +76,8 @@ class SetPageSettings
             $page->enableGA = false;
             $page->gaID = null;
 
-            $page->setDescription($page->getDescription());
-            $page->setKeywords($page->getKeywords().','.$titleKeywords);
+            $page->metaDescription = $page->getDescription();
+            $page->metaKeywords = $page->getKeywords().','.$titleKeywords;
         }
 
         return $page;

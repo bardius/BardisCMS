@@ -12,17 +12,17 @@ Manage the extended Sonata User entity with extra information for the users
 {% extends '::base.html.twig' %}
 
 {% block title %}{{ page.pagetitle }}{% endblock %}
-{% block metaDescription %}{{ page.description }}{% endblock %}
-{% block metaKeywords %}{{ page.keywords }}{% endblock %}
+{% block metaDescription %}{{ page.metaDescription }}{% endblock %}
+{% block metaKeywords %}{{ page.metaKeywords }}{% endblock %}
 {% block metaAuthor %}{{ page.metaAuthor }}{% endblock %}
 
 {% block OgTitle %}{{ page.pagetitle }}{% endblock %}
 {% block OgSiteName %}{{ page.pagetitle }}{% endblock %}
-{% block metaOgDescription %}{{ page.description }}{% endblock %}
+{% block metaOgDescription %}{{ page.metaDescription }}{% endblock %}
 
 {% block siteLogoTitle %}{{ page.pagetitle }}{% endblock %}
-{% block siteLogoKeywords %}{{ page.keywords }}{% endblock %}
-{% block siteLogoDescription %}{{ page.title }} {{ page.description }}{% endblock %}
+{% block siteLogoKeywords %}{{ page.metaKeywords }}{% endblock %}
+{% block siteLogoDescription %}{{ page.title }} {{ page.metaDescription }}{% endblock %}
 
 {% block content %}
 

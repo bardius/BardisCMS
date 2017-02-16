@@ -24,7 +24,7 @@
                 </option>
             </constraint>
             <constraint name="Regex">
-                <option name="pattern">/^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{6,20}$/</option>
+                <option name="pattern">/^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{5,20}$/</option>
                 <option name="match">true</option>
                 <option name="message">comment.username.invalid_chars</option>
                 <option name="groups">
